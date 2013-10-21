@@ -4,7 +4,7 @@ Devise.setup do |config|
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
-  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
+  config.mailer_sender = "no-reply@biblechallenges.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
@@ -86,7 +86,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "517b70e35848cf98134d25c14968af1015ce6930e977d64e244cf979f1aaaae1094d0e5a1bc0cac82ec02923e6fe55d5fc23cd13904550c4d2843d124d9db16e"
+  # config.pepper = "fc55c6db9d3ba9c809f30eb4829e5501f307508dbbc2a719d0386761baf6b09b53d1041ded42ca268ee338969380c7765bf5cd9182fb596c36978608c5493d4a"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -126,7 +126,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length. Default is 8..128.
-  config.password_length = 8..128
+  config.password_length = 5..15
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
