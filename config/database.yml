@@ -1,0 +1,12 @@
+defaults: &defaults
+  adapter: postgresql
+  template: template0
+  host: localhost
+
+development:
+  <<: *defaults
+  database: bc_development
+
+test:
+  <<: *defaults
+  database: bc_test
