@@ -7,4 +7,13 @@ class Challenge < ActiveRecord::Base
   validates :subdomain, presence: true
   validates :owner_id, presence: true
 
+  validate :validate_enddate_before_begindate
+
+  def validate_enddate_before_begindate
+    if enddate && begindate
+      errors[:base] << "The challenge begin and end dates must be sequential" if enddate < begindate
+    end
+  end
+
+
 end
