@@ -23,7 +23,9 @@ describe ChallengesController, "Actions as a logged in user" do
 
   context "on POST to #new" do
     it "should create a new challenge" do
-
+      lambda do
+        post :create, challenge: {name: "newchallenge", subdomain: "mysubdomain", begindate: "2013-01-01", enddate: "2013-01-07", owner_id: "1"}
+      end.should change(Challenge, :count).by(1)
     end
   end
 end
