@@ -9,7 +9,6 @@ gem 'devise', '3.0'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 
 group :production do
   gem 'rails_12factor'
@@ -30,6 +29,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
   gem 'heroku'
