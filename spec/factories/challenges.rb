@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :challenge do
-    owner_id 1
     subdomain "MyString"
     name "MyString"
     begindate "2013-10-21"

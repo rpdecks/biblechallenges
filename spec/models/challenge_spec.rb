@@ -12,7 +12,8 @@ describe Challenge, "Validations" do
     @challenge.valid?
     @challenge.errors.full_messages.should include("The challenge begin and end dates must be sequential")
   end
+end
 
-
-
+describe Challenge, "Relations" do
+  it { should belong_to(:owner) }
 end

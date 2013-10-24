@@ -9,6 +9,8 @@ class Challenge < ActiveRecord::Base
 
   validate :validate_enddate_before_begindate
 
+  belongs_to :owner, class_name: "User", foreign_key: :owner_id
+
   def validate_enddate_before_begindate
     if enddate && begindate
       errors[:base] << "The challenge begin and end dates must be sequential" if enddate < begindate

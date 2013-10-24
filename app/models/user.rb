@@ -5,4 +5,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   # attr_accessible :title, :body
+
+  has_many :challenges, foreign_key: :owner_id
 end

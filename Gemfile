@@ -33,6 +33,7 @@ group :development, :test do
   gem 'shoulda', '3.3.2'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails', '~> 2.7.0'
+  gem 'guard-rspec', require: false
 end
 
 group :test do

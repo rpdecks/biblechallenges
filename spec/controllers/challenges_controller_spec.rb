@@ -21,10 +21,10 @@ describe ChallengesController, "Actions as a logged in user" do
     end
   end
 
-  context "on POST to #new" do
+  context "on POST to #create" do
     it "should create a new challenge" do
       expect {
-        post :create, challenge: {name: "newchallenge", subdomain: "mysubdomain", begindate: "2013-01-01", enddate: "2013-01-07", owner_id: "1"}
+        post :create, challenge: FactoryGirl.attributes_for(:challenge)
       }.to change(Challenge, :count).by(1)
     end
   end
