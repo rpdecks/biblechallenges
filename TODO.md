@@ -7,11 +7,43 @@ Todo List
 - A user should be able to create a challenge
   Challenge: A challenge has a begin date and an end date, and has a
   title, and a number of participants.
-* The user should be logged in, before creating a challenge.
+- [DONE] The user should be logged in, before creating a challenge.
   Guests (not logged in users) should not be able to create challenges.
   Challenges have owners (single owner per challenge).
 - A user should also be able to join a challenge as a participant
   I should be able to join multiple challenges at the same time
   (has_many :through).
+- As a bible challenge creator, I want to be able to create a challenge
+  so that others can sign up for challenge I create.
+- As a bible challenge participant, I want to be able to sign up for a
+  challenge by submitting my email on a signup page that corresponds to
+  subdomain.biblechallenges.com
+- As a visitor to the main site, on the home page I want to see
+  information about what bible challenges are so that the site makes
+  sense to me
+- As a bible challenge creator I want to be able to set begin times and
+  end times for my bible challenges that I create so that people who
+  join them can know what they are getting involved with
+- As a visitor to subdomain.biblechallenges.com (a page specific to a
+  challenge), I want to see a form where I can enter my email and submit
+  it so that I can be enrolled in the challenge
+- As a participant in a challenge, I want to receive a daily email on
+  each day of the challenge that contains that day's verses, so that I
+  can easily read them and submit my results
+- As a bible challenge creator, I want to be able to assign one or more
+  chapters to each day in my challenge, so that participants will have
+  something to read on each day of the challenge
+- As a bible challenge participant, I want to be able to click on a link
+  at the bottom of my daily email that will take me to a page where I
+  can confirm that I read that day's reading so I can log my reading for
+  the challenge easily
+- As a bible challenge creator, I want to be able to sign others up for
+  the challenge that I created so that they don't need to fill out the
+  form online
+- As a bible challenge participant, I want to be able to click on a link
+  at the bottom of my daily email that will take me to a page where I
+  can make a comment on that day's reading so that I can participate in a
+  discussion about that chapter with other participants of my challenge
+
 
 
