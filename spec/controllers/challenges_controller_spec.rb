@@ -43,4 +43,12 @@ describe ChallengesController, "Actions as a logged out user" do
       response.should redirect_to(new_user_session_path)
     end
   end
+
+  context "on POST to #create" do
+    it "should not create a new Challenge" do
+      expect {
+        post :create, challenge: FactoryGirl.attributes_for(:challenge)
+      }.not_to change(Challenge, :count)
+    end
+  end
 end
