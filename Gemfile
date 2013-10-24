@@ -11,6 +11,9 @@ gem 'devise', '3.0'
 
 gem 'sqlite3'
 
+group :production do
+  gem 'rails_12factor'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
