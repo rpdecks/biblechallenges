@@ -5,6 +5,7 @@ gem 'haml', '3.1.7'
 gem 'pg', '0.17.0'
 gem 'haml-rails', '0.4'
 gem 'devise', '3.0'
+gem 'high_voltage', '2.0.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

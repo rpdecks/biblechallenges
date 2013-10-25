@@ -3,6 +3,6 @@ Biblechallenge::Application.routes.draw do
 
   resources :challenges, only: [:new, :create, :index]
 
-  root :to => redirect("challenges#new")
+  root :to => 'high_voltage/pages#show', id: 'home'
 
 end
