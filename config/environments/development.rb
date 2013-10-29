@@ -38,4 +38,8 @@ Biblechallenge::Application.configure do
   #devise options
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
+
+
+  # add db logging
+  config.active_record_logger = Logger.new("log/sql.log")
 end

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe ChallengesController, "Routing" do
+describe Creator::ChallengesController, "Routing" do
 
-  it { {get: '/challenges/new'}.should route_to(controller: "challenges", action: "new") }
-  it { {post: '/challenges'}.should route_to(controller: "challenges", action: "create") }
+  it { {get: '/creator/challenges/new'}.should route_to(controller: "creator/challenges", action: "new") }
+  it { {post: '/creator/challenges'}.should route_to(controller: "creator/challenges", action: "create") }
 
 end
 
-describe ChallengesController, "Actions as a logged in user" do
+describe Creator::ChallengesController, "Actions as a logged in user" do
   let(:current_user) { FactoryGirl.create(:user) }
 
   before do
@@ -30,7 +30,7 @@ describe ChallengesController, "Actions as a logged in user" do
   end
 end
 
-describe ChallengesController, "Actions as a logged out user" do
+describe Creator::ChallengesController, "Actions as a logged out user" do
 
   context "on GET to #new" do
     it "should not display the new challenge form" do
