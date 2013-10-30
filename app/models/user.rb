@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  # attr_accessible :title, :body
+
+  attr_accessible :email, :password, :password_confirmation
 
   has_many :challenges, foreign_key: :owner_id
 end

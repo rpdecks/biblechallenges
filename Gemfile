@@ -7,6 +7,7 @@ gem 'haml-rails', '0.4'
 gem 'devise', '3.0'
 gem 'high_voltage', '2.0.0'
 
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -38,6 +39,7 @@ group :development, :test do
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails', '~> 2.7.0'
   gem 'guard-rspec', require: false
+  gem 'capybara', '2.1.0'
 end
 
 group :test do
