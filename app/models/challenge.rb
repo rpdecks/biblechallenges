@@ -3,7 +3,7 @@ class Challenge < ActiveRecord::Base
 
   validates :begindate, presence: true
   validates :enddate, presence: true
-  validates :name, presence: true
+  validates :name, presence: true, length: {minimum: 3}
   validates :subdomain, presence: true
   validates :owner_id, presence: true
 
@@ -13,7 +13,7 @@ class Challenge < ActiveRecord::Base
 
   def validate_enddate_before_begindate
     if enddate && begindate
-      errors[:base] << "The challenge begin and end dates must be sequential" if enddate < begindate
+      errors[:enddate] << "The challenge begin and end dates must be sequential" if enddate < begindate
     end
   end
 

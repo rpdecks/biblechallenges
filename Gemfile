@@ -6,6 +6,7 @@ gem 'pg', '0.17.0'
 gem 'haml-rails', '0.4'
 gem 'devise', '3.0'
 gem 'high_voltage', '2.0.0'
+gem 'simple_form', '2.1'
 
 
 # Bundle edge Rails instead:
@@ -39,7 +40,7 @@ group :development, :test do
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails', '~> 2.7.0'
   gem 'guard-rspec', require: false
-  gem 'capybara', '2.1.0'
+  gem 'capybara', '1.1.4'
 end
 
 group :test do

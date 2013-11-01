@@ -10,7 +10,7 @@ describe Challenge, "Validations" do
   it "should not validate a challenge with enddate < begindate" do
     @challenge = FactoryGirl.build(:challenge, enddate: Time.now, begindate: Time.now + 1.day)
     @challenge.valid?
-    @challenge.errors.full_messages.should include("The challenge begin and end dates must be sequential")
+    @challenge.errors.messages[:enddate].should include("The challenge begin and end dates must be sequential")
   end
 end
 

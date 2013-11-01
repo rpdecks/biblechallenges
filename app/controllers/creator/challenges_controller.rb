@@ -4,6 +4,8 @@ class Creator::ChallengesController < ApplicationController
   def index
 
   end
+
+
   def new
     @challenge = Challenge.new
   end
