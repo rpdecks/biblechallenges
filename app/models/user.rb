@@ -7,5 +7,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid
 
-  has_many :challenges, foreign_key: :owner_id
+  has_many :createdchallenges, class_name: "Challenge", foreign_key: :owner_id
+  has_many :memberships
+  has_many :joinedchallenges, through: :memberships
 end

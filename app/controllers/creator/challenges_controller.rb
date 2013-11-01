@@ -11,7 +11,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def create
-    @challenge = current_user.challenges.build(params[:challenge])
+    @challenge = current_user.createdchallenges.build(params[:challenge])
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
       redirect_to creator_challenges_url
