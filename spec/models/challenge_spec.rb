@@ -6,6 +6,7 @@ describe Challenge, "Validations" do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:owner_id) }
   it { should validate_presence_of(:subdomain) }
+  it { should validate_uniqueness_of(:subdomain) }
 
   it "should not validate a challenge with enddate < begindate" do
     @challenge = FactoryGirl.build(:challenge, enddate: Time.now, begindate: Time.now + 1.day)

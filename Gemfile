@@ -40,7 +40,7 @@ group :development, :test do
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails', '~> 2.7.0'
   gem 'guard-rspec', require: false
-  gem 'capybara', '1.1.4'
+  gem 'capybara', '2.1.0'
 end
 
 group :test do

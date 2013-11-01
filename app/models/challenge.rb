@@ -4,7 +4,7 @@ class Challenge < ActiveRecord::Base
   validates :begindate, presence: true
   validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
-  validates :subdomain, presence: true
+  validates :subdomain, presence: true, uniqueness:  true
   validates :owner_id, presence: true
 
   validate :validate_enddate_before_begindate

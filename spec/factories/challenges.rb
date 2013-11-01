@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :challenge do
-    subdomain "MyString"
-    name "MyString"
+    subdomain "mystring"
+    name "myname"
     begindate "2013-10-21"
-    enddate "2013-10-21"
+    enddate "2013-11-21"
   end
 end
