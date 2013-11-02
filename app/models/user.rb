@@ -9,5 +9,9 @@ class User < ActiveRecord::Base
 
   has_many :createdchallenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships
+
+  #a.createdchallenges.find(1).members  # to see members of the challenge that a created
+  #a.joinedchallenges  # shows all the challenges a has joined
+
   has_many :joinedchallenges, through: :memberships
 end

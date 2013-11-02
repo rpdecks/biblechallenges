@@ -9,10 +9,10 @@ end
 
 describe ChallengesController, "Actions as a visitor" do
 
-  # here I'm getting a strange error about Email already taken, which
-  # disappears if I run rake db:test:prepare  what gives pdb
-  @challengeowner = FactoryGirl.create(:user)
-  @challenge = FactoryGirl.create(:challenge, subdomain: "woot", owner: @challengeowner)
+  before do
+    @challengeowner = FactoryGirl.create(:user)
+    @challenge = FactoryGirl.create(:challenge, subdomain: "woot", owner: @challengeowner)
+  end
   let(:subdomainurl) { "http://#{@challenge.subdomain}.lvh.me" }
 
 
