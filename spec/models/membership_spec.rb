@@ -1,5 +1,6 @@
 require 'spec_helper'
 
-describe Membership do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Membership, "Relations" do
+  it { should belong_to(:user) }
+  it { should belong_to(:challenge) }
 end

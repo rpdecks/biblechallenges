@@ -1,5 +1,4 @@
-require 'spec_helper'
-
+require 'spec_helper' 
 describe Creator::ChallengesController, "Routing" do
 
   it { {get: '/creator/challenges/new'}.should route_to(controller: "creator/challenges", action: "new") }
