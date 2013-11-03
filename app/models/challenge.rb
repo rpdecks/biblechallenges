@@ -9,9 +9,11 @@ class Challenge < ActiveRecord::Base
 
   validate :validate_enddate_before_begindate
 
-  belongs_to :owner, class_name: "User", foreign_key: :owner_id
   has_many :memberships
   has_many :members, through: :memberships
+  has_many :readings
+
+  belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
   def validate_enddate_before_begindate
     if enddate && begindate

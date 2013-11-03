@@ -19,4 +19,5 @@ describe Challenge, "Relations" do
   it { should belong_to(:owner) }
   it { should have_many(:memberships) }
   it { should have_many(:members).through(:memberships)}
+  it { should have_many(:readings) }
 end
