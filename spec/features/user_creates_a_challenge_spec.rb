@@ -10,8 +10,6 @@ feature 'User creates a valid bible challenge', :type => :feature do
     page.should have_content 'Successfully created Challenge'
   end
 
-  https://github.com/asymmetric/dotfiles.castle/tree/master/home
-
 
 
   pending "with invalid dates"

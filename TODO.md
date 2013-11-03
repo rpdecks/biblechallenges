@@ -8,16 +8,17 @@ Todo List
   Challenge: A challenge has a begin date and an end date, and has a
   title, and a number of participants.
 
-- A user should also be able to join a challenge as a participant
+- A VISITOR should also be able to join a challenge as a participant
   I should be able to join multiple challenges at the same time
   (has_many :through).
-
-- As a bible challenge creator, I want to be able to create a challenge
-  so that others can sign up for challenge I create.
-
+  Visitor may sign up for a challenge just using his e-mail address. We
+should generate a password for them and mail it to them (?)
 - As a bible challenge participant, I want to be able to sign up for a
   challenge by submitting my email on a signup page that corresponds to
   subdomain.biblechallenges.com
+
+- As a bible challenge creator, I want to be able to create a challenge
+  so that others can sign up for challenge I create.
 
 - As a visitor to the main site, on the home page I want to see
   information about what bible challenges are so that the site makes
@@ -53,6 +54,8 @@ Todo List
   can make a comment on that day's reading so that I can participate in a
   discussion about that chapter with other participants of my challenge
 
+We should provide a persistence_token on the e-mail link, so users
+get signed in automatically from the link.
 
 
 
@@ -67,7 +70,8 @@ Challenge
 
   has_many   :memberships
   has_many   :users, through: :memberships
-  has_many   :challenges
+  has_many   :readings
+  has_many   :chapters, through: :readings
 
   belongs_to :creator
 
@@ -99,6 +103,35 @@ User
   has_many :readings, through: :user_readings
   has_many :chapters, through: :readings
 
+
+#### Controllers
+
+Challenges::MembershipsController
+vs 
+MembershipsController   ?
+
+POST  /challenges/:subdomain/memberships
+create(email) 
+User#join_challenge(email, challenge)
+
+
+ChallengesController
+
+GET /challenges
+index
+Paginate Challenges
+
+GET /challenges/:id
+
+GET /reading/:id
+Authenticated User
+ReadingsController
+show(reading_id)
+
+POST /readings/:id/user_readings
+UserReadingsController
+
+create(reading_id)
 
 Done
 --

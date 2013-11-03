@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131101211141) do
+ActiveRecord::Schema.define(:version => 20131103021722) do
 
   create_table "challenges", :force => true do |t|
     t.integer  "owner_id"
@@ -23,8 +23,39 @@ ActiveRecord::Schema.define(:version => 20131101211141) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "chapter_challenges", :force => true do |t|
+    t.integer  "challenge_id"
+    t.integer  "chapter_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "chapters", :force => true do |t|
+    t.string   "book_name"
+    t.integer  "book_number"
+    t.integer  "number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "challenge_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "readings", :force => true do |t|
+    t.integer  "chapter_id"
+    t.integer  "challenge_id"
+    t.date     "date"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "user_readings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "reading_id"
     t.integer  "challenge_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
