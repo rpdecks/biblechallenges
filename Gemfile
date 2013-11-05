@@ -7,6 +7,7 @@ gem 'haml-rails', '0.4'
 gem 'devise', '3.0'
 gem 'high_voltage', '2.0.0'
 gem 'simple_form', '2.1'
+gem 'activerecord-import', '0.3.1' #used to seed data
 
 
 # Bundle edge Rails instead:

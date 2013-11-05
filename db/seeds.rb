@@ -1,7 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+require 'csv'
+
+# USAGE:
 #
-# Examples:
+#   MassImporter.import Model, "path/to/csv_data"
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+module MassImporter
+  class << self
+    def import(ar_model, csv_file)
+      print "Importing #{ar_model.to_s} from #{csv_file}..."
+      @table = CSV.read(csv_file, headers: true)
+      @columns = @table.headers
+      @values = @table.values_at *@columns
+      ar_model.destroy_all # Prevents duplicate records
+      ar_model.import @columns, @values, validate: false
+      puts "Done!"
+    end
+  end
+end
+
+MassImporter.import Chapter, "db/chapters.csv"
+MassImporter.import Bookfrag, "db/bookfrags.csv"

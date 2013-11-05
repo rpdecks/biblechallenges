@@ -64,6 +64,8 @@ get signed in automatically from the link.
 
 #### Models
 
+Parser  # to parse the chapter description strings
+
 Challenge
   attr_accessible :subdomain, :begin_date, :end_date, :title, as:
 :creator
