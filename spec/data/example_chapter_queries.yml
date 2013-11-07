@@ -1,0 +1,119 @@
+---
+- fragment: "1ch 5"
+  book_number: 13
+  chapters: [ 5 ]
+- fragment: "1Ch 5"
+  book_number: 13
+  chapters: [ 5 ]
+- fragment: "2 Tim. 3"
+  book_number: 55
+  chapters: [ 3 ]
+- fragment: "Mat. 5"
+  book_number: 40
+  chapters: [ 5 ]
+- fragment: "Mat 5"
+  book_number: 40
+  chapters: [ 5 ]
+- fragment: "Mat 4"
+  book_number: 40
+  chapters: [ 4 ]
+- fragment: "Matt 4"
+  book_number: 40
+  chapters: [ 4 ]
+- fragment: "Matt. 4"
+  book_number: 40
+  chapters: [ 4 ]
+- fragment: "matt. 4"
+  book_number: 40
+  chapters: [ 4 ]
+- fragment: "John 4"
+  book_number: 43
+  chapters: [ 4 ]
+- fragment: "3 John 1"
+  book_number: 64
+  chapters: [ 1 ]
+- fragment: "mark 10"
+  book_number: 41
+  chapters: [ 10 ]
+- fragment: "2 Tim. 1-3"
+  book_number: 55
+  chapters:
+    - 1
+    - 2
+    - 3
+- fragment: "Matt 1 - Matt 5"
+  book_number: 40
+  chapters:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+- fragment: "Matt 1 - 5"
+  book_number: 40
+  chapters:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+- fragment: "Matt 1-5"
+  book_number: 40
+  chapters:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+- fragment: "Matt 1..Matt 5"
+  book_number: 40
+  chapters:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+- fragment: "Matt 1..5"
+  book_number: 40
+  chapters:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+- fragment: "Matt 3..5"
+  book_number: 40
+  chapters:
+    - 3
+    - 4
+    - 5
+- fragment: "Col 1"
+  book_number: 51
+  chapters: [ 1 ]
+- fragment: "C 1"
+  book_number: 51
+  chapters: [ 1 ]
+- fragment: "Crabs 1"
+  book_number: 51
+  chapters: [ 1 ]
+- fragment: "Ez1"
+  book_number: 26
+  chapters: [ 1 ]
+- fragment: "Ezr 1"
+  book_number: 15
+  chapters: [ 1 ]
+- fragment: "Ezra 1"
+  book_number: 15
+  chapters: [ 1 ]
+- fragment: "Ezronious 2"
+  book_number: 15
+  chapters: [ 2 ]
+- fragment: "Ezlamabad 5"
+  book_number: 26
+  chapters: [ 5 ]
+- fragment: "Ezrodeo 5..9"
+  book_number: 15
+  chapters: [ 5, 6, 7, 8, 9 ]
+- fragment: "J1"
+  book_number: # Nothing
+  chapters: [] # Nothing

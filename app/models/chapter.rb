@@ -4,4 +4,43 @@ class Chapter < ActiveRecord::Base
   has_many :challenges, through: :chapter_challenges
 
   has_many :bookfrags, primary_key: :book_number, foreign_key: :book_number
+
+
+# class methods
+  def Chapter.search(query)
+    fragment, chapters = parse_query(query)
+
+    # First search by fragment
+    bookfrag = Bookfrag.where("upper(:query) like upper(fragment) || '%'",
+                              query: fragment).first
+    matches = where(book_id: bookfrag.try(:book_id))
+    .where(chapter_number: chapters)
+
+    # If nothing found, then search by Chapter name
+    unless matches.length > 0 # Using .any? here causes an extra query
+      matches = where("upper(name) like upper(:query)", query: "#{fragment}")
+      .where(chapter_number: chapters)
+    end
+
+    matches
+  end
+
+  def Chapter.parse_query(query)
+    regex = /^\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/
+    match = query.match(regex)
+    if match
+      if match[3]
+        chapters = (match[2]..match[3]).to_a
+      else
+        chapters = [ match[2] ]
+      end
+      [ match[1].gsub(/ /, ""), chapters ]
+    else
+      [nil, nil]
+    end
+  end
+
+
+
+
 end
