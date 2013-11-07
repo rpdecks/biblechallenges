@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105224940) do
+ActiveRecord::Schema.define(:version => 20131107011514) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
-    t.integer  "book_number"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "book_id"
   end
 
   create_table "challenges", :force => true do |t|
@@ -39,11 +39,11 @@ ActiveRecord::Schema.define(:version => 20131105224940) do
 
   create_table "chapters", :force => true do |t|
     t.string   "book_name"
-    t.integer  "book_number"
     t.integer  "chapter_number"
     t.integer  "chapter_index"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "book_id"
   end
 
   create_table "memberships", :force => true do |t|
