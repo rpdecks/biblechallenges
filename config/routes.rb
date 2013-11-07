@@ -6,7 +6,7 @@ Biblechallenge::Application.routes.draw do
   end
 
   # Memberships
-  resources :memberships, only: [:index]
+  resources :memberships, only: [:index, :show]
 
   # Challenges
   resources :challenges, only: [:index]
