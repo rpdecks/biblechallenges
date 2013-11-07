@@ -5,6 +5,9 @@ Biblechallenge::Application.routes.draw do
     resources :challenges, only: [:new, :create, :index]
   end
 
+  # Memberships
+  resources :memberships, only: [:index]
+
   # Challenges
   resources :challenges, only: [:index]
   get '/' => 'challenges#show', :constraints => { :subdomain => /.+/ }  # from railscasts 221
