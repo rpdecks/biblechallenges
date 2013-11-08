@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131107011514) do
+ActiveRecord::Schema.define(:version => 20131108161749) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -86,5 +86,16 @@ ActiveRecord::Schema.define(:version => 20131107011514) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "verses", :force => true do |t|
+    t.string   "version"
+    t.string   "book_name"
+    t.integer  "chapter_number"
+    t.integer  "verse_number"
+    t.text     "versetext"
+    t.integer  "book_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
 end
