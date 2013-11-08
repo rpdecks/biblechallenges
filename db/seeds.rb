@@ -6,12 +6,12 @@ require 'csv'
 #
 module MassImporter
   class << self
-    def import(ar_model, csv_file)
+    def import(ar_model, csv_file, options = {})
       print "Importing #{ar_model.to_s} from #{csv_file}..."
       @table = CSV.read(csv_file, headers: true)
       @columns = @table.headers
       @values = @table.values_at *@columns
-      ar_model.destroy_all # Prevents duplicate records
+      ar_model.destroy_all unless options[:append] # Prevents duplicate records by default
       ar_model.import @columns, @values, validate: false
       puts "Done!"
     end
