@@ -109,6 +109,10 @@ User
 Challenges::MembershipsController
 vs 
 MembershipsController   ?
+-- new action should display a form with an email address
+-- create should create a membership for that user unless one exists
+
+
 
 POST  /challenges/:subdomain/memberships
 create(email) 

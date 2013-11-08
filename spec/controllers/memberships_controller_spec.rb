@@ -6,6 +6,17 @@ describe MembershipsController, "Routing" do
 
 end
 
+describe MembershipsController, "Actions as a visitor" do
+  context "on GET to #new" do
+    it "should render the new membership template" do
+      #actually based on the subdomain it should render that specific new form
+      get :new 
+      should render_template("memberships/new")
+    end
+  end
+end
+
+
 describe MembershipsController, "Actions as a logged in user" do
   let(:current_user) { FactoryGirl.create(:user) }
 
@@ -19,7 +30,7 @@ describe MembershipsController, "Actions as a logged in user" do
       should render_template("memberships/index")
     end
 
-    it "assigns the current user's member5yyships" do
+    it "assigns the current user's memberships" do
       FactoryGirl.create(:membership, user: current_user)
       get :index
       assigns(:memberships).should_not be_nil
