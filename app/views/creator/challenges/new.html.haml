@@ -1,6 +1,11 @@
-= simple_form_for [:creator, @challenge] do |f|
-  = f.input :name
-  = f.input :subdomain
-  = f.input :begindate, as: :text
-  = f.input :enddate, as: :text
-  = f.submit 'Create Challenge'
+.container
+  = form_for [:creator, @challenge] do |f|
+    = f.label "Challenge Name"
+    = f.text_field :name
+    = f.label "Subdomain"
+    = f.text_field :subdomain
+    = f.label "Begin Date"
+    = f.text_field :begindate
+    = f.label "End Date"
+    = f.text_field :enddate
+    = f.submit
