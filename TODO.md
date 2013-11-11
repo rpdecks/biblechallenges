@@ -144,3 +144,8 @@ Done
   Guests (not logged in users) should not be able to create challenges.
   Challenges have owners (single owner per challenge).
 
+
+
+# call in the experts!  for....
+
+

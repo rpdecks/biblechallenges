@@ -6,3 +6,9 @@ end
 
 describe Verse, "Validations" do
 end
+
+describe Verse, "Class methods" do
+
+end
+
+

@@ -1,11 +1,34 @@
 .container
   = form_for [:creator, @challenge] do |f|
-    = f.label "Challenge Name"
-    = f.text_field :name
-    = f.label "Subdomain"
-    = f.text_field :subdomain
-    = f.label "Begin Date"
-    = f.text_field :begindate
-    = f.label "End Date"
-    = f.text_field :enddate
-    = f.submit
+    %legend Create Challenge
+    .control-group
+      = f.label :name, "Challenge Name", class: "control-label"
+      .controls
+        = f.text_field :name, class: "input-xlarge"
+        %p.help-block Yeah yeah yeah bro
+
+    .control-group
+      = f.label :subdomain, "Subdomain", class: "control-label"
+      .controls
+        = f.text_field :subdomain, class: "input-xlarge"
+        %p.help-block Yeah yeah yeah bro
+
+    .control-group
+      = f.label :begindate, "Begin Date", class: "control-label"
+      .controls
+        = f.text_field :begindate, class: "input-xlarge", data: {behaviour: 'datepicker'}
+        %p.help-block Yeah yeah yeah bro
+
+    .control-group
+      = f.label :enddate, "End Date", class: "control-label"
+      .controls
+        = f.text_field :enddate, class: "input-xlarge", data: {behaviour: 'datepicker'}
+        %p.help-block Yeah yeah yeah bro
+
+    .control-group
+      = f.submit
+
+  :javascript
+    $(document).ready(function(){
+      $('[data-behaviour~=datepicker]').datepicker();
+    });

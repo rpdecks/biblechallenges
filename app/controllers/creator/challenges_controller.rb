@@ -1,5 +1,5 @@
 class Creator::ChallengesController < ApplicationController
-  before_filter :authenticate_user!, except: [:new]
+  before_filter :authenticate_user!  #, except: [:new, :create]
 
   def index
 
