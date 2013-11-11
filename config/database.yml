@@ -3,6 +3,10 @@ defaults: &defaults
   template: template0
   host: localhost
 
+production:
+  <<: *defaults
+  database: bc_production
+
 development:
   <<: *defaults
   database: bc_development
