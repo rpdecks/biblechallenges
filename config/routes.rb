@@ -6,7 +6,7 @@ Biblechallenge::Application.routes.draw do
   end
   resources :memberships, only: [:index, :show]
   resources :challenges, only: [:index]
-  constraints(Subdomaini) do
+  constraints(Subdomain) do
     match '/' => 'challenges#show'
   end
 
