@@ -4,13 +4,11 @@ Biblechallenge::Application.routes.draw do
   namespace :creator do
     resources :challenges, only: [:new, :create, :index]
   end
-
-  # Memberships
   resources :memberships, only: [:index, :show]
-
-  # Challenges
   resources :challenges, only: [:index]
-  get '/' => 'challenges#show', :constraints => { :subdomain => /.+/ }  # from railscasts 221
+  constraints(Subdomaini) do
+    match '/' => 'challenges#show'
+  end
 
   root :to => 'high_voltage/pages#show', id: 'home'
 
