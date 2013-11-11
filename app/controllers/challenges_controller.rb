@@ -9,7 +9,7 @@ class ChallengesController < ApplicationController
   end
 
   def show
-    @challenge = Challenge.find_by_subdomain(request.subdomain)
-    @readings  = @challenge.readings
+#    @challenge = Challenge.find_by_subdomain(request.subdomain)
+#    @readings  = @challenge.readings
   end
 end
