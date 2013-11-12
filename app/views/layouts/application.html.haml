@@ -17,6 +17,5 @@
             - else
               = link_to('Login', new_user_session_path)
         %h3.text-muted BibleChallenges.com
-      %p.notice= notice
-      %p.alert= alert
+      =render partial: "shared/flash_messages", flash: flash
       = yield

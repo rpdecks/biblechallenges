@@ -235,6 +235,7 @@ DEPENDENCIES
   hpricot
   jquery-rails
   pg (= 0.17.0)
+  pry
   rails (= 3.2.13)
   rails_12factor
   rspec-rails (~> 2.14.0)

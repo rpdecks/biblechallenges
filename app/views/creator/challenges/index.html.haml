@@ -1,0 +1,16 @@
+%h3 Created Challenges
+%table.table
+  %tr
+    %th Name
+    %th URL
+    %th Begin Date
+    %th End Date
+    %th 
+  - @challenges.each do |challenge|
+    %tr
+      %td= challenge.name
+      %td= "#{challenge.subdomain}.#{request.host}"
+      %td= challenge.begindate
+      %td= challenge.enddate
+      %td= link_to 'Show', creator_challenge_url(challenge)
+%br/

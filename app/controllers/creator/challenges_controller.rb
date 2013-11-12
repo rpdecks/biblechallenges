@@ -2,9 +2,8 @@ class Creator::ChallengesController < ApplicationController
   before_filter :authenticate_user!  #, except: [:new, :create]
 
   def index
-
+    @challenges = current_user.createdchallenges
   end
-
 
   def new
     @challenge = Challenge.new

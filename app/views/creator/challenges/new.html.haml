@@ -1,34 +1,40 @@
 .container
   = form_for [:creator, @challenge] do |f|
     %legend Create Challenge
+    - if @challenge.errors.any?
+      - flash[:error] = @challenge.errors.full_messages.to_sentence
     .control-group
       = f.label :name, "Challenge Name", class: "control-label"
       .controls
         = f.text_field :name, class: "input-xlarge"
-        %p.help-block Yeah yeah yeah bro
+        %p.help-block The name of your challenge, for example "The Book of Acts in July"
 
     .control-group
       = f.label :subdomain, "Subdomain", class: "control-label"
       .controls
         = f.text_field :subdomain, class: "input-xlarge"
-        %p.help-block Yeah yeah yeah bro
+        %p.help-block 
+          The subdomain is what we will use to create a unique URL for your bible challenge. For example if you choose "julyacts" as your subdomain, 
+          the URL for your challenge will be http://julyacts.biblechallenges.com
 
     .control-group
       = f.label :begindate, "Begin Date", class: "control-label"
       .controls
         = f.text_field :begindate, class: "input-xlarge", data: {behaviour: 'datepicker'}
-        %p.help-block Yeah yeah yeah bro
+        %p.help-block The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out.
 
     .control-group
       = f.label :enddate, "End Date", class: "control-label"
       .controls
         = f.text_field :enddate, class: "input-xlarge", data: {behaviour: 'datepicker'}
-        %p.help-block Yeah yeah yeah bro
+        %p.help-block The end date is the final day of your bible challenge
 
     .control-group
       = f.submit
 
   :javascript
     $(document).ready(function(){
-      $('[data-behaviour~=datepicker]').datepicker();
+      $('[data-behaviour~=datepicker]').datepicker({
+        format:"yyyy-mm-dd"
+      })
     });

@@ -35,6 +35,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'pry'
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
