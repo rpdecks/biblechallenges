@@ -14,4 +14,10 @@ module ApplicationHelper
         flash_type.to_s
     end
   end
+
+  def subdomain_url subdomain
+    subdomain = (subdomain || "")
+    subdomain += "." unless subdomain.empty?
+    [subdomain, request.domain, request.port_string].join
+  end
 end

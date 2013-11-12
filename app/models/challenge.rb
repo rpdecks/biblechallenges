@@ -1,11 +1,12 @@
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain
+  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapterstoread
 
   validates :begindate, presence: true
   validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
   validates :subdomain, presence: true, uniqueness:  true
   validates :owner_id, presence: true
+  validates :chapterstoread, presence: true
 
   validate :validate_enddate_before_begindate
 

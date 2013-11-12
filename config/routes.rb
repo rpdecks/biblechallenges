@@ -2,8 +2,11 @@ Biblechallenge::Application.routes.draw do
   devise_for :users
 
   namespace :creator do
-    resources :challenges, only: [:new, :show, :create, :index]
+    resources :challenges, only: [:new, :show, :create, :index, :edit, :update] do
+      get :activate, :on => :member
+    end
   end
+
   resources :memberships, only: [:index, :show]
   resources :challenges, only: [:index]
   constraints(Subdomain) do

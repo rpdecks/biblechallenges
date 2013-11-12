@@ -5,6 +5,7 @@
     %th URL
     %th Begin Date
     %th End Date
+    %th Active?
     %th 
   - @challenges.each do |challenge|
     %tr
@@ -12,5 +13,6 @@
       %td= "#{challenge.subdomain}.#{request.host}"
       %td= challenge.begindate
       %td= challenge.enddate
+      %td= challenge.active ? "Yes" : "No"  
       %td= link_to 'Show', creator_challenge_url(challenge)
 %br/

@@ -5,6 +5,30 @@ class Creator::ChallengesController < ApplicationController
     @challenges = current_user.createdchallenges
   end
 
+  def show
+    @challenge = current_user.createdchallenges.find(params[:id])
+  end
+
+  def update
+    @challenge = current_user.createdchallenges.find(params[:id])
+    if @challenge.update_attributes(params[:challenge])
+      redirect_to creator_challenge_path(@challenge)
+    else
+      render :action => 'new'
+    end
+  end
+
+  def activate
+    @challenge = current_user.createdchallenges.find(params[:id])
+    @challenge.active = true
+    @challenge.save
+    redirect_to creator_challenges_path
+  end
+
+  def edit
+    @challenge = current_user.createdchallenges.find(params[:id])
+  end
+
   def new
     @challenge = Challenge.new
   end
@@ -13,7 +37,7 @@ class Creator::ChallengesController < ApplicationController
     @challenge = current_user.createdchallenges.build(params[:challenge])
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
-      redirect_to creator_challenges_url
+      redirect_to creator_challenge_path(@challenge)
     else
       render :action => 'new'
     end
