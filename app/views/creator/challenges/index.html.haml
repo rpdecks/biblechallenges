@@ -10,7 +10,7 @@
   - @challenges.each do |challenge|
     %tr
       %td= challenge.name
-      %td= "#{challenge.subdomain}.#{request.host}"
+      %td= subdomain_url challenge.subdomain
       %td= challenge.begindate
       %td= challenge.enddate
       %td= challenge.active ? "Yes" : "No"  
