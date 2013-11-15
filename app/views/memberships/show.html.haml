@@ -1,2 +1,22 @@
-;lakj;lksdja;f
-= @membership.email
+%h3
+  Good for you!  Welcome to the #{@membership.challenge.name} Bible Challenge.
+  
+
+%table.table.table-striped.table-condensed
+  %tr
+    %td Begin Date:
+    %td=@membership.challenge.begindate
+  %tr
+    %td End Date:
+    %td=@membership.challenge.enddate
+  %tr
+    %td Chapters to Read:
+    %td=@membership.challenge.chapterstoread
+
+%p
+  You will receive your first email containing the chapter(s) for that
+  day on
+  = @membership.challenge.begindate
+
+%p
+  Below is the reading schedule for this challenge

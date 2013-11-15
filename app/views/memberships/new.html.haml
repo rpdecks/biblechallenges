@@ -24,6 +24,7 @@
 = form_for @membership do |f|
   - if @membership.errors.any?
     - flash[:error] = @membership.errors.full_messages.to_sentence
+  = f.hidden_field :challenge_id, value: @challenge.id
   .control-group
     = f.label :email, "Email", class: "control-label"
     .controls

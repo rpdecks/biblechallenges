@@ -7,7 +7,7 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :memberships, only: [:index, :show, :new, :create]
+  resources :memberships, only: [:update, :edit, :index, :show, :new, :create] 
 
   resources :challenges, only: [:index]
   constraints(Subdomain) do
