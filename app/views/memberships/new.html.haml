@@ -6,10 +6,12 @@
   Sign up to join the #{@challenge.name} Bible Reading Challenge.  Each
   day's reading portion will be sent to your inbox, and you can click 
   a link in the email to easily update your stats online.
+%p 
+%br 
 
 %h4 Challenge Details
 
-%table.table
+%table.table.table-striped.table-condensed
   %tr
     %td Begin Date:
     %td= @challenge.begindate
@@ -29,6 +31,6 @@
     = f.label :email, "Email", class: "control-label"
     .controls
       = f.text_field :email, class: "input-xlarge"
-      %p.help-block Enter your email to sign up for the ....challenge
+      %p.help-block Enter your email to sign up!
   .control-group
     = f.submit "Join the Challenge"

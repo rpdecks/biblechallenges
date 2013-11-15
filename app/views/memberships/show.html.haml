@@ -1,5 +1,16 @@
 %h3
-  Good for you!  Welcome to the #{@membership.challenge.name} Bible Challenge.
+  Congratulations! You've successfully signed up for the   
+  =@membership.challenge.name 
+  Bible Challenge!
+
+%p
+  The 
+  =@membership.challenge.name 
+  Bible Challenge starts on
+  ="#{@membership.challenge.begindate}."
+%p
+  You'll receive the daily chapters by email starting on that day.
+
   
 
 %table.table.table-striped.table-condensed
@@ -13,10 +24,6 @@
     %td Chapters to Read:
     %td=@membership.challenge.chapterstoread
 
-%p
-  You will receive your first email containing the chapter(s) for that
-  day on
-  = @membership.challenge.begindate
 
 %p
-  Below is the reading schedule for this challenge
+  Below is the reading schedule for this challenge:

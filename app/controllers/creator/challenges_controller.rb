@@ -21,8 +21,12 @@ class Creator::ChallengesController < ApplicationController
   def activate
     @challenge = current_user.createdchallenges.find(params[:id])
     @challenge.active = true
-    @challenge.save
-    redirect_to creator_challenges_path
+    if @challenge.save
+      flash[:notice] = "You have successfully activated your Bible Challenge"
+      redirect_to creator_challenges_path
+    else
+      render :action => 'show'
+    end
   end
 
   def edit
