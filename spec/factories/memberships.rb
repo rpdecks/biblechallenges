@@ -2,6 +2,10 @@
 
 FactoryGirl.define do
   factory :membership do
+    username "joe"
+    firstname "Joe"
+    lastname "Smith"
+    email "joe@example.com"
     user_id 1
     challenge_id 1
   end
