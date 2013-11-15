@@ -5,6 +5,7 @@
 %p
   If you need to make more adjustments, click the edit button to edit your challenge.
   Once completed, your challenge will be available at 
+  = link_to subdomain_url(@challenge.subdomain), "http://" + subdomain_url(@challenge.subdomain)
 
 %table.table
   %tr

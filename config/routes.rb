@@ -7,10 +7,11 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :memberships, only: [:index, :show]
+  resources :memberships, only: [:index, :show, :new, :create]
+
   resources :challenges, only: [:index]
   constraints(Subdomain) do
-    match '/' => 'challenges#show'
+    match '/' => 'memberships#new'
   end
 
   root :to => 'high_voltage/pages#show', id: 'home'

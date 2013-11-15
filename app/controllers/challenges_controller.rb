@@ -1,8 +1,10 @@
 class ChallengesController < ApplicationController
 
-  def index
-    @challenges = Challenge.all #TODO: Paginate
+  before_filter :authenticate_user!  #, except: [:new, :create]
 
+  def index
+    @createdchallenges = current_user.createdchallenges
+    @challenges = current_user.challenges
     respond_to do |format|
       format.html
     end

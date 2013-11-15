@@ -1,0 +1,38 @@
+%h4 Joined Challenges
+%table.table
+  %tr
+    %th Name
+    %th URL
+    %th Begin Date
+    %th End Date
+    %th Active?
+    %th 
+  - @challenges.each do |challenge|
+    %tr
+      %td= challenge.name
+      %td= subdomain_url challenge.subdomain
+      %td= challenge.begindate
+      %td= challenge.enddate
+      %td= challenge.active ? "Yes" : "No"  
+      %td= link_to 'Details', challenge_url(challenge)
+%br/
+
+- if @createdchallenges.count > 0
+  %h4 Created Challenges
+  %table.table.table-striped.table-condensed
+    %tr
+      %th Name
+      %th URL
+      %th Begin Date
+      %th End Date
+      %th Active?
+      %th 
+    - @createdchallenges.each do |challenge|
+      %tr
+        %td= challenge.name
+        %td= link_to subdomain_url(challenge.subdomain), "http://" + subdomain_url(challenge.subdomain)
+        %td= challenge.begindate
+        %td= challenge.enddate
+        %td= challenge.active ? "Yes" : "No"  
+        %td= link_to 'Details', challenges_url(challenge)
+  %br/
