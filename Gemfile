@@ -45,6 +45,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'guard-rspec', require: false
   gem 'capybara', '2.1.0'
+  gem 'better_errors'
+  gem 'quiet_assets'
+  gem 'annotate'  
 end
 
 group :test do

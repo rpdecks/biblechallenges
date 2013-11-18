@@ -31,9 +31,14 @@ GEM
       i18n (= 0.6.1)
       multi_json (~> 1.0)
     addressable (2.3.5)
+    annotate (2.5.0)
+      rake
     ansi (1.4.3)
     arel (3.0.2)
     bcrypt-ruby (3.1.2)
+    better_errors (1.0.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     bootstrap-datepicker-rails (1.1.1.9)
       railties (>= 3.0)
     builder (3.0.4)
@@ -125,6 +130,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -222,6 +229,8 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import (= 0.3.1)
+  annotate
+  better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
   capybara (= 2.1.0)
   coffee-rails (~> 3.2.1)
@@ -236,6 +245,7 @@ DEPENDENCIES
   jquery-rails
   pg (= 0.17.0)
   pry
+  quiet_assets
   rails (= 3.2.13)
   rails_12factor
   rspec-rails (~> 2.14.0)
