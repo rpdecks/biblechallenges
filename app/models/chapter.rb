@@ -18,7 +18,7 @@ class Chapter < ActiveRecord::Base
 
     # If nothing found, then search by Chapter name
     unless matches.length > 0 # Using .any? here causes an extra query
-      matches = where("upper(name) like upper(:query)", query: "#{fragment}")
+      matches = where("upper(book_name) like upper(:query)", query: "#{fragment}")
       .where(chapter_number: chapters)
     end
 

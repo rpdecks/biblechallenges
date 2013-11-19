@@ -11,22 +11,21 @@ end
 
 describe Chapter, "Class methods" do
 
-  def Chapter.search(query)
-    fragment, chapters = parse_query(query)
+  describe "+search" do
+    test_cases_file = File.join(Rails.root,
+                                "spec/data/example_chapter_queries.yml")
+    @test_cases = YAML.load_file(test_cases_file)
+    @test_cases.each do |tc|
+      fragment, book_id, chapters = tc["fragment"], tc["book_number"], tc["chapters"]
 
-    # First search by fragment
-    bookfrag = Bookfrag.where("upper(:query) like upper(fragment) || '%'",
-                              query: fragment).first
-    matches = where(book_id: bookfrag.try(:book_id))
-    .where(chapter_number: chapters)
-
-    # If nothing found, then search by Chapter name
-    unless matches.length > 0 # Using .any? here causes an extra query
-      matches = where("upper(name) like upper(:query)", query: "#{fragment}")
-      .where(chapter_number: chapters)
+      it "should find book_id: #{book_id} and chapters: #{chapters.inspect} for #{fragment.inspect}" do
+        @expected_chapters = Chapter.where(book_id: book_id, chapter_number: chapters)
+        result = Chapter.search(fragment)
+        result.should include(*@expected_chapters)
+        
+        result.length.should == chapters.length
+      end
     end
-
-    matches
   end
 
   describe "+parse_query" do
