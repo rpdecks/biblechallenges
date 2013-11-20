@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: chapters
+#
+#  id             :integer          not null, primary key
+#  book_name      :string(255)
+#  chapter_number :integer
+#  chapter_index  :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  book_id        :integer
+#
+
 class Chapter < ActiveRecord::Base
   # attr_accessible :title, :body
   has_many :chapter_challenges

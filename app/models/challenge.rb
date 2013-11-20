@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: challenges
+#
+#  id             :integer          not null, primary key
+#  owner_id       :integer
+#  subdomain      :string(255)
+#  name           :string(255)
+#  begindate      :date
+#  enddate        :date
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  chapterstoread :string(255)
+#  active         :boolean          default(FALSE)
+#
+
 class Challenge < ActiveRecord::Base
   attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapterstoread
 
@@ -15,6 +31,8 @@ class Challenge < ActiveRecord::Base
   has_many :readings
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
+
+  private
 
   def validate_enddate_before_begindate
     if enddate && begindate
