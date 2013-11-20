@@ -54,6 +54,7 @@ group :test do
   # pretty print test output
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
+  gem 'faker', '~> 1.2.0'
 end
 
 # To use ActiveModel has_secure_password
