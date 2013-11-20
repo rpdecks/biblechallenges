@@ -18,9 +18,8 @@ class Chapter < ActiveRecord::Base
 
   has_many :bookfrags, primary_key: :book_number, foreign_key: :book_number
 
-
-# class methods
-  def Chapter.search(query)
+  # Class methods
+  def self.search(query)
     fragment, chapters = parse_query(query)
 
     # First search by fragment
@@ -38,7 +37,7 @@ class Chapter < ActiveRecord::Base
     matches
   end
 
-  def Chapter.parse_query(query)
+  def self.parse_query(query)
     regex = /^\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/
     match = query.match(regex)
     if match
@@ -52,8 +51,5 @@ class Chapter < ActiveRecord::Base
       [nil, nil]
     end
   end
-
-
-
 
 end

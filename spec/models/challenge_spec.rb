@@ -5,7 +5,7 @@ describe Challenge do
   describe "Validations" do
 
     it "has a valid factory" do
-      create(:challenge).should be_valid
+      expect(create(:challenge)).to be_valid
     end
 
     it { should validate_presence_of(:begindate) }

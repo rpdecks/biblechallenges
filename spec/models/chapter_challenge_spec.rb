@@ -5,7 +5,7 @@ describe ChapterChallenge do
   describe "Validations" do
 
     it "has a valid factory" do
-      create(:chapter_challenge).should be_valid
+      expect(create(:chapter_challenge)).to be_valid
     end
 
     it { should validate_presence_of(:chapter_id) }
