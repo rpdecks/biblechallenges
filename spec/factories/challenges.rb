@@ -1,10 +1,12 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+require 'faker'
 
 FactoryGirl.define do
   factory :challenge do
-    subdomain "mystring"
-    name "myname"
-    begindate "2013-10-21"
-    enddate "2013-11-21"
+    subdomain     {Faker::Internet.domain_name}
+    name          {Faker::Name.name}
+    begindate     {Time.now}
+    enddate       {Time.now + 1.day}
+    chapterstoread "Matthew 1 to Matthew 5"
+    association :owner, factory: :user
   end
 end
