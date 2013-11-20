@@ -1,53 +1,69 @@
 require 'spec_helper'
 
-describe Membership, "Relations" do
-  it { should belong_to(:user) }
-  it { should belong_to(:challenge) }
-end
+describe Membership do
 
-describe Membership, "Validations" do
+  describe "Validations" do
 
+    it "has a valid factory" do
+      expect(create(:membership)).to be_valid
+    end
 
-  it "is invalid without an email" do
-    membership = FactoryGirl.build(:membership, email: "")
-    expect(membership).to have(1).errors_on(:email)
+    it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:challenge_id) }
+
+    it "is invalid without an email" do
+      membership = build(:membership, email: "")
+      expect(membership).to have(1).errors_on(:email)
+    end
+
+    it "is invalid without a challenge_id" do
+      membership = build(:membership, challenge_id: nil)
+      expect(membership).to have(1).errors_on(:challenge_id)
+    end
+
+    context 'when updating' do
+      
+      it "is invalid without a user name" do
+        membership = create(:membership, username: "")
+        expect(membership).to have(1).errors_on(:username)
+      end
+
+      it "is invalid without a first name" do
+        membership = create(:membership, firstname: "")
+        expect(membership).to have(1).errors_on(:firstname)
+      end
+
+      it "is invalid without a last name" do
+        membership = create(:membership, lastname: "")
+        expect(membership).to have(1).errors_on(:lastname)
+      end
+
+    end
+
+    context 'when creating' do
+
+      it "is valid without a user name" do
+        membership = build(:membership, username: "")
+        expect(membership).to have(0).errors_on(:username)
+      end
+
+      it "is valid without a first name" do
+        membership = build(:membership, firstname: "")
+        expect(membership).to have(0).errors_on(:firstname)
+      end
+
+      it "is valid without a last name" do
+        membership = build(:membership, lastname: "")
+        expect(membership).to have(0).errors_on(:lastname)
+      end
+
+    end
+
   end
 
-  it "is invalid without a challenge_id" do
-    membership = FactoryGirl.build(:membership, challenge_id: nil)
-    expect(membership).to have(1).errors_on(:challenge_id)
+  describe "Relations" do
+    it { should belong_to(:user) }
+    it { should belong_to(:challenge) }
   end
-
-  it "is valid without a user name on create" do
-    membership = FactoryGirl.build(:membership, username: "")
-    expect(membership).to have(0).errors_on(:username)
-  end
-
-  it "is invalid without a user name on update" do
-    membership = FactoryGirl.create(:membership, username: "")
-    expect(membership).to have(1).errors_on(:username)
-  end
-
-  it "is valid without a first name on create" do
-    membership = FactoryGirl.build(:membership, firstname: "")
-    expect(membership).to have(0).errors_on(:firstname)
-  end
-
-  it "is invalid without a first name on update" do
-    membership = FactoryGirl.create(:membership, firstname: "")
-    expect(membership).to have(1).errors_on(:firstname)
-  end
-
-  it "is valid without a last name on create" do
-    membership = FactoryGirl.build(:membership, lastname: "")
-    expect(membership).to have(0).errors_on(:lastname)
-  end
-
-  it "is invalid without a last name on update" do
-    membership = FactoryGirl.create(:membership, lastname: "")
-    expect(membership).to have(1).errors_on(:lastname)
-  end
-
-
 
 end

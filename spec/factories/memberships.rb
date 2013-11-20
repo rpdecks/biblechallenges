@@ -1,12 +1,12 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+require 'faker'
 
 FactoryGirl.define do
   factory :membership do
-    username "joe"
-    firstname "Joe"
-    lastname "Smith"
-    email "joe@example.com"
-    user_id 1
-    challenge_id 1
+    username    {Faker::Internet.user_name}
+    firstname   {Faker::Name.first_name}
+    lastname    {Faker::Name.last_name}
+    email       {Faker::Internet.email}
+    user
+    challenge
   end
 end

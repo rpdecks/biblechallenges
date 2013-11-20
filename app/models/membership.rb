@@ -29,8 +29,4 @@ class Membership < ActiveRecord::Base
 #  validates_format_of :email, :with => /@/, message: "doesn't really look like a real email address"
 #  validates_uniqueness_of :username, scope: :challenge_id, on: :update
 
-
-
-
-
 end
