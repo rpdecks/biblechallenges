@@ -58,6 +58,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    database_cleaner (1.2.0)
     devise (3.0.0)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -200,6 +201,10 @@ GEM
       simplecov-html (~> 0.5.3)
     simplecov-html (0.5.3)
     slop (3.4.6)
+    spork (1.0.0rc4)
+    spork-rails (4.0.0)
+      rails (>= 3.0.0, < 5)
+      spork (>= 1.0rc0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -236,6 +241,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails (= 1.1.1.9)
   capybara (= 2.1.0)
   coffee-rails (~> 3.2.1)
+  database_cleaner (~> 1.2.0)
   devise (= 3.0)
   factory_girl_rails (= 4.1.0)
   faker (~> 1.2.0)
@@ -257,6 +263,7 @@ DEPENDENCIES
   shoulda-matchers (= 2.4.0)
   simple_form (= 2.1)
   simplecov (= 0.5.4)
+  spork-rails (~> 4.0.0)
   sqlite3
   therubyracer
   turn

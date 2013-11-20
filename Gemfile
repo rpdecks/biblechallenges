@@ -40,7 +40,6 @@ group :development, :test do
   gem 'hpricot'
   gem 'ruby_parser'
   gem 'heroku'
-  gem 'shoulda-matchers', '2.4.0'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'guard-rspec', require: false
@@ -55,6 +54,9 @@ group :test do
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.2.0'
+  gem 'spork-rails', '~> 4.0.0'
+  gem 'database_cleaner', '~> 1.2.0'
+  gem 'shoulda-matchers', '2.4.0'
 end
 
 # To use ActiveModel has_secure_password

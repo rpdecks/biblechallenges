@@ -36,12 +36,13 @@ assigned, as well as belong to a chapter and challenge.
 
 So going back to the example above, after creation it should have five readings:
 
-challenge_id / date / chapter_id
-1 / 2013-12-1 / 40001
-1 / 2013-12-2 / 40002
-1 / 2013-12-3 / 40003
-1 / 2013-12-4 / 40004
-1 / 2013-12-5 / 40005
+|challenge_id | date | chapter_id|
+|-------------|------|-----------|
+1 | 2013-12-1 | 40001
+1 | 2013-12-2 | 40002
+1 | 2013-12-3 | 40003
+1 |  2013-12-4 | 40004
+1 | 2013-12-5 | 40005
 
 The chapter_id of Matthew 1 through Matthew 5 is 40001 through 40005
 
@@ -107,5 +108,4 @@ five versions in the verses table: ASV, ESV, KJV, NASB, and NKJV).
 ****************************************************************************
 
 ****************************************************************************
-
 
