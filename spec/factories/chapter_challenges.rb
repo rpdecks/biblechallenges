@@ -2,5 +2,7 @@
 
 FactoryGirl.define do
   factory :chapter_challenge do
+    chapter
+    challenge
   end
 end

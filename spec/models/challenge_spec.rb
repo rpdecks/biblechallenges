@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Challenge do
 
-  describe "validations" do
+  describe "Validations" do
 
     it "has a valid factory" do
       create(:challenge).should be_valid
