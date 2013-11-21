@@ -1,8 +1,10 @@
 require 'faker'
 
 FactoryGirl.define do
+
+  sequence(:subdomain) { |n| "testsubdomain#{n}" }
   factory :challenge do
-    subdomain     {Faker::Internet.domain_name}
+    subdomain     {generate(:subdomain)}
     name          {Faker::Name.name}
     begindate     {Time.now}
     enddate       {Time.now + 1.day}
