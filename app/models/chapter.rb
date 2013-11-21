@@ -16,7 +16,7 @@ class Chapter < ActiveRecord::Base
   has_many :chapter_challenges
   has_many :challenges, through: :chapter_challenges
 
-  has_many :bookfrags, primary_key: :book_number, foreign_key: :book_number
+  # has_many :bookfrags, primary_key: :book_number, foreign_key: :book_number
 
   # Class methods
   def self.search(query)

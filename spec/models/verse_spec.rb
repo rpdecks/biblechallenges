@@ -1,14 +1,15 @@
 require 'spec_helper'
 
-describe Verse, "Relations" do
-  it { should belong_to(:chapter) }
+describe Verse do
+
+  describe "Validations" do
+    it "has a valid factory" do
+      expect(create(:verse)).to be_valid
+    end
+  end
+
+  describe "Relations" do
+    it { should belong_to(:chapter) }
+  end
+
 end
-
-describe Verse, "Validations" do
-end
-
-describe Verse, "Class methods" do
-
-end
-
-

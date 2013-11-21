@@ -28,7 +28,5 @@ class User < ActiveRecord::Base
 
   has_many :createdchallenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships
-
-
   has_many :challenges, through: :memberships
 end
