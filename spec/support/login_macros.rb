@@ -1,4 +1,4 @@
-module SignInHelpers
+module LoginMacros
 
   def sign_up_and_in
     visit '/users/sign_up'
@@ -8,9 +8,4 @@ module SignInHelpers
     click_button 'Sign up'
   end
 
-end
-
-
-RSpec.configure do |config|
-  config.include SignInHelpers
 end

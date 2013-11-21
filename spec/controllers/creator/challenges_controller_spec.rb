@@ -1,55 +1,96 @@
 require 'spec_helper' 
-describe Creator::ChallengesController, "Routing" do
+require 'creator/challenges_controller'
 
-  it { {get: '/creator/challenges/new'}.should route_to(controller: "creator/challenges", action: "new") }
-  it { {post: '/creator/challenges'}.should route_to(controller: "creator/challenges", action: "create") }
+describe Creator::ChallengesController do
 
-end
-
-describe Creator::ChallengesController, "Actions as a logged in user" do
-  let(:current_user) { FactoryGirl.create(:user) }
-
-  before do
-    sign_in :user, current_user
+  describe 'Routing' do
+    it { expect({get: '/creator/challenges/new'}).to route_to(controller: 'creator/challenges', action: 'new') }
+    it { expect({post: '/creator/challenges'}).to route_to(controller: 'creator/challenges', action: 'create') }
   end
 
-  context "on GET to #new" do
-    it "should display the new challenge form" do
-      get :new
-      response.should be_success
-    end
-  end
+  describe 'User access' do
+    let(:current_user) { create(:user) }
 
-  context "on POST to #create" do
-    it "should create a new challenge" do
-      expect {
-        post :create, challenge: FactoryGirl.attributes_for(:challenge)
-      }.to change(Challenge, :count).by(1)
+    before do
+      sign_in :user, current_user
     end
 
 
-  end
-end
-
-describe Creator::ChallengesController, "Actions as a logged out user" do
-
-  context "on GET to #new" do
-    it "should not display the new challenge form" do
-      get :new
-      response.should_not be_success
+    describe 'GET#new' do
+      it "sets up a new empty challenge" do
+        get :new
+        expect(assigns(:challenge)).to be_a_new(Challenge)
+      end
+      
+      it "renders the :new template" do
+        get :new
+        expect(response).to render_template(:new)
+      end
     end
 
-    it "should redirect to the log in page" do
-      get :new 
-      response.should redirect_to(new_user_session_path)
+    describe "POST #create" do
+      context "with valid attributes" do
+
+        it "creates a new challenge" do
+          expect {
+            post :create, challenge: attributes_for(:challenge)
+          }.to change(Challenge, :count).by(1)
+        end
+
+        it "redirects to the new challenge" do
+          post :create, challenge: attributes_for(:challenge)
+          expect(response).to redirect_to creator_challenge_path Challenge.last
+        end
+
+      end
+
+      context "with invalid attributes" do
+
+        it "does not save the new challenge" do
+          expect{
+            post :create, challenge: attributes_for(:invalid_challenge)
+          }.to_not change(Challenge,:count)
+        end
+
+        it "re-renders the new method" do
+          post :create, challenge: attributes_for(:invalid_challenge)
+          expect(response).to render_template :new
+        end
+        
+      end
     end
+
   end
 
-  context "on POST to #create" do
-    it "should not create a new Challenge" do
-      expect {
-        post :create, challenge: FactoryGirl.attributes_for(:challenge)
-      }.not_to change(Challenge, :count)
+  describe 'Guest access' do
+
+    describe 'GET#new' do
+      it "does not renders the :new template" do
+        get :new
+        expect(response).to_not render_template(:new)
+      end
+
+      it "redirects to the log in page" do
+        get :new 
+        expect(response).to redirect_to new_user_session_path
+      end
+      
     end
+
+    describe "POST #create" do
+      it "does not create a new Challenge" do
+        expect {
+          post :create, challenge: attributes_for(:challenge)
+        }.not_to change(Challenge, :count)
+      end
+
+      it "redirects to the log in page" do
+        post :create, challenge: attributes_for(:challenge)
+        expect(response).to redirect_to new_user_session_path
+      end
+
+    end
+
   end
+
 end

@@ -1,4 +1,4 @@
-module CreatorHelpers
+module CreationMacros
   def create_challenge(options = {})
     visit '/creator/challenges/new'
     #visit new_creator_challenge_path
@@ -9,10 +9,4 @@ module CreatorHelpers
     fill_in 'challenge_chapterstoread', with: options[:chapterstoread]
     click_button 'Create Challenge'
   end
-end
-
-
-
-RSpec.configure do |config|
-  config.include CreatorHelpers
 end

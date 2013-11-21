@@ -12,7 +12,6 @@ Spork.prefork do
   require Rails.root.join("db/seeds.rb")
   require 'rspec/rails'
   require 'rspec/autorun'
-  require 'capybara/rspec'
   require 'capybara/rspec'  
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -64,6 +63,11 @@ Spork.prefork do
     #config.order = "random"
     config.include Devise::TestHelpers, type: :controller
     config.include Capybara::DSL
+
+    # Include custom macros here
+    config.include LoginMacros
+    config.include CreationMacros
+    config.include ControllerMacros, type: :controller
   end
 
 end
