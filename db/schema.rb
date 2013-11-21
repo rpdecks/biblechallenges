@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131114151046) do
+ActiveRecord::Schema.define(:version => 20131121233641) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -51,12 +51,13 @@ ActiveRecord::Schema.define(:version => 20131114151046) do
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "email"
     t.string   "username"
     t.string   "firstname"
     t.string   "lastname"
+    t.string   "bible_version"
   end
 
   create_table "readings", :force => true do |t|
