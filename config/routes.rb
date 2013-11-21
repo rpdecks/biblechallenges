@@ -10,6 +10,7 @@ Biblechallenge::Application.routes.draw do
   resources :memberships, only: [:update, :edit, :index, :show, :new, :create] 
 
   resources :challenges, only: [:index]
+
   constraints(Subdomain) do
     match '/' => 'memberships#new'
   end
