@@ -21,6 +21,10 @@ class Challenge < ActiveRecord::Base
   validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
   validates :subdomain, presence: true, uniqueness:  true
+  validates_format_of   :subdomain,
+                        with: /^[a-z\d]+(-[a-z\d]+)*$/i,
+                        message: 'invalid format'
+
   validates :owner_id, presence: true
   validates :chapterstoread, presence: true
 
