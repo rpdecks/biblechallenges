@@ -9,7 +9,6 @@ describe Verse do
   end
 
   describe "Relations" do
-    it { should belong_to(:chapter) }
   end
 
 end
