@@ -13,7 +13,6 @@ gem 'activerecord-import', '0.3.1' #used to seed data
 gem 'chosen-rails'
 gem 'thin'
 
-
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

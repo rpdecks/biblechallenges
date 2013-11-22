@@ -50,6 +50,7 @@ Biblechallenge::Application.configure do
     :user_name            => 'pdbradley@gmail.com',
     :password             => '***REMOVED***',
     :authentication       => 'plain',
+    :domain               => "biblechallenges.com",
     :enable_starttls_auto => true  }
 
 
