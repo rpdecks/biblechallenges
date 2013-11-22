@@ -13,7 +13,10 @@ describe Challenge do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:owner_id) }
     it { should validate_presence_of(:subdomain) }
-    it { should validate_uniqueness_of(:subdomain) }
+    it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
+      create(:challenge)
+      should validate_uniqueness_of(:subdomain)
+    end
 
     describe 'End date and begin date validation' do
 
