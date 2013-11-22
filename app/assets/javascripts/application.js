@@ -15,3 +15,5 @@
 //= require_tree .
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require chosen-jquery
+//= require public

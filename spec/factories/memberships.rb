@@ -6,6 +6,7 @@ FactoryGirl.define do
     firstname   {Faker::Name.first_name}
     lastname    {Faker::Name.last_name}
     email       {Faker::Internet.email}
+    bible_version { %w(ASV ESV KJV NASB NKJV).sample }
     user
     challenge
   end

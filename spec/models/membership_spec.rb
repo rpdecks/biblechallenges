@@ -10,6 +10,7 @@ describe Membership do
 
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:challenge_id) }
+    it { should validate_presence_of(:bible_version) }
 
     it "is invalid without an email" do
       membership = build(:membership, email: "")

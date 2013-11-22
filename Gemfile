@@ -10,6 +10,7 @@ gem 'high_voltage', '2.0.0'
 gem 'simple_form', '2.1'
 gem 'bootstrap-datepicker-rails', '1.1.1.9'
 gem 'activerecord-import', '0.3.1' #used to seed data
+gem 'chosen-rails'
 
 
 # Bundle edge Rails instead:
