@@ -33,8 +33,9 @@ class Challenge < ActiveRecord::Base
   has_many :memberships
   has_many :members, through: :memberships
   has_many :readings
-
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
+
+  after_create :successful_creation_email
 
   private
 
@@ -45,5 +46,8 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  def successful_creation_email
+    ChallengeMailer.creation_email(self).deliver
+  end
 
 end

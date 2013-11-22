@@ -2,13 +2,22 @@ require "spec_helper"
 
 describe ChallengeMailer do
 
-  let(:owner){create(:user)}
-  let(:challenge){create(:challenge, owner: owner)}
-
   describe '.send_creation_email' do
+
+    let(:owner){create(:user)}
+    let(:challenge){build(:challenge, owner: owner)}
+
     it "sends a successful creation email" do
-      expect{ ChallengeMailer.send_creation_email(challenge).deliver }.to_not raise_error
+      expect{ ChallengeMailer.creation_email(challenge).deliver }.to_not raise_error
     end
+
+    before {challenge.save}
+
+    it "sends the email to the owner's email" do
+      successful_creation_email = ActionMailer::Base.deliveries.last
+      expect(successful_creation_email.to).to match_array [owner.email] 
+    end
+
   end
 
 end
