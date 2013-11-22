@@ -18,16 +18,16 @@ describe Challenge do
     describe 'End date and begin date validation' do
 
       context 'when begin date is greater than end date' do
-        let (:challenge) {build(:challenge, enddate: Time.now, begindate: Time.now + 1.day)}
+        let (:challenge) {build(:challenge, enddate: Date.today, begindate: Date.today + 1.day)}
 
         it "doesn't validate the challenge" do
           expect(challenge.valid?).to be false
-          expect(challenge.errors.messages[:enddate]).to include ("The challenge begin and end dates must be sequential")
+          expect(challenge.errors.messages[:begin_date]).to include ("and end date must be sequential")
         end
       end
 
       context 'when end date is greater then begin date' do
-        let (:challenge) {build(:challenge, enddate: Time.now + 1.day, begindate: Time.now)}
+        let (:challenge) {build(:challenge, enddate: Date.today + 1.day, begindate: Date.today)}
 
         it "validates the challenge" do
           expect(challenge.valid?).to be true
@@ -35,11 +35,11 @@ describe Challenge do
       end
 
       context 'when begin date is earlier than today' do
-        let (:challenge) {build(:challenge, enddate: Time.now + 1.day, begindate: Time.now)}
+        let (:challenge) {build(:challenge, enddate: Date.today + 1.day, begindate: Date.today - 1.day)}
 
         it "doesn't validate the challenge" do
           expect(challenge.valid?).to be false
-          expect(challenge.errors.messages[:enddate]).to include ("The challenge begin date must be equal or greater than today")
+          expect(challenge.errors.messages[:begin_date]).to include ("must be equal or greater than today")
         end
       end
 

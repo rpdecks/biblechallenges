@@ -28,7 +28,7 @@ class Challenge < ActiveRecord::Base
   validates :owner_id, presence: true
   validates :chapterstoread, presence: true
 
-  validate :validate_enddate_before_begindate
+  validate :validate_dates
 
   has_many :memberships
   has_many :members, through: :memberships
@@ -38,9 +38,10 @@ class Challenge < ActiveRecord::Base
 
   private
 
-  def validate_enddate_before_begindate
+  def validate_dates
     if enddate && begindate
-      errors[:enddate] << "The challenge begin and end dates must be sequential" if enddate < begindate
+      errors[:begin_date] << "and end date must be sequential" if enddate < begindate
+      errors[:begin_date] << "must be equal or greater than today" if begindate < Date.today
     end
   end
 
