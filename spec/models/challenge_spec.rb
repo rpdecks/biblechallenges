@@ -39,7 +39,7 @@ describe Challenge do
 
         it "doesn't validate the challenge" do
           expect(challenge.valid?).to be false
-          expect(challenge.errors.messages[:begin_date]).to include ("must be equal or greater than today")
+          expect(challenge.errors.messages[:begin_date]).to include ("cannot be earlier than today")
         end
       end
 

@@ -1,0 +1,2 @@
+--ignore-dir=log
+--ignore-file=match:/.tsv/
