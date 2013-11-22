@@ -34,6 +34,14 @@ describe Challenge do
         end
       end
 
+      context 'when begin date is earlier than today' do
+        let (:challenge) {build(:challenge, enddate: Time.now + 1.day, begindate: Time.now)}
+
+        it "doesn't validate the challenge" do
+          expect(challenge.valid?).to be false
+          expect(challenge.errors.messages[:enddate]).to include ("The challenge begin date must be equal or greater than today")
+        end
+      end
 
     end
 
