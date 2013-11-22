@@ -1,5 +1,7 @@
 = form_for [:creator, @challenge] do |f|
-  %legend Create Challenge
+  %legend
+    = controller.action_name.capitalize
+    Challenge
   - if @challenge.errors.any?
     - flash[:error] = @challenge.errors.full_messages.to_sentence
   .control-group
@@ -35,7 +37,7 @@
       %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
 
   .control-group
-    = f.submit 'Create Challenge', class: 'btn'
+    = f.submit class: 'btn'
 
 :javascript
   var date = new Date();
