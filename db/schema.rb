@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131121233641) do
+ActiveRecord::Schema.define(:version => 20131123022431) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -53,10 +53,6 @@ ActiveRecord::Schema.define(:version => 20131121233641) do
     t.integer  "challenge_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "email"
-    t.string   "username"
-    t.string   "firstname"
-    t.string   "lastname"
     t.string   "bible_version"
   end
 
@@ -89,6 +85,9 @@ ActiveRecord::Schema.define(:version => 20131121233641) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "username"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
