@@ -27,7 +27,7 @@ class Membership < ActiveRecord::Base
   validates :firstname, presence: true, on: :update
   validates :lastname, presence: true, on: :update
 
-#  validates_uniqueness_of :email, scope: :challenge_id
+  validates_uniqueness_of :user_id, scope: :challenge_id
 #  validates_format_of :email, :with => /@/, message: "doesn't really look like a real email address"
 #  validates_uniqueness_of :username, scope: :challenge_id, on: :update
 

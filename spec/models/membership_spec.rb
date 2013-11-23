@@ -11,6 +11,7 @@ describe Membership do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:challenge_id) }
     it { should validate_presence_of(:bible_version) }
+    it { should validate_uniqueness_of(:user_id).scoped_to(:challenge_id) }
 
     it "is invalid without an email" do
       membership = build(:membership, email: "")
@@ -59,6 +60,18 @@ describe Membership do
       end
 
     end
+
+    context 'when a user has already joined a challenge' do
+      let(:user){create(:user)}
+      let(:challenge){create(:challenge)}
+      let!(:membership){create(:membership, challenge: challenge, user: user)}
+
+      it 'does not allow to re-join again' do
+        expect(build(:membership, challenge: challenge, user: user)).to_not be_valid
+      end
+
+    end
+
 
   end
 
