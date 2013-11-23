@@ -53,9 +53,9 @@ describe Challenge do
 
       it "infers based on chapterstoread" do
         challenge.enddate = nil
-        challenge.chapterstoread = 'Matt 1-28'
+        challenge.chapterstoread = 'Matt 20-28'
         challenge.save
-        expect(challenge.enddate).to eql(challenge.begindate + 28.days)
+        expect(challenge.enddate).to eql(challenge.begindate + 9.days)
       end
 
     end
