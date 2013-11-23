@@ -68,4 +68,47 @@ describe Challenge do
     it { should have_many(:members).through(:memberships)}
     it { should have_many(:readings) }
   end
+
+  describe "Class methods" do
+    describe '.has_member?' do
+      context 'when the member has already joined the challenge' do
+        pending 'retunrs true'        
+      end
+      context "when the member hasn't already joined the challenge" do
+        pending 'retunrs false'        
+      end
+    end
+  end
+
+
+  describe 'Instance methods' do
+
+    let(:challenge){create(:challenge)}
+
+    describe '#join_new_member' do
+      context 'with one user' do
+        let(:user){create(:user)}
+        it 'creates the membership for that user' do
+          expect {
+            challenge.join_new_member(user)
+          }.to change(challenge.memberships, :count).by(1)
+        end
+        it 'creates a membership for that user specifying the bible version' do
+          expect {
+            challenge.join_new_member(user,{bible_version: 'NASB'})
+          }.to change(challenge.memberships, :count).by(1)
+          expect(challenge.memberships.last.bible_version).to eql 'NASB'
+        end        
+      end
+      context 'with multiple users' do
+        let(:users){create_list(:user, 3)}
+        it 'creates the memberships for that users' do
+          expect {
+            challenge.join_new_member(users)
+          }.to change(challenge.memberships, :count).by(3)
+        end
+      end
+
+    end    
+  end
 end
