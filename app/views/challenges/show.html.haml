@@ -1,44 +1,24 @@
+.container
+  %legend 
+    = @challenge.name
+    Bible Reading Challenge!
+  %p 
+    Each day's reading portion will be sent to your inbox, and you can click 
+    a link in the email to easily update your stats online.
+  %p 
+  %br 
 
-%legend 
-  = @challenge.name
-  Bible Reading Challenge!
-%p 
-  Each day's reading portion will be sent to your inbox, and you can click 
-  a link in the email to easily update your stats online.
-%p 
-%br 
+  %h4 Challenge Details
 
-%h4 Challenge Details
+  %table.table.table-striped.table-condensed
+    %tr
+      %td Begin Date:
+      %td= @challenge.begindate
+    %tr
+      %td End Date:
+      %td= @challenge.enddate
+    %tr
+      %td Bible Chapters:
+      %td= @challenge.chapterstoread
 
-%table.table.table-striped.table-condensed
-  %tr
-    %td Begin Date:
-    %td= @challenge.begindate
-  %tr
-    %td End Date:
-    %td= @challenge.enddate
-  %tr
-    %td Bible Chapters:
-    %td= @challenge.chapterstoread
-
-
-  -# - unless current_user
-  -#   = form_for @membership do |f|
-  -#     - if @membership.errors.any?
-  -#       - flash[:error] = @membership.errors.full_messages.to_sentence
-  -#     = f.hidden_field :challenge_id, value: @challenge.id
-  -#     .row
-  -#       .col-md-6
-  -#         .control-group
-  -#           = f.label :email, "Email", class: "control-label"
-  -#           .controls
-  -#             = f.text_field :email, class: "input-xlarge"
-  -#             %p.help-block Enter your email to sign up!
-  -#       .col-md-6          
-  -#         .control-group
-  -#           = f.label :bible_version, "Bible Version", class: "control-label"      
-  -#           .controls
-  -#             = f.select :bible_version,  Membership::BIBLE_VERSIONS,  { include_blank: false },  { class: 'chosen-select' }
-  -#             %p.help-block Select the Bible versin.
-  -#     .control-group
-  -#       = f.submit 'Join the Challenge', class: 'btn'
+  = render 'join_form'
