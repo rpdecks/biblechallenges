@@ -13,7 +13,6 @@ class MembershipsController < ApplicationController
         redirect_to root_url(subdomain: @challenge.subdomain)
       end
     else
-      puts root_url(subdomain: @challenge.subdomain)
       redirect_to root_url(subdomain: @challenge.subdomain)
     end
   end
