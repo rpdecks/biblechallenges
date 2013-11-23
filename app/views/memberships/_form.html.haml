@@ -4,23 +4,5 @@
     - flash[:error] = @membership.errors.full_messages.to_sentence
 
   .control-group
-    = f.label :username, "User Name", class: "control-label"
-    .controls
-      = f.text_field :username, class: "input-xlarge"
-      %p.help-block 
-
-  .control-group
-    = f.label :firstname, "First Name", class: "control-label"
-    .controls
-      = f.text_field :firstname, class: "input-xlarge"
-      %p.help-block 
-
-  .control-group
-    = f.label :lastname, "Last Name", class: "control-label"
-    .controls
-      = f.text_field :lastname, class: "input-xlarge"
-      %p.help-block 
-
-  .control-group
     = f.submit "Activate my challenge account"
 

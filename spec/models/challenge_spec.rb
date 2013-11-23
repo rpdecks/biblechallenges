@@ -13,7 +13,10 @@ describe Challenge do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:owner_id) }
     it { should validate_presence_of(:subdomain) }
-    it { should validate_uniqueness_of(:subdomain) }
+    it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
+      create(:challenge)
+      should validate_uniqueness_of(:subdomain)
+    end
 
     describe 'End date and begin date validation' do
 
@@ -41,6 +44,18 @@ describe Challenge do
           expect(challenge.valid?).to be false
           expect(challenge.errors.messages[:begin_date]).to include ("cannot be earlier than today")
         end
+      end
+
+    end
+
+    context 'when end date is not provided' do
+      let (:challenge) {build(:challenge)}
+
+      it "infers based on chapterstoread" do
+        challenge.enddate = nil
+        challenge.chapterstoread = 'Matt 20-28'
+        challenge.save
+        expect(challenge.enddate).to eql(challenge.begindate + 9.days)
       end
 
     end

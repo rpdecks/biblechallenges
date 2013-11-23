@@ -15,6 +15,9 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  username               :string(255)
+#  first_name             :string(255)
+#  last_name              :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -24,7 +27,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid
+  attr_accessible :username, :first_name, :last_name, :email, :password, :password_confirmation, :remember_me, :provider, :uid
 
   has_many :createdchallenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships
