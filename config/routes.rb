@@ -1,5 +1,5 @@
 Biblechallenge::Application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {registrations: "registrations"}
 
   namespace :creator do
     resources :challenges, only: [:new, :show, :create, :index, :edit, :update] do
@@ -15,6 +15,6 @@ Biblechallenge::Application.routes.draw do
     match '/' => 'memberships#new'
   end
 
-  root :to => 'high_voltage/pages#show', id: 'home'
+  root to: 'high_voltage/pages#show', id: 'home'
 
 end
