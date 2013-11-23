@@ -48,6 +48,18 @@ describe Challenge do
 
     end
 
+    context 'when end date is not provided' do
+      let (:challenge) {build(:challenge)}
+
+      it "infers based on chapterstoread" do
+        challenge.enddate = nil
+        challenge.chapterstoread = 'Matt 1-28'
+        challenge.save
+        expect(challenge.enddate).to eql(challenge.begindate + 28.days)
+      end
+
+    end
+
   end
 
   describe "Relations" do
