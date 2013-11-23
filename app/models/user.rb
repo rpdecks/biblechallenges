@@ -31,6 +31,6 @@ class User < ActiveRecord::Base
     :password_confirmation, :remember_me, :provider, :uid
 
   has_many :createdchallenges, class_name: "Challenge", foreign_key: :owner_id
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
 end
