@@ -31,11 +31,33 @@ class Challenge < ActiveRecord::Base
   validate :validate_dates
 
   has_many :memberships
-  has_many :members, through: :memberships
+  has_many :members, through: :memberships, source: :user
   has_many :readings
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
   before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
   after_create :successful_creation_email
+
+  def membership_for(user)
+    memberships.find_by_user_id(user.id)
+  end
+
+  def has_member?(member)
+    members.include?(member)
+  end
+
+  # Accepts one or multiple users
+  def join_new_member(userz,options={})
+    if userz.class == Array
+      userz.map {|u| join_new_member(u,options) }
+    else
+      membership = Membership.new
+      membership.challenge =  self
+      membership.user =  userz
+      membership.bible_version = options[:bible_version] unless options[:bible_version].blank?
+      membership.save
+      membership
+    end
+  end
 
   private
 
