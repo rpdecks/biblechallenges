@@ -8,10 +8,13 @@ class MembershipsController < ApplicationController
   end
 
   def show
-    @membership = if current_user
-      @challenge.membership_for(current_user) || @challenge.memberships.build
+    if current_user
+      unless @membership = @challenge.membership_for(current_user)
+        redirect_to root_url(subdomain: @challenge.subdomain)
+      end
     else
-      @challenge.memberships.build
+      puts root_url(subdomain: @challenge.subdomain)
+      redirect_to root_url(subdomain: @challenge.subdomain)
     end
   end
 
@@ -30,11 +33,12 @@ class MembershipsController < ApplicationController
 
   def create
     @membership = @challenge.memberships.build(params[:membership])
+    @membership.user = current_user if current_user
     if @membership.save
-      flash[:notice] = "Thank you for joining!  We just need a few more details:"
-      redirect_to edit_membership_path(@membership)
+      flash[:notice] = "Thank you for joining!"
+      redirect_to my_membership_path
     else
-      render action: 'new'
+      redirect_to root_url(subdomain: @challenge.subdomain)
     end
   end
 

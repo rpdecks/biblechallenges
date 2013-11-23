@@ -22,16 +22,10 @@ describe MembershipsController do
     end
 
 
-    describe 'GET#show' do
-
-      it "sets up a show empty membership" do
-        get :show 
-        expect(assigns(:membership)).to be_a_new(Membership)
-      end
-
-      it "renders the :show template" do
-        get :show 
-        expect(response).to render_template :show
+    describe 'GET#show (my-membership)' do
+      it "redirects to the challenge" do
+        get :show
+        expect(response).to redirect_to root_url(subdomain:challenge.subdomain)
       end
     end
   end
@@ -48,22 +42,17 @@ describe MembershipsController do
       end
     end
 
-    describe 'GET#show' do
-      it "sets up a show empty membership" do
-        get :show 
-        expect(assigns(:membership)).to be_a_new(Membership)
-      end
-
-      it "renders the :show template" do
+    describe 'GET#show  (my-membership)' do
+      it "redirects to the challenge" do
         get :show
-        expect(response).to render_template :show
+        expect(response).to redirect_to root_url(subdomain:challenge.subdomain)
       end
     end
 
 
     context 'when the user has already joined' do
       let!(:membership){challenge.join_new_member(current_user)}
-      describe 'GET#show' do
+      describe 'GET#show  (my-membership)' do
         it "finds the current_user membership" do
           get :show 
           expect(assigns(:membership)).to eql(membership)
