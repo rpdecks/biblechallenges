@@ -34,7 +34,7 @@ class Challenge < ActiveRecord::Base
   has_many :members, through: :memberships
   has_many :readings
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
-
+  before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
   after_create :successful_creation_email
 
   private
@@ -49,5 +49,10 @@ class Challenge < ActiveRecord::Base
   def successful_creation_email
     ChallengeMailer.creation_email(self).deliver
   end
+
+  def calculate_enddate
+    self.enddate = begindate + 28.days
+  end
+
 
 end
