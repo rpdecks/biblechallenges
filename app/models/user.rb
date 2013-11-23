@@ -27,7 +27,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :username, :first_name, :last_name, :email, :password, :password_confirmation, :remember_me, :provider, :uid
+  attr_accessible :username, :first_name, :last_name, :email, :password, 
+    :password_confirmation, :remember_me, :provider, :uid
 
   has_many :createdchallenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships
