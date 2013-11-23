@@ -1,5 +1,7 @@
 class MembershipsController < ApplicationController
 
+  before_filter :find_challenge, except: [:index, :show]
+
   def index
     @memberships = current_user.memberships
   end
@@ -9,7 +11,6 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    @challenge = Challenge.find_by_subdomain(request.subdomain)
     @membership = Membership.find(params[:id])
     if @membership.update_attributes(params[:membership])
       redirect_to membership_path(@membership)
@@ -19,12 +20,10 @@ class MembershipsController < ApplicationController
   end
 
   def new
-    @challenge = Challenge.find_by_subdomain(request.subdomain)
     @membership = Membership.new
   end
 
   def edit
-    @challenge = Challenge.find_by_subdomain(request.subdomain)
     @membership = Membership.find(params[:id])
   end
 
@@ -34,9 +33,16 @@ class MembershipsController < ApplicationController
       flash[:notice] = "Thank you for joining!  We just need a few more details:"
       redirect_to edit_membership_path(@membership)
     else
-      @challenge = Challenge.find_by_subdomain(request.subdomain)
-      render :action => 'new'
+      render action: 'new'
     end
-
   end
+
+  private
+
+  def find_challenge
+    @challenge = Challenge.find_by_subdomain(request.subdomain)
+    redirect_to root_url(subdomain:false) if @challenge.nil?
+  end
+
+
 end
