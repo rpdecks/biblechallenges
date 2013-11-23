@@ -51,7 +51,8 @@ class Challenge < ActiveRecord::Base
   end
 
   def calculate_enddate
-    self.enddate = begindate + 28.days
+    response = Chapter.parse_query(chapterstoread)    
+    self.enddate = begindate + response[1].length.days if response[1]
   end
 
 
