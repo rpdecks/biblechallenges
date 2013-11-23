@@ -11,7 +11,10 @@
 #
 
 class Membership < ActiveRecord::Base
-  attr_accessible :challenge_id, :user_id, :bible_version
+
+  attr_accessible :challenge, :user, :bible_version
+
+  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV)
 
   belongs_to :user
   belongs_to :challenge
@@ -20,7 +23,6 @@ class Membership < ActiveRecord::Base
   validates :bible_version, presence: true
 
   validates_uniqueness_of :user_id, scope: :challenge_id
-
-  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV)
+  validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
 end
