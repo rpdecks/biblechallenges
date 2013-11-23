@@ -12,7 +12,8 @@ Biblechallenge::Application.routes.draw do
   end
 
   constraints(Subdomain) do
-    match '/' => 'memberships#show'
+    match '/' => 'challenges#show'
+    match '/my-membership' => 'memberships#show'
     match '/memberships' => 'memberships#index'
   end
 
