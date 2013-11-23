@@ -14,7 +14,7 @@ class MembershipsController < ApplicationController
     if @membership.update_attributes(params[:membership])
       redirect_to membership_path(@membership)
     else
-      render :action => "edit"
+      render action: 'edit'
     end
   end
 
