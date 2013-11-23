@@ -70,20 +70,27 @@ describe Challenge do
   end
 
   describe "Class methods" do
-    describe '.has_member?' do
-      context 'when the member has already joined the challenge' do
-        pending 'retunrs true'        
-      end
-      context "when the member hasn't already joined the challenge" do
-        pending 'retunrs false'        
-      end
-    end
-  end
 
+  end
 
   describe 'Instance methods' do
 
     let(:challenge){create(:challenge)}
+
+    describe '#membership_for' do
+      let(:user){create(:user)}
+      context 'when the user has already joined the challenge' do
+        let!(:membership){challenge.join_new_member(user)}
+        it 'returns the membership' do
+          expect(challenge.reload.membership_for(user)).to eql(membership)
+        end
+      end
+      context "when the user hasn't already joined the challenge" do
+        it 'returns nil' do
+          expect(challenge.membership_for(user)).to be_nil
+        end
+      end
+    end
 
     describe '#join_new_member' do
       context 'with one user' do
@@ -108,7 +115,22 @@ describe Challenge do
           }.to change(challenge.memberships, :count).by(3)
         end
       end
+    end
 
+    describe '#has_member?' do
+      let(:user){create(:user)}
+      context 'when the user has already joined the challenge' do
+        before {challenge.join_new_member(user)}
+        it 'returns true' do
+          expect(challenge.has_member?(user)).to be_true
+        end
+      end
+      context "when the user hasn't already joined the challenge" do
+        it 'returns false' do
+          expect(challenge.has_member?(user)).to be_false
+        end
+      end
     end    
+
   end
 end
