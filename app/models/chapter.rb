@@ -35,6 +35,7 @@ class Chapter < ActiveRecord::Base
     matches
   end
 
+  # This method should NOT be here. Single responsibility principle!
   def self.parse_query(query)
     regex = /^\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/
     match = query.match(regex)

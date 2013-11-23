@@ -1,5 +1,7 @@
 = form_for [:creator, @challenge] do |f|
-  %legend Create Challenge
+  %legend
+    = controller.action_name.capitalize
+    Challenge
   - if @challenge.errors.any?
     - flash[:error] = @challenge.errors.full_messages.to_sentence
   .control-group
@@ -13,8 +15,7 @@
     .controls
       = f.text_field :subdomain, class: "form-control"
       %p.help-block 
-        The subdomain is what we will use to create a unique URL for your bible challenge. For example if you choose "julyacts" as your subdomain, 
-        the URL for your challenge will be http://julyacts.biblechallenges.com
+        The subdomain is what we will use to create a unique URL for your bible challenge. For example if you choose "julyacts" as your subdomain, the URL for your challenge will be http://julyacts.biblechallenges.com
 
   .control-group
     = f.label :begindate, "Begin Date", class: "control-label"
@@ -23,36 +24,18 @@
       %p.help-block The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out.
 
   .control-group
-    = f.label :enddate, "End Date", class: "control-label"
-    .controls
-      = f.text_field :enddate, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_enddate_input'
-      %p.help-block The end date is the final day of your bible challenge
-
-  .control-group
     = f.label :chapterstoread, "Chapters to Read", class: "control-label"
     .controls
       = f.text_field :chapterstoread, class: "form-control"
       %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
 
   .control-group
-    = f.submit 'Create Challenge', class: 'btn'
+    = f.submit class: 'btn', disable_with: 'Please Wait...'
 
 :javascript
-  var date = new Date();
-  date.setDate(date.getDate()-1);
-  $(document).ready(function(){
+  $(function(){
     $('#challenge_begindate_input').datepicker({
       format:"yyyy-mm-dd",
-      startDate: date
-    }).on('changeDate', function(selected){
-        startDate = new Date(selected.date.valueOf());
-        startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())) + 1 );
-        $('#challenge_enddate_input').datepicker('setStartDate', startDate);
-        $('#challenge_enddate_input').datepicker('update', startDate)
+      startDate: new Date()
     });
-    $('#challenge_enddate_input').datepicker({
-      format:"yyyy-mm-dd",
-      startDate: date + 1 
-    });
-
   });

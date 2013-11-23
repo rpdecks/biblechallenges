@@ -7,6 +7,8 @@ Run the Spork test server ` $ spork`. It forks a copy of the server each time yo
 
 Then in a different console ` $ time rspec` (it will run all the specs).
 
+If you run any migration while _spork_ is running you'll have to restart _spork_.
+
 > As we're using Rspec please take in count this [guideline](http://betterspecs.org/).
 >
 

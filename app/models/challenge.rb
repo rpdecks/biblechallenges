@@ -33,8 +33,9 @@ class Challenge < ActiveRecord::Base
   has_many :memberships
   has_many :members, through: :memberships
   has_many :readings
-
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
+  before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
+  after_create :successful_creation_email
 
   private
 
@@ -43,6 +44,15 @@ class Challenge < ActiveRecord::Base
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
       errors[:begin_date] << "cannot be earlier than today" if begindate < Date.today
     end
+  end
+
+  def successful_creation_email
+    ChallengeMailer.creation_email(self).deliver
+  end
+
+  def calculate_enddate
+    response = Chapter.parse_query(chapterstoread)    
+    self.enddate = begindate + response[1].length.days if response[1]
   end
 
 
