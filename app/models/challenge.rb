@@ -30,7 +30,7 @@ class Challenge < ActiveRecord::Base
 
   validate :validate_dates
 
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
   has_many :readings
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
