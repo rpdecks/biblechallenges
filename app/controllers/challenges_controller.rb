@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
 
   before_filter :authenticate_user!  #, except: [:new, :create]
-  # before_filter :find_challenge, only: [:show]
+  before_filter :find_challenge, only: [:show]
 
   def index
     @createdchallenges = current_user.createdchallenges
@@ -11,9 +11,9 @@ class ChallengesController < ApplicationController
     end
   end
 
-  # def show
-  #  @readings  = @challenge.readings
-  # end
+  def show
+    @readings  = @challenge.readings
+  end
 
   private
 

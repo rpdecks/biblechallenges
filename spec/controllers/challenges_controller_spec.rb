@@ -7,7 +7,7 @@ describe ChallengesController do
   describe "Routing" do
 
     let(:subdomainurl) { "http://woot.lvh.me" }
-    it {expect({get: "#{subdomainurl}"}).to route_to(controller: 'memberships', action: 'new') }
+    it {expect({get: "#{subdomainurl}"}).to route_to(controller: 'challenges', action: 'show') }
     it { {get: "/challenges"}.should route_to(controller: "challenges", action: "index") }
 
   end
