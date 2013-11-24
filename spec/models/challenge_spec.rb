@@ -68,4 +68,69 @@ describe Challenge do
     it { should have_many(:members).through(:memberships)}
     it { should have_many(:readings) }
   end
+
+  describe "Class methods" do
+
+  end
+
+  describe 'Instance methods' do
+
+    let(:challenge){create(:challenge)}
+
+    describe '#membership_for' do
+      let(:user){create(:user)}
+      context 'when the user has already joined the challenge' do
+        let!(:membership){challenge.join_new_member(user)}
+        it 'returns the membership' do
+          expect(challenge.reload.membership_for(user)).to eql(membership)
+        end
+      end
+      context "when the user hasn't already joined the challenge" do
+        it 'returns nil' do
+          expect(challenge.membership_for(user)).to be_nil
+        end
+      end
+    end
+
+    describe '#join_new_member' do
+      context 'with one user' do
+        let(:user){create(:user)}
+        it 'creates the membership for that user' do
+          expect {
+            challenge.join_new_member(user)
+          }.to change(challenge.memberships, :count).by(1)
+        end
+        it 'creates a membership for that user specifying the bible version' do
+          expect {
+            challenge.join_new_member(user,{bible_version: 'NASB'})
+          }.to change(challenge.memberships, :count).by(1)
+          expect(challenge.memberships.last.bible_version).to eql 'NASB'
+        end        
+      end
+      context 'with multiple users' do
+        let(:users){create_list(:user, 3)}
+        it 'creates the memberships for that users' do
+          expect {
+            challenge.join_new_member(users)
+          }.to change(challenge.memberships, :count).by(3)
+        end
+      end
+    end
+
+    describe '#has_member?' do
+      let(:user){create(:user)}
+      context 'when the user has already joined the challenge' do
+        before {challenge.join_new_member(user)}
+        it 'returns true' do
+          expect(challenge.has_member?(user)).to be_true
+        end
+      end
+      context "when the user hasn't already joined the challenge" do
+        it 'returns false' do
+          expect(challenge.has_member?(user)).to be_false
+        end
+      end
+    end    
+
+  end
 end

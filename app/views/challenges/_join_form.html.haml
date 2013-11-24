@@ -1,0 +1,13 @@
+- if current_user && @challenge.membership_for(current_user).nil?
+  %p 
+    Join!
+  = form_for [@challenge, Membership.new] do |f|
+    .row
+      .col-md-6
+        .control-group
+          = f.label :bible_version, "Bible Version", class: "control-label"      
+          .controls
+            = f.select :bible_version,  Membership::BIBLE_VERSIONS,  { include_blank: false },  { class: 'chosen-select' }
+            %p.help-block Select the Bible versin.
+    .control-group
+      = f.submit 'Join the Challenge', class: 'btn'

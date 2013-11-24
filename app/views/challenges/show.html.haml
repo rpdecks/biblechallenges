@@ -1,1 +1,24 @@
+.container
+  %legend 
+    = @challenge.name
+    Bible Reading Challenge!
+  %p 
+    Each day's reading portion will be sent to your inbox, and you can click 
+    a link in the email to easily update your stats online.
+  %p 
+  %br 
 
+  %h4 Challenge Details
+
+  %table.table.table-striped.table-condensed
+    %tr
+      %td Begin Date:
+      %td= @challenge.begindate
+    %tr
+      %td End Date:
+      %td= @challenge.enddate
+    %tr
+      %td Bible Chapters:
+      %td= @challenge.chapterstoread
+
+  = render 'join_form'
