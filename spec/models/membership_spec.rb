@@ -10,8 +10,11 @@ describe Membership do
 
     it { should validate_presence_of(:challenge_id) }
     it { should validate_presence_of(:bible_version) }
-    it { should validate_uniqueness_of(:user_id).scoped_to(:challenge_id) }
     it { should ensure_inclusion_of(:bible_version).in_array(Membership::BIBLE_VERSIONS)}
+    it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
+      create(:membership)
+      should validate_uniqueness_of(:user_id).scoped_to(:challenge_id)
+    end
 
     it "is invalid without a challenge_id" do
       membership = build(:membership, challenge_id: nil)
