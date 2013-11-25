@@ -1,6 +1,6 @@
+%p 
+  Join!
 - if current_user && @challenge.membership_for(current_user).nil?
-  %p 
-    Join!
   = form_for [@challenge, Membership.new] do |f|
     .row
       .col-md-6
