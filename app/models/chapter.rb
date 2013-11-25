@@ -11,13 +11,14 @@
 #  book_id        :integer
 #
 
+require "parser"
 class Chapter < ActiveRecord::Base
   has_many :chapter_challenges
   has_many :challenges, through: :chapter_challenges
 
   # Class methods
   def self.search(query)
-    fragment, chapters = parse_query(query)
+    fragment, chapters = Parser.parse_query(query)
 
     # First search by fragment
     bookfrag = Bookfrag.where("upper(:query) like upper(fragment) || '%'",
