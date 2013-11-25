@@ -36,6 +36,7 @@ class Challenge < ActiveRecord::Base
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
   before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
   after_create :successful_creation_email
+  after_create :generate_readings
 
   def membership_for(user)
     memberships.find_by_user_id(user.id)
@@ -61,6 +62,7 @@ class Challenge < ActiveRecord::Base
 
   private
 
+  # Validations
   def validate_dates
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
@@ -68,10 +70,18 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  # Callbacks
+
+  # - after_create
   def successful_creation_email
     ChallengeMailer.creation_email(self).deliver
   end
+  
+  def generate_readings
+    
+  end
 
+  # - before_validation
   def calculate_enddate
     response = Chapter.parse_query(chapterstoread)    
     self.enddate = begindate + response[1].length.days if response[1]
