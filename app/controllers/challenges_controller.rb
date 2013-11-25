@@ -1,6 +1,6 @@
 class ChallengesController < ApplicationController
 
-  before_filter :authenticate_user!  #, except: [:new, :create]
+  before_filter :authenticate_user!, except: [:show]
   before_filter :find_challenge, only: [:show]
 
   def index
