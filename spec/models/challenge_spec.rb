@@ -72,8 +72,10 @@ describe Challenge do
   describe 'Callbacks' do
     let(:challenge){create(:challenge, chapterstoread: 'Matt 20-28')}
     describe 'After create' do
-      it 'creates a reading for every chapter assigned in the challenge' do
-        expect(challenge.readings.length).to eql 9
+      describe '#generate_readings' do
+        it 'creates a reading for every chapter assigned in the challenge', focus: false do
+          expect(challenge.readings.length).to eql 9
+        end
       end
     end
   end

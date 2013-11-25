@@ -78,12 +78,12 @@ class Challenge < ActiveRecord::Base
   end
   
   def generate_readings
-    
+    # puts Parser.parse_query(chapterstoread)
   end
 
   # - before_validation
   def calculate_enddate
-    response = Chapter.parse_query(chapterstoread)    
+    response = Parser.parse_query(chapterstoread)    
     self.enddate = begindate + response[1].length.days if response[1]
   end
 
