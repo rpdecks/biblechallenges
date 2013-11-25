@@ -55,7 +55,7 @@ describe Challenge do
         challenge.enddate = nil
         challenge.chapterstoread = 'Matt 20-28'
         challenge.save
-        expect(challenge.enddate).to eql(challenge.begindate + 9.days)
+        expect(challenge.enddate).to eql(challenge.begindate + 8.days)
       end
 
     end
@@ -70,17 +70,18 @@ describe Challenge do
   end
 
   describe 'Callbacks' do
-    let(:challenge){create(:challenge, chapterstoread: 'Matt 20-28')}
+    let(:challenge){create(:challenge, chapterstoread: 'Matt 20-22')}
     describe 'After create' do
       describe '#generate_readings' do
         it 'creates a reading for every chapter assigned in the challenge'do
-          expect(challenge.readings.length).to eql 9
+          expect(challenge.readings.length).to eql 3
         end
 
-        it 'creates the readings with its corresponding date',focus: true do
+        it 'creates the readings with its corresponding date' do
           challenge.readings.each_with_index do |reading,index|
-            expect(reading.date).to eql(challenge.begindate + index.day)
+            expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
           end
+          expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))          
         end
 
       end
