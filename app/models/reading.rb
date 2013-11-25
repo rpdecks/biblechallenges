@@ -11,7 +11,7 @@
 #
 
 class Reading < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :chapter, :challenge
   belongs_to :challenge
   belongs_to :chapter
 

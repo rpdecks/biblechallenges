@@ -10,8 +10,6 @@
 #  updated_at     :datetime         not null
 #  book_id        :integer
 #
-
-require "parser"
 class Chapter < ActiveRecord::Base
   has_many :chapter_challenges
   has_many :challenges, through: :chapter_challenges
