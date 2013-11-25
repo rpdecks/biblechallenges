@@ -78,7 +78,9 @@ class Challenge < ActiveRecord::Base
   end
   
   def generate_readings
-    # puts Parser.parse_query(chapterstoread)
+    Chapter.search(chapterstoread).each do |chapter|
+      readings.create(chapter: chapter)
+    end
   end
 
   # - before_validation

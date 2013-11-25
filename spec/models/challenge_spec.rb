@@ -73,9 +73,16 @@ describe Challenge do
     let(:challenge){create(:challenge, chapterstoread: 'Matt 20-28')}
     describe 'After create' do
       describe '#generate_readings' do
-        it 'creates a reading for every chapter assigned in the challenge', focus: false do
+        it 'creates a reading for every chapter assigned in the challenge'do
           expect(challenge.readings.length).to eql 9
         end
+
+        it 'creates the readings with its corresponding date',focus: true do
+          challenge.readings.each_with_index do |reading,index|
+            expect(reading.date).to eql(challenge.begindate + index.day)
+          end
+        end
+
       end
     end
   end
