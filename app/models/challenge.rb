@@ -17,6 +17,13 @@
 class Challenge < ActiveRecord::Base
   attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapterstoread
 
+  # Relations
+  has_many :memberships, dependent: :destroy
+  has_many :members, through: :memberships, source: :user
+  has_many :readings
+  belongs_to :owner, class_name: "User", foreign_key: :owner_id
+
+  #  Validations
   validates :begindate, presence: true
   validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
@@ -24,16 +31,11 @@ class Challenge < ActiveRecord::Base
   validates_format_of   :subdomain,
                         with: /^[a-z\d]+(-[a-z\d]+)*$/i,
                         message: 'invalid format'
-
   validates :owner_id, presence: true
   validates :chapterstoread, presence: true
-
   validate :validate_dates
 
-  has_many :memberships, dependent: :destroy
-  has_many :members, through: :memberships, source: :user
-  has_many :readings
-  belongs_to :owner, class_name: "User", foreign_key: :owner_id
+  # Callbacks 
   before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
   after_create :successful_creation_email
   after_create :generate_readings

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe ChallengeMailer do
 
-  describe '.send_creation_email' do
+  describe '.creation_email' do
 
     let(:owner){create(:user)}
     let(:challenge){build(:challenge, owner: owner)}
