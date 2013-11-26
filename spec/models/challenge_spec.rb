@@ -61,7 +61,7 @@ describe Challenge do
     end
 
     context 'when the challenge is active' do
-      let (:challenge) {build(:challenge)}
+      let (:challenge) {create(:challenge)}
 
       before do
         challenge.active =  true
@@ -69,15 +69,17 @@ describe Challenge do
       end
 
       it "doesn't allow begindate to be chaned" do
-        
+        expect(challenge.update_attributes({begindate: Date.today + 10.days})).to be_false
+        expect(challenge.errors.messages[:""]).to include("Challenge activated. Change not allowed")        
       end
       it "doesn't allow enddate to be chaned" do
-        
+        expect(challenge.update_attributes({enddate: Date.today - 10.days})).to be_false
+        expect(challenge.errors.messages[:""]).to include("Challenge activated. Change not allowed")        
       end
       it "doesn't allow chapterstoread to be chaned" do
-        
-      end      
-
+        expect(challenge.update_attributes({chapterstoread: 'Phil 1 - 2'})).to be_false
+        expect(challenge.errors.messages[:""]).to include("Challenge activated. Change not allowed")  
+      end
     end
 
 
