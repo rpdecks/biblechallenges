@@ -33,12 +33,13 @@ class Challenge < ActiveRecord::Base
                         message: 'invalid format'
   validates :owner_id, presence: true
   validates :chapterstoread, presence: true
-  validate :validate_dates
+  validate  :validate_dates
 
   # Callbacks 
-  before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
-  after_create :successful_creation_email
-  after_create :generate_readings
+  before_validation :calculate_enddate, 
+    if: "(enddate.nil? && !chapterstoread.blank?) || (!new_record? && (begindate_changed? || chapterstoread_changed?) && !active)"
+  after_create      :successful_creation_email
+  after_save        :generate_readings
 
   def membership_for(user)
     memberships.find_by_user_id(user.id)
@@ -80,8 +81,12 @@ class Challenge < ActiveRecord::Base
   end
   
   def generate_readings
-    Chapter.search(chapterstoread).each_with_index do |chapter,i|
-      readings.create(chapter: chapter, date: (begindate + i.days))
+    # Only generate the reading on the cases below.
+    if (id_changed? || begindate_changed? || chapterstoread_changed?) && !active
+      readings.destroy_all
+      Chapter.search(chapterstoread).each_with_index do |chapter,i|
+        readings.create(chapter: chapter, date: (begindate + i.days))
+      end
     end
   end
 
