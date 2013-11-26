@@ -12,12 +12,14 @@
 
 class Reading < ActiveRecord::Base
   attr_accessible :chapter, :challenge, :date
+
+  # Relations
   belongs_to :challenge
   belongs_to :chapter
-
-  has_many :user_readings
-  has_many :users, through: :user_readings
-
+  has_many :membership_readings
+  has_many :memberships, through: :membership_readings
+  
+  # Validations
   validates :chapter_id, presence: true
   validates :challenge_id, presence: true
   validates :date, presence: true

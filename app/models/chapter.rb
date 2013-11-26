@@ -24,6 +24,8 @@
 #  book_id        :integer
 #
 class Chapter < ActiveRecord::Base
+
+  # Relations
   has_many :chapter_challenges
   has_many :challenges, through: :chapter_challenges
 

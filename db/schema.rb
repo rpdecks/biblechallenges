@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131126003052) do
+ActiveRecord::Schema.define(:version => 20131126004635) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(:version => 20131126003052) do
     t.integer  "book_id"
   end
 
+  create_table "membership_readings", :force => true do |t|
+    t.integer  "membership_id"
+    t.integer  "reading_id"
+    t.string   "state"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
@@ -62,13 +70,6 @@ ActiveRecord::Schema.define(:version => 20131126003052) do
     t.date     "date"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-  end
-
-  create_table "user_readings", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "reading_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
