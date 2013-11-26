@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
 
+  before_filter :authenticate_user!, except: [:show, :create, :create_for_guest]
   before_filter :find_challenge
   before_filter :require_challenge_owner, only: [:index]
 
@@ -39,6 +40,24 @@ class MembershipsController < ApplicationController
     else
       redirect_to root_url(subdomain: @challenge.subdomain)
     end
+  end
+
+  def create_for_guest
+    @membership_form = MembershipForm.new(params[:membership_form])
+    if @membership_form.valid?
+      flash[:notice] = "s."
+      redirect_to root_url(subdomain: @challenge.subdomain)
+    else
+      flash[:notice] = "e."
+      redirect_to root_url(subdomain: @challenge.subdomain)
+    end
+  end
+
+  def destroy
+    @membership = current_user.memberships.find(params[:id])
+    @membership.destroy
+    flash[:notice] = "You have been successfully unsubscribed from this challenge"
+    redirect_to root_url(subdomain:@challenge.subdomain)
   end
 
   private

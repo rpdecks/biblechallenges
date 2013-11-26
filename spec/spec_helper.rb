@@ -73,7 +73,6 @@ Spork.prefork do
     config.include CreationMacros
     config.include ControllerMacros, type: :controller
   end
-
 end
 
 Spork.each_run do

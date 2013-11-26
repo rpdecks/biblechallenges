@@ -1,7 +1,6 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  sequence(:email) { |n| "bc#{n}@test.com" }
   factory :user do
     username    {Faker::Internet.user_name}
     first_name   {Faker::Name.first_name}

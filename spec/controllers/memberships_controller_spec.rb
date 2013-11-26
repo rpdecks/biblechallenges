@@ -17,7 +17,7 @@ describe MembershipsController do
     describe 'GET#index' do
       it "redirects to the root" do
         get :index
-        expect(response).to redirect_to root_url(subdomain:false)
+        expect(response).to redirect_to new_user_session_url
       end
     end
 
@@ -63,11 +63,31 @@ describe MembershipsController do
           expect(response).to render_template :show
         end
       end
-      
+
+      describe 'DELETE#destroy' do
+
+        it "finds the current_user membership" do
+          delete :destroy, challenge_id: challenge, id: membership
+          expect(assigns(:membership)).to eql(membership)
+        end
+
+        it "destroys the membership" do
+          expect{
+            delete :destroy, challenge_id: challenge, id: membership
+          }.to change(Membership,:count).by(-1)
+        end
+
+        it "redirects to the challenge url" do
+          delete :destroy, challenge_id: challenge, id: membership
+          expect(response).to redirect_to root_url(subdomain:challenge.subdomain)
+        end
+        
+      end
+
     end
   end
 
-  describe 'Owenr challenge access' do
+  describe 'Owner challenge access' do
     before{sign_in :user, owner}
     describe 'GET#index' do
       it "collects memberships into @memberships" do
