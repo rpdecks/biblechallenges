@@ -23,7 +23,7 @@ class Challenge < ActiveRecord::Base
   has_many :readings
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
-  #  Validations
+  # Validations
   validates :begindate, presence: true
   validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
