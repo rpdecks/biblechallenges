@@ -34,6 +34,7 @@ class Challenge < ActiveRecord::Base
   validates :owner_id, presence: true
   validates :chapterstoread, presence: true
   validate  :validate_dates
+  validate  :changes_allowed_when_activated, if: "active"
 
   # Callbacks 
   before_validation :calculate_enddate, 
@@ -71,6 +72,12 @@ class Challenge < ActiveRecord::Base
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
       errors[:begin_date] << "must be equal or greater than today" if begindate < Date.today
     end
+  end
+
+  def changes_allowed_when_activated
+    if begindate_changed? || chapterstoread_changed? || enddate_changed?
+      errors.add("","Challenge activated. Change not allowed")
+    end    
   end
 
   # Callbacks
