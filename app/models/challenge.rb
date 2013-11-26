@@ -76,7 +76,7 @@ class Challenge < ActiveRecord::Base
 
   def changes_allowed_when_activated
     if begindate_changed? || chapterstoread_changed? || enddate_changed?
-      errors.add("","Challenge activated. Change not allowed")
+      errors[:change_not_allowed] << "because this challenge is active"
     end    
   end
 

@@ -8,4 +8,10 @@ module Creator::ChallengesHelper
     end
   end
 
+  def botton_availability
+    if @challenge.active?
+      "disabled"
+    end
+  end
+
 end

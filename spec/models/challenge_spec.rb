@@ -70,15 +70,15 @@ describe Challenge do
 
       it "doesn't allow begindate to be chaned" do
         expect(challenge.update_attributes({begindate: Date.today + 10.days})).to be_false
-        expect(challenge.errors.messages[:""]).to include("Challenge activated. Change not allowed")        
+        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")        
       end
       it "doesn't allow enddate to be chaned" do
         expect(challenge.update_attributes({enddate: Date.today - 10.days})).to be_false
-        expect(challenge.errors.messages[:""]).to include("Challenge activated. Change not allowed")        
+        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")        
       end
       it "doesn't allow chapterstoread to be chaned" do
         expect(challenge.update_attributes({chapterstoread: 'Phil 1 - 2'})).to be_false
-        expect(challenge.errors.messages[:""]).to include("Challenge activated. Change not allowed")  
+        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")  
       end
     end
 
