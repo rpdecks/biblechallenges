@@ -4,7 +4,7 @@ class ChallengesController < ApplicationController
   before_filter :find_challenge, only: [:show]
 
   def index
-    @createdchallenges = current_user.createdchallenges
+    @created_challenges = current_user.created_challenges
     @challenges = current_user.challenges
     respond_to do |format|
       format.html
