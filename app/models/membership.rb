@@ -20,6 +20,9 @@ class Membership < ActiveRecord::Base
   # Relations
   belongs_to :user
   belongs_to :challenge
+  has_many :membership_readings, dependent: :destroy
+  has_many :readings, through: :membership_readings
+
 
   #  Validations
   validates :challenge_id, presence: true

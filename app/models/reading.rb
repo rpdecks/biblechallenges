@@ -16,7 +16,7 @@ class Reading < ActiveRecord::Base
   # Relations
   belongs_to :challenge
   belongs_to :chapter
-  has_many :membership_readings
+  has_many :membership_readings, dependent: :destroy
   has_many :memberships, through: :membership_readings
   
   # Validations
