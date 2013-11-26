@@ -13,8 +13,7 @@
       %td= subdomain_url challenge.subdomain
       %td= challenge.begindate
       %td= challenge.enddate
-      %td= challenge.active ? "Yes" : "No"  
-      %td= link_to 'Details', challenge_url(challenge)
+      %td= challenge.active ? "Yes" : "No"
 %br/
 
 - if @created_challenges.count > 0
@@ -33,6 +32,5 @@
         %td= link_to subdomain_url(challenge.subdomain), "http://" + subdomain_url(challenge.subdomain)
         %td= challenge.begindate
         %td= challenge.enddate
-        %td= challenge.active ? "Yes" : "No"  
-        %td= link_to 'Details', challenge_url(challenge)
+        %td= challenge.active ? "Yes" : "No"
   %br/
