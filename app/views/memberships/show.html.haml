@@ -1,5 +1,11 @@
 %h3
   My membership for #{@challenge.name}
+  .pull-right
+    = link_to raw("<i class='icon-warning-sign'></i> Unsubscribe"),challenge_membership_path(@challenge,@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger bt-small"
 
-
-TODO -> Details and unjoin this challenge.  
+%br
+%h4
+  Readings progress
+.progress
+  .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "60", role: "progressbar", style: "width: 60%;"}
+    %span.sr-only 60% Complete

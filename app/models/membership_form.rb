@@ -2,7 +2,7 @@ class MembershipForm
   include ActiveModel::Validations
   include ActiveModel::Conversion
 
-  attr_accessor :email
+  attr_accessor :email, :bible_version, :user
   validates_presence_of :email
 
 
@@ -10,6 +10,11 @@ class MembershipForm
     attributes.each do |name, value|
       send("#{name}=",value)
     end
+  end
+
+
+  def subscribe
+    self.user = User.find_or_initialize_by_email email
   end
 
   def persisted?
