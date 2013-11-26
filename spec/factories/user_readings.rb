@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :user_reading do
     user
-    challenge
+    reading
   end
 end

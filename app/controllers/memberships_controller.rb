@@ -27,7 +27,7 @@ class MembershipsController < ApplicationController
   end
 
   def edit
-    @membership =@challenge.memberships.find(params[:id])
+    @membership = @challenge.memberships.find(params[:id])
   end
 
   def create

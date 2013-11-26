@@ -106,6 +106,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashids (0.3.0)
     heroku (3.0.1)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -268,6 +269,7 @@ DEPENDENCIES
   guard-rspec
   haml (= 3.1.7)
   haml-rails (= 0.4)
+  hashids (~> 0.3.0)
   heroku
   high_voltage (= 2.0.0)
   hpricot
