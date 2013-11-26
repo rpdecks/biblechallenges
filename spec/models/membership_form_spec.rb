@@ -5,6 +5,7 @@ describe MembershipForm do
   describe "Validations" do
 
     it { should validate_presence_of(:email) }
+    it { should validate_presence_of(:challenge) }
     
   end
 
@@ -13,16 +14,43 @@ describe MembershipForm do
     context 'when the email belongs to an user already registered' do
       let(:challenge)   {create(:challenge)}
       let(:user)        {create(:user)}
-      let!(:membership) {challenge.join_new_member(user)}
+      let(:membership_form) {build(:membership_form, email: user.email, challenge: challenge)}
 
-      let(:membership) {build(:membership_form, email: user.email)}
+      it "creates the membership" do
+        expect {
+          membership_form.subscribe
+        }.to change(Membership,:count).by(1)
+      end
 
       it "finds the current_user membership" do
-        membership.subscribe
-        expect(membership.user).to eql(user)
+        membership_form.subscribe
+        expect(membership_form.user).to eql(user)
+      end
+
+      context 'with a membership already created' do
+        let!(:membership){challenge.join_new_member(user)}
+
+        it "doesn't create the membership" do
+          expect {
+            membership_form.subscribe
+          }.to change(Membership,:count).by(0)
+        end        
+
+        it "finds the current_user membership" do
+          membership_form.subscribe
+          expect(membership_form.user).to eql(user)
+        end
+
+        it 'sets the proper error message' do
+          membership_form.subscribe
+          expect(membership_form.errors.messages[:email]).to include ("already registered in this challenge")
+        end
+
       end
 
     end
+
+
 
   end
 

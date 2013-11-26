@@ -8,6 +8,8 @@
   %p 
   %br 
 
+  = render 'join_form'
+
   %h3 Challenge Details
 
   %table.table.table-striped.table-condensed
@@ -35,5 +37,3 @@
           %td= read.date.strftime("%a, %-d %b %Y")
           %td= read.chapter.book_name
           %td= read.chapter.chapter_number
-
-  = render 'join_form'

@@ -9,5 +9,5 @@ class ChallengeMailer < ActionMailer::Base
     @owner = @challenge.owner    
     mail( to: @owner.email, subject: "#{@challenge.name} created!")
   end
-
+  
 end

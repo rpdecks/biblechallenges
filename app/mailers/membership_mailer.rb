@@ -3,7 +3,6 @@ class MembershipMailer < ActionMailer::Base
   default from: "Bible Challenges <no-reply@biblechallenges.com>"
   layout 'default_mailer'
 
-
   # Send an email to the user, when the membership creation is succesfull.
   def creation_email(membership)
     @membership = membership
@@ -13,5 +12,12 @@ class MembershipMailer < ActionMailer::Base
       subject: "#{@challenge.name} joined!", 
       from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
+
+  def auto_creation_email(membership)
+    @membership = membership
+    @challenge = @membership.challenge
+    @user = @membership.user    
+  end
+
 
 end

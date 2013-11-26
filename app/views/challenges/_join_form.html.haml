@@ -1,14 +1,15 @@
-- if current_user && @challenge.membership_for(current_user).nil?
-  = form_for [@challenge, Membership.new] do |f|
-    .row
-      .col-md-6
-        .control-group
-          = f.label :bible_version, "Bible Version", class: "control-label"      
-          .controls
-            = f.select :bible_version,  Membership::BIBLE_VERSIONS,  { include_blank: false },  { class: 'chosen-select' }
-            %p.help-block Select the Bible versin.
-    .control-group
-      = f.submit 'Join the Challenge', class: 'btn'
+- if current_user
+  - if @challenge.membership_for(current_user).nil?
+    = form_for [@challenge, Membership.new] do |f|
+      .row
+        .col-md-6
+          .control-group
+            = f.label :bible_version, "Bible Version", class: "control-label"      
+            .controls
+              = f.select :bible_version,  Membership::BIBLE_VERSIONS,  { include_blank: false },  { class: 'chosen-select' }
+              %p.help-block Select the Bible versin.
+        .pull-right
+          = f.submit 'Join the Challenge', class: 'btn btn-default', disable_with: 'Please Wait...'
 - else
   = form_for(MembershipForm.new,url: create_for_guest_challenge_memberships_path(@challenge)) do |f|
     .row
@@ -24,4 +25,4 @@
             = f.select :bible_version,  Membership::BIBLE_VERSIONS,  { include_blank: false },  { class: 'chosen-select' }
             %p.help-block Select the Bible versin.
     .control-group
-      = f.submit 'Join the Challenge', class: 'btn'
+      = f.submit 'Join the Challenge', class: 'btn btn-default', disable_with: 'Please Wait...'

@@ -13,6 +13,7 @@
 class Membership < ActiveRecord::Base
 
   attr_accessible :challenge, :user, :bible_version
+  attr_accessor :auto_created_user
 
   # Constants 
   BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV)
@@ -31,7 +32,8 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks 
-  after_create :successful_creation_email
+  after_create :successful_creation_email, unless: 'auto_created_user'
+  after_create :successful_auto_creation_email, unless: 'auto_created_user'
 
   private
 
@@ -41,4 +43,8 @@ class Membership < ActiveRecord::Base
   def successful_creation_email
     MembershipMailer.creation_email(self).deliver
   end
+  def successful_auto_creation_email
+    MembershipMailer.auto_creation_email(self).deliver
+  end
+
 end

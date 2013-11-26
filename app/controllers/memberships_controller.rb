@@ -44,11 +44,12 @@ class MembershipsController < ApplicationController
 
   def create_for_guest
     @membership_form = MembershipForm.new(params[:membership_form])
-    if @membership_form.valid?
-      flash[:notice] = "s."
+    @membership_form.challenge = @challenge
+    if @membership_form.valid? && @membership_form.subscribe
+      flash[:notice] = "Thank you for joining!"
       redirect_to root_url(subdomain: @challenge.subdomain)
     else
-      flash[:notice] = "e."
+      flash[:error] = @membership_form.errors.full_messages.to_sentence
       redirect_to root_url(subdomain: @challenge.subdomain)
     end
   end
