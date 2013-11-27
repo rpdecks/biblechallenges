@@ -11,6 +11,7 @@ describe Chapter do
   describe "Relations" do
     it { should have_many(:challenges).through(:chapter_challenges) }
     it { should have_many(:chapter_challenges) }
+    it { should have_many(:verses) }
   end
 
   describe "Class methods" do

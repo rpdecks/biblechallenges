@@ -19,5 +19,16 @@ class MembershipMailer < ActionMailer::Base
     @user = @membership.user    
   end
 
+  def dailyreading_email(membership, reading)
+    @membership = membership
+    @chapter = reading.chapter
+    @challenge = @membership.challenge
+    @user = @membership.user
+    @reading = reading
+    mail( to: @user.email, 
+      subject: "#{@challenge.name} reading: #{@chapter.book_name} #{@chapter.chapter_number}", 
+    from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
+  end
+
 
 end
