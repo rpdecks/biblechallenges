@@ -13,22 +13,11 @@
       Today's reading, for #{@reading.date.strftime("%b %-d %Y")} is below.
       %br
       %br
-      Here's what will happen next:
-      %ol
-        %li 
-          On the first day of the challenge, you will receive your first email containing your reading for that day.
-        %li
-          After you read your chapter, click on the link at the bottom of that email to log your reading.
-        %li
-          That's it!
-
-      %br
 
       %table
         %thead
         %tr
-          %th Date
-          %th Book name
+          %th Verse
           %th Chapter
         %tbody
           - @challenge.readings.each do |read|
