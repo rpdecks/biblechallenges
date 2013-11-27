@@ -236,6 +236,7 @@ GEM
       rack (>= 1.0.0)
     thor (0.18.1)
     tilt (1.4.1)
+    timecop (0.6.3)
     timers (1.1.0)
     treetop (1.4.15)
       polyglot
@@ -289,5 +290,6 @@ DEPENDENCIES
   sqlite3
   therubyracer
   thin
+  timecop (= 0.6.3)
   turn
   uglifier (>= 1.0.3)

@@ -49,6 +49,7 @@ group :development, :test do
   gem 'better_errors'
   gem 'quiet_assets'
   gem 'annotate'  
+  gem 'timecop', '0.6.3'
 end
 
 group :test do
