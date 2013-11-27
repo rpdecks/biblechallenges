@@ -22,6 +22,7 @@ class MembershipMailer < ActionMailer::Base
   def dailyreading_email(membership, reading)
     @membership = membership
     @chapter = reading.chapter
+    @verses = @chapter.verses.by_version(membership.bible_version)
     @challenge = @membership.challenge
     @user = @membership.user
     @reading = reading
