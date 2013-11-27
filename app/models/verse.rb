@@ -14,5 +14,9 @@
 #
 
 class Verse < ActiveRecord::Base
-  attr_accessible :book_id, :book_name, :chapter_number, :verse_number, :versetext, :version
+  attr_accessible :book_id, :book_name, :chapter_number, :verse_number, :versetext, :version, :chapter_index
+
+  belongs_to :chapter, foreign_key: :chapter_index
+
+
 end
