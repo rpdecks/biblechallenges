@@ -32,6 +32,7 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks 
+  after_create :associate_readings
   after_create :successful_creation_email, unless: 'auto_created_user'
   after_create :successful_auto_creation_email, if: 'auto_created_user'
 
@@ -40,6 +41,10 @@ class Membership < ActiveRecord::Base
   # Callbacks
 
   # - after_create
+  def associate_readings
+    self.readings << challenge.readings
+  end
+  # -- emails
   def successful_creation_email
     MembershipMailer.creation_email(self).deliver
   end
