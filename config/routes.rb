@@ -16,7 +16,7 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :readings, only: [] do
+  resources :membership_readings, only: [] do
     collection do
       put 'log/:hash', action: :log
     end
