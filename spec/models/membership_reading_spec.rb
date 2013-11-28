@@ -10,6 +10,7 @@ describe MembershipReading do
 
     it { should validate_presence_of(:reading_id) }
     it { should validate_presence_of(:membership_id) }
+    it { should ensure_inclusion_of(:state).in_array(MembershipReading::STATES)}
   end
 
   describe "Relations" do

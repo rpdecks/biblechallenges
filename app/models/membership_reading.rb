@@ -5,13 +5,16 @@
 #  id            :integer          not null, primary key
 #  membership_id :integer
 #  reading_id    :integer
-#  state         :string(255)
+#  state         :string(255)      default("unread")
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
 
 class MembershipReading < ActiveRecord::Base
-  attr_accessible :reading, :membership
+  attr_accessible :reading, :membership, :state
+
+  # Constants 
+  STATES = %w(read unread)
 
   # Relations
   belongs_to :membership
@@ -20,4 +23,5 @@ class MembershipReading < ActiveRecord::Base
   # Validations
   validates :membership_id, presence: true
   validates :reading_id, presence: true
+  validates :state, inclusion: {in: STATES}
 end
