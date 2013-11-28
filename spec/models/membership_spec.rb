@@ -42,4 +42,17 @@ describe Membership do
     it { should have_many(:membership_readings) }    
   end
 
+  describe 'Callbacks' do
+    describe 'After create' do
+      describe '#associate_readings' do
+        let(:membership){create(:membership)}
+
+        it 'associates all the readings from its challenge' do
+          expect(membership.readings).to match_array(membership.challenge.readings)
+        end
+
+      end
+    end
+  end
+
 end
