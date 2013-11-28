@@ -1,0 +1,4 @@
+= form_tag membership_readings_log_path,method: "put" do
+  = hidden_field_tag :hash, @hash
+  .control-group
+    = submit_tag "Confirm", class: 'btn btn-default'
