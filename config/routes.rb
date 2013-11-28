@@ -1,4 +1,5 @@
 Biblechallenge::Application.routes.draw do
+
   devise_for :users, controllers: {registrations: "registrations"}
 
   namespace :creator do
@@ -12,6 +13,12 @@ Biblechallenge::Application.routes.draw do
       collection do
         post 'create_for_guest'
       end
+    end
+  end
+
+  resources :readings, only: [] do
+    collection do
+      put 'log/:hash', action: :log
     end
   end
 

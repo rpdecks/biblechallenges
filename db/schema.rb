@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131127042447) do
+ActiveRecord::Schema.define(:version => 20131128052753) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -51,9 +51,9 @@ ActiveRecord::Schema.define(:version => 20131127042447) do
   create_table "membership_readings", :force => true do |t|
     t.integer  "membership_id"
     t.integer  "reading_id"
-    t.string   "state"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "state",         :default => "unread"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   create_table "memberships", :force => true do |t|
