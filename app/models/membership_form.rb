@@ -18,7 +18,10 @@ class MembershipForm
       generated_password = Devise.friendly_token.first(8)
       self.user.password = generated_password
       self.user.password_confirmation = generated_password
-      # TODO... Implementing user auto creation.
+      user.save!
+      membership = Membership.new(user: user, bible_version: bible_version, challenge: challenge)
+      membership.auto_created_user = true
+      membership.save!
     else
       if challenge.membership_for(user).nil?
         challenge.memberships.create({user: user, bible_version: bible_version})

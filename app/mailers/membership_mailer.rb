@@ -16,7 +16,10 @@ class MembershipMailer < ActionMailer::Base
   def auto_creation_email(membership)
     @membership = membership
     @challenge = @membership.challenge
-    @user = @membership.user    
+    @user = @membership.user
+    mail( to: @user.email, 
+      subject: "#{@challenge.name} joined!", 
+      from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")    
   end
 
   def dailyreading_email(membership, reading)
@@ -28,7 +31,7 @@ class MembershipMailer < ActionMailer::Base
     @reading = reading
     mail( to: @user.email, 
       subject: "#{@challenge.name} reading: #{@chapter.book_name} #{@chapter.chapter_number}", 
-    from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
+      from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
 
 

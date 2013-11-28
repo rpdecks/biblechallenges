@@ -66,6 +66,7 @@ Spork.prefork do
     #     --seed 1234
     #config.order = "random"
     config.include Devise::TestHelpers, type: :controller
+    config.include FeatureHelpers, type: :feature
     config.include Capybara::DSL
 
     # Include custom macros here

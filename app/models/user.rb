@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   attr_accessible :username, :first_name, :last_name, :email, :password, 
     :password_confirmation, :remember_me, :provider, :uid
 
+  # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships

@@ -33,7 +33,7 @@ class Membership < ActiveRecord::Base
 
   # Callbacks 
   after_create :successful_creation_email, unless: 'auto_created_user'
-  after_create :successful_auto_creation_email, unless: 'auto_created_user'
+  after_create :successful_auto_creation_email, if: 'auto_created_user'
 
   private
 
