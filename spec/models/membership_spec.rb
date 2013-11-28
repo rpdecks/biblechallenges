@@ -42,6 +42,28 @@ describe Membership do
     it { should have_many(:membership_readings) }    
   end
 
+  describe "Class methods" do
+
+  end
+
+  describe 'Instance methods' do
+    describe '#progress_percentage' do
+      let!(:challenge){create(:challenge, chapterstoread: 'Mar 1 -10')}
+      let(:membership){create(:membership, challenge: challenge)}
+
+      before do
+        membership.membership_readings[0..3].each do |mr|
+          mr.state = 'read'
+          mr.save!
+        end
+      end
+
+      it 'returns the progress percentage based on readings' do
+        expect(membership.progress_percentage).to eql(40)
+      end
+    end
+  end
+
   describe 'Callbacks' do
     describe 'After create' do
       describe '#associate_readings' do

@@ -36,6 +36,10 @@ class Membership < ActiveRecord::Base
   after_create :successful_creation_email, unless: 'auto_created_user'
   after_create :successful_auto_creation_email, if: 'auto_created_user'
 
+  def progress_percentage
+    
+  end
+
   private
 
   # Callbacks
