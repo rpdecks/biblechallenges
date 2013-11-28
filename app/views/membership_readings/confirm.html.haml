@@ -1,4 +1,15 @@
-= form_tag membership_readings_log_path,method: "put" do
-  = hidden_field_tag :hash, @hash
-  .control-group
-    = submit_tag "Confirm", class: 'btn btn-default'
+.center-block
+
+  - if @membership_reading
+    
+    %h2.element
+      #{@reading.chapter.book_name}  #{@reading.chapter.chapter_number}
+    
+    Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+    %br
+    = form_tag membership_readings_log_path,method: "put", class: 'form-inline' do
+      = hidden_field_tag :hash, @hash
+      Did you complete #{@reading.chapter.book_name} #{@reading.chapter.chapter_number}?
+      = submit_tag "Yes", class: 'btn btn-default'
+  - else
+    Please check the link you receive in your email.
