@@ -48,7 +48,7 @@ describe Membership do
 
   describe 'Instance methods' do
     describe '#progress_percentage' do
-      let!(:challenge){create(:challenge, chapterstoread: 'Mar 1 -10')}
+      let!(:challenge){create(:challenge, chapterstoread: 'Mar 1 -7')}
       let(:membership){create(:membership, challenge: challenge)}
 
       before do
@@ -59,7 +59,7 @@ describe Membership do
       end
 
       it 'returns the progress percentage based on readings' do
-        expect(membership.progress_percentage).to eql(40)
+        expect(membership.progress_percentage).to eql(57)
       end
     end
   end

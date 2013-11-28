@@ -13,6 +13,9 @@
 class MembershipReading < ActiveRecord::Base
   attr_accessible :reading, :membership, :state
 
+  # Scopes
+  scope :read, -> { where(state: 'read') }
+
   # Constants 
   STATES = %w(read unread)
 
