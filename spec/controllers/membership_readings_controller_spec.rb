@@ -58,12 +58,12 @@ describe MembershipReadingsController do
 
     context 'with a valid hash' do
       it "finds membership_reading" do
-        put :log, hash: hash
+        put :log, hash: hash, format:'js'
         expect(assigns(:membership_reading)).to eql(membership_reading)
       end
 
       it "changes membership_reading state to 'read'" do
-        put :log, hash: hash
+        put :log, hash: hash, format:'js'
         expect(membership_reading.reload.state).to eql('read')
       end
     end

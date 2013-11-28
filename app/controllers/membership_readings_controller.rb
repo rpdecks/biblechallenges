@@ -17,9 +17,7 @@ class MembershipReadingsController < ApplicationController
   def log
     @membership_reading.state = 'read'
     @membership_reading.save!
-    render_nothing
   end
-
 
   private
 
