@@ -10,9 +10,9 @@ describe MembershipForm do
   end
 
   describe '#subscribe' do
-    
+    let!(:challenge)   {create(:challenge)}
+
     context 'when the email belongs to an user already registered' do
-      let(:challenge)   {create(:challenge)}
       let(:user)        {create(:user)}
       let(:membership_form) {build(:membership_form, email: user.email, challenge: challenge)}
 
@@ -50,6 +50,22 @@ describe MembershipForm do
 
     end
 
+    context 'when the email belongs to a new user' do
+      let(:email){'super_new_email@test.com'}
+      let!(:membership_form) {build(:membership_form, email: email, challenge: challenge)}
+
+      it "creates a new User" do
+        membership_form.subscribe
+        expect(membership_form.user.email).to eql(email)
+      end
+
+      it "creates the membership" do
+        expect {
+          membership_form.subscribe
+        }.to change(Membership,:count).by(1)
+      end
+
+    end
 
 
   end

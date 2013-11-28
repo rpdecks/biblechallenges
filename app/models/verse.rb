@@ -15,8 +15,10 @@
 #
 
 class Verse < ActiveRecord::Base
+
   attr_accessible :book_id, :book_name, :chapter_number, :verse_number, :versetext, :version, :chapter_index
 
+  # Relations
   belongs_to :chapter, foreign_key: :chapter_index
 
   def self.by_version(version)
