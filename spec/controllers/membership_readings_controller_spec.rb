@@ -6,7 +6,7 @@ describe MembershipReadingsController do
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){membership.membership_readings.first}
-  let(:hash){Hashids.new("ReAdInG LoG",8).encrypt(membership_reading.id)}
+  let(:hash){HashidsGenerator.instance.encrypt(membership_reading.id)}
 
   before do
     @request.host = "#{challenge.subdomain}.test.com"
