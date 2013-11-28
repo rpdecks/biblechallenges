@@ -17,15 +17,16 @@ Biblechallenge::Application.routes.draw do
   end
 
   resources :membership_readings, only: [] do
-    collection do
-      put 'log/:hash', action: :log
-    end
   end
 
   constraints(Subdomain) do
     match '/' => 'challenges#show'
     match '/my-membership' => 'memberships#show', as: 'my_membership'
     match '/memberships' => 'memberships#index'
+
+    # Loging readings
+    match '/reading/confirm/:hash' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
+    match '/reading/log/:hash' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
   end
 
   root to: 'high_voltage/pages#show', id: 'home'
