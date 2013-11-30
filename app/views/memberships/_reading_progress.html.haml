@@ -1,0 +1,5 @@
+%h4
+  Readings progress
+.progress
+  .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{@membership.progress_percentage}", role: "progressbar", style: "width: #{@membership.progress_percentage}%;"}
+    %span.sr-only #{@membership.progress_percentage}% Complete
