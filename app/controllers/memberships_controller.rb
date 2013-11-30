@@ -2,6 +2,7 @@ class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
   before_filter :find_challenge
+  before_filter :find_membership_from_hash, only: [:unsubscribe_from_email]
   before_filter :require_challenge_owner, only: [:index]
 
   def index
@@ -46,7 +47,7 @@ class MembershipsController < ApplicationController
     @membership_form = MembershipForm.new(params[:membership_form])
     @membership_form.challenge = @challenge
     if @membership_form.valid? && @membership_form.subscribe
-      flash[:notice] = "Thank you for joining!"
+      flash[:notice] = "Thank you for joining, check your email inbox!"
       redirect_to root_url(subdomain: @challenge.subdomain)
     else
       flash[:error] = @membership_form.errors.full_messages.to_sentence
@@ -55,11 +56,17 @@ class MembershipsController < ApplicationController
   end
 
   def unsubscribe_from_email
-    render_nothing
+    if @membership
+      @hash = params[:hash]
+      @user = @membership.user
+    else
+      flash[:error] = "This unsubscribe link doesn't exist"
+    end
+    render layout: 'from_email'
   end
 
   def destroy
-    @membership = current_user.memberships.find(params[:id])
+    @membership = (params[:id].blank?)? find_membership_from_hash : current_user.memberships.find(params[:id])
     @membership.destroy
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
     redirect_to root_url(subdomain:@challenge.subdomain)
@@ -70,6 +77,12 @@ class MembershipsController < ApplicationController
   def find_challenge
     @challenge = Challenge.find_by_subdomain(request.subdomain) || Challenge.find_by_id(params[:challenge_id])
     redirect_to root_url(subdomain:false) if @challenge.nil?
+  end
+
+  def find_membership_from_hash
+    hashids = HashidsGenerator.instance
+    membership_id = hashids.decrypt(params[:hash])
+    @membership = Membership.find_by_id(membership_id)    
   end
 
   def require_challenge_owner
