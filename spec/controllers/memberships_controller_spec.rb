@@ -4,12 +4,22 @@ describe MembershipsController do
 
   let(:owner){create(:user)}
   let(:challenge){create(:challenge, owner: owner)}
+  let(:user){create(:user)}
+  let(:membership){challenge.join_new_member(user)}
+  let(:membership_reading){membership.membership_readings.first}
+  let(:hash){HashidsGenerator.instance.encrypt(membership_reading.id)}
+
+
+
   before do
     @request.host = "#{challenge.subdomain}.test.com"
   end
 
   describe "Routing" do
-    it { { get: "challenges/#{challenge.id}/memberships/"}.should route_to(controller: "memberships", action: "index", challenge_id: "#{challenge.id}") }
+    let(:subdomainurl) { "http://#{challenge.subdomain}.test.com" }
+    it {expect({get: "challenges/#{challenge.id}/memberships/"}).to route_to(controller: "memberships", action: "index", challenge_id: "#{challenge.id}")}
+    it {expect({get: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'unsubscribe_from_email', hash: hash)}
+    it {expect({delete: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'destroy', hash: hash)}    
   end
 
   describe 'Guest access' do
