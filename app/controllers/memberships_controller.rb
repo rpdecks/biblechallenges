@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
 
-  before_filter :authenticate_user!, except: [:show, :create, :create_for_guest]
+  before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
   before_filter :find_challenge
   before_filter :require_challenge_owner, only: [:index]
 
@@ -52,6 +52,10 @@ class MembershipsController < ApplicationController
       flash[:error] = @membership_form.errors.full_messages.to_sentence
       redirect_to root_url(subdomain: @challenge.subdomain)
     end
+  end
+
+  def unsubscribe_from_email
+    render_nothing
   end
 
   def destroy
