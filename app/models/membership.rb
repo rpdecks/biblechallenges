@@ -12,6 +12,8 @@
 
 class Membership < ActiveRecord::Base
 
+  include UrlHashable
+
   attr_accessible :challenge, :user, :bible_version
   attr_accessor :auto_created_user
 
