@@ -6,7 +6,7 @@ describe MembershipReadingsController do
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){membership.membership_readings.first}
-  let(:hash){HashidsGenerator.instance.encrypt(membership_reading.id)}
+  let(:hash){membership_reading.hash_for_url}
 
   before do
     @request.host = "#{challenge.subdomain}.test.com"
@@ -24,6 +24,11 @@ describe MembershipReadingsController do
       it "renders the :new template" do
         get :confirm, hash: hash
         expect(response).to render_template(:confirm)
+      end
+
+      it "renders with email layout" do
+        get :confirm, hash: hash
+        should render_with_layout('from_email')
       end
 
       it "finds the membership_reading's user" do
@@ -44,6 +49,11 @@ describe MembershipReadingsController do
       it "renders the :new template" do
         get :confirm, hash: hash
         expect(response).to render_template(:confirm)
+      end
+
+      it "renders with email layout" do
+        get :confirm, hash: hash
+        should render_with_layout('from_email')
       end
 
       it 'sets a proper flash message' do

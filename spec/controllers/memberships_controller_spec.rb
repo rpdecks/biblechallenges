@@ -6,10 +6,7 @@ describe MembershipsController do
   let(:challenge){create(:challenge, owner: owner)}
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
-  let(:membership_reading){membership.membership_readings.first}
-  let(:hash){HashidsGenerator.instance.encrypt(membership_reading.id)}
-
-
+  let(:hash){membership.hash_for_url}
 
   before do
     @request.host = "#{challenge.subdomain}.test.com"
@@ -22,6 +19,45 @@ describe MembershipsController do
     it {expect({delete: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'destroy', hash: hash)}    
   end
 
+  describe 'GET#unsubscribe_from_email' do
+    context 'with a valid hash' do
+      it "renders the :new template" do
+        get :unsubscribe_from_email, hash: hash
+        expect(response).to render_template(:unsubscribe_from_email)
+      end
+
+      it "renders with email layout" do
+        get :unsubscribe_from_email, hash: hash
+       should render_with_layout('from_email')
+      end
+
+      it "finds the membership" do
+        get :unsubscribe_from_email, hash: hash
+        expect(assigns(:membership)).to eql(membership)
+      end
+    end
+
+    context 'with an invalid hash' do
+      let(:hash){'gB0NV05e'}
+
+      it "renders the :new template" do
+        get :unsubscribe_from_email, hash: hash
+        expect(response).to render_template(:unsubscribe_from_email)
+      end
+
+      it "renders with email layout" do
+        get :unsubscribe_from_email, hash: hash
+        should render_with_layout('from_email')
+      end
+
+      it 'sets a proper flash message' do
+        get :unsubscribe_from_email, hash: hash
+        should set_the_flash[:error].to("This unsubscribe link doesn't exist")
+      end
+    end
+
+  end
+
   describe 'Guest access' do
 
     describe 'GET#index' do
@@ -30,7 +66,6 @@ describe MembershipsController do
         expect(response).to redirect_to new_user_session_url
       end
     end
-
 
     describe 'GET#show (my-membership)' do
       it "redirects to the challenge" do
