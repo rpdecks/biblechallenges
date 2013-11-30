@@ -32,4 +32,11 @@ class MembershipReading < ActiveRecord::Base
   validates :reading_id, presence: true
   validates :state, inclusion: {in: STATES}
 
+
+  def self.send_daily_emails
+    MembershipReading.all.each do |mr|
+     MembershipReadingMailer.daily_reading_email(mr).deliver if Date.today == mr.reading.date
+    end
+  end
+
 end

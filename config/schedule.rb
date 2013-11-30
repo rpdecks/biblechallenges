@@ -18,3 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+
+every 1.day, at: '6:00 am' do
+  runner "MembershipReading.send_daily_emails"
+end
