@@ -15,6 +15,7 @@ class MembershipReadingsController < ApplicationController
   end
 
   def log
+    @membership = @membership_reading.membership
     @membership_reading.state = 'read'
     @membership_reading.save!
   end

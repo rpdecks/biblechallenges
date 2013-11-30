@@ -3,10 +3,9 @@
   - if @membership_reading
     %h2.element
       #{@reading.chapter.book_name}  #{@reading.chapter.chapter_number}
-    
-    Hello#{ " " + @user.first_name unless @user.first_name.blank?},
-    %br
     %div#confirmation_container
+      Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+      %br
       - if @membership_reading.state == 'unread'
         = form_tag membership_readings_log_path,method: "put", remote: true, class: 'form-inline' do
           = hidden_field_tag :hash, @hash

@@ -5,4 +5,4 @@ $('.header').after(
   "  You have successfully confirmed this read."+
   "</div>"
 )
-$('#confirmation_container').html("");
+$('#confirmation_container').html("<%= escape_javascript(render '/memberships/reading_progress')%>");
