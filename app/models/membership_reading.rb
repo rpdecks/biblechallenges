@@ -11,6 +11,9 @@
 #
 
 class MembershipReading < ActiveRecord::Base
+
+  include UrlHashable
+
   attr_accessible :reading, :membership, :state
 
   # Scopes
@@ -28,9 +31,5 @@ class MembershipReading < ActiveRecord::Base
   validates :membership_id, presence: true
   validates :reading_id, presence: true
   validates :state, inclusion: {in: STATES}
-
-  def hash_for_url
-    HashidsGenerator.instance.encrypt(id)
-  end
 
 end
