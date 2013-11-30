@@ -2,7 +2,7 @@ class MembershipReadingsController < ApplicationController
 
   before_filter :find_membership_reading
 
-  layout 'reading_logging'
+  layout 'from_email'
 
   def confirm
     if @membership_reading
