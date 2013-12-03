@@ -13,7 +13,6 @@ gem 'activerecord-import', '0.3.1' #used to seed data
 gem 'chosen-rails'
 gem 'thin'
 gem 'hashids', '~> 0.3.0'
-gem 'whenever', require: false
 gem 'sidekiq', '~> 2.17.0'
 
 # Bundle edge Rails instead:
@@ -50,7 +49,7 @@ group :development, :test do
   gem 'capybara', '2.1.0'
   gem 'better_errors'
   gem 'quiet_assets'
-  gem 'annotate'  
+  gem 'annotate'
   gem 'timecop', '0.6.3'
 end
 
