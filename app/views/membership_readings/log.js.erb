@@ -1,8 +1,11 @@
+var html = ""
+html += "<div class='alert alert-success fade in'>"
+html += "  <button class='close' data-dismiss='alert'>×</button>"
+html += "  You have successfully confirmed this read."
+html += "</div>"
 
-$('.header').after(
-  "<div class='alert alert-success fade in'>"+
-  "  <button class='close' data-dismiss='alert'>×</button>"+
-  "  You have successfully confirmed this read."+
-  "</div>"
-)
+$('.flash-messages').prepend(
+	$(html).hide().fadeIn('fast')
+);
+
 $('#confirmation_container').html("<%= escape_javascript(render '/memberships/reading_progress')%>");

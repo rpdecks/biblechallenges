@@ -10,7 +10,18 @@
  *
  *= require_self
  *= require_tree .
- *= require bootstrap
+ *= require base
  *= require bootstrap-datepicker
  *= require chosen
  */
+
+.chosen-container-single {
+	.chosen-single{
+		height: 30px !important;
+		line-height: 29px !important;
+	}
+	.chosen-single div b {
+		margin-top: 3px;
+	}
+
+}

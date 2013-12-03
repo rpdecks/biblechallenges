@@ -1,7 +1,7 @@
 %h3
   My membership for #{@challenge.name}
   .pull-right
-    = link_to raw("<i class='icon-warning-sign'></i> Unsubscribe"),challenge_membership_path(@challenge,@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger bt-small"
+    = link_to raw("<i class='icon-warning-sign'></i> Unsubscribe"),challenge_membership_path(@challenge,@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger btn-sm"
 
 %br
 = render 'reading_progress'
