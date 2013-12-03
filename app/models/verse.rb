@@ -11,8 +11,21 @@
 #  book_id        :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  chapter_index  :integer
 #
 
 class Verse < ActiveRecord::Base
-  attr_accessible :book_id, :book_name, :chapter_number, :verse_number, :versetext, :version
+
+  attr_accessible :book_id, :book_name, :chapter_number, :verse_number, :versetext, :version, :chapter_index
+
+  # Relations
+  belongs_to :chapter, foreign_key: :chapter_index
+
+  def self.by_version(version)
+    #if the chosen version is not in the verses table, go with ASV
+    #this default version should probably be in a constant  (ASV)
+    response = where(version: version)
+    response.any? ? response : where(version: "ASV")
+  end
+
 end

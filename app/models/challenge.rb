@@ -17,6 +17,13 @@
 class Challenge < ActiveRecord::Base
   attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapterstoread
 
+  # Relations
+  has_many :memberships, dependent: :destroy
+  has_many :members, through: :memberships, source: :user
+  has_many :readings
+  belongs_to :owner, class_name: "User", foreign_key: :owner_id
+
+  # Validations
   validates :begindate, presence: true
   validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
@@ -24,18 +31,16 @@ class Challenge < ActiveRecord::Base
   validates_format_of   :subdomain,
                         with: /^[a-z\d]+(-[a-z\d]+)*$/i,
                         message: 'invalid format'
-
   validates :owner_id, presence: true
   validates :chapterstoread, presence: true
+  validate  :validate_dates
+  validate  :changes_allowed_when_activated, if: "active"
 
-  validate :validate_dates
-
-  has_many :memberships, dependent: :destroy
-  has_many :members, through: :memberships, source: :user
-  has_many :readings
-  belongs_to :owner, class_name: "User", foreign_key: :owner_id
-  before_validation :calculate_enddate, if: "enddate.nil? && !chapterstoread.blank?"
-  after_create :successful_creation_email
+  # Callbacks 
+  before_validation :calculate_enddate, 
+    if: "(enddate.nil? && !chapterstoread.blank?) || (!new_record? && (begindate_changed? || chapterstoread_changed?) && !active)"
+  after_create      :successful_creation_email
+  after_save        :generate_readings
 
   def membership_for(user)
     memberships.find_by_user_id(user.id)
@@ -61,6 +66,7 @@ class Challenge < ActiveRecord::Base
 
   private
 
+  # Validations
   def validate_dates
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
@@ -68,13 +74,33 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  def changes_allowed_when_activated
+    if begindate_changed? || chapterstoread_changed? || enddate_changed?
+      errors[:change_not_allowed] << "because this challenge is active"
+    end    
+  end
+
+  # Callbacks
+
+  # - after_create
   def successful_creation_email
     ChallengeMailer.creation_email(self).deliver
   end
+  
+  def generate_readings
+    # Only generate the reading on the cases below.
+    if (id_changed? || begindate_changed? || chapterstoread_changed?) && !active
+      readings.destroy_all
+      Chapter.search(chapterstoread).each_with_index do |chapter,i|
+        readings.create(chapter: chapter, date: (begindate + i.days))
+      end
+    end
+  end
 
+  # - before_validation
   def calculate_enddate
-    response = Chapter.parse_query(chapterstoread)    
-    self.enddate = begindate + response[1].length.days if response[1]
+    response = Parser.parse_query(chapterstoread)    
+    self.enddate = begindate + (response[1].length - 1).days if response[1]
   end
 
 

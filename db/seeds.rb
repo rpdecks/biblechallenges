@@ -22,12 +22,13 @@ end
 MassImporter.import Chapter, "db/chapters.csv", false, headers: true
 MassImporter.import Bookfrag, "db/bookfrags.csv", false, headers: true
 
-MassImporter.import Verse, "db/versions/ASV_OLD.tsv", false, :col_sep => "\t", headers: true
-MassImporter.import Verse, "db/versions/ASV.tsv", true, :col_sep => "\t", headers: true
-MassImporter.import Verse, "db/versions/ESV.tsv", true, :col_sep => "\t", headers: true
-MassImporter.import Verse, "db/versions/KJV.tsv", true, :col_sep => "\t", headers: true
-MassImporter.import Verse, "db/versions/NASB.tsv", true, :col_sep => "\t", headers: true
-MassImporter.import Verse, "db/versions/NKJV.tsv", true, :col_sep => "\t", headers: true
+MassImporter.import Verse, "db/versions/ALL.tsv", false, :col_sep => "\t", headers: true
+#MassImporter.import Verse, "db/versions/ASV_OLD.tsv", false, :col_sep => "\t", headers: true
+#MassImporter.import Verse, "db/versions/ASV.tsv", true, :col_sep => "\t", headers: true
+#MassImporter.import Verse, "db/versions/ESV.tsv", true, :col_sep => "\t", headers: true
+#MassImporter.import Verse, "db/versions/KJV.tsv", true, :col_sep => "\t", headers: true
+#MassImporter.import Verse, "db/versions/NASB.tsv", true, :col_sep => "\t", headers: true
+#MassImporter.import Verse, "db/versions/NKJV.tsv", true, :col_sep => "\t", headers: true
 
 #This below is for the verses, which come from tab delimited files
 

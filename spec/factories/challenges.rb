@@ -7,11 +7,9 @@ FactoryGirl.define do
   factory :challenge do
     subdomain     {generate(:subdomain)}
     name          {Faker::Name.name}
-    begindate     {Time.now}
-    enddate       {Time.now + 1.day}
-    chapterstoread "Matthew 1 to Matthew 5"
+    begindate     {Date.today}
+    chapterstoread "Matthew 1 -5"
     association :owner, factory: :user
-
 
     factory :invalid_challenge do
       subdomain nil

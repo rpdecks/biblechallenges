@@ -4,12 +4,58 @@ describe MembershipsController do
 
   let(:owner){create(:user)}
   let(:challenge){create(:challenge, owner: owner)}
+  let(:user){create(:user)}
+  let(:membership){challenge.join_new_member(user)}
+  let(:hash){membership.hash_for_url}
+
   before do
     @request.host = "#{challenge.subdomain}.test.com"
   end
 
   describe "Routing" do
-    it { { get: "challenges/#{challenge.id}/memberships/"}.should route_to(controller: "memberships", action: "index", challenge_id: "#{challenge.id}") }
+    let(:subdomainurl) { "http://#{challenge.subdomain}.test.com" }
+    it {expect({get: "challenges/#{challenge.id}/memberships/"}).to route_to(controller: "memberships", action: "index", challenge_id: "#{challenge.id}")}
+    it {expect({get: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'unsubscribe_from_email', hash: hash)}
+    it {expect({delete: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'destroy', hash: hash)}    
+  end
+
+  describe 'GET#unsubscribe_from_email' do
+    context 'with a valid hash' do
+      it "renders the :new template" do
+        get :unsubscribe_from_email, hash: hash
+        expect(response).to render_template(:unsubscribe_from_email)
+      end
+
+      it "renders with email layout" do
+        get :unsubscribe_from_email, hash: hash
+       should render_with_layout('from_email')
+      end
+
+      it "finds the membership" do
+        get :unsubscribe_from_email, hash: hash
+        expect(assigns(:membership)).to eql(membership)
+      end
+    end
+
+    context 'with an invalid hash' do
+      let(:hash){'gB0NV05e'}
+
+      it "renders the :new template" do
+        get :unsubscribe_from_email, hash: hash
+        expect(response).to render_template(:unsubscribe_from_email)
+      end
+
+      it "renders with email layout" do
+        get :unsubscribe_from_email, hash: hash
+        should render_with_layout('from_email')
+      end
+
+      it 'sets a proper flash message' do
+        get :unsubscribe_from_email, hash: hash
+        should set_the_flash[:error].to("This unsubscribe link doesn't exist")
+      end
+    end
+
   end
 
   describe 'Guest access' do
@@ -17,10 +63,9 @@ describe MembershipsController do
     describe 'GET#index' do
       it "redirects to the root" do
         get :index
-        expect(response).to redirect_to root_url(subdomain:false)
+        expect(response).to redirect_to new_user_session_url
       end
     end
-
 
     describe 'GET#show (my-membership)' do
       it "redirects to the challenge" do
@@ -63,11 +108,31 @@ describe MembershipsController do
           expect(response).to render_template :show
         end
       end
-      
+
+      describe 'DELETE#destroy' do
+
+        it "finds the current_user membership" do
+          delete :destroy, challenge_id: challenge, id: membership
+          expect(assigns(:membership)).to eql(membership)
+        end
+
+        it "destroys the membership" do
+          expect{
+            delete :destroy, challenge_id: challenge, id: membership
+          }.to change(Membership,:count).by(-1)
+        end
+
+        it "redirects to the challenge url" do
+          delete :destroy, challenge_id: challenge, id: membership
+          expect(response).to redirect_to root_url(subdomain:challenge.subdomain)
+        end
+        
+      end
+
     end
   end
 
-  describe 'Owenr challenge access' do
+  describe 'Owner challenge access' do
     before{sign_in :user, owner}
     describe 'GET#index' do
       it "collects memberships into @memberships" do
