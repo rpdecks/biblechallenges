@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/esbanarango/bootswatch-rails.git
+  revision: c72f17511ef740cb7733efb8b2c3aaa528e7a789
+  specs:
+    bootswatch-rails (3.0.0)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -41,6 +48,8 @@ GEM
       erubis (>= 2.6.6)
     bootstrap-datepicker-rails (1.1.1.9)
       railties (>= 3.0)
+    bootstrap-sass (3.0.2.1)
+      sass (~> 3.2)
     builder (3.0.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -271,6 +280,8 @@ DEPENDENCIES
   annotate
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
+  bootstrap-sass (~> 3.0.2.0)
+  bootswatch-rails!
   capybara (= 2.1.0)
   chosen-rails
   coffee-rails (~> 3.2.1)
@@ -294,7 +305,7 @@ DEPENDENCIES
   rake-performance (~> 0.1.0)
   rspec-rails (~> 2.14.0)
   ruby_parser
-  sass-rails (~> 3.2.3)
+  sass-rails (>= 3.2)
   shoulda-matchers (= 2.4.0)
   sidekiq (~> 2.17.0)
   simple_form (= 2.1)
