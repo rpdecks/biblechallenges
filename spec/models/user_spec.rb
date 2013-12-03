@@ -32,7 +32,7 @@ describe User do
   end
 
   describe "Relations" do
-    it { should have_many(:createdchallenges) }
+    it { should have_many(:created_challenges) }
     it { should have_many(:memberships) }
     it { should have_many(:challenges).through(:memberships)}
   end

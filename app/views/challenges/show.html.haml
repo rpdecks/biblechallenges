@@ -8,7 +8,9 @@
   %p 
   %br 
 
-  %h4 Challenge Details
+  = render 'join_form'
+
+  %h3 Challenge Details
 
   %table.table.table-striped.table-condensed
     %tr
@@ -21,4 +23,17 @@
       %td Bible Chapters:
       %td= @challenge.chapterstoread
 
-  = render 'join_form'
+  %h4 Readings
+
+  %table.table.table-striped.table-condensed
+    %thead
+    %tr
+      %th Date
+      %th Book name
+      %th Chapter
+    %tbody
+      - @readings.each do |read|
+        %tr
+          %td= read.date.strftime("%a, %-d %b %Y")
+          %td= read.chapter.book_name
+          %td= read.chapter.chapter_number

@@ -25,7 +25,7 @@
     %td= @challenge.chapterstoread
   %tr
     %td 
-      = button_to 'Activate my Challenge', activate_creator_challenge_path(@challenge), :class => 'btn btn-primary', :method => 'get'
+      = challenge_status_button
     %td 
       = button_to 'Edit my Challenge', edit_creator_challenge_path(@challenge), :class => 'btn btn-primary', :method => 'get'
 

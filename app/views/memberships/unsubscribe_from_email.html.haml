@@ -1,0 +1,12 @@
+.center-block
+
+  - if @membership
+    Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+    %br
+    %div
+      = form_tag membership_unsubscribe_destroy_path,method: "delete", class: 'form-inline' do
+        = hidden_field_tag :hash, @hash
+        Do you really want to be unsubscribed from #{@challenge.name} challenge?
+        = submit_tag "Yes", class: 'btn btn-default btn-small', disable_with: 'Please wait...'
+  - else
+    Please check the link you received in your email or maybe you have been already unsubscribed.

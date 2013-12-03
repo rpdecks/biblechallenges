@@ -1,0 +1,17 @@
+.center-block
+
+  - if @membership_reading
+    %h2.element
+      #{@reading.chapter.book_name}  #{@reading.chapter.chapter_number}
+    %div#confirmation_container
+      Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+      %br
+      - if @membership_reading.state == 'unread'
+        = form_tag membership_readings_log_path,method: "put", remote: true, class: 'form-inline' do
+          = hidden_field_tag :hash, @hash
+          Did you complete #{@reading.chapter.book_name} #{@reading.chapter.chapter_number}?
+          = submit_tag "Yes", class: 'btn btn-default btn-small', disable_with: 'Please wait...'
+      - else
+        You have already confirmed this read.
+  - else
+    Please check the link you received in your email.

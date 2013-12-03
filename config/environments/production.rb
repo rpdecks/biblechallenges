@@ -63,6 +63,8 @@ Biblechallenge::Application.configure do
 
 
   config.action_mailer.delivery_method = :smtp
+  
+  config.action_mailer.default_url_options = { host: 'bcstaging.com' }
   config.action_mailer.smtp_settings = {
     :address              => "smtp.sendgrid.net",
     :port                 => 587,

@@ -2,15 +2,15 @@ class Creator::ChallengesController < ApplicationController
   before_filter :authenticate_user!  #, except: [:new, :create]
 
   def index
-    @challenges = current_user.createdchallenges
+    @challenges = current_user.created_challenges
   end
 
   def show
-    @challenge = current_user.createdchallenges.find(params[:id])
+    @challenge = current_user.created_challenges.find(params[:id])
   end
 
   def update
-    @challenge = current_user.createdchallenges.find(params[:id])
+    @challenge = current_user.created_challenges.find(params[:id])
     if @challenge.update_attributes(params[:challenge])
       redirect_to creator_challenge_path(@challenge)
     else
@@ -19,7 +19,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def activate
-    @challenge = current_user.createdchallenges.find(params[:id])
+    @challenge = current_user.created_challenges.find(params[:id])
     @challenge.active = true
     if @challenge.save
       flash[:notice] = "You have successfully activated your Bible Challenge"
@@ -30,7 +30,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def edit
-    @challenge = current_user.createdchallenges.find(params[:id])
+    @challenge = current_user.created_challenges.find(params[:id])
   end
 
   def new
@@ -38,7 +38,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def create
-    @challenge = current_user.createdchallenges.build(params[:challenge])
+    @challenge = current_user.created_challenges.build(params[:challenge])
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
       redirect_to creator_challenge_path(@challenge)

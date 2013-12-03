@@ -16,9 +16,8 @@ describe Reading do
   describe "Relations" do
     it { should belong_to(:challenge) }
     it { should belong_to(:chapter) }
-
-    it { should have_many(:users).through(:user_readings) }
-    it { should have_many(:user_readings) }
+    it { should have_many(:memberships).through(:membership_readings) }
+    it { should have_many(:membership_readings) }
   end
 
 end

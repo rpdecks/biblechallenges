@@ -10,8 +10,11 @@ describe Membership do
 
     it { should validate_presence_of(:challenge_id) }
     it { should validate_presence_of(:bible_version) }
-    it { should validate_uniqueness_of(:user_id).scoped_to(:challenge_id) }
     it { should ensure_inclusion_of(:bible_version).in_array(Membership::BIBLE_VERSIONS)}
+    it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
+      create(:membership)
+      should validate_uniqueness_of(:user_id).scoped_to(:challenge_id)
+    end
 
     it "is invalid without a challenge_id" do
       membership = build(:membership, challenge_id: nil)
@@ -35,6 +38,43 @@ describe Membership do
   describe "Relations" do
     it { should belong_to(:user) }
     it { should belong_to(:challenge) }
+    it { should have_many(:readings).through(:membership_readings) }
+    it { should have_many(:membership_readings) }    
+  end
+
+  describe "Class methods" do
+
+  end
+
+  describe 'Instance methods' do
+    describe '#progress_percentage' do
+      let!(:challenge){create(:challenge, chapterstoread: 'Mar 1 -7')}
+      let(:membership){create(:membership, challenge: challenge)}
+
+      before do
+        membership.membership_readings[0..3].each do |mr|
+          mr.state = 'read'
+          mr.save!
+        end
+      end
+
+      it 'returns the progress percentage based on readings' do
+        expect(membership.progress_percentage).to eql(57)
+      end
+    end
+  end
+
+  describe 'Callbacks' do
+    describe 'After create' do
+      describe '#associate_readings' do
+        let(:membership){create(:membership)}
+
+        it 'associates all the readings from its challenge' do
+          expect(membership.readings).to match_array(membership.challenge.readings)
+        end
+
+      end
+    end
   end
 
 end
