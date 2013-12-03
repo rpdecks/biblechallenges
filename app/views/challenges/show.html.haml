@@ -1,12 +1,18 @@
 .container
-  %legend 
+
+  / My memberhip button
+  - if current_user && @challenge.membership_for(current_user)
+    .pull-right
+      = link_to 'My Membership', '/my-membership', class: 'btn btn-primary btn-xs'
+
+  %legend
     = @challenge.name
     Bible Reading Challenge!
-  %p 
-    Each day's reading portion will be sent to your inbox, and you can click 
+  %p
+    Each day's reading portion will be sent to your inbox, and you can click
     a link in the email to easily update your stats online.
-  %p 
-  %br 
+  %p
+  %br
 
   = render 'join_form'
 
@@ -23,14 +29,15 @@
       %td Bible Chapters:
       %td= @challenge.chapterstoread
 
+  %hr
   %h4 Readings
 
-  %table.table.table-striped.table-condensed
+  %table.table.table-striped.table-bordered.table-hover
     %thead
-    %tr
-      %th Date
-      %th Book name
-      %th Chapter
+      %tr
+        %th Date
+        %th Book name
+        %th Chapter
     %tbody
       - @readings.each do |read|
         %tr
