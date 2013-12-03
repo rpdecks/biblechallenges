@@ -26,7 +26,7 @@ describe ChallengesController do
       end
 
       it "redirects to the log in page" do
-        get :index 
+        get :index
         expect(response).to redirect_to new_user_session_path
       end
 
@@ -42,7 +42,7 @@ describe ChallengesController do
 
   describe 'User access' do
 
-    let(:current_user) { create(:user) }    
+    let(:current_user) { create(:user) }
     let!(:membership) {create(:membership, user: current_user, challenge: challenge)}
 
     before do
