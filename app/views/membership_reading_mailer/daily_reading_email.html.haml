@@ -7,7 +7,7 @@
         =@chapter.chapter_number
 
       %div{style:'float:right'}
-        You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} (#{@membership.progress_percentage}%)        
+        You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} (#{@membership.progress_percentage}%)
       %br
       Hello#{ " " + @user.first_name unless @user.first_name.blank?},
       %br
@@ -19,7 +19,7 @@
         %center
           #{@chapter.book_name}  #{@chapter.chapter_number} (#{@membership.bible_version.upcase})
 
-      %ul
+      %ol
         - @verses.each do |v|
           %li=v.versetext
 

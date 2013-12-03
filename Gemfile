@@ -14,6 +14,7 @@ gem 'chosen-rails'
 gem 'thin'
 gem 'hashids', '~> 0.3.0'
 gem 'sidekiq', '~> 2.17.0'
+gem 'rake-performance', '~> 0.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
