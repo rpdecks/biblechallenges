@@ -16,6 +16,8 @@ class MembershipReadingsController < ApplicationController
 
   def log
     @membership = @membership_reading.membership
+    @reading = @membership_reading.reading
+
     @membership_reading.state = 'read'
     @membership_reading.save!
   end
@@ -25,7 +27,7 @@ class MembershipReadingsController < ApplicationController
   def find_membership_reading
     hashids = HashidsGenerator.instance
     membership_reading_id = hashids.decrypt(params[:hash])
-    @membership_reading = MembershipReading.find_by_id(membership_reading_id)    
+    @membership_reading = MembershipReading.find_by_id(membership_reading_id)
   end
 
 end

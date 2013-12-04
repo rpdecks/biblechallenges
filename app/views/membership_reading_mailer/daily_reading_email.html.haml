@@ -7,7 +7,7 @@
         =@chapter.chapter_number
 
       %div{style:'float:right'}
-        You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} (#{@membership.progress_percentage}%)
+        You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} readings for this challenge (#{@membership.progress_percentage}%)
       %br
       Hello#{ " " + @user.first_name unless @user.first_name.blank?},
       %br
@@ -25,7 +25,7 @@
 
       %br
       %center
-        = link_to 'Confirm this Read!', membership_readings_confirm_url(@membership_reading.hash_for_url, subdomain: @challenge.subdomain)
+        = link_to 'Confirm this reading!', membership_readings_confirm_url(@membership_reading.hash_for_url, subdomain: @challenge.subdomain)
       %br
       %small
         If you have any questions, check out our FAQ page.  If your question isn't answered there you can ask us directly through our feedback form.
