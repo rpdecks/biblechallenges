@@ -17,9 +17,9 @@ class Membership < ActiveRecord::Base
   attr_accessible :challenge, :user, :bible_version
   attr_accessor :auto_created_user
 
-  # Constants 
+  # Constants
   BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV)
-  
+
   # Relations
   belongs_to :user
   belongs_to :challenge
@@ -33,7 +33,7 @@ class Membership < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: :challenge_id
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
-  # Callbacks 
+  # Callbacks
   after_create :associate_readings
   after_create :successful_creation_email, unless: 'auto_created_user'
   after_create :successful_auto_creation_email, if: 'auto_created_user'
@@ -41,7 +41,7 @@ class Membership < ActiveRecord::Base
   def progress_percentage
     mr_total = membership_readings.count
     read = membership_readings.read.count
-    (read * 100) / mr_total
+    mr_total.zero? ? 0 : (read * 100) / mr_total
   end
 
   private
