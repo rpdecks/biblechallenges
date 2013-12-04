@@ -2,20 +2,20 @@
 #
 # Table name: challenges
 #
-#  id             :integer          not null, primary key
-#  owner_id       :integer
-#  subdomain      :string(255)
-#  name           :string(255)
-#  begindate      :date
-#  enddate        :date
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  chapterstoread :string(255)
-#  active         :boolean          default(FALSE)
+#  id               :integer          not null, primary key
+#  owner_id         :integer
+#  subdomain        :string(255)
+#  name             :string(255)
+#  begindate        :date
+#  enddate          :date
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  chapters_to_read :string(255)
+#  active           :boolean          default(FALSE)
 #
 
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapterstoread
+  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read
 
   # Relations
   has_many :memberships, dependent: :destroy
@@ -25,22 +25,29 @@ class Challenge < ActiveRecord::Base
 
   # Validations
   validates :begindate, presence: true
-  validates :enddate, presence: true
   validates :name, presence: true, length: {minimum: 3}
   validates :subdomain, presence: true, uniqueness:  true
-  validates_format_of   :subdomain,
+  validates_format_of  :subdomain,
                         with: /^[a-z\d]+(-[a-z\d]+)*$/i,
                         message: 'invalid format'
   validates :owner_id, presence: true
-  validates :chapterstoread, presence: true
+  validates :chapters_to_read, presence: true
+  validates_format_of :chapters_to_read,
+                        with: /^\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/,
+                        message: 'invalid format'
   validate  :validate_dates
   validate  :changes_allowed_when_activated, if: "active"
 
-  # Callbacks 
-  before_validation :calculate_enddate, 
-    if: "(enddate.nil? && !chapterstoread.blank?) || (!new_record? && (begindate_changed? || chapterstoread_changed?) && !active)"
+  # Callbacks
+  before_validation :calculate_enddate,
+    if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?) && !active)"
   after_create      :successful_creation_email
   after_save        :generate_readings
+
+  def subdomain= subdomain
+    subdomain.gsub!(/\s+/, "") if subdomain
+    super(subdomain.try(:downcase))
+  end
 
   def membership_for(user)
     memberships.find_by_user_id(user.id)
@@ -75,9 +82,9 @@ class Challenge < ActiveRecord::Base
   end
 
   def changes_allowed_when_activated
-    if begindate_changed? || chapterstoread_changed? || enddate_changed?
+    if begindate_changed? || chapters_to_read_changed? || enddate_changed?
       errors[:change_not_allowed] << "because this challenge is active"
-    end    
+    end
   end
 
   # Callbacks
@@ -86,12 +93,12 @@ class Challenge < ActiveRecord::Base
   def successful_creation_email
     ChallengeMailer.creation_email(self).deliver
   end
-  
+
   def generate_readings
     # Only generate the reading on the cases below.
-    if (id_changed? || begindate_changed? || chapterstoread_changed?) && !active
+    if (id_changed? || begindate_changed? || chapters_to_read_changed?) && !active
       readings.destroy_all
-      Chapter.search(chapterstoread).each_with_index do |chapter,i|
+      Chapter.search(chapters_to_read).each_with_index do |chapter,i|
         readings.create(chapter: chapter, date: (begindate + i.days))
       end
     end
@@ -99,7 +106,7 @@ class Challenge < ActiveRecord::Base
 
   # - before_validation
   def calculate_enddate
-    response = Parser.parse_query(chapterstoread)    
+    response = Parser.parse_query(chapters_to_read)
     self.enddate = begindate + (response[1].length - 1).days if response[1]
   end
 

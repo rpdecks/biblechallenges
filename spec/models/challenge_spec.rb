@@ -9,13 +9,34 @@ describe Challenge do
     end
 
     it { should validate_presence_of(:begindate) }
-    it { should validate_presence_of(:enddate) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:owner_id) }
     it { should validate_presence_of(:subdomain) }
     it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
       create(:challenge)
       should validate_uniqueness_of(:subdomain)
+    end
+
+    describe "Subdomain format" do
+      let(:challenge) {create(:challenge, subdomain: 'with spaces And UPERCASE')}
+      context "when the challenge is being created" do
+        it "sets the subdomain to downcase" do
+          expect(challenge.subdomain).to eql('withspacesandupercase')
+        end
+        it "removes all the spaces on" do
+          expect(challenge.subdomain).to eql('withspacesandupercase')
+        end
+      end
+      context "when the challenge is updated" do
+        before do
+          challenge.subdomain = 'update with spaces UPERCASE'
+          challenge.save
+        end
+        it "sets the subdomain to downcase" do
+          expect(challenge.subdomain).to eql('updatewithspacesupercase')
+        end
+      end
+
     end
 
     describe 'End date and begin date validation' do
@@ -51,9 +72,9 @@ describe Challenge do
     context 'when end date is not provided' do
       let (:challenge) {build(:challenge)}
 
-      it "infers based on chapterstoread" do
+      it "infers based on chapters_to_read" do
         challenge.enddate = nil
-        challenge.chapterstoread = 'Matt 20-28'
+        challenge.chapters_to_read = 'Matt 20-28'
         challenge.save
         expect(challenge.enddate).to eql(challenge.begindate + 8.days)
       end
@@ -70,15 +91,15 @@ describe Challenge do
 
       it "doesn't allow begindate to be chaned" do
         expect(challenge.update_attributes({begindate: Date.today + 10.days})).to be_false
-        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")        
+        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
       end
       it "doesn't allow enddate to be chaned" do
         expect(challenge.update_attributes({enddate: Date.today - 10.days})).to be_false
-        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")        
+        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
       end
-      it "doesn't allow chapterstoread to be chaned" do
-        expect(challenge.update_attributes({chapterstoread: 'Phil 1 - 2'})).to be_false
-        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")  
+      it "doesn't allow chapters_to_read to be chaned" do
+        expect(challenge.update_attributes({chapters_to_read: 'Phil 1 - 2'})).to be_false
+        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
       end
     end
 
@@ -95,8 +116,8 @@ describe Challenge do
   describe 'Callbacks' do
     describe 'After save' do
       describe '#generate_readings' do
-        let(:challenge){create(:challenge, chapterstoread: 'Matt 20-22')}
-        
+        let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22')}
+
         context 'when the challenge is being created' do
 
           it 'creates a reading for every chapter assigned in the challenge'do
@@ -107,7 +128,7 @@ describe Challenge do
             challenge.readings.each_with_index do |reading,index|
               expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
             end
-            expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))          
+            expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
           end
 
         end
@@ -116,7 +137,7 @@ describe Challenge do
           context "when 'begindate' has changed" do
 
             before do
-              # challenge.chapterstoread = 'Phile'
+              # challenge.chapters_to_read = 'Phile'
               challenge.begindate = Date.today + 7.days
               challenge.save
             end
@@ -129,15 +150,15 @@ describe Challenge do
               challenge.readings.each_with_index do |reading,index|
                 expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
               end
-              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))          
+              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
             end
 
           end
 
-          context "when 'chapterstoread' has changed" do
+          context "when 'chapters_to_read' has changed" do
 
             before do
-              challenge.chapterstoread = 'Phil 1 - 4'
+              challenge.chapters_to_read = 'Phil 1 - 4'
               challenge.save
             end
 
@@ -149,7 +170,7 @@ describe Challenge do
               challenge.readings.each_with_index do |reading,index|
                 expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
               end
-              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))          
+              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
             end
 
           end
@@ -194,7 +215,7 @@ describe Challenge do
             challenge.join_new_member(user,{bible_version: 'NASB'})
           }.to change(challenge.memberships, :count).by(1)
           expect(challenge.memberships.last.bible_version).to eql 'NASB'
-        end        
+        end
       end
       context 'with multiple users' do
         let(:users){create_list(:user, 3)}
@@ -219,7 +240,7 @@ describe Challenge do
           expect(challenge.has_member?(user)).to be_false
         end
       end
-    end    
+    end
 
   end
 end

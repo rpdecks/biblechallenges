@@ -5,7 +5,7 @@ module CreationMacros
     fill_in 'challenge_name', with: options[:name]
     fill_in 'challenge_subdomain', with: options[:subdomain]
     fill_in 'challenge_begindate_input', with: options[:begindate]
-    fill_in 'challenge_chapterstoread', with: options[:chapterstoread]
+    fill_in 'challenge_chapters_to_read', with: options[:chapters_to_read]
     click_button 'Create Challenge'
   end
 end

@@ -7,30 +7,32 @@
   .control-group
     = f.label :name, "Challenge Name", class: "control-label"
     .controls
-      = f.text_field :name, class: "form-control"
+      = f.text_field :name, required: true, class: "form-control"
       %p.help-block The name of your challenge, for example "The Book of Acts in July"
 
   .control-group
     = f.label :subdomain, "Subdomain", class: "control-label"
     .controls
-      = f.text_field :subdomain, class: "form-control"
-      %p.help-block 
+      = f.text_field :subdomain, required: true, class: "form-control"
+      %p.help-block
         The subdomain is what we will use to create a unique URL for your bible challenge. For example if you choose "julyacts" as your subdomain, the URL for your challenge will be http://julyacts.biblechallenges.com
 
   .control-group
     = f.label :begindate, "Begin Date", class: "control-label"
     .controls
-      = f.text_field :begindate, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input', disabled: botton_availability
+      = f.text_field :begindate, required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input', disabled: botton_availability
       %p.help-block The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out.
 
   .control-group
-    = f.label :chapterstoread, "Chapters to Read", class: "control-label"
+    = f.label :chapters_to_read, "Chapters to Read", class: "control-label"
     .controls
-      = f.text_field :chapterstoread, class: "form-control", disabled: botton_availability
+      = f.text_field :chapters_to_read, required: true, class: "form-control", disabled: botton_availability
       %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
 
   .control-group
-    = f.submit class: 'btn', disable_with: 'Please Wait...'
+    = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
+    %br
+    %br
 
 :javascript
   $(function(){
