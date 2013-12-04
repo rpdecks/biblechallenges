@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require_tree .
 //= require bootstrap
-//= require bootstrap-datepicker
+//= require pickadate/picker
+//= require pickadate/picker.date
 //= require chosen-jquery
 //= require public

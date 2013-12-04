@@ -20,7 +20,7 @@
   .control-group
     = f.label :begindate, "Begin Date", class: "control-label"
     .controls
-      = f.text_field :begindate, required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input', disabled: botton_availability
+      = f.text_field :begindate, value: f.object.begindate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input', disabled: botton_availability
       %p.help-block The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out.
 
   .control-group
@@ -35,9 +35,20 @@
     %br
 
 :javascript
-  $(function(){
-    $('#challenge_begindate_input').datepicker({
-      format:"yyyy-mm-dd",
-      startDate: new Date()
-    });
+
+  $('#challenge_begindate_input').pickadate({
+    // Escape any “rule” characters with an exclamation mark (!).
+    format: 'dddd, dd mmm, yyyy',
+    formatSubmit: 'yyyy-mm-dd',
+    min: true,
+    clear: '',
+    hiddenPrefix: 'date_format_',
+    hiddenSuffix: 'data'
   });
+
+  // $(function(){
+  //   $('#challenge_begindate_input').datepicker({
+  //     format:"yyyy-mm-dd",
+  //     startDate: new Date()
+  //   });
+  // });

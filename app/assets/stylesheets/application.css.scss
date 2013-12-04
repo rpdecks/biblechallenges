@@ -11,7 +11,8 @@
  *= require_self
  *= require_tree .
  *= require base
- *= require bootstrap-datepicker
+ *= require pickadate/default
+ *= require pickadate/default.date
  *= require chosen
  */
 
