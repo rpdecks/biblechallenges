@@ -16,7 +16,7 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :membership_readings, only: [] do
+  resources :membership_readings, only: [:update] do
   end
 
   constraints(Subdomain) do

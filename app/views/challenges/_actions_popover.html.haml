@@ -1,0 +1,13 @@
+= form_for membership_reading,method: "put", remote: true, class: 'form-inline' do |f|
+	- if membership_reading.state == 'read'
+		= hidden_field_tag :state, 'unread'
+		You haven't read it yet?
+		%br
+		%center
+			= submit_tag "No", class: 'btn btn-success btn-xs', disable_with: 'Please wait...'
+	- else
+		= hidden_field_tag :state, 'read'
+		Have you already read this?
+		%br
+		%center
+			= submit_tag "Yes", class: 'btn btn-success btn-xs', disable_with: 'Please wait...'

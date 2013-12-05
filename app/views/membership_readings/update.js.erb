@@ -1,0 +1,8 @@
+$("#actions_m_reading_<%=@membership_reading.id%>").click(); //Hide the current popover
+$("#reading_tr_<%=@membership_reading.id%>").attr('class','<%= reading_row_class @membership_reading %>'); // Add the proper class to the row
+$("#actions_m_reading_<%=@membership_reading.id%>").popover('destroy') // Destroy the old popover
+$('#actions_m_reading_<%=@membership_reading.id%>').popover({ // Add the new popover
+  html: true,
+  content: "<%=escape_javascript(render partial:'challenges/actions_popover',locals:{membership_reading:@membership_reading})%>",
+  container: 'body'
+}).on('click',function(e) {e.preventDefault();});

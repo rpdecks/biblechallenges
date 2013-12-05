@@ -1,8 +1,15 @@
 class MembershipReadingsController < ApplicationController
 
-  before_filter :find_membership_reading
+  before_filter :authenticate_user!, only: [:update]
+  before_filter :find_membership_reading, expect: [:update]
 
   layout 'from_email'
+
+  def update
+    @membership_reading = MembershipReading.find_by_id(params[:id])
+    @membership_reading.state = (params[:state] == 'read') ? 'read' : 'unread'
+    @membership_reading.save!
+  end
 
   def confirm
     if @membership_reading
