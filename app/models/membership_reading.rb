@@ -17,6 +17,7 @@ class MembershipReading < ActiveRecord::Base
   attr_accessible :reading, :membership, :state
 
   # Scopes
+  default_scope order('created_at ASC')
   scope :read, -> {where(state: 'read')}
   scope :unread, -> {where(state: 'unread')}
 

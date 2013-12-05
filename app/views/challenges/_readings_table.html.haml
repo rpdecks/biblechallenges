@@ -1,0 +1,32 @@
+%table.table.table-striped.table-bordered.table-hover.table-centered-text
+  %thead
+    %tr
+      %th Date
+      %th Book name
+      %th Chapter
+  %tbody
+    - if current_user && membership = @challenge.membership_for(current_user)
+      - membership.membership_readings.each do |mr|
+        %tr{class: reading_row_class(mr),id: "reading_tr_#{mr.id}"}
+          %td= mr.reading.date.strftime("%a, %-d %b %Y")
+          %td= mr.reading.chapter.book_name
+          %td= mr.reading.chapter.chapter_number
+          / ACTIONS
+          - if mr.reading.date == Date.today
+            %td.td-with-action-button
+              %a.btn.btn-xs.btn-default{"data-original-title" => "", "data-placement" => "top", "data-toggle" => "popover", href: "#", id: "actions_m_reading_#{mr.id}", title: ""}
+                = fa_icon 'cog'
+              :javascript
+                $('#actions_m_reading_#{mr.id}').popover({
+                  html: true,
+                  content: "#{escape_javascript(render partial:'actions_popover',locals:{membership_reading:mr})}",
+                  container: 'body'
+                }).on('click',function(e) {e.preventDefault();});
+
+
+    - else
+      - @readings.each do |reading|
+        %tr
+          %td= reading.date.strftime("%a, %-d %b %Y")
+          %td= reading.chapter.book_name
+          %td= reading.chapter.chapter_number

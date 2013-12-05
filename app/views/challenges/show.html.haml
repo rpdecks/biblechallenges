@@ -32,15 +32,4 @@
   %hr
   %h4 Readings
 
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th Date
-        %th Book name
-        %th Chapter
-    %tbody
-      - @readings.each do |read|
-        %tr
-          %td= read.date.strftime("%a, %-d %b %Y")
-          %td= read.chapter.book_name
-          %td= read.chapter.chapter_number
+  = render 'readings_table'

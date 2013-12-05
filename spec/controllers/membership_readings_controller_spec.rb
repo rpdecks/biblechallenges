@@ -18,6 +18,38 @@ describe MembershipReadingsController do
     it {expect({put: "#{subdomainurl}/reading/log/#{hash}"}).to route_to(controller: 'membership_readings', action: 'log', hash: hash) }
   end
 
+
+  describe 'User access' do
+
+    before do
+      sign_in :user, user
+    end
+
+    describe 'PUT#update' do
+      it "finds the membership_reading" do
+        put :update, id: membership_reading, format: 'js'
+        expect(assigns(:membership_reading)).to eql(membership_reading)
+      end
+
+      it "renders the :update template" do
+        put :update, id: membership_reading, format: 'js'
+        expect(response).to render_template :update
+      end
+    end
+
+  end
+
+
+  describe 'Guest access' do
+    describe 'PUT#update' do
+      it "redirects to the log in page" do
+        put :update, id: membership_reading
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+
   describe 'GET#confirm' do
     context 'with a valid hash' do
 
