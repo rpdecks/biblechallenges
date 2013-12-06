@@ -16,6 +16,7 @@ class MembershipReadingsController < ApplicationController
     if @membership_reading
       @hash = params[:hash]
       @user = @membership_reading.membership.user
+      sign_in @user
       @reading = @membership_reading.reading
     else
       flash[:error] = "This confirmation link doesn't exist"
