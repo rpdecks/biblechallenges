@@ -20,7 +20,7 @@ Spork.prefork do
 
   RSpec.configure do |config|
     # ## Mock Framework
-    # 
+    #
     # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
     #
     # config.mock_with :mocha
@@ -81,7 +81,7 @@ Spork.each_run do
   FactoryGirl.reload
   # Reload support
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| load f }
-  
+
 end
 
 # --- Instructions ---
