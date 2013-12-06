@@ -1,7 +1,7 @@
 %h3
   Bible Reading Challenge Summary
   .pull-right
-    = link_to raw("<i class='icon-warning-sign'></i> Delete"),'#',confirm: 'No working yet...',class: "btn btn-danger btn-sm"
+    = link_to "Want to delete this challene?", confirm_delete_creator_challenge_url(@challenge),class: "btn btn-danger btn-xs"
 
 
 %p

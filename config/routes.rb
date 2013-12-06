@@ -3,8 +3,11 @@ Biblechallenge::Application.routes.draw do
   devise_for :users, controllers: {registrations: "registrations"}
 
   namespace :creator do
-    resources :challenges, only: [:new, :show, :create, :index, :edit, :update] do
-      get :activate, on: :member
+    resources :challenges do
+      member do
+        get :activate
+        get '/confirm/delete', action: :confirm_destroy
+      end
     end
   end
 

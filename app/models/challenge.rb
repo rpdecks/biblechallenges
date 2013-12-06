@@ -20,7 +20,7 @@ class Challenge < ActiveRecord::Base
   # Relations
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
-  has_many :readings
+  has_many :readings, dependent: :destroy
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
   # Validations
