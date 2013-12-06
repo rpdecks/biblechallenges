@@ -12,7 +12,7 @@
           %td= mr.reading.chapter.book_name
           %td= mr.reading.chapter.chapter_number
           / ACTIONS
-          - if mr.reading.date == Date.today
+          - if mr.reading.date <= Date.today
             %td.td-with-action-button
               %a.btn.btn-xs.btn-default{"data-original-title" => "", "data-placement" => "top", "data-toggle" => "popover", href: "#", id: "actions_m_reading_#{mr.id}", title: ""}
                 = fa_icon 'cog'

@@ -6,3 +6,6 @@ $('#actions_m_reading_<%=@membership_reading.id%>').popover({ // Add the new pop
   content: "<%=escape_javascript(render partial:'challenges/actions_popover',locals:{membership_reading:@membership_reading})%>",
   container: 'body'
 }).on('click',function(e) {e.preventDefault();});
+
+// Update the reading bar progress
+$("#progress-bar-container").html("<%=escape_javascript( render 'memberships/reading_progress')%>");

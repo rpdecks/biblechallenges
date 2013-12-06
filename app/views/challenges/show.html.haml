@@ -1,7 +1,7 @@
 .container
 
-  / My memberhip button
-  - if current_user && @challenge.membership_for(current_user)
+  / My membership button
+  - if current_user && @membership = @challenge.membership_for(current_user)
     .pull-right
       = link_to 'My Membership', '/my-membership', class: 'btn btn-primary btn-xs'
 
@@ -30,6 +30,11 @@
       %td= @challenge.chapters_to_read
 
   %hr
+
+  - if @membership
+    #progress-bar-container
+      = render 'memberships/reading_progress'
+
   %h4 Readings
 
   = render 'readings_table'
