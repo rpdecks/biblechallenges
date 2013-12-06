@@ -1,0 +1,11 @@
+.panel.panel-danger
+  .panel-body
+    When you delete this challenge you will remove all record of its existence including all the readings that users may have logged for this challenge since its creation. You cannot undo this action so please be careful before you proceed.
+
+%center
+  %label
+    Do you really want to delete
+    %em=@challenge.name
+    challenge?
+  %br
+  = link_to raw("<i class='icon-warning-sign'></i> Delete"),creator_challenge_url(@challenge), method: :delete,confirm: 'Are you sure?',class: "btn btn-danger btn-sm"

@@ -1,7 +1,6 @@
 module ChallengesHelper
 
 	def reading_row_class membership_reading
-		puts 'oe'
 		if membership_reading.state == 'read'
 			'success'
 		elsif membership_reading.state == 'unread' && membership_reading.reading.date < Date.today
