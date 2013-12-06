@@ -7,6 +7,7 @@ class MembershipReadingsController < ApplicationController
 
   def update
     @membership_reading = MembershipReading.find_by_id(params[:id])
+    @membership = @membership_reading.membership
     @membership_reading.state = (params[:state] == 'read') ? 'read' : 'unread'
     @membership_reading.save!
   end
