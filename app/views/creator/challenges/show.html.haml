@@ -1,10 +1,14 @@
-%h3 Bible Reading Challenge Summary
+%h3
+  Bible Reading Challenge Summary
+  .pull-right
+    = link_to "Want to delete this challenge?", confirm_delete_creator_challenge_url(@challenge),class: "btn btn-danger btn-xs"
+
 
 %p
   Here is a summary of your Bible reading challenge.  Please review and click "Activate My Challenge" if everything looks ok
 %p
   If you need to make more adjustments, click the edit button to edit your challenge.
-  Once completed, your challenge will be available at 
+  Once completed, your challenge will be available at
   = link_to subdomain_url(@challenge.subdomain), "http://" + subdomain_url(@challenge.subdomain)
 
 %table.table
@@ -22,11 +26,11 @@
     %td= @challenge.enddate
   %tr
     %td Chapters to Read
-    %td= @challenge.chapterstoread
+    %td= @challenge.chapters_to_read
   %tr
-    %td 
+    %td
       = challenge_status_button
-    %td 
-      = button_to 'Edit my Challenge', edit_creator_challenge_path(@challenge), :class => 'btn btn-primary', :method => 'get'
+    %td
+      = button_to 'Edit my Challenge', edit_creator_challenge_path(@challenge), class: 'btn btn-primary btn-sm ', method: 'get'
 
 

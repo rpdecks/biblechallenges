@@ -8,8 +8,13 @@
         = javascript_include_tag "application"
         = csrf_meta_tags
   %body
+
+    / Nav Header
+    .navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          %a.navbar-brand{href: "/"} BibleChallenges.com
     .container
-      .header
-        %h3.text-muted BibleChallenges.com
-      =render partial: "shared/flash_messages", flash: flash
+      .flash-messages
+        =render partial: "shared/flash_messages", flash: flash
       = yield

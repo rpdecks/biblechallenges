@@ -19,7 +19,7 @@ module ApplicationHelper
     subdomain = (subdomain || "")
     subdomain += "." unless subdomain.empty?
     current_domain = request.domain
-    current_domain.slice!("www.")  #this is so ugly and I am ashamed.  remove www if it is in the request
+    current_domain.slice!("www.") if current_domain  #this is so ugly and I am ashamed.  remove www if it is in the request
     [subdomain, current_domain, request.port_string].join
   end
 

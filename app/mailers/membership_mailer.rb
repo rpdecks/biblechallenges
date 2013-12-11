@@ -1,5 +1,6 @@
 class MembershipMailer < ActionMailer::Base
-  helper ActionView::Helpers::UrlHelper 
+  helper ActionView::Helpers::UrlHelper
+
   default from: "Bible Challenges <no-reply@biblechallenges.com>"
   layout 'default_mailer'
 
@@ -8,8 +9,8 @@ class MembershipMailer < ActionMailer::Base
     @membership = membership
     @challenge = @membership.challenge
     @user = @membership.user
-    mail( to: @user.email, 
-      subject: "#{@challenge.name} joined!", 
+    mail( to: @user.email,
+      subject: "#{@challenge.name} joined!",
       from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
 
@@ -17,9 +18,9 @@ class MembershipMailer < ActionMailer::Base
     @membership = membership
     @challenge = @membership.challenge
     @user = @membership.user
-    mail( to: @user.email, 
-      subject: "#{@challenge.name} joined!", 
-      from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")    
+    mail( to: @user.email,
+      subject: "#{@challenge.name} joined!",
+      from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
 
 end

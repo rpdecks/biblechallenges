@@ -17,25 +17,26 @@ class MembershipReading < ActiveRecord::Base
   attr_accessible :reading, :membership, :state
 
   # Scopes
+  default_scope order('created_at ASC')
   scope :read, -> {where(state: 'read')}
   scope :unread, -> {where(state: 'unread')}
 
-  # Constants 
+  # Constants
   STATES = %w(read unread)
 
   # Relations
   belongs_to :membership
   belongs_to :reading
-  
+
   # Validations
   validates :membership_id, presence: true
   validates :reading_id, presence: true
   validates :state, inclusion: {in: STATES}
 
-
   def self.send_daily_emails
-    MembershipReading.all.each do |mr|
-     MembershipReadingMailer.daily_reading_email(mr).deliver if Date.today == mr.reading.date
+    MembershipReading.unread.joins(:reading).where("readings.date = ?",Date.today).each do |mr|
+      puts "Sending email to: #{mr.membership.user.email} from #{mr.membership.challenge.name} challenge."
+      MembershipReadingMailer.daily_reading_email(mr).deliver
     end
   end
 

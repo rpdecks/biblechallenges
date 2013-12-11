@@ -1,7 +1,20 @@
 %h3
   My membership for #{@challenge.name}
   .pull-right
-    = link_to raw("<i class='icon-warning-sign'></i> Unsubscribe"),challenge_membership_path(@challenge,@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger bt-small"
+    = link_to raw("<i class='icon-warning-sign'></i> Unsubscribe"),challenge_membership_path(@challenge,@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger btn-sm"
 
 %br
+
 = render 'reading_progress'
+
+%br
+
+= form_for [@membership.challenge, @membership], method: :put do |f|
+  .row
+    .col-md-6
+      .control-group
+        = f.label :bible_version, "Bible Version", class: "control-label"
+        .controls
+          = f.select :bible_version,  select_options_for_bible,  { include_blank: false },  { class: 'chosen-select' }
+          %p.help-block Select the Bible version.
+        = f.submit 'Update', class: 'btn btn-success btn-sm', disable_with: 'Please Wait...'
