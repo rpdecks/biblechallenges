@@ -10,6 +10,7 @@ class MembershipForm
     attributes.each do |name, value|
       send("#{name}=",value)
     end
+    @bible_version = 'ASV' if @bible_version.blank?
   end
 
   def subscribe

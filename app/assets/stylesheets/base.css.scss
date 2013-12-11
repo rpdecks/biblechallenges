@@ -1,0 +1,29 @@
+// First import journal variables
+@import "bootswatch/flatly/variables";
+
+// Then bootstrap itself
+@import "bootstrap";
+@import "bootstrap/mixins";
+// Bootstrap body padding for fixed navbar
+body { padding-top: 80px !important; }
+
+// Responsive styles go here in case you want them
+// @import "bootstrap-responsive";
+
+// And finally bootswatch style itself
+@import "bootswatch/flatly/bootswatch";
+
+@import "font-awesome";
+
+
+.table-centered-text{
+	text-align: center !important;
+	th{
+		text-align: center;
+	}
+}
+
+.td-with-action-button{
+	background-color: transparent !important;
+	width: 1px;
+}

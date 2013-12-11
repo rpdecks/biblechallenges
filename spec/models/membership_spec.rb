@@ -39,7 +39,7 @@ describe Membership do
     it { should belong_to(:user) }
     it { should belong_to(:challenge) }
     it { should have_many(:readings).through(:membership_readings) }
-    it { should have_many(:membership_readings) }    
+    it { should have_many(:membership_readings) }
   end
 
   describe "Class methods" do
@@ -48,7 +48,7 @@ describe Membership do
 
   describe 'Instance methods' do
     describe '#progress_percentage' do
-      let!(:challenge){create(:challenge, chapterstoread: 'Mar 1 -7')}
+      let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
       let(:membership){create(:membership, challenge: challenge)}
 
       before do

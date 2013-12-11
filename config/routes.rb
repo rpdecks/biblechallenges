@@ -3,20 +3,23 @@ Biblechallenge::Application.routes.draw do
   devise_for :users, controllers: {registrations: "registrations"}
 
   namespace :creator do
-    resources :challenges, only: [:new, :show, :create, :index, :edit, :update] do
-      get :activate, on: :member
+    resources :challenges do
+      member do
+        get :activate
+        get '/confirm/delete', action: :confirm_destroy
+      end
     end
   end
 
   resources :challenges, only: [:index] do
-    resources :memberships, only: [:update, :edit, :index, :show, :create, :destroy] do
+    resources :memberships, only: [:update, :index, :show, :create, :destroy] do
       collection do
         post 'create_for_guest'
       end
     end
   end
 
-  resources :membership_readings, only: [] do
+  resources :membership_readings, only: [:update] do
   end
 
   constraints(Subdomain) do

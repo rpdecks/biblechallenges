@@ -4,20 +4,20 @@
       %h2{style: "display: block;font-family: Helvetica;font-size: 20px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #404040;"} Congratulations!
       %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"}
         You have successfully joined the
-        %em 
+        %em
           =@challenge.name
         Bible Challenge.
       %br
       Hello#{ " " + @user.first_name unless @user.first_name.blank?},
       %br
       %br
-      This challenge begins on #{@challenge.begindate.strftime("%b %-d %Y")} and ends on #{@challenge.enddate.strftime("%b %-d %Y")}. 
+      This challenge begins on #{@challenge.begindate.strftime("%b %-d %Y")} and ends on #{@challenge.enddate.strftime("%b %-d %Y")}.
       You can see a detailed schedule of readings below.
       %br
       %br
       Here's what will happen next:
       %ol
-        %li 
+        %li
           On the first day of the challenge, you will receive your first email containing your reading for that day.
         %li
           After you read your chapter, click on the link at the bottom of that email to log your reading.
@@ -25,24 +25,27 @@
           That's it!
 
       %br
-
-      %table
-        %thead
-        %tr
-          %th Date
-          %th Book name
-          %th Chapter
-        %tbody
-          - @challenge.readings.each do |read|
-            %tr
-              %td= read.date.strftime("%-d/%-m/%Y")
-              %td= read.chapter.book_name
-              %td= read.chapter.chapter_number
+      %center
+        %table{style: "width: 98%;border: 1px solid #A3B5B9;text-align: center;"}
+          %thead
+          %tr
+            %th{style: "border: 1px solid #A3B5B9;"} Date
+            %th{style: "border: 1px solid #A3B5B9;"} Book name
+            %th{style: "border: 1px solid #A3B5B9;"} Chapter
+          %tbody
+            - @challenge.readings.each do |read|
+              %tr
+                %td{style: "border: 1px solid #A3B5B9;"}
+                  = read.date.strftime("%-d/%-m/%Y")
+                %td{style: "border: 1px solid #A3B5B9;"}
+                  = read.chapter.book_name
+                %td{style: "border: 1px solid #A3B5B9;"}
+                  = read.chapter.chapter_number
 
       %br
       %small
         If you didn't mean to sign up for this bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url,subdomain:@challenge.subdomain)} here to be unsubscribed.
-      %br 
-      %br      
+      %br
+      %br
       %small
         If you have any questions, check out our FAQ page.  If your question isn't answered there you can ask us directly through our feedback form.

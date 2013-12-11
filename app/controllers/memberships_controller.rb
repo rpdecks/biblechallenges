@@ -2,34 +2,29 @@ class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
   before_filter :find_challenge
+  before_filter :find_membership, only: [:update]
   before_filter :find_membership_from_hash, only: [:unsubscribe_from_email]
   before_filter :require_challenge_owner, only: [:index]
 
+  respond_to :html, :json, :js
+
   def index
     @memberships = @challenge.memberships
+    respond_with(@memberships)
   end
 
   def show
-    if current_user
-      unless @membership = @challenge.membership_for(current_user)
-        redirect_to root_url(subdomain: @challenge.subdomain)
-      end
-    else
-      redirect_to root_url(subdomain: @challenge.subdomain)
-    end
+    return redirect_to root_url(subdomain: @challenge.subdomain) if !current_user || !(@membership = @challenge.membership_for(current_user))
+    respond_with(@membership)
   end
 
   def update
-    @membership = @challenge.memberships.find(params[:id])
     if @membership.update_attributes(params[:membership])
-      redirect_to membership_path(@membership)
+      flash[:notice] = "You have successfully updated your membership"
+      redirect_to challenge_membership_path(@membership)
     else
-      render action: 'edit'
+      render action: 'show'
     end
-  end
-
-  def edit
-    @membership = @challenge.memberships.find(params[:id])
   end
 
   def create
@@ -79,10 +74,15 @@ class MembershipsController < ApplicationController
     redirect_to root_url(subdomain:false) if @challenge.nil?
   end
 
+  def find_membership
+    @membership = @challenge.memberships.find(params[:id])
+    redirect_to root_url(subdomain:@challenge.subdomain) if @membership.nil?
+  end
+
   def find_membership_from_hash
     hashids = HashidsGenerator.instance
     membership_id = hashids.decrypt(params[:hash])
-    @membership = Membership.find_by_id(membership_id)    
+    @membership = Membership.find_by_id(membership_id)
   end
 
   def require_challenge_owner
