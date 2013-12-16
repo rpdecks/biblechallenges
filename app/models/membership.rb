@@ -38,7 +38,7 @@ class Membership < ActiveRecord::Base
   after_create :successful_creation_email, unless: 'auto_created_user'
   after_create :successful_auto_creation_email, if: 'auto_created_user'
 
-  def progress_percentage
+  def overall_progress_percentage
     mr_total = membership_readings.count
     read = membership_readings.read.count
     mr_total.zero? ? 0 : (read * 100) / mr_total
