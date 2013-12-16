@@ -62,6 +62,19 @@ describe Membership do
         expect(membership.overall_progress_percentage).to eql(57)
       end
     end
+    describe '#to_date_progress_percentage' do
+      let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
+      let(:membership){create(:membership, challenge: challenge)}
+      before do
+        membership.membership_readings[0..1].each do |mr| # read first two
+          mr.state = 'read'
+          mr.save!
+        end
+      end
+      it 'returns the progress percentage of the readings up to and including the passed in date' 
+        #expect(membership.to_date_progress_percentage(challenge.begindate + 4.days)).to eql(50)
+    end
+
   end
 
   describe 'Callbacks' do

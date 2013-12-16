@@ -39,5 +39,4 @@ class MembershipReading < ActiveRecord::Base
       MembershipReadingMailer.daily_reading_email(mr).deliver
     end
   end
-
 end

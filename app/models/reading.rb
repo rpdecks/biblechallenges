@@ -23,4 +23,7 @@ class Reading < ActiveRecord::Base
   validates :chapter_id, presence: true
   validates :challenge_id, presence: true
   validates :date, presence: true
+
+  #Scopes
+  scope :to_date, lambda { | a_date | where("date <= ?", a_date) }
 end
