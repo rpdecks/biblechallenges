@@ -71,8 +71,10 @@ describe Membership do
           mr.save!
         end
       end
-      it 'returns the progress percentage of the readings up to and including the passed in date' 
-        #expect(membership.to_date_progress_percentage(challenge.begindate + 4.days)).to eql(50)
+      it 'returns the progress percentage of the readings up to and including the passed in date' do
+        # total of four days elapsed with two readings completed
+        expect(membership.to_date_progress_percentage(challenge.begindate + 3.days)).to eql(50)
+      end
     end
 
   end
