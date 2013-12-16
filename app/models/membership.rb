@@ -44,6 +44,12 @@ class Membership < ActiveRecord::Base
     mr_total.zero? ? 0 : (read * 100) / mr_total
   end
 
+  def to_date_progress_percentage(adate)
+    td_total = readings.to_date(adate).count
+    read = membership_readings.read.count
+    td_total.zero? ? 0 : (read * 100) / td_total
+  end
+
   private
 
   # Callbacks
