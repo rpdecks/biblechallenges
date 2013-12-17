@@ -1,5 +1,12 @@
 Biblechallenge::Application.routes.draw do
 
+  # mail_view stuff
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
+  #end mail view
+
+
   devise_for :users, controllers: {registrations: "registrations"}
 
   namespace :creator do
