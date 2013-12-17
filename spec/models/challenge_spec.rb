@@ -109,6 +109,7 @@ describe Challenge do
     it { should have_many(:memberships) }
     it { should have_many(:members).through(:memberships)}
     it { should have_many(:readings) }
+    it { should have_many(:membership_readings) }
   end
 
   describe 'Callbacks' do
