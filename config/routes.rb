@@ -18,6 +18,9 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
+  resources :comments, only: [:create] do
+  end
+
   resources :challenges, only: [:index] do
     resources :memberships, only: [:update, :index, :show, :create, :destroy] do
       collection do
