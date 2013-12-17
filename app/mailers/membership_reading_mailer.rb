@@ -4,6 +4,7 @@ class MembershipReadingMailer < ActionMailer::Base
   layout 'default_mailer'
 
   def daily_reading_email(membership_reading)
+    @reading_date = Date.today
     @membership_reading = membership_reading
     @reading = @membership_reading.reading
     @membership = @membership_reading.membership
@@ -15,5 +16,7 @@ class MembershipReadingMailer < ActionMailer::Base
       subject: "#{@challenge.name} reading: #{@chapter.book_name} #{@chapter.chapter_number}", 
       from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
+
+
 
 end
