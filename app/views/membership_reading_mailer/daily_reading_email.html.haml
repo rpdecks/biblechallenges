@@ -10,12 +10,15 @@
           You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} readings for this challenge (#{@membership.overall_progress_percentage}%)
         %div{style:'clear:both;'}
         %div{style:'float:right;font-size: 12px;'}
+          You have completed #{@membership.membership_readings.read.count} of #{@membership.readings.to_date(@reading_date).count} available readings for this challenge (#{@membership.to_date_progress_percentage(@reading_date)}%)
+        %div{style:'clear:both;'}
+        %div{style:'float:right;font-size: 12px;'}
           There are #{@membership.challenge.members.count} participants in this bible challenge.
       %br
       %br
       Hello#{ " " + @user.first_name unless @user.first_name.blank?},
       %br
-      Today's reading, for #{@reading.date.strftime("%b %-d %Y")} is below.
+      Today's reading, for #{@reading.date.strftime("%b %-d %Y")}, is below.
       %br
       %br
       %hr
