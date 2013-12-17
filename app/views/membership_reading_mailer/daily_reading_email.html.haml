@@ -14,6 +14,9 @@
         %div{style:'clear:both;'}
         %div{style:'float:right;font-size: 12px;'}
           There are #{@membership.challenge.members.count} participants in this bible challenge.
+        %div{style:'clear:both;'}
+        %div{style:'float:right;font-size: 12px;'}
+          A total of #{@membership.challenge.membership_readings.read.count} chapters have been read by all participants.
       %br
       %br
       Hello#{ " " + @user.first_name unless @user.first_name.blank?},
