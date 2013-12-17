@@ -17,7 +17,7 @@ describe 'Bible challenge creation', type: :feature do
 
     it 'shows an explanation message on invalid dates' do
       create_challenge(name: "Some Challenge", subdomain: "somesubdomain", begindate: Date.today - 1.day, chapters_to_read: 'Matthew 1 - 5')
-      page.should have_content 'Begin date must be equal or greater than today'
+      page.should have_content 'Begin date cannot be earlier than today'
     end
 
     it 'shows an explanation message on invalid subdomain' do
