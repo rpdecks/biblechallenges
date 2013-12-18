@@ -34,6 +34,7 @@ describe User do
   describe "Relations" do
     it { should have_many(:created_challenges) }
     it { should have_many(:memberships) }
+    it { should have_many(:comments) }
     it { should have_many(:challenges).through(:memberships)}
   end
 
