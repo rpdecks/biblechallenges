@@ -34,5 +34,6 @@ class User < ActiveRecord::Base
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
+  has_many :comments
   
 end
