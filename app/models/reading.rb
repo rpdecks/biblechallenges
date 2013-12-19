@@ -27,4 +27,9 @@ class Reading < ActiveRecord::Base
 
   #Scopes
   scope :to_date, lambda { | a_date | where("date <= ?", a_date) }
+
+  def last_read_by
+    #returns the user who last read this reading
+    membership_readings.read.order("updated_at").first.membership.user
+  end
 end

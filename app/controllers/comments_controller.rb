@@ -13,7 +13,8 @@ class CommentsController < ApplicationController
       flash[:alert] = @comment.errors.full_messages.to_sentence
     end 
     
-    respond_with(@comment, location: params[:location] || root_path)
-
+    # respond towards the passed location or go back 
+    respond_with(@comment, location: params[:location] || request.referer)
   end
+
 end

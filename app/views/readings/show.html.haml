@@ -1,0 +1,40 @@
+.container
+
+  %legend
+    = @reading.chapter.book_and_chapter
+
+  %table.table.table-striped.table-condensed
+    %tr
+      %td Already read by:
+      %td= @reading.membership_readings.read.count
+    %tr
+      %td Last read by:
+      %td= @reading.last_read_by.username || "no username"
+    %tr
+      %td Number of Verses:
+      %td 
+    %tr
+      %td Number of Comments:
+      %td 
+  %hr
+
+  %p
+    This is a chapter page for the
+    = @reading.challenge.name
+    bible challenge.
+    You are encouraged to post a comment related to 
+    = @reading.chapter.book_and_chapter
+    below; anything that stood out to you that you feel might build others up.
+
+
+  = render partial: 'comment_form', locals: {comment: @comment, reading: @reading}
+  %br
+
+  %hr
+  %h4 Impressions from others
+  - unless @comments.empty?
+    - @comments.each do |c|
+      %hr
+      %p= c.content
+      %p= c.user.username
+

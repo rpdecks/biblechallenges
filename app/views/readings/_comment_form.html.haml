@@ -1,0 +1,13 @@
+= form_for comment do |f|
+  - if comment.errors.any?
+    - flash[:error] = comment.errors.full_messages.to_sentence
+  .control-group
+    .controls
+      = f.text_area :content, rows: 5, required: true, class: "form-control"
+
+    = hidden_field_tag :location, reading_path(reading)
+    = f.hidden_field :commentable_id, value: reading.id
+    = f.hidden_field :commentable_type, value: reading.class.to_s
+
+  .control-group
+    = f.submit "Post Comment", class: 'btn btn-success', disable_with: 'Please Wait...'
