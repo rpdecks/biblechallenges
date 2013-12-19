@@ -29,6 +29,9 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
+  resources :readings, only: [:show] do
+  end
+
   resources :membership_readings, only: [:update] do
   end
 

@@ -13,6 +13,7 @@ class MembershipReadingsController < ApplicationController
   end
 
   def confirm
+    @comment = Comment.new
     if @membership_reading
       @hash = params[:hash]
       @user = @membership_reading.membership.user

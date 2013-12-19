@@ -19,6 +19,7 @@ describe CommentsController, "Actions" do
 
     before do
       sign_in :user, current_user
+      request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
     it "creates a new reading comment" do
@@ -26,9 +27,9 @@ describe CommentsController, "Actions" do
       }.to change(Comment, :count).by(1)
 
     end
-    it "should redirect to / if not params[:location] is not  provided" do
+    it "should redirect to :back if not params[:location] is not  provided" do
       post :create, comment: newcomment_attr
-      expect(response).to redirect_to root_url
+      expect(response).to redirect_to "where_i_came_from"
     end
 
     it "should redirect to params[:location] if it's provided" do
