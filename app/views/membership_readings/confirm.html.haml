@@ -17,6 +17,7 @@
                 = submit_tag "Yes", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
             - else
               You have already confirmed this reading. Would you like to comment on the chapter?
+              = render partial: 'readings/comment_form', locals: {comment: @comment, reading: @membership_reading.reading}
       - else
         .panel-body
           Please check the link you received in your email.
