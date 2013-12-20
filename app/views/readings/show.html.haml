@@ -9,7 +9,7 @@
       %td= @reading.membership_readings.read.count
     %tr
       %td Last read by:
-      %td= @reading.last_read_by.username || "no username"
+      %td= @reading.try(:last_read_by).try(:username) || "no username"
     %tr
       %td Number of Verses:
       %td 
@@ -31,10 +31,17 @@
   %br
 
   %hr
-  %h4 Impressions from others
   - unless @comments.empty?
-    - @comments.each do |c|
-      %hr
-      %p= c.content
-      %p= c.user.username
+    %h4 Impressions from others
+    %table.table.table-striped.table-bordered.table-hover
+      - @comments.each do |c|
+        %tr
+          %td 
+            %div
+              %i= c.content
+            %div
+              %b
+                = "--#{c.user.username}"
+              = time_ago_in_words(c.created_at)
+              ago
 

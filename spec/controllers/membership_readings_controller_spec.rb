@@ -16,6 +16,7 @@ describe MembershipReadingsController do
     let(:subdomainurl) { "http://#{challenge.subdomain}.test.com" }
     it {expect({get: "#{subdomainurl}/reading/confirm/#{hash}"}).to route_to(controller: 'membership_readings', action: 'confirm', hash: hash) }
     it {expect({put: "#{subdomainurl}/reading/log/#{hash}"}).to route_to(controller: 'membership_readings', action: 'log', hash: hash) }
+    it {expect({get: "#{subdomainurl}/membership_readings/#{hash}/edit"}).to route_to(controller: 'membership_readings', action: 'edit', id: hash) }
   end
 
 
@@ -31,9 +32,24 @@ describe MembershipReadingsController do
         expect(assigns(:membership_reading)).to eql(membership_reading)
       end
 
-      it "renders the :update template" do
-        put :update, id: membership_reading, format: 'js'
-        expect(response).to render_template :update
+      it "re-renders the :edit template" do
+        put :update, id: membership_reading
+        expect(response).to render_template :edit
+      end
+
+      it "assigns comment" do
+        put :update, id: membership_reading
+        expect(assigns(:comment)).to be_true
+      end
+
+      it "assigns user" do
+        put :update, id: membership_reading
+        expect(assigns(:user)).to be_true
+      end
+
+      it "assigns reading" do
+        put :update, id: membership_reading
+        expect(assigns(:reading)).to be_true
       end
     end
 
@@ -46,6 +62,32 @@ describe MembershipReadingsController do
         put :update, id: membership_reading
         expect(response).to redirect_to new_user_session_path
       end
+    end
+  end
+
+  describe 'GET#edit' do
+    context 'with a valid hash' do
+      it "renders the :edit template" do
+        get :edit, id: hash
+        expect(response).to render_template(:edit)
+      end
+
+      it "finds the membership_reading's user" do
+        get :edit, id: hash
+        expect(assigns(:user)).to eql(membership_reading.membership.user)
+      end
+
+      it "finds the membership_reading's reading" do
+        get :edit, id: hash
+        expect(assigns(:reading)).to eql(membership_reading.reading)
+      end
+
+      it "assigns a comment to be available in the form" do
+        get :edit, id: hash
+        expect(assigns(:comment)).to be_true
+      end
+
+
     end
   end
 
