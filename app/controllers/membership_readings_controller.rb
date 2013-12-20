@@ -1,16 +1,36 @@
 class MembershipReadingsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:update]
-  before_filter :find_membership_reading, expect: [:update]
+  before_filter :find_membership_reading, except: [:update, :edit]
 
   layout 'from_email'
 
   def update
+    @comment = Comment.new
     @membership_reading = MembershipReading.find_by_id(params[:id])
     @membership = @membership_reading.membership
-    @membership_reading.state = (params[:state] == 'read') ? 'read' : 'unread'
+    @user = @membership_reading.membership.user
+    @reading = @membership_reading.reading
+    #just going to toggle state on any update
+    @membership_reading.state = (@membership_reading.state == 'unread') ? 'read' : 'unread'
     @membership_reading.save!
+    render action: :edit 
   end
+
+  def edit
+    @comment = Comment.new
+    hashids = HashidsGenerator.instance
+    membership_reading_id = hashids.decrypt(params[:id])
+    @membership_reading = MembershipReading.find_by_id(membership_reading_id)
+    if @membership_reading
+      @user = @membership_reading.membership.user
+      sign_in @user
+      @reading = @membership_reading.reading
+    else
+      flash[:error] = "This confirmation link doesn't exist"
+    end
+  end
+
 
   def confirm
     @comment = Comment.new

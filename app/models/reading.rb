@@ -19,6 +19,7 @@ class Reading < ActiveRecord::Base
   has_many :membership_readings, dependent: :destroy
   has_many :memberships, through: :membership_readings
   has_many :comments, as: :commentable
+  has_many :users, through: :memberships #untested
   
   # Validations
   validates :chapter_id, presence: true
@@ -30,6 +31,6 @@ class Reading < ActiveRecord::Base
 
   def last_read_by
     #returns the user who last read this reading
-    membership_readings.read.order("updated_at").first.membership.user
+    membership_readings.read.order("updated_at").try(:first).try(:membership).try(:user)
   end
 end
