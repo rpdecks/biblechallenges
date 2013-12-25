@@ -19,7 +19,9 @@ class Reading < ActiveRecord::Base
   has_many :membership_readings, dependent: :destroy
   has_many :memberships, through: :membership_readings
   has_many :comments, as: :commentable
-  has_many :users, through: :memberships #untested
+
+  #delegations
+  delegate :members, to: :challenge
   
   # Validations
   validates :chapter_id, presence: true

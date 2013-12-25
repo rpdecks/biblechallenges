@@ -4,7 +4,7 @@ describe ReadingsController do
 
   let(:challenge){create(:challenge, chapters_to_read:'matt 1-4')}
   let(:user){create(:user)}
-  let(:membership){create(:membership, challenge: challenge, user: user)}
+  let!(:membership){create(:membership, challenge: challenge, user: user)}
   let(:membership_reading){membership.membership_readings.first}
   let(:hash){membership_reading.hash_for_url}
 
@@ -36,7 +36,6 @@ describe ReadingsController do
       context "the user is part of this challenge and reading" do
         it "assigns the requested reading to @reading" do
           reading = challenge.readings.first
-          binding.pry
           get :show, id: reading
           expect(assigns(:reading)).to eq reading
         end
@@ -56,8 +55,17 @@ describe ReadingsController do
         end
 
 
-        it "does not render the show template"
-        it "redirects to / "
+        it "does not render the show template" do
+          randomreading = create(:reading)
+          get :show, id: randomreading
+          expect(response).to_not render_template :show
+        end
+
+        it "redirects to / " do
+          randomreading = create(:reading)
+          get :show, id: randomreading
+          expect(response).to redirect_to root_url
+        end
 
       end
 

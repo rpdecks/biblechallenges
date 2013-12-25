@@ -13,9 +13,12 @@ describe CommentsController, "Actions" do
 
 
   describe "POST #create" do
-    let(:current_user) {create(:user)}
+    let!(:current_user) {create(:user)}
     let!(:membership) {create(:membership, user: current_user, challenge: challenge)}
+    let(:reading) { membership.readings.first}
     let(:newcomment_attr) {attributes_for(:reading_comment, user: current_user, commentable: membership.readings.first)}
+    let!(:existing_comment) {create(:reading_comment, user: current_user, commentable: membership.readings.first)}
+
 
     before do
       sign_in :user, current_user
@@ -37,9 +40,26 @@ describe CommentsController, "Actions" do
       should redirect_to(new_user_session_path)
     end
 
+    it "should redirect to params[:location] if the comment is invalid" do
+      post :create, comment: build(:reading_comment, content: nil), location: new_user_session_path
+      should redirect_to(new_user_session_path)
+    end
+
     it "should set the flash" do
       post :create, comment: newcomment_attr
       should set_the_flash
     end
+
+    it "does not allow a user to create a comment for a reading he is not part of (through a challenge)" do
+      randomuser = FactoryGirl.create(:user)
+      sign_out current_user
+      sign_in :user, randomuser
+      expect{
+        post :create, comment: attributes_for(:reading_comment, commentable_type: "Reading", commentable_id: reading.id), location: reading_path(reading.id)
+      }.to_not change(Comment, :count).by(1)
+    end
+
+
+
   end
 end

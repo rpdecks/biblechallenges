@@ -35,5 +35,9 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
   has_many :comments
+
+  def owns_reading
+
+  end
   
 end

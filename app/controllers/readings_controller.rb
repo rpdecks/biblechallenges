@@ -12,6 +12,7 @@ class ReadingsController < ApplicationController
       @last_read_by = @reading.last_read_by  
     else
       @reading = nil
+      redirect_to root_url
     end
     
   end
