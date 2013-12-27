@@ -54,6 +54,7 @@ class MembershipsController < ApplicationController
     if @membership
       @hash = params[:hash]
       @user = @membership.user
+      sign_in @user
     else
       flash[:error] = "This unsubscribe link doesn't exist"
     end
