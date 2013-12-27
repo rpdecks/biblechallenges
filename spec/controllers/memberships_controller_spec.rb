@@ -6,7 +6,6 @@ describe MembershipsController do
   let(:challenge){create(:challenge, owner: owner)}
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
-  let(:hash){membership.hash_for_url}
 
   before do
     @request.host = "#{challenge.subdomain}.test.com"
@@ -14,6 +13,8 @@ describe MembershipsController do
 
   describe "Routing" do
     let(:subdomainurl) { "http://#{challenge.subdomain}.test.com" }
+    hash = 'somehash'
+
     it {expect({get: "challenges/#{challenge.id}/memberships/"}).to route_to(controller: "memberships", action: "index", challenge_id: "#{challenge.id}")}
     it {expect({get: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'unsubscribe_from_email', hash: hash)}
     it {expect({delete: "#{subdomainurl}/unsubscribe/#{hash}"}).to route_to(controller: 'memberships', action: 'destroy', hash: hash)}    
@@ -21,17 +22,20 @@ describe MembershipsController do
 
   describe 'GET#unsubscribe_from_email' do
     context 'with a valid hash' do
-      it "renders the :new template" do
+      it "renders the :unsubscribe template" do
+        hash = membership.hash_for_url
         get :unsubscribe_from_email, hash: hash
         expect(response).to render_template(:unsubscribe_from_email)
       end
 
       it "renders with email layout" do
+        hash = membership.hash_for_url
         get :unsubscribe_from_email, hash: hash
        should render_with_layout('from_email')
       end
 
       it "finds the membership" do
+        hash = membership.hash_for_url
         get :unsubscribe_from_email, hash: hash
         expect(assigns(:membership)).to eql(membership)
       end
