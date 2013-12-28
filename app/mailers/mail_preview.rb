@@ -20,7 +20,6 @@ if Rails.env.development?
                                 chapters_to_read: "Matt 1-5")
 
       membership = Membership.create(challenge: challenge, user: user)
-      binding.pry
       membership_reading = membership.membership_readings.first
       MembershipReadingMailer.daily_reading_email(membership_reading)
     end
