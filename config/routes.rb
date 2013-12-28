@@ -28,7 +28,7 @@ Biblechallenge::Application.routes.draw do
   end
 
   resources :readings, only: [:show] do
-    resources :comments, only: [:create], controller: 'readings/comments' 
+    resources :comments, only: [:create, :destroy], controller: 'readings/comments' 
   end
 
   constraints(Subdomain) do

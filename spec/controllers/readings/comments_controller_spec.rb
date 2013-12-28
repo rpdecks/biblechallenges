@@ -12,6 +12,48 @@ describe Readings::CommentsController, "Actions" do
   end
 
 
+  describe "Delete #delete" do
+
+    before do
+      request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
+    end
+
+    it "should destroy the current comment if the current_user owns it" do
+      current_user= create(:user)
+      sign_in :user, current_user
+      challenge = create(:challenge)
+      membership = create(:membership, user: current_user, challenge: challenge)
+      reading = membership.readings.first
+      comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
+      expect{ delete :destroy, reading_id: reading.id, id: comment.id}.to change(Comment, :count).by(-1)
+    end
+
+    it "should not destroy the comment if the current_user does not own it" do
+      current_user= create(:user)
+      challenge = create(:challenge)
+      membership = create(:membership, user: current_user, challenge: challenge)
+      reading = membership.readings.first
+      comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
+      randomuser = create(:user)
+      sign_in :user, randomuser
+      expect{ delete :destroy, reading_id: reading.id, id: comment.id}.not_to change(Comment, :count)
+    end
+
+    it "should redirect to login if the user is not logged in" do
+      current_user= create(:user)
+      challenge = create(:challenge)
+      membership = create(:membership, user: current_user, challenge: challenge)
+      reading = membership.readings.first
+      comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
+      delete :destroy, reading_id: reading.id, id: comment.id
+      expect(response).to redirect_to new_user_session_url
+    end
+
+
+  end
+
+
+
   describe "POST #create" do
     let!(:current_user) {create(:user)}
     let!(:membership) {create(:membership, user: current_user, challenge: challenge)}

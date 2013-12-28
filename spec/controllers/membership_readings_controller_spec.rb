@@ -24,17 +24,13 @@ describe MembershipReadingsController do
 
     before do
       sign_in :user, user
+      request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
     describe 'PUT#update' do
       it "finds the membership_reading" do
         put :update, id: membership_reading, format: 'js'
         expect(assigns(:membership_reading)).to eql(membership_reading)
-      end
-
-      it "re-renders the :edit template" do
-        put :update, id: membership_reading
-        expect(response).to render_template :edit
       end
 
       it "assigns comment" do
