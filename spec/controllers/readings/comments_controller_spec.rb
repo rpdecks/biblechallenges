@@ -67,6 +67,13 @@ describe Readings::CommentsController, "Actions" do
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
+    it "redirects to the user's profile if the user does not have a login name" do
+      current_user.username = nil
+      current_user.save
+      post :create, reading_id: reading.id, comment: newcomment_attr
+      expect(response).to redirect_to edit_user_registration_url
+    end
+
     it "creates a new reading comment" do
       expect{post :create, reading_id: reading.id, comment: newcomment_attr
       }.to change(Comment, :count).by(1)

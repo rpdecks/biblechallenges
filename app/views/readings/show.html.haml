@@ -24,7 +24,7 @@
     bible challenge.
     You are encouraged to post a comment related to 
     = @reading.chapter.book_and_chapter
-    below; anything that stood out to you that you feel might build others up.
+    below; anything that stood out to you that you feel might benefit the other readers, or perhaps a question that others might answer.
 
 
   = render partial: 'comment_form', locals: {comment: @comment, reading: @reading}
@@ -46,5 +46,5 @@
               ago
             - if current_user.comments.map(&:id).include?(c.id)
               %div
-                = link_to "Delete", [@reading, c], method: :delete, confirm: "Are you sure"
+                = link_to "Delete", [@reading, c], method: :delete, confirm: "Are you sure you want to delete this comment?"
 

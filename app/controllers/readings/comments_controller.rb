@@ -4,6 +4,7 @@ class Readings::CommentsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:create, :destroy]
   before_filter :find_reading
+  before_filter :verify_username
 
   def create
     @comment = current_user.comments.new(params[:comment])
@@ -35,6 +36,13 @@ class Readings::CommentsController < ApplicationController
 
   def find_reading
     @reading = Reading.find_by_id(params[:reading_id])
+  end
+
+  def verify_username
+    if current_user.username.blank?
+      flash[:notice] = "You must set a username in your profile before you can post comments"
+      redirect_to edit_user_registration_url 
+    end
   end
 
 end
