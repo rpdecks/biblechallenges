@@ -7,9 +7,9 @@ class MembershipReadingsController < ApplicationController
 
   def update
     @comment = Comment.new
-    @membership_reading = MembershipReading.find_by_id(params[:id])
+    @user = current_user
+    @membership_reading = current_user.membership_readings.find_by_id(params[:id])
     @membership = @membership_reading.membership
-    @user = @membership_reading.membership.user
     @reading = @membership_reading.reading
     #just going to toggle state on any update
     @membership_reading.state = (@membership_reading.state == 'unread') ? 'read' : 'unread'

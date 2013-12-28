@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe CommentsController, "Actions" do
+describe Readings::CommentsController, "Actions" do
   let(:challenge) {create(:challenge)}
   describe "Guest Posting" do
     describe "POST #create" do
       it "redirects to login page" do
-        post :create, comment: attributes_for(:reading_comment)
+        post :create, reading_id: 1, comment: attributes_for(:reading_comment)
         expect(response).to redirect_to new_user_session_path
       end
     end
@@ -26,27 +26,27 @@ describe CommentsController, "Actions" do
     end
 
     it "creates a new reading comment" do
-      expect{post :create, comment: newcomment_attr
+      expect{post :create, reading_id: reading.id, comment: newcomment_attr
       }.to change(Comment, :count).by(1)
 
     end
     it "should redirect to :back if not params[:location] is not  provided" do
-      post :create, comment: newcomment_attr
+      post :create, reading_id: reading.id, comment: newcomment_attr
       expect(response).to redirect_to "where_i_came_from"
     end
 
     it "should redirect to params[:location] if it's provided" do
-      post :create, comment: newcomment_attr, location: new_user_session_path
+      post :create, reading_id: reading.id, comment: newcomment_attr, location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
 
     it "should redirect to params[:location] if the comment is invalid" do
-      post :create, comment: build(:reading_comment, content: nil), location: new_user_session_path
+      post :create, reading_id: reading.id, comment: build(:reading_comment, content: nil), location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
 
     it "should set the flash" do
-      post :create, comment: newcomment_attr
+      post :create, reading_id: reading.id, comment: newcomment_attr
       should set_the_flash
     end
 
@@ -55,7 +55,7 @@ describe CommentsController, "Actions" do
       sign_out current_user
       sign_in :user, randomuser
       expect{
-        post :create, comment: attributes_for(:reading_comment, commentable_type: "Reading", commentable_id: reading.id), location: reading_path(reading.id)
+        post :create, reading_id: reading.id, comment: attributes_for(:reading_comment, commentable_type: "Reading", commentable_id: reading.id), location: reading_path(reading.id)
       }.to_not change(Comment, :count).by(1)
     end
 

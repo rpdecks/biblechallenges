@@ -24,7 +24,7 @@
 
             - if @membership_reading.state == 'read'
               %br
-              You have already confirmed this reading. Would you like to comment on the chapter?
+              You have already confirmed this reading. Would you also like to comment on the chapter?
               = render partial: 'readings/comment_form', locals: {comment: @comment, reading: @membership_reading.reading}
       - else
         .panel-body
