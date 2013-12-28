@@ -16,7 +16,7 @@
                 Did you complete #{@reading.chapter.book_name} #{@reading.chapter.chapter_number}?
                 = submit_tag "Yes", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
             - else
-              You have already confirmed this reading. Would you like to comment on the chapter?
+              You have already confirmed this reading. Would you also like to comment on the chapter?
               = render partial: 'readings/comment_form', locals: {comment: @comment, reading: @membership_reading.reading}
       - else
         .panel-body

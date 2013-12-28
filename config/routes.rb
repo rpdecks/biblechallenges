@@ -18,8 +18,6 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :comments, only: [:create] do
-  end
 
   resources :challenges, only: [:index] do
     resources :memberships, only: [:update, :index, :show, :create, :destroy] do
@@ -30,8 +28,8 @@ Biblechallenge::Application.routes.draw do
   end
 
   resources :readings, only: [:show] do
+    resources :comments, only: [:create], controller: 'readings/comments' 
   end
-
 
   constraints(Subdomain) do
     match '/' => 'challenges#show'

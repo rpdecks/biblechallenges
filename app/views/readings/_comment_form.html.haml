@@ -1,4 +1,4 @@
-= form_for comment do |f|
+= form_for [reading, comment] do |f|
   - if comment.errors.any?
     - flash[:error] = comment.errors.full_messages.to_sentence
   .control-group
