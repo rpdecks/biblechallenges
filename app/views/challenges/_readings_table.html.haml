@@ -1,26 +1,31 @@
 %table.table.table-striped.table-bordered.table-hover.table-centered-text
-  %thead
-    %tr
-      %th Date
-      %th Chapter
   %tbody
     - if current_user && membership = @challenge.membership_for(current_user)
+      %thead
+        %tr
+          %th Date
+          %th Chapter
+          %th Comments
       - membership.membership_readings.each do |mr|
-        %tr{class: reading_row_class(mr),id: "reading_tr_#{mr.id}"}
+        %tr
           %td= mr.reading.date.strftime("%a, %-d %b %Y")
-          %td= mr.reading.chapter.book_and_chapter
-          - if mr.state == 'unread'
-            %td
+          %td= link_to mr.reading.chapter.book_and_chapter, mr.reading
+          %td= link_to mr.reading.comments.count, mr.reading
+          %td{class: reading_row_class(mr),id: "reading_tr_#{mr.id}"}
+            - if mr.state == 'unread'
               = form_for(mr) do
-                = submit_tag "Confirm", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
-          - else
-            %td
+                = submit_tag "Confirm", class: 'btn btn-primary btn-xs', disable_with: 'Please wait...'
+            - else
               = form_for(mr) do
-                = submit_tag "Unconfirm", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
+                = submit_tag "Unconfirm", class: 'btn btn-primary btn-xs', disable_with: 'Please wait...'
 
 
 
     - else
+      %thead
+        %tr
+          %th Date
+          %th Chapter
       - @readings.each do |reading|
         %tr
           %td= reading.date.strftime("%a, %-d %b %Y")
