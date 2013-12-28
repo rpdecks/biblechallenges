@@ -3,7 +3,7 @@
   / My membership button
   - if current_user && @membership = @challenge.membership_for(current_user)
     .pull-right
-      = link_to 'My Membership', '/my-membership', class: 'btn btn-primary btn-xs'
+      = link_to 'Membership Details', '/my-membership', class: 'btn btn-primary btn-xs'
 
   %legend
     = @challenge.name

@@ -2,10 +2,10 @@ class Readings::CommentsController < ApplicationController
 
   respond_to :html
 
-  before_filter :authenticate_user!, only: [:create]
+  before_filter :authenticate_user!, only: [:create, :destroy]
+  before_filter :find_reading
 
   def create
-    @reading = Reading.find_by_id(params[:reading_id])
     @comment = current_user.comments.new(params[:comment])
 
     if @comment.save
@@ -20,4 +20,21 @@ class Readings::CommentsController < ApplicationController
       redirect_to params[:location] || request.referer
     end 
   end
+
+
+  def destroy
+    if (@comment = current_user.comments.find_by_id(params[:id]))
+      @comment.destroy
+      flash[:notice] = "Successfully deleted comment"
+      respond_with(@reading)
+    else
+      redirect_to root_url
+    end
+  end
+
+
+  def find_reading
+    @reading = Reading.find_by_id(params[:reading_id])
+  end
+
 end

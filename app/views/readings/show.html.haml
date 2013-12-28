@@ -44,4 +44,7 @@
                 = "--#{c.user.username}"
               = time_ago_in_words(c.created_at)
               ago
+            - if current_user.comments.map(&:id).include?(c.id)
+              %div
+                = link_to "Delete", [@reading, c], method: :delete, confirm: "Are you sure"
 

@@ -24,14 +24,14 @@
 
             - if @membership_reading.state == 'read'
               %br
-              You have already confirmed this reading. Would you also like to comment on the chapter?
+              You have confirmed this reading. Would you also like to comment on the chapter?
               = render partial: 'readings/comment_form', locals: {comment: @comment, reading: @membership_reading.reading}
       - else
         .panel-body
           Please check the link you received in your email.
     .well.well-sm
       %center
-        = link_to "Go to the main challenge page",'/'
+        = link_to "Go to your main challenge page",'/'
         %br
         %br
         = link_to "Go to chapter page for #{@reading.chapter.book_and_chapter}", reading_path(@reading)
