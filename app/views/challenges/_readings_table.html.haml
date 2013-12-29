@@ -4,13 +4,11 @@
       %thead
         %tr
           %th Date
-          %th Chapter
-          %th Comments
+          %th Chapter(comments)
       - membership.membership_readings.each do |mr|
         %tr
-          %td= mr.reading.date.strftime("%a, %-d %b %Y")
-          %td= link_to mr.reading.chapter.book_and_chapter, mr.reading
-          %td= link_to mr.reading.comments.count, mr.reading
+          %td= mr.reading.date.strftime("%-m/%-d")
+          %td= link_to mr.reading.chapter.book_and_chapter + "  (#{mr.reading.comments.count})" , mr.reading
           %td{class: reading_row_class(mr),id: "reading_tr_#{mr.id}"}
             - if mr.state == 'unread'
               = form_for(mr) do
