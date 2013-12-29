@@ -20,7 +20,7 @@ class MembershipsController < ApplicationController
 
   def update
     if @membership.update_attributes(params[:membership])
-      flash[:notice] = "You have successfully updated your membership"
+      flash[:notice] = "You have successfully updated your challenge settings."
       redirect_to challenge_membership_path(@membership)
     else
       render action: 'show'
