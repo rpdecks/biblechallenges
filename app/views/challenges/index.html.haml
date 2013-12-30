@@ -6,17 +6,15 @@
   %thead
     %tr
       %th Name
-      %th URL
       %th Begin Date
-      %th End Date
-      %th Active?
+      %th.hidden-xs End Date
+      %th.hidden-xs Active?
   - @challenges.each do |challenge|
     %tr
-      %td= challenge.name
-      %td= link_to subdomain_url(challenge.subdomain), "http://" + subdomain_url(challenge.subdomain)
+      %td= link_to challenge.name, "http://" + subdomain_url(challenge.subdomain)
       %td= challenge.begindate
-      %td= challenge.enddate
-      %td= challenge.active ? "Yes" : "No"
+      %td.hidden-xs= challenge.enddate
+      %td.hidden-xs= challenge.active ? "Yes" : "No"
 %br/
 
 - if @created_challenges.count > 0
@@ -25,16 +23,15 @@
     %thead
       %tr
         %th Name
-        %th URL
         %th Begin Date
-        %th End Date
+        %th.hidden-xs End Date
         %th Active?
+        %th 
     - @created_challenges.each do |challenge|
       %tr
-        %td= challenge.name
-        %td= link_to subdomain_url(challenge.subdomain), "http://" + subdomain_url(challenge.subdomain)
+        %td= link_to challenge.name, "http://" + subdomain_url(challenge.subdomain)
         %td= challenge.begindate
-        %td= challenge.enddate
+        %td.hidden-xs= challenge.enddate
         %td= challenge.active ? "Yes" : "No"
         %td= link_to 'Details', creator_challenge_path(challenge)
   %br/
