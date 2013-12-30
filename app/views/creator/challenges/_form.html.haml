@@ -33,6 +33,9 @@
     = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
     %br
     %br
+    %br
+    = link_to "Delete this challenge", confirm_delete_creator_challenge_url(@challenge),class: "btn btn-danger" unless @challenge.new_record?
+    %br
 
 :javascript
 
