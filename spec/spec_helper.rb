@@ -9,7 +9,7 @@ Spork.prefork do
   # need to restart spork for it take effect.
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
-  require Rails.root.join("db/seeds.rb")
+  #require Rails.root.join("db/seeds.rb")
   require 'rspec/rails'
   require 'rspec/autorun'
   require 'capybara/rspec'
