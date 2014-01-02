@@ -13,7 +13,7 @@ if Rails.env.development?
         password_confirmation: 'somepassword'
       )
 
-      challenge = Challenge.create(subdomain: SecureRandom.urlsafe_base64(20),
+      challenge = Challenge.create(subdomain: ('a'..'z').to_a.shuffle[0,8].join,
                                 name: Faker::Company.name,
                                 begindate: Time.now,
                                 owner_id: 1, #to pass validations
@@ -23,6 +23,5 @@ if Rails.env.development?
       membership_reading = membership.membership_readings.first
       MembershipReadingMailer.daily_reading_email(membership_reading)
     end
-
   end
 end
