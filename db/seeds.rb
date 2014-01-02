@@ -13,6 +13,8 @@ module MassImporter
       @columns = @table.headers
       @values = @table.values_at *@columns
       ar_model.destroy_all unless append # Prevents duplicate records by default
+      ActiveRecord::Base.connection.reset_pk_sequence!(ar_model.table_name)# so the ids always start with one psql only
+
       ar_model.import @columns, @values, validate: false
       puts "Done!"
     end
