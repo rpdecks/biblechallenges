@@ -38,4 +38,8 @@ describe User do
     it { should have_many(:challenges).through(:memberships)}
   end
 
+  describe "Callbacks" do
+    it "should create a profile record after being created"
+  end
+
 end
