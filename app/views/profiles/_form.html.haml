@@ -1,0 +1,28 @@
+= form_for @profile do |f|
+  %legend
+    = controller.action_name.capitalize
+    Profile
+  - if @profile.errors.any?
+    - flash[:error] = @challenge.errors.full_messages.to_sentence
+  .control-group
+    = f.label :username, "Username", class: "control-label"
+    .controls
+      = f.text_field :username, class: "form-control"
+      %p.help-block Your username will be displayed by any comments you post
+  .control-group
+    = f.label :first_name, "First Name", class: "control-label"
+    .controls
+      = f.text_field :first_name, class: "form-control"
+      %p.help-block 
+  .control-group
+    = f.label :last_name, "Last Name", class: "control-label"
+    .controls
+      = f.text_field :last_name, class: "form-control"
+      %p.help-block
+
+  .control-group
+    = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
+
+%br
+%p
+  = link_to "Change your account password", edit_user_registration_url
