@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :username, :first_name, :last_name, :email, :password, 
+  attr_accessible :email, :password, 
     :password_confirmation, :remember_me, :provider, :uid
 
   # Relations
@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
   #Callbacks
 
   before_create :add_profile
+
+  delegate :first_name, :last_name, :username, to: :profile
 
 
 

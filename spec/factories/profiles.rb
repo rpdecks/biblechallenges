@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :profile do
-    username "MyString"
-    first_name "MyString"
-    last_name "MyString"
+    username    {Faker::Internet.user_name}
+    first_name   {Faker::Name.first_name}
+    last_name    {Faker::Name.last_name}
   end
 end
