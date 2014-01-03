@@ -1,6 +1,6 @@
 .row
   .col-md-6.col-md-offset-3
-    %h2 Edit Profile
+    %h2 Change Password
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put, role: 'form'}) do |f|
       = devise_error_messages!
       %fieldset
@@ -11,17 +11,19 @@
           %div
             Currently waiting confirmation for: #{resource.unconfirmed_email}
         %hr
+        %p
+          If you would like to change your password, enter the new password in the two fields below
+          and your current password in the bottom field, and click "Update"
         .form-group
-          = f.label :password
+          = f.label "New Password"
           = f.password_field :password, autocomplete: "off", class: 'form-control'
         .form-group
-          = f.label :password_confirmation
+          = f.label "New Password Confirmation"
           = f.password_field :password_confirmation, class: 'form-control'
         .form-group
           = f.label :current_password
           = f.password_field :current_password, class: 'form-control'
           %p.help-block
-            (leave blank if you don't want to change it)
         = f.submit "Update", class: 'btn btn-default btn-block'
         %br
         -# %h3 Cancel my account
