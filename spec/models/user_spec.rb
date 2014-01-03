@@ -39,7 +39,9 @@ describe User do
   end
 
   describe "Callbacks" do
-    it "should create a profile record after being created"
+    it "should create a profile record after being created" do
+      expect{FactoryGirl.create(:user)}.to change(Profile, :count).by(1)
+    end
   end
 
 end
