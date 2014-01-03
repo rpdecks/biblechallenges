@@ -5,9 +5,6 @@ if Rails.env.development?
 
     def daily_reading_email
       user = User.create(
-        username:    Faker::Internet.user_name,
-        first_name:   Faker::Name.first_name,
-        last_name:    Faker::Name.last_name,
         email:        Faker::Internet.email,
         password: 'somepassword',
         password_confirmation: 'somepassword'

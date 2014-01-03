@@ -20,6 +20,7 @@ describe Readings::CommentsController, "Actions" do
 
     it "should destroy the current comment if the current_user owns it" do
       current_user= create(:user)
+      current_user.profile = create(:profile, username: "Phil")
       sign_in :user, current_user
       challenge = create(:challenge)
       membership = create(:membership, user: current_user, challenge: challenge)
@@ -67,29 +68,37 @@ describe Readings::CommentsController, "Actions" do
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
-    it "redirects to the user's profile if the user does not have a login name" do
-      current_user.username = nil
-      current_user.save
+    it "redirects to the user's profile if the user does not have a username" do
+      current_user.profile.username = nil
+      current_user.profile.save
       post :create, reading_id: reading.id, comment: newcomment_attr
-      expect(response).to redirect_to edit_user_registration_url
+      expect(response).to redirect_to edit_profile_url
     end
 
     it "creates a new reading comment" do
+      current_user.profile.username = "Phil"
+      current_user.profile.save
       expect{post :create, reading_id: reading.id, comment: newcomment_attr
       }.to change(Comment, :count).by(1)
 
     end
     it "should redirect to :back if not params[:location] is not  provided" do
+      current_user.profile.username = "Phil"
+      current_user.profile.save
       post :create, reading_id: reading.id, comment: newcomment_attr
       expect(response).to redirect_to "where_i_came_from"
     end
 
     it "should redirect to params[:location] if it's provided" do
+      current_user.profile.username = "Phil"
+      current_user.profile.save
       post :create, reading_id: reading.id, comment: newcomment_attr, location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
 
     it "should redirect to params[:location] if the comment is invalid" do
+      current_user.profile.username = "Phil"
+      current_user.profile.save
       post :create, reading_id: reading.id, comment: build(:reading_comment, content: nil), location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
