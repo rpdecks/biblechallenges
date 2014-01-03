@@ -38,8 +38,14 @@ class User < ActiveRecord::Base
   has_one  :profile
   has_many :membership_readings, through: :memberships
 
-  def owns_reading
+  #Callbacks
 
+  before_create :add_profile
+
+
+
+  def add_profile
+    self.create_profile
   end
   
 end
