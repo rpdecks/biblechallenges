@@ -72,6 +72,13 @@ describe Creator::ChallengesController do
         end
 
       end
+
+      describe "DELETE#destroy" do
+        it "redirects to the challenges page" do
+          delete :destroy, id: challenge
+          expect(response).to redirect_to challenges_url
+        end
+      end
     end
 
   end
