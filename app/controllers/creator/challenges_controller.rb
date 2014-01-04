@@ -47,7 +47,7 @@ class Creator::ChallengesController < ApplicationController
     name = @challenge.name
     @challenge.destroy
     respond_to do |format|
-      format.html { redirect_to creator_challenges_url, notice: "#{name.capitalize} challenge was successfully deleted" }
+      format.html { redirect_to challenges_url, notice: "#{name.capitalize} challenge was successfully deleted" }
       format.json { head :no_content }
     end
   end
