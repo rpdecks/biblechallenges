@@ -26,7 +26,23 @@
     = @reading.chapter.book_and_chapter
     below; anything that stood out to you that you feel might benefit the other readers, or perhaps a question that others might answer.
 
+  %br
 
+  = link_to_function "Show / hide chapter text", "$('#chapter_text').toggle()"
+  #chapter_text{style: "display: none;"}
+    %br
+    %h4
+      =@reading.chapter.book_name
+      =@reading.chapter.chapter_number
+    - @verses.each do |v|
+      %b=v.verse_number
+      =v.versetext
+      %br
+    %br
+    %br
+
+  %br
+  %br
   = render partial: 'comment_form', locals: {comment: @comment, reading: @reading}
   %br
 
