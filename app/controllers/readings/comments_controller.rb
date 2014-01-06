@@ -39,7 +39,7 @@ class Readings::CommentsController < ApplicationController
   end
 
   def verify_username
-    if current_user.username.blank?
+    if current_user.profile.username.blank?
       flash[:notice] = "You must set a username in your profile before you can post comments"
       redirect_to edit_profile_url
     end

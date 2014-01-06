@@ -57,7 +57,7 @@
               %i= c.content
             %div
               %b
-                = "--#{c.user.username}"
+                = "--#{c.user.profile.username}"
               = time_ago_in_words(c.created_at)
               ago
             - if current_user.comments.map(&:id).include?(c.id)

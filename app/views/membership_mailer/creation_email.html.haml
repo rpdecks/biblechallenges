@@ -8,7 +8,7 @@
           =@challenge.name
         Bible Challenge.
       %br
-      Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+      Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
       %br
       %br
       This challenge begins on #{@challenge.begindate.strftime("%b %-d %Y")} and ends on #{@challenge.enddate.strftime("%b %-d %Y")}.

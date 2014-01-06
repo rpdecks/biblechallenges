@@ -8,7 +8,7 @@
           =@challenge.name
         Bible Challenge.
       %br
-      Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+      Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
       %br
       %br
       We have created an user account on BibleChallenges.com for you. You can use the credentials below to login.
@@ -67,3 +67,4 @@
       %br
       %small
         If you have any questions, check out our FAQ page.  If your question isn't answered there you can ask us directly through our feedback form.
+
