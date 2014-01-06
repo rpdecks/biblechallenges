@@ -19,7 +19,7 @@
           A total of #{@membership.challenge.membership_readings.read.count} chapters have been read by all participants.
       %br
       %br
-      Hello#{ " " + @user.first_name unless @user.first_name.blank?},
+      Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
       %br
       Today's reading, for #{@reading.date.strftime("%b %-d %Y")}, is below.
       %br

@@ -1,5 +1,4 @@
-require 'spec_helper'
-
+require 'spec_helper' 
 describe ProfilesController do
 
   describe "Routing" do
@@ -35,7 +34,7 @@ describe ProfilesController do
                                                last_name: "Bradley",
                                                username: "yeahbuddy")
           current_user.reload
-          expect(current_user.first_name).to eql "Phil"
+          expect(current_user.profile.first_name).to eql "Phil"
         end
       end
 
