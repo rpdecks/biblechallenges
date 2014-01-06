@@ -43,7 +43,6 @@ describe Membership do
   end
 
   describe "Class methods" do
-
   end
 
   describe 'Instance methods' do
@@ -76,6 +75,28 @@ describe Membership do
         expect(membership.to_date_progress_percentage(challenge.begindate + 3.days)).to eql(50)
       end
     end
+
+    describe '#completed?' do
+      it "returns true if all the chapters have been read" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        membership = create(:membership, challenge: challenge)
+        membership.membership_readings[0..1].each do |mr| # read first two
+          mr.state = 'read'
+          mr.save!
+        end
+        expect(membership.completed?).to eq true
+      end
+      it "returns false if not all the chapters have been read" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1-3')
+        membership = create(:membership, challenge: challenge)
+        membership.membership_readings[0..1].each do |mr| # read first two
+          mr.state = 'read'
+          mr.save!
+        end
+        expect(membership.completed?).to eq false
+      end
+    end
+
 
   end
 
