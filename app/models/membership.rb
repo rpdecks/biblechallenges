@@ -50,6 +50,10 @@ class Membership < ActiveRecord::Base
     td_total.zero? ? 0 : (read * 100) / td_total
   end
 
+  def completed?
+    membership_readings.count == membership_readings.read.count
+  end
+
   private
 
   # Callbacks
