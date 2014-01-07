@@ -14,7 +14,10 @@
   %p
   %br
 
-  = render 'join_form'
+  - if @challenge.active
+    = render 'join_form'
+  - else
+    %p This challenge is not currently active; signups are disabled.
 
   %hr
 
