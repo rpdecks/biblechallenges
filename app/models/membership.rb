@@ -54,6 +54,10 @@ class Membership < ActiveRecord::Base
     membership_readings.count == membership_readings.read.count
   end
 
+  def has_reading_on?(adate)
+    self.readings.find_by_date(adate) ? true : false  #ask jose about this
+  end
+
   private
 
   # Callbacks
