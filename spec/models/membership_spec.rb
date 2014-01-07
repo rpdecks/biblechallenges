@@ -97,6 +97,20 @@ describe Membership do
       end
     end
 
+    describe "has_reading_on?" do
+      it "returns false if there is not a reading on the given date" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2', begindate: Date.tomorrow)  #start date of today by default
+        membership = create(:membership, challenge: challenge)
+        expect(membership.has_reading_on?(Date.today)).to_not eq true
+      end
+      it "returns true if there is a reading on the given date" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')  #start date of today by default
+        membership = create(:membership, challenge: challenge)
+        expect(membership.has_reading_on?(Date.today)).to eq true
+      end
+    end
+
+
 
   end
 
