@@ -97,20 +97,6 @@ describe Membership do
       end
     end
 
-    describe "has_reading_on?" do
-      it "returns false if there is not a reading on the given date" do
-        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2', begindate: Date.tomorrow)  #start date of today by default
-        membership = create(:membership, challenge: challenge)
-        expect(membership.has_reading_on?(Date.today)).to_not eq true
-      end
-      it "returns true if there is a reading on the given date" do
-        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')  #start date of today by default
-        membership = create(:membership, challenge: challenge)
-        expect(membership.has_reading_on?(Date.today)).to eq true
-      end
-    end
-
-
 
   end
 
@@ -118,12 +104,28 @@ describe Membership do
     describe 'After create' do
       describe '#associate_readings' do
         let(:membership){create(:membership)}
-
         it 'associates all the readings from its challenge' do
           expect(membership.readings).to match_array(membership.challenge.readings)
         end
-
       end
+
+      describe '#send_todays_reading' do
+        it "sends todays reading after creation if it exists" do
+          user = create(:user)
+          challenge = create(:challenge, begindate: Date.today)  
+          membership = build(:membership, challenge: challenge, user: user)
+          MembershipReadingMailer.should_receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
+          membership.save
+        end
+        it "does not send todays reading after creation if it does not exist" do
+          user = create(:user)
+          challenge = create(:challenge, begindate: Date.tomorrow) 
+          membership = build(:membership, challenge: challenge, user: user)
+          MembershipReadingMailer.should_not_receive(:daily_reading_email)
+          membership.save
+        end
+      end
+
     end
   end
 

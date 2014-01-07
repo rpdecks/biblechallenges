@@ -9,7 +9,7 @@ class ChallengeMailer < ActionMailer::Base
   def creation_email(challenge)
     @challenge = challenge
     @owner = @challenge.owner
-    mail( to: @owner.email, subject: "#{@challenge.name} created!")
+    mail( to: @owner.email, subject: "Bible Challenge #{@challenge.name} created!")
   end
 
 end

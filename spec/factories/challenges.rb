@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :challenge do
     subdomain     {generate(:subdomain)}
     name          {Faker::Name.name}
-    begindate     {Date.today}
+    begindate     {Date.tomorrow}
     chapters_to_read "Matthew 1 -5"
     association :owner, factory: :user
 
