@@ -38,6 +38,8 @@ class Membership < ActiveRecord::Base
   after_create :successful_creation_email, unless: 'auto_created_user'
   after_create :successful_auto_creation_email, if: 'auto_created_user'
 
+  after_create :send_todays_reading
+
   def overall_progress_percentage
     mr_total = membership_readings.count
     read = membership_readings.read.count
@@ -54,8 +56,12 @@ class Membership < ActiveRecord::Base
     membership_readings.count == membership_readings.read.count
   end
 
-  def has_reading_on?(adate)
-    self.readings.find_by_date(adate) ? true : false  #ask jose about this
+  def send_todays_reading  #this feels bad ask jose
+    r = readings.find_by_date(Date.today)
+    if r
+      mr = r.membership_readings.find_by_reading_id_and_membership_id(r.id, self.id)
+      MembershipReadingMailer.daily_reading_email(mr).deliver if mr
+    end
   end
 
   private
@@ -73,5 +79,6 @@ class Membership < ActiveRecord::Base
   def successful_auto_creation_email
     MembershipMailer.auto_creation_email(self).deliver
   end
+
 
 end

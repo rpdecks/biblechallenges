@@ -28,6 +28,9 @@ class MembershipReading < ActiveRecord::Base
   belongs_to :membership
   belongs_to :reading
 
+  #delegations
+  delegate :date, to: :reading
+
   # Validations
   validates :membership_id, presence: true
   validates :reading_id, presence: true
