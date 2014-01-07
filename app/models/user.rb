@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   before_create :add_profile
 
-  #delegate :first_name, :last_name, :username, to: :profile
+  delegate :first_name, :last_name, :username, to: :profile
 
 
 
