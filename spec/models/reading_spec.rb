@@ -31,4 +31,29 @@ describe Reading do
       end
     end
   end
+
+  describe "Instance Methods" do
+    describe "last_readers" do
+      it "should return a collection of the last x readers" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        reading = challenge.readings.first
+        m1 = create(:membership, challenge: challenge)
+        m2 = create(:membership, challenge: challenge)
+        reading.membership_readings.each do |m|
+          m.state = 'read'
+          m.save!
+        end
+        expect(reading.last_readers(2)).to match_array [m1.user, m2.user]
+        
+      end
+
+      it "should return an empty collection of noone has read" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        reading = challenge.readings.first
+        create(:membership, challenge: challenge)
+        create(:membership, challenge: challenge)
+        expect(reading.last_readers(2)).to match_array []
+      end
+    end
+  end
 end
