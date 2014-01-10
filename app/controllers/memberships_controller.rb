@@ -42,7 +42,7 @@ class MembershipsController < ApplicationController
     @membership_form = MembershipForm.new(params[:membership_form])
     @membership_form.challenge = @challenge
     if @membership_form.valid? && @membership_form.subscribe
-      flash[:notice] = "Thank you for joining, check your email inbox!"
+      flash[:notice] = "Thank you for joining. check your email inbox for more details!"
       redirect_to root_url(subdomain: @challenge.subdomain)
     else
       flash[:error] = @membership_form.errors.full_messages.to_sentence

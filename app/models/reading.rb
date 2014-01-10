@@ -34,6 +34,11 @@ class Reading < ActiveRecord::Base
 
   def last_read_by
     #returns the user who last read this reading
-    membership_readings.read.order("updated_at").try(:first).try(:membership).try(:user)
+    #last_reading.try(:membership).try(:user)
+    nil #pdb
+  end
+
+  def last_readers(num)
+    membership_readings.read.order("updated_at").limit(num).map {|r| r.membership.user}  #is this as ugly as it feels?  jose
   end
 end

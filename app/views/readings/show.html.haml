@@ -5,6 +5,9 @@
 
   %table.table.table-striped.table-condensed
     %tr
+      %td Challenge:
+      %td= link_to @reading.challenge.name, @reading.challenge
+    %tr
       %td Already read by:
       %td= @reading.membership_readings.read.count
     %tr

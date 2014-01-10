@@ -36,7 +36,7 @@ describe 'Membership creation', type: :feature do
 
         fill_in "membership_form_email", with: email
         click_button "Join the Challenge"        
-        page.should have_content 'Thank you for joining, check your email inbox!'
+        page.should have_content 'Thank you for joining. check your email inbox for more details!'
       end
 
     end
