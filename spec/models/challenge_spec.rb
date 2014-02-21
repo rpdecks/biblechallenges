@@ -115,12 +115,13 @@ describe Challenge do
   describe 'Callbacks' do
     describe 'After save' do
       describe '#generate_readings' do
-        let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22')}
+        let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
+        let(:expected_readings) { 6 } # avoiding magic numbers
 
         context 'when the challenge is being created' do
 
           it 'creates a reading for every chapter assigned in the challenge'do
-            expect(challenge.readings.length).to eql 3
+            expect(challenge.readings.length).to eql 6
           end
 
           it 'creates the readings with its corresponding date' do
@@ -142,7 +143,7 @@ describe Challenge do
             end
 
             it 're-creates a reading for every chapter assigned in the challenge'do
-              expect(challenge.readings.length).to eql 3
+              expect(challenge.readings.length).to eql(expected_readings)
             end
 
             it 're-creates the readings with its corresponding date' do
