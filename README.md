@@ -19,6 +19,8 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 
 ##Tests
 
+*This app uses seed data on the test db, so please be sure to run `rake db:seed RAILS_ENV=test` when cloning and before starting to work on it.
+
 Run the Spork test server ` $ spork`. It forks a copy of the server each time you run the tests rather than using the Rails constant unloading to reloadthe files. Way faster!!
 
 Then in a different console ` $ time rspec` (it will run all the specs).
