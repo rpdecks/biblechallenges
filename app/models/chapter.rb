@@ -36,22 +36,27 @@ class Chapter < ActiveRecord::Base
 
 
   # Class methods
-  def self.search(query)
-    fragment, chapters = Parser.parse_query(query)
+  def self.search(comma_separated_queries)
 
-    # First search by fragment
-    bookfrag = Bookfrag.where("upper(:query) like upper(fragment) || '%'",
-                              query: fragment).first
-    matches = where(book_id: bookfrag.try(:book_id))
-    .where(chapter_number: chapters)
+    matches = Parser.separate_queries(comma_separated_queries).inject([]) do |results, query|
 
-    # If nothing found, then search by Chapter name
-    unless matches.length > 0 # Using .any? here causes an extra query
-      matches = where("upper(book_name) like upper(:query)", query: "#{fragment}")
+      fragment, chapters = Parser.parse_query(query)
+
+      # First search by fragment
+      bookfrag = Bookfrag.where("upper(:query) like upper(fragment) || '%'",
+                                query: fragment).first
+      matches = where(book_id: bookfrag.try(:book_id))
       .where(chapter_number: chapters)
+
+      # If nothing found, then search by Chapter name
+      unless matches.length > 0 # Using .any? here causes an extra query
+        matches = where("upper(book_name) like upper(:query)", query: "#{fragment}")
+        .where(chapter_number: chapters)
+      end
+
+      results << matches
     end
 
-    matches
   end
 
 end

@@ -13,4 +13,8 @@ class Parser
       [nil, nil]
     end
   end
+
+  def self.separate_queries(comma_separated_queries)
+    comma_separated_queries.split(/\s*,\s*/)
+  end
 end

@@ -117,3 +117,11 @@
 - fragment: "J1"
   book_number: # Nothing
   chapters: [] # Nothing
+# Multiple spans tests below to avoid changing the spec I'm creating one
+# book test per multi-span fragment
+- fragment: "Matt 3..5, 2 Tim. 1-3"
+  book_number: 40
+  chapters: [3, 4, 5]
+- fragment: "Matt 3..5, 2 Tim. 1-3"
+  book_number: 55
+  chapters: [1, 2, 3]
