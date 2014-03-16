@@ -85,6 +85,23 @@ describe MembershipReadingsController do
 
 
     end
+
+    context "with an invalid hash" do
+      it "set the flash with an error message" do
+        get :edit, id: "blah"
+        should set_the_flash
+      end
+    end
+
+    context "when a user unsubscribes" do
+      # renders the same page but...
+      it "set the flash with an error message" do
+        old_hash = hash
+        membership.destroy
+        get :edit, id: old_hash
+        should set_the_flash
+      end
+    end
   end
 
 
