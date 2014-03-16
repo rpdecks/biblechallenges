@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
   has_many :comments
-  has_one  :profile
+  has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
   #Callbacks
