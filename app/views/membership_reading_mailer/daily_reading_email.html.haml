@@ -38,7 +38,7 @@
         = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.hash_for_url, subdomain: @challenge.subdomain)
       %br
       %small
-        If you have any questions, check out our FAQ page.  If your question isn't answered there you can ask us directly through our feedback form.
+        If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
       %br
       %br
       %small
