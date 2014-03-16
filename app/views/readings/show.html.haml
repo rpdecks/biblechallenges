@@ -60,7 +60,7 @@
               %i= c.content
             %div
               %b
-                = "--#{c.user.profile.username}"
+                \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.profile.username}
               = time_ago_in_words(c.created_at)
               ago
             - if current_user.comments.map(&:id).include?(c.id)
