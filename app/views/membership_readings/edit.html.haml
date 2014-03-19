@@ -32,6 +32,7 @@
     .well.well-sm
       %center
         = link_to "Go to your main challenge page",'/'
-        %br
-        %br
-        = link_to "Go to chapter page for #{@reading.chapter.book_and_chapter}", reading_path(@reading)
+        - if @reading.present?
+          %br
+          %br
+          = link_to "Go to chapter page for #{@reading.chapter.book_and_chapter}", reading_path(@reading)
