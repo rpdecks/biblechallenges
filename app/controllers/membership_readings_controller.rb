@@ -28,7 +28,7 @@ class MembershipReadingsController < ApplicationController
       sign_in @user
       @reading = @membership_reading.reading
     else
-      flash[:error] = "This confirmation link doesn't exist"
+      flash[:error] = "This confirmation link doesn't exist or you may have unsubscribed from this challenge"
     end
   end
 
