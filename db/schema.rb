@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140103145146) do
+ActiveRecord::Schema.define(:version => 20140330163824) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -80,14 +80,24 @@ ActiveRecord::Schema.define(:version => 20140103145146) do
     t.string   "username"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "time_zone",              :default => "UTC"
+    t.integer  "preferred_reading_hour", :default => 0
   end
 
   create_table "readings", :force => true do |t|
     t.integer  "chapter_id"
     t.integer  "challenge_id"
     t.date     "date"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "user_readings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "reading_id"
+    t.integer  "challenge_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
