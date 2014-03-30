@@ -15,7 +15,7 @@
 #
 
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read
+  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read, :public
 
   # Relations
   has_many :memberships, dependent: :destroy
