@@ -46,6 +46,8 @@ class Challenge < ActiveRecord::Base
   after_create      :successful_creation_email
   after_save        :generate_readings
 
+  scope :public, -> { where(public: true) }
+
   def subdomain= subdomain
     subdomain.gsub!(/\s+/, "") if subdomain
     super(subdomain.try(:downcase))
