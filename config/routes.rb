@@ -34,6 +34,10 @@ Biblechallenge::Application.routes.draw do
     resources :comments, only: [:create, :destroy], controller: 'readings/comments' 
   end
 
+  resources :comments, only: [] do
+    resources :comments, only: [:create], controller: "comments/comments"
+  end
+
   constraints(Subdomain) do
     match '/' => 'challenges#show'
     match '/my-membership' => 'memberships#show', as: 'my_membership'

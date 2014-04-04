@@ -5,9 +5,11 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
+  has_many :comments, as: :commentable
+
   validates :user, presence: true
   validates :content, presence: true, length: {maximum: 1000}
-  
+
   validate :commentable_belongs_to_user
 
   def commentable_belongs_to_user
