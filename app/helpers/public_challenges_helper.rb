@@ -1,0 +1,2 @@
+module PublicChallengesHelper
+end

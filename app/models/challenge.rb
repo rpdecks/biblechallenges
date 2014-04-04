@@ -15,7 +15,7 @@
 #
 
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read
+  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read, :public
 
   # Relations
   has_many :memberships, dependent: :destroy
@@ -45,6 +45,8 @@ class Challenge < ActiveRecord::Base
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?) && !active)"
   after_create      :successful_creation_email
   after_save        :generate_readings
+
+  scope :public, -> { where(public: true) }
 
   def subdomain= subdomain
     subdomain.gsub!(/\s+/, "") if subdomain
