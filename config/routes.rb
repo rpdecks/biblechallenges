@@ -53,6 +53,7 @@ Biblechallenge::Application.routes.draw do
 
   end
 
-  root to: 'high_voltage/pages#show', id: 'home'
+  resources :public_challenges, only: [:index]
+  root to: 'public_challenges#index'
 
 end
