@@ -12,6 +12,8 @@ class Comment < ActiveRecord::Base
 
   validate :commentable_belongs_to_user
 
+  default_scope { order('created_at DESC') }
+
   def commentable_belongs_to_user
     if commentable_type == "Reading"
       unless commentable.members.find_by_id user.id
