@@ -1,0 +1,1 @@
+Someone commented upon your comment here: #{url_for(comment.commentable.commentable)}
