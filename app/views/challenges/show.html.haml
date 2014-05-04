@@ -6,18 +6,21 @@
       = link_to 'Membership Details', '/my-membership', class: 'btn btn-primary btn-xs'
 
   %legend
-    = @challenge.name
-    Bible Reading Challenge!
+    %center
+      Join the challenge!
+      %p
+      Challenge Name:
+      = @challenge.name
   %p
-    Each day's reading portion will be sent to your inbox, and you can click
-    a link in the email to easily update your stats online.
-  %p
-  %br
 
   - if @challenge.active
     = render 'join_form'
   - else
     %p This challenge is not currently active; signups are disabled.
+  %br
+  %br
+  %p
+    Each day a scheduled reading of Scripture for this challenge will be sent to your inbox.  Once you've read that day's reading, you can click on a link in the email you received to update your progress and comment on that day's reading.
 
   %hr
 
@@ -25,13 +28,13 @@
 
   %table.table.table-striped.table-condensed
     %tr
-      %td Begin Date:
-      %td= @challenge.begindate
+      %td Challenge Dates:
+      %td
+        =@challenge.begindate.strftime("%-m/%-d/%Y") 
+        = "-" 
+        =@challenge.enddate.strftime("%-m/%-d/%Y") 
     %tr
-      %td End Date:
-      %td= @challenge.enddate
-    %tr
-      %td Bible Chapters:
+      %td Bible Reading Overview:
       %td= @challenge.chapters_to_read
 
   %hr

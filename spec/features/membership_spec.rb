@@ -14,7 +14,7 @@ describe 'Membership creation', type: :feature do
 
         login user
         visit root_url(subdomain: challenge.subdomain)
-        click_button "Join the Challenge"
+        click_button "Join this Challenge"
         page.should have_content 'Thank you for joining!'
       end
       
@@ -35,7 +35,7 @@ describe 'Membership creation', type: :feature do
         visit root_url(subdomain: challenge.subdomain)
 
         fill_in "membership_form_email", with: email
-        click_button "Join the Challenge"        
+        click_button "Join this Challenge"        
         page.should have_content 'Thank you for joining. check your email inbox for more details!'
       end
 

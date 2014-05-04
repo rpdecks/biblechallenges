@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140330163824) do
+ActiveRecord::Schema.define(:version => 20140330211542) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -91,14 +91,6 @@ ActiveRecord::Schema.define(:version => 20140330163824) do
     t.integer  "chapter_id"
     t.integer  "challenge_id"
     t.date     "date"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "user_readings", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "reading_id"
-    t.integer  "challenge_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
