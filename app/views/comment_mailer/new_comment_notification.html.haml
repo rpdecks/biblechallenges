@@ -1,0 +1,14 @@
+%p
+  = @newcomment.user.profile.username
+  has commented upon your comment: 
+%p
+  = @newcomment.content
+
+%p Your original comment was:
+
+%p
+  = @original_comment.content
+
+%small
+  If you would prefer not to receive these notifications, please adjust your notification preferences 
+  #{link_to 'here', edit_profile_url}

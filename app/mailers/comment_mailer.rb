@@ -1,10 +1,11 @@
 class CommentMailer < ActionMailer::Base
-  default from: "mailer@biblechallenge.com"
+  default from: "noreply@biblechallenge.com"
 
   def new_comment_notification(comment)
     @recipient = comment.commentable.user
     @original_comment = comment.commentable
+    @newcomment = comment
 
-    mail to: @recipient.email, subject: "New response on your comment"
+    mail to: @recipient.email, subject: "#{comment.user.profile.username} has responded to your comment"
   end
 end
