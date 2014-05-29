@@ -10,7 +10,7 @@ class MembershipMailer < ActionMailer::Base
     @challenge = @membership.challenge
     @user = @membership.user
     mail( to: @user.email,
-      subject: "#{@challenge.name} joined!",
+      subject: "#{@challenge.name}: Thanks for joining!",
       from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
 

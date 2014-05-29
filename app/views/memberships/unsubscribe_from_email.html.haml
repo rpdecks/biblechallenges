@@ -13,6 +13,13 @@
               %em
                 #{@challenge.name}
               challenge?
-              = submit_tag "Yes", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
+              %br
+              %br
+              = submit_tag "Yes, unsubscribe me", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
+            %br
+            = button_to "Wait, keep me subscribed for now!", challenge_path(@challenge), method: :get, class:'btn btn-default btn-xs'
+            %br
+            %br
+            = link_to "Return to challenge home page", challenge_path(@challenge)
         - else
           Please check the link you received in your email or maybe you have been already unsubscribed.
