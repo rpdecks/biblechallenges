@@ -1,10 +1,15 @@
 %p
-  = @newcomment.user.profile.username
-  has commented upon your comment: 
+  %i
+    = @newcomment.user.profile.username
+    responded to your comment
+    from
+    = link_to @original_comment.commentable.chapter.book_and_chapter + ":", reading_path(@original_comment.commentable)
 %p
   = @newcomment.content
 
-%p Your original comment was:
+%p
+  %i
+    Your original comment:
 
 %p
   = @original_comment.content
