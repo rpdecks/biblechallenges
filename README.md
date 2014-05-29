@@ -31,3 +31,9 @@ If you run any migration or change any route while _spork_ is running then you'l
 >
 
 Note: DO NOT FORGET TO RUN THE TESTS BEFORE PUSH.
+
+## Mail Preview
+
+go to localhost:3000/mail_view
+
+
