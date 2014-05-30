@@ -17,6 +17,7 @@ gem 'sidekiq', '~> 2.17.0'
 gem 'rake-performance', '~> 0.1.0'
 gem 'pickadate-rails', '~> 1.3.0'
 gem 'font-awesome-rails', '~> 4.0.3.0'
+gem 'redcarpet', '3.1.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -68,6 +69,6 @@ group :test do
   gem 'faker', '~> 1.2.0'
   gem 'spork-rails', '~> 4.0.0'
   gem 'database_cleaner', '~> 1.2.0'
-  gem 'shoulda-matchers', '2.4.0'
+  gem 'shoulda-matchers', '2.6.1'
 end
 

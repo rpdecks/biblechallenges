@@ -1,0 +1,15 @@
+= form_for @reading do |f|
+  %legend
+    Add Discussion Question(s) to this Reading
+  - if @reading.errors.any?
+    - flash[:error] = @reading.errors.full_messages.to_sentence
+  .control-group
+    = f.label :discussion, "Discussion", class: "control-label"
+    .controls
+      = f.text_area :discussion, class: "form-control"
+      %p.help-block Enter a discussion question here that will prompt good comments (optional)
+
+  .control-group
+    = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
+
+

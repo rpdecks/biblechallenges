@@ -30,7 +30,7 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :readings, only: [:show] do
+  resources :readings, only: [:show, :edit, :update] do
     resources :comments, only: [:create, :destroy], controller: 'readings/comments' 
   end
 

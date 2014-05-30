@@ -45,7 +45,15 @@
     %br
 
   %br
-  %br
+  - if @reading.owner == current_user || !@discussion_md.blank?
+    %br
+    %h4 Discussion / Questions
+    %p
+      = raw @discussion_md
+    - if @reading.owner == current_user
+      %p
+        = link_to "Edit Discussion Question(s)", edit_reading_path(@reading)
+    %br
   = render partial: 'comment_form', locals: {comment: @comment, reading: @reading}
   %br
 

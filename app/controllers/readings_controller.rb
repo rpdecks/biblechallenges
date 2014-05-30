@@ -4,7 +4,11 @@ class ReadingsController < ApplicationController
   respond_to :html
 
   def show
+    #for the discussion
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+
     @reading = Reading.find_by_id(params[:id])
+    @discussion_md = markdown.render(@reading.discussion || "")
 
     if @reading.challenge.members.include? current_user
       @comment = Comment.new
@@ -16,6 +20,17 @@ class ReadingsController < ApplicationController
       @reading = nil
       redirect_to root_url
     end
-    
+  end
+
+
+  def update
+    @reading = Reading.find(params[:id])
+    flash[:notice] = "Reading successfully updated" if @reading.update_attributes(params[:reading])
+    redirect_to reading_path(@reading)
+  end
+
+
+  def edit
+    @reading = Reading.find(params[:id])
   end
 end
