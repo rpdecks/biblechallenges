@@ -11,7 +11,7 @@
 #
 
 class Reading < ActiveRecord::Base
-  attr_accessible :chapter, :challenge, :date
+  attr_accessible :chapter, :challenge, :date, :discussion
 
   # Relations
   belongs_to :challenge
@@ -23,6 +23,7 @@ class Reading < ActiveRecord::Base
 
   #delegations
   delegate :members, to: :challenge
+  delegate :owner, to: :challenge
   
   # Validations
   validates :chapter_id, presence: true
@@ -31,6 +32,10 @@ class Reading < ActiveRecord::Base
 
   #Scopes
   scope :to_date, lambda { | a_date | where("date <= ?", a_date) }
+
+  #def initialize
+  #  self.discussion = ""
+  #end
 
   def last_read_by
     #returns the user who last read this reading

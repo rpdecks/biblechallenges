@@ -5,5 +5,6 @@ FactoryGirl.define do
     challenge
     chapter
     date      {Date.today}
+    discussion "This is so interesting"
   end
 end

@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe ReadingsController do
 
-  let(:challenge){create(:challenge, chapters_to_read:'matt 1-4')}
+  let(:owner){create(:user)}
+  let(:challenge){create(:challenge, chapters_to_read:'matt 1-4', owner: owner)}
   let(:user){create(:user)}
   let!(:membership){create(:membership, challenge: challenge, user: user)}
   let(:membership_reading){membership.membership_readings.first}
@@ -27,11 +28,45 @@ describe ReadingsController do
     end
   end
 
+  describe "Owner Access" do
+    before do
+      sign_in :user, owner
+    end
+
+    describe "GET #edit" do
+      it "assigns @reading" do
+        reading = challenge.readings.first
+        get :edit, id: reading
+        expect(assigns(:reading)).to eql reading
+      end
+      it "renders the :edit template" do
+        reading = challenge.readings.first
+        get :edit, id: reading
+        expect(response).to render_template(:edit)
+      end
+    end
+    describe "PUT#update" do
+      context "with valid attributes" do
+        it "updates the reading in the database" do
+          reading = challenge.readings.first
+          put :update, id: reading, reading: attributes_for(:reading, discussion: "Who is God?")
+          reading.reload
+          expect(reading.discussion).to eql "Who is God?"
+        end
+      end
+    end
+  end
+
+
+
   describe "User Access" do
     before do
       sign_in :user, user
     end
 
+    describe "GET #edit" do
+      it "does not show the edit form"
+    end
     describe "GET #show" do
       context "the user is part of this challenge and reading" do
         it "assigns the requested reading to @reading" do

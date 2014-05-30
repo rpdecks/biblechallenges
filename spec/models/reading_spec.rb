@@ -13,6 +13,10 @@ describe Reading do
     it { should validate_presence_of(:date) }
   end
 
+  describe "Delegations" do
+    it { should delegate_method(:owner).to(:challenge) }
+  end
+
   describe "Relations" do
     it { should belong_to(:challenge) }
     it { should belong_to(:chapter) }
