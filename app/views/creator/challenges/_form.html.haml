@@ -18,6 +18,12 @@
         The subdomain is what we will use to create a unique URL for your bible challenge. For example if you choose "julyacts" as your subdomain, the URL for your challenge will be http://julyacts.biblechallenges.com
 
   .control-group
+    = f.label :welcome_message, "Welcome Message", class: "control-label"
+    .controls
+      = f.text_area :welcome_message, required: false, class: "form-control"
+      %p.help-block The welcome message is included in the email that is sent to those who join your challenge.  You can format the message using Markdown
+
+  .control-group
     = f.label :begindate, "Begin Date", class: "control-label"
     .controls
       = f.text_field :begindate, value: f.object.begindate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input', disabled: botton_availability

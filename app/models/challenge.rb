@@ -15,7 +15,7 @@
 #
 
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read, :public
+  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read, :public, :welcome_message
 
   # Relations
   has_many :memberships, dependent: :destroy
@@ -75,6 +75,11 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  def welcome_message_markdown
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    markdown.render(self.welcome_message || "")
+  end
+
   private
 
   # Validations
@@ -93,6 +98,7 @@ class Challenge < ActiveRecord::Base
 
   # Callbacks
 
+  # before save
   # - after_create
   def successful_creation_email
     ChallengeMailer.creation_email(self).deliver

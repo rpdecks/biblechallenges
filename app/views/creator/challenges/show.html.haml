@@ -16,6 +16,9 @@
     %td Challenge URL
     %td= link_to subdomain_url(@challenge.subdomain), "http://" + subdomain_url(@challenge.subdomain)
   %tr
+    %td Welcome Message
+    %td= @challenge.welcome_message
+  %tr
     %td Begin Date
     %td= @challenge.begindate
   %tr
