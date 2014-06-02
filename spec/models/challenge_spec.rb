@@ -192,8 +192,14 @@ describe Challenge do
 
   describe 'Instance methods' do
 
-    let(:challenge){create(:challenge)}
+    let(:challenge){create(:challenge, welcome_message: "# This")}
 
+    describe '#welcome_message_markdown' do
+      it "should parse and render the contents of welcome_message as html" do
+        expect(challenge.welcome_message_markdown).to eq "<h1>This</h1>\n"
+      end
+
+    end
     describe '#membership_for' do
       let(:user){create(:user)}
       context 'when the user has already joined the challenge' do

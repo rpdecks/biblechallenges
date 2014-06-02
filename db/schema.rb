@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140529185714) do
+ActiveRecord::Schema.define(:version => 20140530232722) do
 
   create_table "bookfrags", :force => true do |t|
     t.string   "fragment"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20140529185714) do
     t.string   "chapters_to_read"
     t.boolean  "active",           :default => false
     t.boolean  "public",           :default => false
+    t.text     "welcome_message"
   end
 
   create_table "chapter_challenges", :force => true do |t|
