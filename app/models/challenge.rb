@@ -80,6 +80,14 @@ class Challenge < ActiveRecord::Base
     markdown.render(self.welcome_message || "")
   end
 
+  def url
+    if subdomain
+      subdomain + ".biblechallenges.com"
+    else
+      "biblechallenges.com"
+    end
+  end
+
   private
 
   # Validations
