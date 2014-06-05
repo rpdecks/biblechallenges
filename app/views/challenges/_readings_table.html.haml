@@ -5,17 +5,17 @@
         %tr
           %th Date
           %th Chapter(comments)
+          %th 
+            %span.glyphicon.glyphicon-ok
       - membership.membership_readings.each do |mr|
         %tr
           %td= mr.reading.date.strftime("%-m/%-d")
           %td= link_to mr.reading.chapter.book_and_chapter + "  (#{mr.reading.comments.count})" , mr.reading
-          %td{class: reading_row_class(mr),id: "reading_tr_#{mr.id}"}
+          %td{id: "reading_tr_#{mr.id}"}
             - if mr.state == 'unread'
-              = form_for(mr) do
-                = submit_tag "Confirm", class: 'btn btn-primary btn-xs', disable_with: 'Please wait...'
+              = link_to raw('<span class="glyphicon glyphicon-unchecked"></span>'), membership_reading_path(id: mr.id), method: :put
             - else
-              = form_for(mr) do
-                = submit_tag "Unconfirm", class: 'btn btn-primary btn-xs', disable_with: 'Please wait...'
+              = link_to raw('<span class="glyphicon glyphicon-ok"></span>'), membership_reading_path(id: mr.id), method: :put
 
 
 
