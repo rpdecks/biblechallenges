@@ -2,5 +2,9 @@
 
 FactoryGirl.define do
   factory :chapter do
+    book_name "Genesis"
+    sequence(:chapter_number) { |n| n }
+
+
   end
 end
