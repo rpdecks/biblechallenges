@@ -23,4 +23,12 @@ describe Comment do
     it { should have_many(:comments) }
   end
 
+  describe "Instance Methods" do
+    describe "#relatedchapter" do
+      it "returns the book and chapter it is related to" do
+        chapter = build_stubbed(:chapter)
+      end
+    end
+  end
+
 end
