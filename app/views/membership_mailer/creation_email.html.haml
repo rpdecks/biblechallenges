@@ -5,7 +5,7 @@
       %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"}
         You have successfully joined the following Bible challenge:
         %em
-          =@challenge.name
+          = link_to @challenge.name, "http://" + @challenge.url
       %br
       Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
       %br
