@@ -20,7 +20,8 @@
         %li
           On the first day of the challenge, you will receive your first email containing your reading for that day.
         %li
-          After you read your chapter, click on the link at the bottom of that email to log your reading.
+          After you read your chapter, click on the link at the bottom of that email to log your reading
+          and to add a comment to the chapter discussion.
         %li
           That's it!
 
@@ -42,7 +43,7 @@
 
       %br
       %small
-        If you didn't mean to sign up for this bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url,subdomain:@challenge.subdomain)} here to be unsubscribed.
+        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url,subdomain:@challenge.subdomain)} here to be unsubscribed.
       %br
       %br
       %small
