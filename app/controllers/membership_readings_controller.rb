@@ -14,8 +14,14 @@ class MembershipReadingsController < ApplicationController
     #just going to toggle state on any update
     @membership_reading.state = (@membership_reading.state == 'unread') ? 'read' : 'unread'
     @membership_reading.save!
-    #render action: :edit 
-    redirect_to params[:location] || request.referer
+
+    if @membership_reading.state == 'read'
+      notice = "Reading updated!  You have completed #{@reading.chapter.book_and_chapter}."
+    else
+      notice = "Reading updated!"
+    end
+
+    redirect_to params[:location] || request.referer, notice: notice
   end
 
   def edit
