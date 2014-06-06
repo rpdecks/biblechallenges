@@ -1,52 +1,12 @@
 .container
 
   %legend
-    = @reading.chapter.book_and_chapter
+    = "#{@reading.chapter.book_and_chapter}:"
+    Discussion Forum
 
-  %table.table.table-striped.table-condensed
-    %tr
-      %td Challenge:
-      %td= link_to @reading.challenge.name, @reading.challenge
-    %tr
-      %td Already read by:
-      %td= @reading.membership_readings.read.count
-    %tr
-      %td Last read by:
-      %td= @reading.try(:last_read_by).try(:username) || "no username"
-    %tr
-      %td Number of Verses:
-      %td 
-    %tr
-      %td Number of Comments:
-      %td 
-  %hr
+  = render 'challengestattable'
 
-  %p
-    This is a chapter page for the
-    = @reading.challenge.name
-    bible challenge.
-    You are encouraged to post a comment related to 
-    = @reading.chapter.book_and_chapter
-    below; anything that stood out to you that you feel might benefit the other readers, or perhaps a question that others might answer.
-
-  %br
-
-  = link_to_function "Show / hide chapter text", "$('#chapter_text').toggle()"
-  #chapter_text{style: "display: none;"}
-    %br
-    %h4
-      =@reading.chapter.book_name
-      =@reading.chapter.chapter_number
-    - @verses.each do |v|
-      %b=v.verse_number
-      =v.versetext
-      %br
-    %br
-    %br
-
-  %br
   - if @reading.owner == current_user || !@discussion_md.blank?
-    %br
     %h4 Discussion / Questions
     %p
       = raw @discussion_md
@@ -54,6 +14,7 @@
       %p
         = link_to "Edit Discussion Question(s)", edit_reading_path(@reading)
     %br
+  = render 'showhidechapter'
   = render partial: 'comment_form', locals: {comment: @comment, reading: @reading}
   %br
 
