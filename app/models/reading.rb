@@ -40,7 +40,7 @@ class Reading < ActiveRecord::Base
     nil #pdb
   end
 
-  def last_readers(num)
+  def last_readers(num = 50)
     membership_readings.read.order("updated_at").limit(num).map {|r| r.membership.user}  #is this as ugly as it feels?  jose
   end
 end
