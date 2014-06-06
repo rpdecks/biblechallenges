@@ -7,8 +7,9 @@
 
   %legend
     %center
-      Join the challenge!
-      %p
+      - unless current_user && @membership = @challenge.membership_for(current_user)
+        Join the challenge!
+        %p
       Challenge Name:
       = @challenge.name
   %p
