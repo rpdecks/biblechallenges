@@ -98,6 +98,15 @@ describe MembershipsController do
       end
     end
 
+    describe  'POST#create' do
+      let(:newchallenge){create(:challenge, owner: owner)}
+      it "redirects to the challenge page after joining as a logged in user" do
+        @request.host = "#{newchallenge.subdomain}.test.com"
+        post :create, challenge_id: newchallenge
+        expect(response).to redirect_to root_url(subdomain:newchallenge.subdomain)
+      end
+
+    end
 
     context 'when the user has already joined' do
       let!(:membership){challenge.join_new_member(current_user)}

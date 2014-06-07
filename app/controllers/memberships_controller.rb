@@ -21,7 +21,7 @@ class MembershipsController < ApplicationController
   def update
     if @membership.update_attributes(params[:membership])
       flash[:notice] = "You have successfully updated your challenge settings."
-      redirect_to challenge_membership_path(@membership)
+      redirect_to challenge_path(@membership.challenge)
     else
       render action: 'show'
     end
@@ -32,7 +32,8 @@ class MembershipsController < ApplicationController
     @membership.user = current_user if current_user
     if @membership.save
       flash[:notice] = "Thank you for joining!"
-      redirect_to my_membership_path
+      redirect_to root_url(subdomain: @challenge.subdomain)
+      #redirect_to my_membership_path
     else
       redirect_to root_url(subdomain: @challenge.subdomain)
     end
