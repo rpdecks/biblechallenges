@@ -36,4 +36,11 @@ Note: DO NOT FORGET TO RUN THE TESTS BEFORE PUSH.
 
 go to localhost:3000/mail_view
 
+## Development emails
+
+mailcatcher gem is installed
+run % mailcatcher 
+go to localhost:1080 to see dev emails
+
+
 
