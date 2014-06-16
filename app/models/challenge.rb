@@ -21,7 +21,7 @@ class Challenge < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
-  has_many :membership_readings, through: :readings
+  has_many :membership_readings, through: :readings, order: 'date'
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
