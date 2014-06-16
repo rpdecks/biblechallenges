@@ -36,13 +36,6 @@
       %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
 
   .control-group
-    .controls
-      = f.label :public, class: "control-label" do
-        = f.check_box :public
-        Viewable on the front page
-      %p.help-block
-
-  .control-group
     = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
     %br
     %br
