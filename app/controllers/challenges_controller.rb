@@ -12,7 +12,7 @@ class ChallengesController < ApplicationController
   end
 
   def show
-    @readings  = @challenge.readings
+    @readings  = @challenge.readings.order(:date)
   end
 
   private
