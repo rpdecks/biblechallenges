@@ -41,6 +41,6 @@ class Reading < ActiveRecord::Base
   end
 
   def last_readers(num = 50)
-    membership_readings.read.order("updated_at").limit(num).map {|r| r.membership.user}  #is this as ugly as it feels?  jose
+    membership_readings.read.order("membership_readings.updated_at").limit(num).map {|r| r.membership.user}  #is this as ugly as it feels?  jose
   end
 end
