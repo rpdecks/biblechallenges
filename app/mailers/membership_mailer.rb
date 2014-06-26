@@ -14,5 +14,13 @@ class MembershipMailer < ActionMailer::Base
       from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
   end
 
+  def auto_creation_email(membership)
+      @membership = membership
+      @challenge = @membership.challenge
+      @user = @membership.user
+      mail( to: @user.email,
+        subject: "#{@challenge.name}: Thanks for joining!",
+        from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
+  end
 
 end
