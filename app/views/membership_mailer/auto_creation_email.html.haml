@@ -11,7 +11,8 @@
       %br
       We have created an account on BibleChallenges.com for you. You can use the credentials below to login.
       %br
-      You might want to log in to set up a new password and a user name.  Having a username allows you to comment on your readings and interact with other participants in the challenge.  
+      You might want to log in to set up a new password and a user name.  Having a username allows you to comment on your readings and interact with other participants in the challenge. 
+      %br
       %br
       %div{style: "margin-left:5px;"}
         %table
@@ -24,6 +25,8 @@
               %td
                 Password:
               %td= @user.password
+      %br
+      You can log into your account #{link_to "here", root_url} to update your profile and set other preferences.
       %br
       =raw @challenge.welcome_message_markdown
       %br
