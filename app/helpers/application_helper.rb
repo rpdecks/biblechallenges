@@ -32,4 +32,12 @@ module ApplicationHelper
     [["ASV (American Standard)",'ASV'],["ESV (English Standard)",'ESV'],["KJV (King James)",'KJV'],["NASB (New American Standard)",'NASB'],["NKJV (New King James)",'NKJV']]
   end
 
+  def completion_ratio(membership)
+    "#{membership.membership_readings.read.count}/#{membership.membership_readings.count}"
+  end
+
+  def completion_graph(membership)
+    membership.membership_readings.map {|m| m.read? ? 'x' : '-' }.join
+  end
+
 end

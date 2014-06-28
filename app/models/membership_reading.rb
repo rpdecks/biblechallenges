@@ -36,6 +36,10 @@ class MembershipReading < ActiveRecord::Base
   validates :reading_id, presence: true
   validates :state, inclusion: {in: STATES}
 
+  def read?
+    state == 'read'
+  end
+
   def self.send_daily_emails
     MembershipReading.unread.joins(:reading).where("readings.date = ?",Date.today).each do |mr|
       puts "Sending email to: #{mr.membership.user.email} from #{mr.membership.challenge.name} challenge."

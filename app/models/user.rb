@@ -45,6 +45,9 @@ class User < ActiveRecord::Base
   delegate :first_name, :last_name, :username, to: :profile
 
 
+  def fullname
+    "#{first_name} #{last_name}"
+  end
 
   def add_profile
     self.create_profile
