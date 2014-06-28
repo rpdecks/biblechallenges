@@ -41,6 +41,7 @@ class Membership < ActiveRecord::Base
 
   after_create :send_todays_reading
 
+
   def overall_progress_percentage
     mr_total = membership_readings.count
     read = membership_readings.read.count
