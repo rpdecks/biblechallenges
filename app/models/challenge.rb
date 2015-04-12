@@ -21,7 +21,7 @@ class Challenge < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
-  has_many :membership_readings, through: :readings, order: 'date'
+  has_many :membership_readings, through: :readings  # needs default order #todo 
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
@@ -30,12 +30,12 @@ class Challenge < ActiveRecord::Base
   validates :name, presence: true, length: {minimum: 3}
   validates :subdomain, presence: true, uniqueness:  true
   validates_format_of  :subdomain,
-                        with: /^[a-z\d]+(-[a-z\d]+)*$/i,
+                        with: /\A[a-z\d]+(-[a-z\d]+)*\z/i,
                         message: 'invalid format'
   validates :owner_id, presence: true
   validates :chapters_to_read, presence: true
   validates_format_of :chapters_to_read,
-                        with: /^\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/,
+                        with: /\A\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/,
                         message: 'invalid format'
   validate  :validate_dates
   validate  :changes_allowed_when_activated, if: "active"
@@ -46,7 +46,7 @@ class Challenge < ActiveRecord::Base
   after_create      :successful_creation_email
   after_save        :generate_readings
 
-  scope :public, -> { where(public: true) }
+  #scope :public, -> { where(public: true) }  # illegal scope name in rails 4.1+
 
   def subdomain= subdomain
     subdomain.gsub!(/\s+/, "") if subdomain
