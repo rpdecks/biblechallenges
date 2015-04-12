@@ -7,7 +7,7 @@ class HashidsGenerator
   end
 
   def decrypt(s)
-    @hashids.decrypt(s)
+    @hashids.decode(s)
   end
 
   def encrypt(numberz)
