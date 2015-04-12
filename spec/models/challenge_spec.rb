@@ -184,7 +184,7 @@ describe Challenge do
     describe "Challenge#public" do
       it "finds challenges where public is set to true" do
         public_challenge = create(:challenge, public: true)
-        Challenge.public.should include(public_challenge)
+        Challenge.non_private.should include(public_challenge)
       end
     end
 
