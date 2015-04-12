@@ -39,12 +39,12 @@ Biblechallenge::Application.routes.draw do
   end
 
   constraints(Subdomain) do
-    match '/' => 'challenges#show'
-    match '/my-membership' => 'memberships#show', as: 'my_membership'
-    match '/memberships' => 'memberships#index'
+    get '/' => 'challenges#show'
+    get '/my-membership' => 'memberships#show', as: 'my_membership'
+    get '/memberships' => 'memberships#index'
 
     # Unsubscribe from email
-    match '/unsubscribe/:hash' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
+    get '/unsubscribe/:hash' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
     match '/unsubscribe/:hash' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
 
     # Loging readings
