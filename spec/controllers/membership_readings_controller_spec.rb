@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipReadingsController do
+describe MembershipReadingsController, type: :controller do
 
   let(:challenge){create(:challenge, chapters_to_read:'mi 1-4')}
   let(:user){create(:user)}
@@ -35,17 +35,17 @@ describe MembershipReadingsController do
 
       it "assigns comment" do
         put :update, id: membership_reading
-        expect(assigns(:comment)).to be_true
+        expect(assigns(:comment)).to be_truthy
       end
 
       it "assigns user" do
         put :update, id: membership_reading
-        expect(assigns(:user)).to be_true
+        expect(assigns(:user)).to be_truthy
       end
 
       it "assigns reading" do
         put :update, id: membership_reading
-        expect(assigns(:reading)).to be_true
+        expect(assigns(:reading)).to be_truthy
       end
     end
 
@@ -80,7 +80,7 @@ describe MembershipReadingsController do
 
       it "assigns a comment to be available in the form" do
         get :edit, id: hash
-        expect(assigns(:comment)).to be_true
+        expect(assigns(:comment)).to be_truthy
       end
 
 
