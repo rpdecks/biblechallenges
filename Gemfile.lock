@@ -237,6 +237,8 @@ GEM
     rest-client (1.6.8)
       mime-types (~> 1.16)
       rdoc (>= 2.4.2)
+    rspec-collection_matchers (1.1.2)
+      rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.2.3)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.1)
@@ -355,6 +357,7 @@ DEPENDENCIES
   rails_12factor
   rake-performance
   redcarpet
+  rspec-collection_matchers
   rspec-rails
   ruby_parser
   sass-rails
