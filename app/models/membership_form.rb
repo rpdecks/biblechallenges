@@ -14,7 +14,7 @@ class MembershipForm
   end
 
   def subscribe
-    self.user = User.find_or_initialize_by_email email
+    self.user = User.find_or_initialize_by(email: email)
     if user.new_record?
       generated_password = Devise.friendly_token.first(8)
       self.user.password = generated_password
