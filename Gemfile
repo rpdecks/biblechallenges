@@ -64,6 +64,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'annotate'
   gem 'timecop', '0.6.3'
+  gem 'rspec-collection_matchers'
 end
 
 group :test do

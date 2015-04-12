@@ -87,16 +87,16 @@ describe Challenge do
         challenge.save
       end
 
-      it "doesn't allow begindate to be chaned" do
-        expect(challenge.update_attributes({begindate: Date.today + 10.days})).to be_false
+      it "doesn't allow begindate to be changed" do
+        expect(challenge.update_attributes({begindate: Date.today + 10.days})).to be_falsey
         expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
       end
       it "doesn't allow enddate to be chaned" do
-        expect(challenge.update_attributes({enddate: Date.today - 10.days})).to be_false
+        expect(challenge.update_attributes({enddate: Date.today - 10.days})).to be_falsey
         expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
       end
       it "doesn't allow chapters_to_read to be chaned" do
-        expect(challenge.update_attributes({chapters_to_read: 'Phil 1 - 2'})).to be_false
+        expect(challenge.update_attributes({chapters_to_read: 'Phil 1 - 2'})).to be_falsey
         expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
       end
     end
@@ -245,12 +245,12 @@ describe Challenge do
       context 'when the user has already joined the challenge' do
         before {challenge.join_new_member(user)}
         it 'returns true' do
-          expect(challenge.has_member?(user)).to be_true
+          expect(challenge.has_member?(user)).to be_truthy
         end
       end
       context "when the user hasn't already joined the challenge" do
         it 'returns false' do
-          expect(challenge.has_member?(user)).to be_false
+          expect(challenge.has_member?(user)).to be_falsey
         end
       end
     end
