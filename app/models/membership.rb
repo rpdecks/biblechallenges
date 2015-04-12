@@ -76,10 +76,10 @@ class Membership < ActiveRecord::Base
   end
   # -- emails
   def successful_creation_email
-    MembershipMailer.creation_email(self).deliver
+    MembershipMailer.creation_email(self).deliver_now
   end
   def successful_auto_creation_email
-    MembershipMailer.auto_creation_email(self).deliver
+    MembershipMailer.auto_creation_email(self).deliver_now
   end
 
 

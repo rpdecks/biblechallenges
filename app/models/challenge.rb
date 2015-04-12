@@ -46,7 +46,7 @@ class Challenge < ActiveRecord::Base
   after_create      :successful_creation_email
   after_save        :generate_readings
 
-  #scope :public, -> { where(public: true) }  # illegal scope name in rails 4.1+
+  scope :non_private, -> { where(public: true) }  # illegal scope name in rails 4.1+
 
   def subdomain= subdomain
     subdomain.gsub!(/\s+/, "") if subdomain
@@ -109,7 +109,7 @@ class Challenge < ActiveRecord::Base
   # before save
   # - after_create
   def successful_creation_email
-    ChallengeMailer.creation_email(self).deliver
+    ChallengeMailer.creation_email(self).deliver_now
   end
 
   def generate_readings
