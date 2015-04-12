@@ -1,23 +1,23 @@
 source 'https://rubygems.org'
-ruby "2.0.0"
+ruby "2.2.1"
 
-gem 'rails', '3.2.13'
-gem 'haml', '3.1.7'
-gem 'pg', '0.17.0'
-gem 'haml-rails', '0.4'
+gem 'rails', '4.2'
+gem 'haml'
+gem 'pg'
+gem 'haml-rails'
 gem 'devise', '3.0'
-gem 'high_voltage', '2.0.0'
-gem 'simple_form', '2.1'
+gem 'high_voltage'
+gem 'simple_form'
 gem 'bootstrap-datepicker-rails', '1.1.1.9'
-gem 'activerecord-import', '0.3.1' #used to seed data
+gem 'activerecord-import'
 gem 'chosen-rails'
 gem 'thin'
-gem 'hashids', '~> 0.3.0'
-gem 'sidekiq', '~> 2.17.0'
-gem 'rake-performance', '~> 0.1.0'
-gem 'pickadate-rails', '~> 1.3.0'
-gem 'font-awesome-rails', '~> 4.0.3.0'
-gem 'redcarpet', '3.1.2'
+gem 'hashids'
+gem 'sidekiq'
+gem 'rake-performance'
+gem 'pickadate-rails'
+gem 'font-awesome-rails'
+gem 'redcarpet'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -28,14 +28,14 @@ group :production do
 end
 
 group :development do
-  gem 'mail_view', "~> 1.0.3"
+  gem 'mail_view'
 end
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '>= 3.2' # sass-rails needs to be higher than 3.2
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'bootstrap-sass', '~> 3.0.2.0'
   gem 'bootswatch-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -54,7 +54,6 @@ group :development, :test do
   gem 'heroku'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails', '~> 2.14.0'
-  gem 'guard-rspec', require: false
   gem 'capybara', '2.1.0'
   gem 'better_errors'
   gem 'quiet_assets'
@@ -67,7 +66,6 @@ group :test do
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.2.0'
-  gem 'spork-rails', '~> 4.0.0'
   gem 'database_cleaner', '~> 1.2.0'
   gem 'shoulda-matchers', '2.6.1'
 end
