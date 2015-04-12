@@ -1,5 +1,4 @@
 --format documentation
---default_path spec
 --color
 --drb
 --order default
