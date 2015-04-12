@@ -114,7 +114,7 @@ describe Readings::CommentsController, "Actions" do
       sign_in :user, randomuser
       expect{
         post :create, reading_id: reading.id, comment: attributes_for(:reading_comment, commentable_type: "Reading", commentable_id: reading.id), location: reading_path(reading.id)
-      }.to_not change(Comment, :count).by(1)
+      }.to change(Comment, :count).by(0)
     end
 
 
