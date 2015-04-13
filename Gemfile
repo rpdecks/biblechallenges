@@ -65,6 +65,7 @@ group :development, :test do
   gem 'annotate'
   gem 'timecop', '0.6.3'
   gem 'rspec-collection_matchers'
+  gem 'dotenv-rails'
 end
 
 group :test do
