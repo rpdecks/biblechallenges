@@ -9,9 +9,6 @@ describe ReadingsController do
   let(:membership_reading){membership.membership_readings.first}
   let(:hash){membership_reading.hash_for_url}
 
-  before do
-    @request.host = "#{challenge.subdomain}.test.com"
-  end
 
   describe "for a guest" do
     describe "GET #show" do

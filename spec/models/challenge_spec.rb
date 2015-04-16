@@ -9,33 +9,7 @@ describe Challenge do
     it { should validate_presence_of(:begindate) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:owner_id) }
-    it { should validate_presence_of(:subdomain) }
-    it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
-      create(:challenge)
-      should validate_uniqueness_of(:subdomain)
-    end
 
-    describe "Subdomain format" do
-      let(:challenge) {create(:challenge, subdomain: 'with spaces And UPERCASE')}
-      context "when the challenge is being created" do
-        it "sets the subdomain to downcase" do
-          expect(challenge.subdomain).to eql('withspacesandupercase')
-        end
-        it "removes all the spaces on" do
-          expect(challenge.subdomain).to eql('withspacesandupercase')
-        end
-      end
-      context "when the challenge is updated" do
-        before do
-          challenge.subdomain = 'update with spaces UPERCASE'
-          challenge.save
-        end
-        it "sets the subdomain to downcase" do
-          expect(challenge.subdomain).to eql('updatewithspacesupercase')
-        end
-      end
-
-    end
 
     describe 'End date and begin date validation' do
 

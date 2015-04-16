@@ -44,10 +44,10 @@ class MembershipsController < ApplicationController
 #    @membership_form.challenge = @challenge
 #    if @membership_form.valid? && @membership_form.subscribe
 #      flash[:notice] = "Thank you for joining. check your email inbox for more details!"
-#      redirect_to root_url(subdomain: @challenge.subdomain)
+#      redirect_to @challenge
 #    else
 #      flash[:error] = @membership_form.errors.full_messages.to_sentence
-#      redirect_to root_url(subdomain: @challenge.subdomain)
+#      redirect_to @challenge
 #    end
 #  end
 
@@ -73,7 +73,7 @@ class MembershipsController < ApplicationController
   private
 
   def find_challenge
-    @challenge = Challenge.find_by_id(params[:challenge_id]) #|| Challenge.find_by_subdomain(request.subdomain)
+    @challenge = Challenge.find_by_id(params[:challenge_id])
     redirect_to root_url if @challenge.nil?
   end
 

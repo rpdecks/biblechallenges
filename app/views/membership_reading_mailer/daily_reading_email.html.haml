@@ -35,7 +35,7 @@
 
       %br
       %center
-        = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.hash_for_url, subdomain: @challenge.subdomain)
+        = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.hash_for_url)
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
@@ -43,5 +43,5 @@
       %br
       %small
         If for ANY reason you would like to opt-out of this bible reading challenge, simply click
-        #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url,subdomain:@challenge.subdomain)} here to be unsubscribed.
+        #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url)} here to be unsubscribed.
         

@@ -16,11 +16,6 @@ describe MembershipMailer do
       expect(successful_creation_email.to).to match_array [user.email]
     end
 
-    it "has email's from like no-reply@subdomain.biblechallenges.com" do
-      successful_creation_email = ActionMailer::Base.deliveries.last
-      expect(successful_creation_email.from).to match_array ["no-reply@#{challenge.subdomain}.biblechallenges.com"] 
-    end
-
   end
 
 

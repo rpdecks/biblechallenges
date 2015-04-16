@@ -9,7 +9,7 @@
       This challenge begins on #{@challenge.begindate.strftime("%b %-d %Y")} and ends on #{@challenge.enddate.strftime("%b %-d %Y")}.
       %br
       %br
-      The signup page for the challenge is #{link_to root_url(subdomain:@challenge.subdomain), root_url(subdomain:@challenge.subdomain)}
+      The signup page for the challenge is #{link_to challenge_url(@challenge), challenge_url(@challenge)}
       %br
       %br
       %small

@@ -9,8 +9,7 @@ describe ChallengesController do
   end
 
   let(:challengeowner) { create(:user) }
-  let(:challenge) { create(:challenge, subdomain: "woot", owner: challengeowner) }
-  let(:subdomainurl) { "http://#{@challenge.subdomain}.lvh.me" }
+  let(:challenge) { create(:challenge, owner: challengeowner) }
 
 
 

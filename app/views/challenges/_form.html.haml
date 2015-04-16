@@ -11,13 +11,6 @@
       %p.help-block The name of your challenge, for example "The Book of Acts in July"
 
   .control-group
-    = f.label :subdomain, "Subdomain", class: "control-label"
-    .controls
-      = f.text_field :subdomain, required: true, class: "form-control"
-      %p.help-block
-        The subdomain is what we will use to create a unique URL for your bible challenge. For example if you choose "julyacts" as your subdomain, the URL for your challenge will be http://julyacts.biblechallenges.com
-
-  .control-group
     = f.label :welcome_message, "Welcome Message", class: "control-label"
     .controls
       = f.text_area :welcome_message, required: false, class: "form-control"
