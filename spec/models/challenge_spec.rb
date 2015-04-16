@@ -79,28 +79,6 @@ describe Challenge do
 
     end
 
-    context 'when the challenge is active' do
-      let (:challenge) {create(:challenge)}
-
-      before do
-        challenge.active =  true
-        challenge.save
-      end
-
-      it "doesn't allow begindate to be changed" do
-        expect(challenge.update_attributes({begindate: Date.today + 10.days})).to be_falsey
-        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
-      end
-      it "doesn't allow enddate to be chaned" do
-        expect(challenge.update_attributes({enddate: Date.today - 10.days})).to be_falsey
-        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
-      end
-      it "doesn't allow chapters_to_read to be chaned" do
-        expect(challenge.update_attributes({chapters_to_read: 'Phil 1 - 2'})).to be_falsey
-        expect(challenge.errors.messages[:change_not_allowed]).to include("because this challenge is active")
-      end
-    end
-
 
   end
 

@@ -38,11 +38,10 @@ class Challenge < ActiveRecord::Base
                         with: /\A\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/,
                         message: 'invalid format'
   validate  :validate_dates
-  validate  :changes_allowed_when_activated, if: "active"
 
   # Callbacks
   before_validation :calculate_enddate,
-    if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?) && !active)"
+    if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
   after_create      :successful_creation_email
   after_save        :generate_readings
 
@@ -114,7 +113,7 @@ class Challenge < ActiveRecord::Base
 
   def generate_readings
     # Only generate the reading on the cases below.
-    if (id_changed? || begindate_changed? || chapters_to_read_changed?) && !active
+    if (id_changed? || begindate_changed? || chapters_to_read_changed?)
       readings.destroy_all
       Chapter.search(chapters_to_read).flatten.each_with_index do |chapter,i|
         readings.create(chapter: chapter, date: (begindate + i.days))
