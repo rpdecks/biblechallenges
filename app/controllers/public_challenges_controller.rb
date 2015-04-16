@@ -1,5 +1,5 @@
 class PublicChallengesController < ApplicationController
   def index
-    @public_challenges = Challenge.non_private.limit(10)
+    @public_challenges = Challenge.all
   end
 end
