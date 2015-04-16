@@ -45,7 +45,6 @@ class Challenge < ActiveRecord::Base
   after_create      :successful_creation_email
   after_save        :generate_readings
 
-  scope :non_private, -> { where(public: true) }  # illegal scope name in rails 4.1+
 
   def subdomain= subdomain
     subdomain.gsub!(/\s+/, "") if subdomain
