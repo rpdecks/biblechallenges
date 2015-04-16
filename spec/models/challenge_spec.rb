@@ -157,16 +157,6 @@ describe Challenge do
     end
   end
 
-  describe "Class methods" do
-
-    describe "Challenge#public" do
-      it "finds challenges where public is set to true" do
-        public_challenge = create(:challenge, public: true)
-        Challenge.non_private.should include(public_challenge)
-      end
-    end
-
-  end
 
   describe 'Instance methods' do
 
