@@ -12,16 +12,6 @@ Biblechallenge::Application.routes.draw do
 
   resource :profile, only: [:update, :edit]
 
-  namespace :creator do
-    resources :challenges do
-      member do
-        get :activate
-        get '/confirm/delete', action: :confirm_destroy
-      end
-    end
-  end
-
-
   resources :challenges, only: [:new, :index, :show, :create] do
     resources :memberships, only: [:update, :index, :show, :create, :destroy] do
       collection do
