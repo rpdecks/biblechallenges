@@ -5,14 +5,17 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
+      %th Owner?
       %th Name
       %th Begin Date
       %th.hidden-xs End Date
-      %th 
   - @challenges.each do |challenge|
     %tr
+      %td= "X" if challenge.owner == current_user
       %td= link_to challenge.name, challenge
       %td= challenge.begindate
       %td.hidden-xs= challenge.enddate
-      %td= link_to 'Details', creator_challenge_path(challenge)
 %br/
+
+
+

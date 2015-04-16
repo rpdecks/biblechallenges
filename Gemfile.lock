@@ -125,6 +125,7 @@ GEM
       excon (~> 0.25.1)
     high_voltage (2.2.1)
     hike (1.2.3)
+    hirb (0.7.3)
     hitimes (1.2.2)
     hpricot (0.8.6)
     html2haml (2.0.0)
@@ -321,6 +322,7 @@ DEPENDENCIES
   hashids
   heroku
   high_voltage
+  hirb
   hpricot
   jquery-rails
   mail_view

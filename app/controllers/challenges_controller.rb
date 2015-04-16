@@ -8,6 +8,7 @@ class ChallengesController < ApplicationController
   end
 
   def index
+    # this gets all challenges that you own or are a member of
     @challenges = (current_user.created_challenges + current_user.challenges).uniq
   end
 
