@@ -45,6 +45,19 @@ describe ChallengesController do
       sign_in :user, current_user
     end
 
+    describe "DELETE#destroy" do
+      it "redirects to the challenges page" do
+        delete :destroy, id: challenge
+        expect(response).to redirect_to challenges_url
+      end
+
+      it "removes challenge from database" do
+        expect {
+         delete :destroy, id: challenge
+        }.to change(Challenge, :count).by(-1)
+      end
+    end
+
     describe 'GET#index' do
       it "collects challenges into @challenges" do
         get :index
