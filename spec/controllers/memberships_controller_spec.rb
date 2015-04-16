@@ -137,7 +137,7 @@ describe MembershipsController do
 
         it "redirects to the challenge url" do
           delete :destroy, challenge_id: challenge, id: membership
-          expect(response).to redirect_to root_url(subdomain:challenge.subdomain)
+          expect(response).to redirect_to challenge
         end
         
       end

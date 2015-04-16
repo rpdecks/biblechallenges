@@ -38,17 +38,18 @@ class MembershipsController < ApplicationController
     redirect_to @challenge
   end
 
-  def create_for_guest
-    @membership_form = MembershipForm.new(params[:membership_form])
-    @membership_form.challenge = @challenge
-    if @membership_form.valid? && @membership_form.subscribe
-      flash[:notice] = "Thank you for joining. check your email inbox for more details!"
-      redirect_to root_url(subdomain: @challenge.subdomain)
-    else
-      flash[:error] = @membership_form.errors.full_messages.to_sentence
-      redirect_to root_url(subdomain: @challenge.subdomain)
-    end
-  end
+  # This is to let someone sign up for a challenge with only their email
+#  def create_for_guest
+#    @membership_form = MembershipForm.new(params[:membership_form])
+#    @membership_form.challenge = @challenge
+#    if @membership_form.valid? && @membership_form.subscribe
+#      flash[:notice] = "Thank you for joining. check your email inbox for more details!"
+#      redirect_to root_url(subdomain: @challenge.subdomain)
+#    else
+#      flash[:error] = @membership_form.errors.full_messages.to_sentence
+#      redirect_to root_url(subdomain: @challenge.subdomain)
+#    end
+#  end
 
   def unsubscribe_from_email
     if @membership
@@ -63,9 +64,10 @@ class MembershipsController < ApplicationController
 
   def destroy
     @membership = (params[:id].blank?)? find_membership_from_hash : current_user.memberships.find(params[:id])
+    challenge = @membership.challenge
     @membership.destroy
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
-    redirect_to root_url(subdomain:@challenge.subdomain)
+    redirect_to challenge
   end
 
   private
@@ -77,7 +79,7 @@ class MembershipsController < ApplicationController
 
   def find_membership
     @membership = @challenge.memberships.find(params[:id])
-    redirect_to root_url(subdomain:@challenge.subdomain) if @membership.nil?
+    redirect_to @challenge if @membership.nil?
   end
 
   def find_membership_from_hash
