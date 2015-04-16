@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show]
-  before_filter :find_challenge, only: [:show]
+  before_filter :find_challenge, only: [:show, :destroy]
 
   def new
     @challenge = Challenge.new
@@ -27,4 +27,8 @@ class ChallengesController < ApplicationController
     redirect_to @challenge
   end
 
+  def destroy
+    @challenge.destroy
+    redirect_to challenges_path
+  end
 end

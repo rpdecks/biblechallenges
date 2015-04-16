@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20150416174217) do
 
   create_table "bookfrags", force: :cascade do |t|
     t.string   "fragment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "book_id"
   end
 
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.string   "name"
     t.date     "begindate"
     t.date     "enddate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "chapters_to_read"
     t.text     "welcome_message"
   end
@@ -37,16 +37,16 @@ ActiveRecord::Schema.define(version: 20150416174217) do
   create_table "chapter_challenges", force: :cascade do |t|
     t.integer  "challenge_id"
     t.integer  "chapter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "chapters", force: :cascade do |t|
     t.string   "book_name"
     t.integer  "chapter_number"
     t.integer  "chapter_index"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "book_id"
   end
 
@@ -57,23 +57,23 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.string   "commentable_type"
     t.boolean  "invisible",        default: false
     t.integer  "flag_count",       default: 0,     null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "membership_readings", force: :cascade do |t|
     t.integer  "membership_id"
     t.integer  "reading_id"
     t.string   "state",         default: "unread"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "bible_version", default: "ASV"
   end
 
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.string   "username"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "time_zone",              default: "UTC"
     t.integer  "preferred_reading_hour", default: 0
   end
@@ -92,8 +92,8 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.integer  "chapter_id"
     t.integer  "challenge_id"
     t.date     "date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.text     "discussion"
   end
 
@@ -108,8 +108,8 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -122,8 +122,8 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.integer  "verse_number"
     t.text     "versetext"
     t.integer  "book_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "chapter_index"
   end
 
