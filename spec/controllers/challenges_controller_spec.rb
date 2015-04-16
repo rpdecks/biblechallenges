@@ -5,16 +5,20 @@ require 'challenges_controller'
 describe ChallengesController do
 
   describe "Routing" do
-
-    let(:subdomainurl) { "http://woot.lvh.me" }
-    it {expect({get: "#{subdomainurl}"}).to route_to(controller: 'challenges', action: 'show') }
     it { {get: "/challenges"}.should route_to(controller: "challenges", action: "index") }
-
   end
 
   let(:challengeowner) { create(:user) }
   let(:challenge) { create(:challenge, subdomain: "woot", owner: challengeowner) }
   let(:subdomainurl) { "http://#{@challenge.subdomain}.lvh.me" }
+
+
+
+
+
+
+
+
 
   describe 'Guest access' do
 
@@ -29,13 +33,6 @@ describe ChallengesController do
         get :index
         expect(response).to redirect_to new_user_session_path
       end
-
-      ## Should this be the desired behavior ?
-      # it "displays a list of all the challenges" do
-      #   get :index
-      #   assigns(:challenges).should_not be_nil
-      # end
-
     end
 
   end
@@ -50,8 +47,6 @@ describe ChallengesController do
     end
 
     describe 'GET#index' do
-
-
       it "collects challenges into @challenges" do
         get :index
         expect(assigns(:challenges)).to match_array [challenge]
@@ -61,24 +56,29 @@ describe ChallengesController do
         get :index
         expect(response).to render_template :index
       end
-
     end
 
-  end
+    describe 'GET#new' do
+      it "sets up a new empty challenge" do
+        get :new
+        expect(assigns(:challenge)).to be_a_new(Challenge)
+      end
 
+      it "renders the :new template" do
+        get :new
+        expect(response).to render_template(:new)
+      end
+    end
+
+    describe "POST #create" do
+      describe "with valid attributes" do
+        it "creates a new challenge" do
+          expect {
+            post :create, challenge: attributes_for(:challenge)
+          }.to change(Challenge, :count).by(1)
+        end
+      end
+    end
+  end
 end
 
-# describe ChallengesController, "Actions as a visitor" do
-
-#   context "on GET to #show" do
-#     subject { get :show }
-
-#     before do
-#       request.host = "#{challenge.subdomain}.lvh.me"
-#     end
-
-#     it { assigns(:challenge).should_not be_nil }
-#     it { assigns(:readings).should_not be_nil }
-#   end
-
-# end
