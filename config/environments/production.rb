@@ -75,5 +75,4 @@ Biblechallenge::Application.configure do
     :enable_starttls_auto => true  }
 
 
-  config.middleware.use "CustomDomainCookie", ".biblechallenges.com"
 end
