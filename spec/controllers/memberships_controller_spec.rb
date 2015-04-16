@@ -104,12 +104,20 @@ describe MembershipsController do
       let!(:membership){challenge.join_new_member(current_user)}
       describe 'GET#show  (my-membership)' do
         it "finds the current_user membership" do
-          get :show 
+          somechallenge = create(:challenge)  #uses factorygirl
+          membership = somechallenge.join_new_member(current_user)
+
+          get :show, challenge_id: somechallenge.id
+
           expect(assigns(:membership)).to eql(membership)
         end
 
         it "renders the :show template" do
-          get :show
+          somechallenge = create(:challenge)  #uses factorygirl
+          somechallenge.join_new_member(current_user)
+
+          get :show, challenge_id: somechallenge.id
+
           expect(response).to render_template :show
         end
       end
@@ -141,12 +149,22 @@ describe MembershipsController do
     before{sign_in :user, owner}
     describe 'GET#index' do
       it "collects memberships into @memberships" do
-        get :index
-        expect(assigns(:memberships)).to match_array(challenge.memberships)
+        somechallenge = create(:challenge, owner_id: owner.id)
+        somechallenge.join_new_member(create(:user))
+        somechallenge.join_new_member(create(:user))
+
+        get :index, challenge_id: somechallenge
+
+        expect(assigns(:memberships)).to match_array(somechallenge.memberships)
       end
 
       it "renders the :index template" do
-        get :index
+        somechallenge = create(:challenge, owner_id: owner.id)
+        somechallenge.join_new_member(create(:user))
+        somechallenge.join_new_member(create(:user))
+
+        get :index, challenge_id: somechallenge
+
         expect(response).to render_template :index
       end
     end

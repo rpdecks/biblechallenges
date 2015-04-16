@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
-  before_filter :find_challenge
+  before_filter :find_challenge, except: [:unsubscribe_from_email]
   before_filter :find_membership, only: [:update]
   before_filter :find_membership_from_hash, only: [:unsubscribe_from_email]
   before_filter :require_challenge_owner, only: [:index]
@@ -13,7 +13,8 @@ class MembershipsController < ApplicationController
   end
 
   def show
-    return redirect_to root_url(subdomain: @challenge.subdomain) if !current_user || !(@membership = @challenge.membership_for(current_user))
+    @challenge = Challenge.find(params[:challenge_id])
+    @membership = @challenge.memberships.find_by_user_id(current_user.id)
     respond_with(@membership)
   end
 
@@ -66,7 +67,7 @@ class MembershipsController < ApplicationController
   private
 
   def find_challenge
-    @challenge = Challenge.find_by_id(params[:challenge_id]) || Challenge.find_by_subdomain(request.subdomain)
+    @challenge = Challenge.find_by_id(params[:challenge_id]) #|| Challenge.find_by_subdomain(request.subdomain)
     redirect_to root_url if @challenge.nil?
   end
 
