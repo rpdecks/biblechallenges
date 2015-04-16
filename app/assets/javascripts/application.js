@@ -16,6 +16,5 @@
 //= require bootstrap
 //= require pickadate/picker
 //= require pickadate/picker.date
-//= require chosen-jquery
 //= require public
 //= require bootstrap
