@@ -64,13 +64,6 @@ describe MembershipsController do
 
   describe 'Guest access' do
 
-    describe 'GET#index' do
-      it "redirects to the root" do
-        get :index
-        expect(response).to redirect_to new_user_session_url
-      end
-    end
-
     describe 'GET#show (my-membership)' do
       it "redirects to the challenge" do
         get :show
@@ -84,13 +77,6 @@ describe MembershipsController do
     let(:current_user) {create(:user)}
     before{sign_in :user, current_user}
 
-    describe 'GET#index' do
-      it "redirects to the root" do
-        get :index
-        expect(response).to redirect_to root_url(subdomain:false)
-      end
-    end
-
     describe 'GET#show  (my-membership)' do
       it "redirects to the challenge" do
         get :show
@@ -101,11 +87,17 @@ describe MembershipsController do
     describe  'POST#create' do
       let(:newchallenge){create(:challenge, owner: owner)}
       it "redirects to the challenge page after joining as a logged in user" do
-        @request.host = "#{newchallenge.subdomain}.test.com"
-        post :create, challenge_id: newchallenge
-        expect(response).to redirect_to root_url(subdomain:newchallenge.subdomain)
+        somechallenge = create(:challenge)  #uses factorygirl
+        post :create, challenge_id: somechallenge.id
+        expect(response).to redirect_to somechallenge
       end
 
+      it "creates a membership" do
+        expect {
+          post :create, challenge_id: newchallenge
+        }.to change(Membership, :count).by(1)
+
+      end
     end
 
     context 'when the user has already joined' do
