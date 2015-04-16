@@ -26,13 +26,13 @@
   .control-group
     = f.label :begindate, "Begin Date", class: "control-label"
     .controls
-      = f.text_field :begindate, value: f.object.begindate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input', disabled: botton_availability
+      = f.text_field :begindate, value: f.object.begindate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input'
       %p.help-block The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out.
 
   .control-group
     = f.label :chapters_to_read, "Chapters to Read", class: "control-label"
     .controls
-      = f.text_field :chapters_to_read, required: true, class: "form-control", disabled: botton_availability
+      = f.text_field :chapters_to_read, required: true, class: "form-control"
       %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
 
   .control-group

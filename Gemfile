@@ -30,6 +30,7 @@ gem 'activerecord-deprecated_finders'
 
 group :production do
   gem 'rails_12factor'
+  gem 'hirb'
 end
 
 group :development do
