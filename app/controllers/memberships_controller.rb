@@ -30,7 +30,11 @@ class MembershipsController < ApplicationController
   def create
     @membership = @challenge.memberships.build(params[:membership])
     @membership.user = current_user if current_user
-    flash[:notice] = "Thank you for joining!" if @membership.save
+    if @membership.save
+      flash[:notice] = "Thank you for joining!" 
+    else
+      flash[:error] = @membership.errors.full_messages.to_sentence
+    end
     redirect_to @challenge
   end
 
