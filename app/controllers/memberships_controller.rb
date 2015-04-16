@@ -10,7 +10,6 @@ class MembershipsController < ApplicationController
 
   def index
     @memberships = @challenge.memberships
-    respond_with(@memberships)
   end
 
   def show
@@ -30,13 +29,8 @@ class MembershipsController < ApplicationController
   def create
     @membership = @challenge.memberships.build(params[:membership])
     @membership.user = current_user if current_user
-    if @membership.save
-      flash[:notice] = "Thank you for joining!"
-      redirect_to root_url(subdomain: @challenge.subdomain)
-      #redirect_to my_membership_path
-    else
-      redirect_to root_url(subdomain: @challenge.subdomain)
-    end
+    flash[:notice] = "Thank you for joining!" if @membership.save
+    redirect_to @challenge
   end
 
   def create_for_guest
@@ -72,8 +66,8 @@ class MembershipsController < ApplicationController
   private
 
   def find_challenge
-    @challenge = Challenge.find_by_subdomain(request.subdomain) || Challenge.find_by_id(params[:challenge_id])
-    redirect_to root_url(subdomain:false) if @challenge.nil?
+    @challenge = Challenge.find_by_id(params[:challenge_id]) || Challenge.find_by_subdomain(request.subdomain)
+    redirect_to root_url if @challenge.nil?
   end
 
   def find_membership
@@ -88,7 +82,7 @@ class MembershipsController < ApplicationController
   end
 
   def require_challenge_owner
-    redirect_to root_url(subdomain:false) if @challenge.owner != current_user
+    redirect_to root_url if @challenge.owner != current_user
   end
 
 end
