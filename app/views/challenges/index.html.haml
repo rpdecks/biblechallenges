@@ -8,13 +8,11 @@
       %th Name
       %th Begin Date
       %th.hidden-xs End Date
-      %th Active?
       %th 
   - @challenges.each do |challenge|
     %tr
       %td= link_to challenge.name, challenge
       %td= challenge.begindate
       %td.hidden-xs= challenge.enddate
-      %td= challenge.active ? "Yes" : "No"
       %td= link_to 'Details', creator_challenge_path(challenge)
 %br/
