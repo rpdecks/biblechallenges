@@ -1,21 +1,5 @@
-# == Schema Information
-#
-# Table name: challenges
-#
-#  id               :integer          not null, primary key
-#  owner_id         :integer
-#  subdomain        :string(255)
-#  name             :string(255)
-#  begindate        :date
-#  enddate          :date
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  chapters_to_read :string(255)
-#  active           :boolean          default(FALSE)
-#
-
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :subdomain, :chapters_to_read, :public, :welcome_message
+  attr_accessible :begindate, :enddate, :name, :owner_id, :chapters_to_read, :public, :welcome_message
 
   # Relations
   has_many :memberships, dependent: :destroy
@@ -28,10 +12,6 @@ class Challenge < ActiveRecord::Base
   # Validations
   validates :begindate, presence: true
   validates :name, presence: true, length: {minimum: 3}
-  validates :subdomain, presence: true, uniqueness:  true
-  validates_format_of  :subdomain,
-                        with: /\A[a-z\d]+(-[a-z\d]+)*\z/i,
-                        message: 'invalid format'
   validates :owner_id, presence: true
   validates :chapters_to_read, presence: true
   validates_format_of :chapters_to_read,
@@ -46,10 +26,6 @@ class Challenge < ActiveRecord::Base
   after_save        :generate_readings
 
 
-  def subdomain= subdomain
-    subdomain.gsub!(/\s+/, "") if subdomain
-    super(subdomain.try(:downcase))
-  end
 
   def membership_for(user)
     memberships.find_by_user_id(user.id)
@@ -79,11 +55,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def url
-    if subdomain
-      subdomain + ".biblechallenges.com"
-    else
       "biblechallenges.com"
-    end
   end
 
   private

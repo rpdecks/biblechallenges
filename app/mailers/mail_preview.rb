@@ -10,7 +10,7 @@ if Rails.env.development?
         password_confirmation: 'somepassword'
       )
 
-      challenge = Challenge.create(subdomain: ('a'..'z').to_a.shuffle[0,8].join,
+      challenge = Challenge.create(
                                 name: Faker::Company.name,
                                 begindate: Time.now,
                                 owner_id: 1, #to pass validations
@@ -38,7 +38,7 @@ if Rails.env.development?
       user2.profile.username = Faker::Internet.user_name
       user2.profile.save
 
-      challenge = Challenge.create(subdomain: ('a'..'z').to_a.shuffle[0,8].join,
+      challenge = Challenge.create(
                                 name: Faker::Company.name,
                                 begindate: Time.now,
                                 owner_id: 1, #to pass validations

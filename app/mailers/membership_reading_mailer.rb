@@ -14,7 +14,7 @@ class MembershipReadingMailer < ActionMailer::Base
     @user = @membership.user
     mail( to: @user.email, 
       subject: "Bible Challenge reading for #{@challenge.name} : #{@chapter.book_name} #{@chapter.chapter_number}", 
-      from: "#{@challenge.name.capitalize} <no-reply@#{@challenge.subdomain}.biblechallenges.com>")
+      from: "#{@challenge.name.capitalize} <no-reply@biblechallenges.com>")
   end
 
 

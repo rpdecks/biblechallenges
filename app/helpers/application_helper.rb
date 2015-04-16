@@ -20,14 +20,6 @@ module ApplicationHelper
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
-  def subdomain_url subdomain
-    subdomain = (subdomain || "")
-    subdomain += "." unless subdomain.empty?
-    current_domain = request.domain
-    current_domain.slice!("www.") if current_domain  #this is so ugly and I am ashamed.  remove www if it is in the request
-    [subdomain, current_domain, request.port_string].join
-  end
-
   def select_options_for_bible
     [["ASV (American Standard)",'ASV'],["ESV (English Standard)",'ESV'],["KJV (King James)",'KJV'],["NASB (New American Standard)",'NASB'],["NKJV (New King James)",'NKJV']]
   end

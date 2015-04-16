@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416144510) do
+ActiveRecord::Schema.define(version: 20150416174217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20150416144510) do
 
   create_table "challenges", force: :cascade do |t|
     t.integer  "owner_id"
-    t.string   "subdomain"
     t.string   "name"
     t.date     "begindate"
     t.date     "enddate"

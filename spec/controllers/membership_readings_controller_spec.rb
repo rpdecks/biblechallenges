@@ -8,17 +8,6 @@ describe MembershipReadingsController, type: :controller do
   let(:membership_reading){membership.membership_readings.first}
   let(:hash){membership_reading.hash_for_url}
 
-  before do
-    @request.host = "#{challenge.subdomain}.test.com"
-  end
-
-  describe "Routing" do
-    let(:subdomainurl) { "http://#{challenge.subdomain}.test.com" }
-    it {expect({get: "#{subdomainurl}/reading/confirm/#{hash}"}).to route_to(controller: 'membership_readings', action: 'confirm', hash: hash) }
-    it {expect({put: "#{subdomainurl}/reading/log/#{hash}"}).to route_to(controller: 'membership_readings', action: 'log', hash: hash) }
-    it {expect({get: "#{subdomainurl}/membership_readings/#{hash}/edit"}).to route_to(controller: 'membership_readings', action: 'edit', id: hash) }
-  end
-
 
   describe 'User access' do
 
