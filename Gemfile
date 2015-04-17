@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.2.1"
+ruby "2.1.1"
 
 gem 'rails', '4.2.1'
 gem 'haml'
@@ -45,7 +45,7 @@ group :assets do
   gem 'bootstrap-sass', '~> 3.0.2.0'
   gem 'bootswatch-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+  #gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
 end
