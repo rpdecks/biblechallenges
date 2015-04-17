@@ -13,34 +13,43 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 6.  push to heroku
 7.  rake db:migrate
 8.  rake db:seed  (to get the verse data in there)
-9.  also added biblechallenges.com and *.biblechallenges.com in the domains add page
 
 
 
 ##Tests
 
-*This app uses seed data on the test db, so please be sure to run `rake db:seed RAILS_ENV=test` when cloning and before starting to work on it.
-
-Run the Spork test server ` $ spork`. It forks a copy of the server each time you run the tests rather than using the Rails constant unloading to reloadthe files. Way faster!!
+This app uses seed data on the test db, so please be sure to run `rake db:seed RAILS_ENV=test` when cloning and before starting to work on it.
 
 Then in a different console ` $ time rspec` (it will run all the specs).
 
-If you run any migration or change any route while _spork_ is running then you'll have to restart _spork_.
+As we're using Rspec please take in count this [guideline](http://betterspecs.org/).
 
-> As we're using Rspec please take in count this [guideline](http://betterspecs.org/).
->
 
 Note: DO NOT FORGET TO RUN THE TESTS BEFORE PUSH.
 
 ## Mail Preview
 
-go to localhost:3000/mail_view
+go to `localhost:3000/mail_view`
 
 ## Development emails
 
 mailcatcher gem is installed
 run % mailcatcher 
 go to localhost:1080 to see dev emails
+
+
+## Schema explanation
+
+A Challenge is a bible reading program that Users can join
+A Membership is a join record that associates a User with a Challenge
+Each Challenge has many Readings, which are the chapters covered by that Challenge
+For every Reading in a Challenge, for every User, there is a MembershipReading that represents the "read" state of that reading for that user
+
+The Challenge, Membership, Reading, and MembershipReading models are the main classes modified moment by moment.
+
+The Chapter, Bookfrag, and Verse classes are used to parse Bible references and look up chapters in the various versions, and are not altered 
+unless changes are made to the versions of the Bible in the system.
+
 
 
 
