@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.1.1"
+ruby "2.2.1"
 
 gem 'rails', '4.2.1'
 gem 'haml'
@@ -73,7 +73,7 @@ group :test do
   # pretty print test output
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
-  gem 'faker', '~> 1.2.0'
+  gem 'faker', '~> 1.4.3'
   gem 'database_cleaner', '~> 1.2.0'
   gem 'shoulda-matchers', '2.6.1'
 end
