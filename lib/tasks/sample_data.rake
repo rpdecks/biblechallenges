@@ -33,6 +33,7 @@ namespace :sample_fake do
       user.created_challenges << FactoryGirl.create(:challenge)
     end
     print "Created #{Challenge.count} challenges \n"
+    print "Created #{Reading.count} readings \n"
   end
 
   def remove_current_records
@@ -40,6 +41,8 @@ namespace :sample_fake do
     User.delete_all
     puts "Deleting Challenges"
     Challenge.delete_all
+    puts "Deleting Readings"
+    Reading.delete_all
 
     print "--Finished removing current records----------\n\n"
   end
