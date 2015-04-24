@@ -1,9 +1,6 @@
 .container
   .row
-    .col-md-6
-      - if !user_signed_in?
-        = render 'devise/sessions/signin'
-    .col-md-6
+    .col-md-12
       %h1 Bible Challenges
       %br
       %p.lead Create a Bible Reading Challenge for a church, small group, or student organization.
@@ -12,13 +9,22 @@
 
 
   - unless @public_challenges.empty?
-    %p Or take a look at some of the current challenges:
+    %h2 Or take a look at some of the current challenges
 
-    %ul
-      - @public_challenges.each do |challenge|
-        %li= link_to challenge.name, challenge_path(challenge)
-
-
-
-
+    .row
+    - @public_challenges.each do |challenge|
+      .col-md-6
+        = link_to challenge.name, challenge_path(challenge)
+        %br
+        = "Members: #{challenge.members.size}"
+        %br
+        = "Chapters: #{challenge.readings.size}"
+        %br
+        = "Total Chapters To Read: #{challenge.membership_readings.size}"
+        %br
+        = "Total Chapters Read: #{challenge.membership_readings.read.size}"
+        %br
+        = "Start: #{challenge.begindate}"
+        %br
+        = "Start: #{challenge.enddate}"
 
