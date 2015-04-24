@@ -345,6 +345,7 @@ DEPENDENCIES
   hpricot
   jquery-rails
   mail_view
+  omniauth
   omniauth-facebook
   pg
   pickadate-rails
