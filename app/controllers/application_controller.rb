@@ -4,7 +4,4 @@ class ApplicationController < ActionController::Base
   def render_nothing(status = :ok)
     render json: {}, status: status
   end
-
-
-
 end

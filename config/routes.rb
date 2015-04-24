@@ -8,7 +8,7 @@ Biblechallenge::Application.routes.draw do
   #end mail view
 
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   resource :profile, only: [:update, :edit]
 
