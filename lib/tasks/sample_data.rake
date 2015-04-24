@@ -6,43 +6,40 @@ namespace :sample_fake do
   desc "generates fake users; augment: [count] number of users to generate (default: 10)"
   task data: :environment do
     Rails.env = 'development'  # this rake task should only be run in development
-    users_count = 5
-    challenges_count = 2
-    memberships_count = 5
+    users_count = 25
+    challenges_count = 10 
 
     remove_current_records
 
     create_users(users_count)
     create_challenges(challenges_count)
-    create_memberships(memberships_count)
+    create_memberships
+    mark_chapters_as_read
   end
 
-  def create_memberships(memberships_count)
-    puts "Creating memberships: "
-    memberships_count.times do
-      membership = FactoryGirl.build(:membership,
-                                     user: user = User.all.sample,
-                                     challenge: challenge = Challenge.all.sample)
-      unless membership.save
-        # possible duplicate of user-challenge pair
-        if (membership.errors.full_messages.to_sentence ==
-            "User has already been taken")
-          puts " User (#{user.email}) has already been subscribed to challenge (#{challenge.name})"
-        else # some other error (shouldn't happen)
-          puts membership.errors.full_messages.to_sentence
-        end
-      end
+  def mark_chapters_as_read
+    # just randomly mark about half of them as read
+    count = MembershipReading.count / 2
+    MembershipReading.all.sample(count).each do |mr|
+      mr.update_attribute(:state, "read")
     end
 
+  end
+
+  def create_memberships
+    puts "Creating memberships: "
+    # just add a random number of users between 1 and 20 to each challenge
+    Challenge.all.each do |challenge|
+      challenge.members << User.all.sample(rand(20) + 1)
+    end
     puts " Created #{Membership.count} memberships"
-    puts " Created #{MembershipReading.count} membership readings"
   end
 
   def create_users(users_count)
     users_count.times do
       User.create!(
         email: Faker::Internet.email,
-        password: Faker::Internet.password(5)
+        password: '123123'
       )
     end
 
