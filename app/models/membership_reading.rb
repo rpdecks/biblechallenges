@@ -43,7 +43,7 @@ class MembershipReading < ActiveRecord::Base
   def self.send_daily_emails
     MembershipReading.unread.joins(:reading).where("readings.date = ?",Date.today).each do |mr|
       puts "Sending email to: #{mr.membership.user.email} from #{mr.membership.challenge.name} challenge."
-      MembershipReadingMailer.daily_reading_email(mr).deliver
+      MembershipReadingMailer.daily_reading_email(mr).deliver_now
     end
   end
 end
