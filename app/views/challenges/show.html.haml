@@ -16,6 +16,11 @@
     Each day a scheduled reading of Scripture for this challenge will be sent to your inbox.  Once you've read that day's reading, you can click on a link in the email you received to update your progress and comment on that day's reading.
 
   %hr
+  %h3 Challenge Groups
+  - @challenge.groups.each do |g|
+    - if @membership
+      = link_to g.name, join_group_challenge_membership_path(challenge_id: @challenge.id, id: @membership.id, group_id: g.id), method: :post
+
 
   %h3 Challenge Details
 

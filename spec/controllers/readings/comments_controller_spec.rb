@@ -97,6 +97,7 @@ describe Readings::CommentsController, "Actions" do
     end
 
     it "should redirect to params[:location] if the comment is invalid" do
+      pending
       current_user.profile.username = "Phil"
       current_user.profile.save
       post :create, reading_id: reading.id, comment: build(:reading_comment, content: nil), location: new_user_session_path

@@ -14,7 +14,6 @@ class Membership < ActiveRecord::Base
 
   include UrlHashable
 
-  attr_accessible :challenge, :user, :bible_version
   attr_accessor :auto_created_user
 
   # Constants
@@ -23,6 +22,8 @@ class Membership < ActiveRecord::Base
   # Relations
   belongs_to :user
   belongs_to :challenge
+  belongs_to :group
+
   has_many :membership_readings, dependent: :destroy
   has_many :readings, through: :membership_readings
 
@@ -36,10 +37,10 @@ class Membership < ActiveRecord::Base
   # Callbacks
   after_create :associate_readings
 
-  after_create :successful_creation_email, unless: 'auto_created_user'
-  after_create :successful_auto_creation_email, if: 'auto_created_user'
-
-  after_create :send_todays_reading
+#  after_create :successful_creation_email, unless: 'auto_created_user'
+#  after_create :successful_auto_creation_email, if: 'auto_created_user'
+#
+#  after_create :send_todays_reading
 
 
   def overall_progress_percentage
@@ -62,7 +63,7 @@ class Membership < ActiveRecord::Base
     r = readings.find_by_date(Date.today)
     if r
       mr = r.membership_readings.find_by_reading_id_and_membership_id(r.id, self.id)
-      MembershipReadingMailer.daily_reading_email(mr).deliver if mr
+      MembershipReadingMailer.daily_reading_email(mr).deliver_now if mr
     end
   end
 
