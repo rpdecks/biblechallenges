@@ -31,6 +31,7 @@ feature 'User manages challenges' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
     group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
+
     visit(challenge_path(challenge))
     click_link "UC Irvine"
 
