@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
-  before_filter :find_challenge, except: [:unsubscribe_from_email]
+  before_filter :find_challenge, except: [:unsubscribe_from_email, :find_challenge]
   before_filter :find_membership, only: [:update, :join_group]
   before_filter :find_membership_from_hash, only: [:unsubscribe_from_email]
   before_filter :require_challenge_owner, only: [:index]
