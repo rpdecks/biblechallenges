@@ -7,7 +7,7 @@ class Readings::CommentsController < ApplicationController
   before_filter :verify_username
 
   def create
-    @comment = current_user.comments.new(params[:comment])
+    @comment = current_user.comments.new(comment_params)
 
     if @comment.save
       flash[:notice] = "Successfully created comment!"
@@ -43,6 +43,12 @@ class Readings::CommentsController < ApplicationController
       flash[:notice] = "You must set a username in your profile before you can post comments"
       redirect_to edit_profile_url
     end
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content, :commentable_id, :commentable_type, :invisible, :flag_count)
   end
 
 end

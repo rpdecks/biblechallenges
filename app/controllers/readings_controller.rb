@@ -25,12 +25,18 @@ class ReadingsController < ApplicationController
 
   def update
     @reading = Reading.find(params[:id])
-    flash[:notice] = "Reading successfully updated" if @reading.update_attributes(params[:reading])
+    flash[:notice] = "Reading successfully updated" if @reading.update_attributes(reading_params)
     redirect_to reading_path(@reading)
   end
 
 
   def edit
     @reading = Reading.find(params[:id])
+  end
+
+  private
+
+  def reading_params
+    params.require(:reading).permit( :chapter_id, :challenge_id, :date, :discussion)
   end
 end
