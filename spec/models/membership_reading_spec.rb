@@ -18,4 +18,10 @@ describe MembershipReading do
     it { should belong_to(:reading) }
   end
 
+  describe "Instance methods" do
+    describe "#percentage_read" do
+
+    end
+  end
+
 end
