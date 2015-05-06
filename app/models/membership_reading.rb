@@ -14,7 +14,6 @@ class MembershipReading < ActiveRecord::Base
 
   include UrlHashable
 
-  attr_accessible :reading, :membership, :state
 
   # Scopes
   default_scope {includes(:reading).order('readings.date')}

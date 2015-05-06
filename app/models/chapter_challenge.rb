@@ -10,7 +10,7 @@
 #
 
 class ChapterChallenge < ActiveRecord::Base
-  # attr_accessible :title, :body
+
   belongs_to :chapter
   belongs_to :challenge
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416174217) do
+ActiveRecord::Schema.define(version: 20150506135907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,17 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.datetime "updated_at"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.integer  "challenge_id"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
+
   create_table "membership_readings", force: :cascade do |t|
     t.integer  "membership_id"
     t.integer  "reading_id"
@@ -75,6 +86,7 @@ ActiveRecord::Schema.define(version: 20150416174217) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "bible_version", default: "ASV"
+    t.integer  "group_id"
   end
 
   create_table "profiles", force: :cascade do |t|
