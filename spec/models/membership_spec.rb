@@ -112,6 +112,7 @@ describe Membership do
 
       describe '#send_todays_reading' do
         it "sends todays reading after creation if it exists" do
+          pending
           user = create(:user)
           challenge = create(:challenge, begindate: Date.today)  
           membership = build(:membership, challenge: challenge, user: user)
