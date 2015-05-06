@@ -22,7 +22,7 @@ class ChallengesController < ApplicationController
   end
 
   def create
-    @challenge = current_user.created_challenges.build(params[:challenge])
+    @challenge = current_user.created_challenges.build(challenge_params)
     flash[:notice] = "Successfully created Challenge" if @challenge.save
     redirect_to @challenge
   end
@@ -30,5 +30,11 @@ class ChallengesController < ApplicationController
   def destroy
     @challenge.destroy
     redirect_to challenges_path
+  end
+
+  private
+
+  def challenge_params
+    params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read, :welcome_message)
   end
 end

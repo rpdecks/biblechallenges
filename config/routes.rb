@@ -17,6 +17,9 @@ Biblechallenge::Application.routes.draw do
       collection do
         post 'create_for_guest'
       end
+      member do
+        post 'join_group'
+      end
     end
   end
 
