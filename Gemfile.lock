@@ -159,8 +159,6 @@ GEM
     pg (0.18.1)
     pickadate-rails (3.5.5.0)
       railties (>= 3.1.0)
-    protected_attributes (1.0.9)
-      activemodel (>= 4.0.1, < 5.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -323,7 +321,6 @@ DEPENDENCIES
   mail_view
   pg
   pickadate-rails
-  protected_attributes
   pry
   quiet_assets
   rails (= 4.2.1)

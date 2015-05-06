@@ -11,7 +11,6 @@
 #
 
 class Reading < ActiveRecord::Base
-  attr_accessible :chapter, :challenge, :date, :discussion
 
   # Relations
   belongs_to :challenge

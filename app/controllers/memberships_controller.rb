@@ -2,7 +2,7 @@ class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
   before_filter :find_challenge, except: [:unsubscribe_from_email]
-  before_filter :find_membership, only: [:update]
+  before_filter :find_membership, only: [:update, :join_group]
   before_filter :find_membership_from_hash, only: [:unsubscribe_from_email]
   before_filter :require_challenge_owner, only: [:index]
 
@@ -35,6 +35,12 @@ class MembershipsController < ApplicationController
     else
       flash[:error] = @membership.errors.full_messages.to_sentence
     end
+    redirect_to @challenge
+  end
+
+  def join_group
+    @membership.group_id = params[:group_id] if params[:group_id]
+    @membership.save
     redirect_to @challenge
   end
 

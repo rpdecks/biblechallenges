@@ -38,6 +38,7 @@ describe Membership do
   describe "Relations" do
     it { should belong_to(:user) }
     it { should belong_to(:challenge) }
+    it { should belong_to(:group) }
     it { should have_many(:readings).through(:membership_readings) }
     it { should have_many(:membership_readings) }
   end
