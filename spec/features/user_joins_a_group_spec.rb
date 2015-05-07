@@ -12,7 +12,6 @@ feature 'User manages challenges' do
     click_link 'Create a Challenge'
     expect{
       fill_in 'challenge[name]', with: "challenge 1"
-      fill_in 'challenge[welcome_message]', with: "Hello, y'all"
       fill_in 'challenge[begindate]', with: Date.today
       fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
       click_button "Create Challenge"

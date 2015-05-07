@@ -4,9 +4,6 @@
     Profile
   - if @profile.errors.any?
     - flash[:error] = @challenge.errors.full_messages.to_sentence
-  %b Gravatar:
-  = image_tag avatar_url(current_user, 55)
-  = link_to "Edit your Gravatar", "http://gravatar.com"
   .control-group
     = f.label :username, "Username", class: "control-label"
     .controls
