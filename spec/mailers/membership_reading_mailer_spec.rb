@@ -4,7 +4,7 @@ describe MembershipReadingMailer do
 
   describe '.daily_reading_email' do
     let(:user){create(:user)}
-    let(:challenge){create(:challenge)}
+    let(:challenge){create(:challenge_with_readings)}
     let(:membership){challenge.join_new_member(user)}
     let!(:membership_reading){membership.membership_readings.first}
 
