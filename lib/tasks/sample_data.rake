@@ -14,6 +14,7 @@ namespace :sample_fake do
     create_users(users_count)
     create_challenges(challenges_count)
     create_memberships
+    create_groups
     mark_chapters_as_read
   end
 
@@ -28,11 +29,34 @@ namespace :sample_fake do
 
   def create_memberships
     puts "Creating memberships: "
-    # just add a random number of users between 1 and 20 to each challenge
+    # just add a random number of users between 5 and 20 to each challenge
     Challenge.all.each do |challenge|
-      challenge.members << User.all.sample(rand(20) + 1)
+      challenge.members << User.all.sample(rand(15) + 5)
     end
     puts " Created #{Membership.count} memberships"
+  end
+
+  def create_groups
+    # create three groups in each challenge
+    puts "creating groups"
+    Challenge.all.each do |challenge|
+      3.times do
+        challenge.groups.create(name: "#{Faker::Name.name}'s Group")
+        print "."
+      end
+    end
+  end
+
+  def add_members_to_groups
+    #every member of every challenge in a group
+    puts "adding members to groups"
+    Challenge.all.each do |challenge|
+      challenge.memberships.each do |membership|
+        membership.group = challenge.groups.sample
+        membership.save
+        print "."
+      end
+    end
   end
 
   def create_users(users_count)
@@ -68,6 +92,8 @@ namespace :sample_fake do
     Reading.delete_all
     puts "Deleting Memberships"
     Membership.delete_all
+    puts "Deleting Groups"
+    Group.delete_all
 
     #todo: how come removing membership doesn't remve membership readings?
     # is this by design?
