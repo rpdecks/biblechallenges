@@ -64,77 +64,35 @@ describe Challenge do
     it { should have_many(:membership_readings) }
   end
 
-  describe 'Callbacks' do
-    describe 'After save' do
-      describe '#generate_readings' do
-        let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
-        let(:expected_readings) { 6 } # avoiding magic numbers
-
-        context 'when the challenge is being created' do
-
-          it 'creates a reading for every chapter assigned in the challenge'do
-            expect(challenge.readings.length).to eql 6
-          end
-
-          it 'creates the readings with its corresponding date' do
-            challenge.readings.each_with_index do |reading,index|
-              expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
-            end
-            expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
-          end
-
-        end
-
-        context "when the challenge isn't active" do
-          context "when 'begindate' has changed" do
-
-            before do
-              # challenge.chapters_to_read = 'Phile'
-              challenge.begindate = Date.today + 7.days
-              challenge.save
-            end
-
-            it 're-creates a reading for every chapter assigned in the challenge'do
-              expect(challenge.readings.length).to eql(expected_readings)
-            end
-
-            it 're-creates the readings with its corresponding date' do
-              challenge.readings.each_with_index do |reading,index|
-                expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
-              end
-              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
-            end
-
-          end
-
-          context "when 'chapters_to_read' has changed" do
-
-            before do
-              challenge.chapters_to_read = 'Phil 1 - 4'
-              challenge.save
-            end
-
-            it 're-creates a reading for every chapter assigned in the challenge'do
-              expect(challenge.readings.length).to eql 4
-            end
-
-            it 're-creates the readings with its corresponding date' do
-              challenge.readings.each_with_index do |reading,index|
-                expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
-              end
-              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
-            end
-
-          end
-        end
-      end
-    end
-  end
 
 
   describe 'Instance methods' do
 
     let(:challenge){create(:challenge)}
+
+    describe '#generate_readings' do
+      let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
+      let(:expected_readings) { 6 } # avoiding magic numbers
+
+      context 'when the challenge is being created' do
+
+        it 'creates a reading for every chapter assigned in the challenge'do
+          challenge.generate_readings
+          
+          expect(challenge.readings.length).to eql 6
+        end
+
+        it 'creates the readings with its corresponding date' do
+          challenge.generate_readings
+          challenge.readings.each_with_index do |reading,index|
+            expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
+          end
+          expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
+        end
+
+      end
+
+    end
 
     describe '#membership_for' do
       let(:user){create(:user)}
