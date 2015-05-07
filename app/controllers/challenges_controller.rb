@@ -35,6 +35,6 @@ class ChallengesController < ApplicationController
   private
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read, :welcome_message)
+    params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read)
   end
 end
