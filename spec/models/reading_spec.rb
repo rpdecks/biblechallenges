@@ -31,6 +31,7 @@ describe Reading do
       let(:membership){create(:membership, challenge: challenge)}
 
       it "should find all readings up to and including the passed date" do
+        challenge.generate_readings
         expect(membership.readings.to_date(challenge.begindate + 1.day)).to have(2).items
       end
     end
@@ -40,6 +41,7 @@ describe Reading do
     describe "last_readers" do
       it "should return a collection of the last x readers" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        challenge.generate_readings
         reading = challenge.readings.first
         m1 = create(:membership, challenge: challenge)
         m2 = create(:membership, challenge: challenge)
@@ -53,6 +55,7 @@ describe Reading do
 
       it "should return an empty collection of noone has read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        challenge.generate_readings
         reading = challenge.readings.first
         create(:membership, challenge: challenge)
         create(:membership, challenge: challenge)

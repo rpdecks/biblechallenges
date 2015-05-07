@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe MembershipReadingsController, type: :controller do
 
-  let(:challenge){create(:challenge, chapters_to_read:'mi 1-4')}
+  let(:challenge){create(:challenge, chapters_to_read:'mi 1-4')} 
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
-  let(:membership_reading){membership.membership_readings.first}
+  let(:membership_reading){ create(:membership_reading, membership: membership)}
   let(:hash){membership_reading.hash_for_url}
 
 
@@ -18,6 +18,7 @@ describe MembershipReadingsController, type: :controller do
 
     describe 'PUT#update' do
       it "finds the membership_reading" do
+        #membership_reading = create(:membership_reading, membership: membership)
         put :update, id: membership_reading, format: 'js'
         expect(assigns(:membership_reading)).to eql(membership_reading)
       end
