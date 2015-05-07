@@ -1,0 +1,6 @@
+- unless current_user && @membership = @challenge.membership_for(current_user)
+  Join the challenge!
+  %p
+Challenge Name:
+= @challenge.name
+= link_to "Join Challenge", challenge_memberships_path(challenge_id: @challenge.id), method: :post
