@@ -49,11 +49,6 @@ class Challenge < ActiveRecord::Base
     end
   end
 
-  def welcome_message_markdown
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-    markdown.render(self.welcome_message || "")
-  end
-
   def url
       "biblechallenges.com"
   end
