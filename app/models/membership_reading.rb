@@ -18,6 +18,8 @@ class MembershipReading < ActiveRecord::Base
   # Scopes
   default_scope {includes(:reading).order('readings.date')}
   scope :read, -> {where(state: 'read')}
+  scope :punctual, -> {where(state: 'read', punctual: 1)}
+  scope :not_punctual, -> {where(state: 'read', punctual: 0)}
   scope :unread, -> {where(state: 'unread')}
 
   # Constants

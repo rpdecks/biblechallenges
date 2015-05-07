@@ -55,6 +55,12 @@ class Membership < ActiveRecord::Base
     td_total.zero? ? 0 : (read * 100) / td_total
   end
 
+  def punctual_reading_percentage
+    td_total = readings.to_date(Date.today).count
+    punct_total = membership_readings.punctual.count
+    td_total.zero? ? 0 : (punct_total * 100) / td_total
+  end
+
   def completed?
     membership_readings.count == membership_readings.read.count
   end
