@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ReadingsController do
 
   let(:owner){create(:user)}
-  let(:challenge){create(:challenge, chapters_to_read:'matt 1-4', owner: owner)}
+  let(:challenge){create(:challenge_with_readings, owner: owner)}
   let(:user){create(:user)}
   let!(:membership){create(:membership, challenge: challenge, user: user)}
   let(:membership_reading){membership.membership_readings.first}

@@ -52,6 +52,7 @@ describe Membership do
       let(:membership){create(:membership, challenge: challenge)}
 
       before do
+        challenge.generate_readings
         membership.membership_readings[0..3].each do |mr|
           mr.state = 'read'
           mr.save!
@@ -66,6 +67,7 @@ describe Membership do
       let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
       let(:membership){create(:membership, challenge: challenge)}
       before do
+        challenge.generate_readings
         membership.membership_readings[0..1].each do |mr| # read first two
           mr.state = 'read'
           mr.save!
@@ -89,6 +91,7 @@ describe Membership do
       end
       it "returns false if not all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1-3')
+        challenge.generate_readings
         membership = create(:membership, challenge: challenge)
         membership.membership_readings[0..1].each do |mr| # read first two
           mr.state = 'read'

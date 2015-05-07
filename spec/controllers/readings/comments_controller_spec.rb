@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Readings::CommentsController, "Actions" do
-  let(:challenge) {create(:challenge)}
   describe "Guest Posting" do
     describe "POST #create" do
       it "redirects to login page" do
@@ -22,7 +21,7 @@ describe Readings::CommentsController, "Actions" do
       current_user= create(:user)
       current_user.profile = create(:profile, username: "Phil")
       sign_in :user, current_user
-      challenge = create(:challenge)
+      challenge = create(:challenge_with_readings)
       membership = create(:membership, user: current_user, challenge: challenge)
       reading = membership.readings.first
       comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
@@ -31,7 +30,7 @@ describe Readings::CommentsController, "Actions" do
 
     it "should not destroy the comment if the current_user does not own it" do
       current_user= create(:user)
-      challenge = create(:challenge)
+      challenge = create(:challenge_with_readings)
       membership = create(:membership, user: current_user, challenge: challenge)
       reading = membership.readings.first
       comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
@@ -42,7 +41,7 @@ describe Readings::CommentsController, "Actions" do
 
     it "should redirect to login if the user is not logged in" do
       current_user= create(:user)
-      challenge = create(:challenge)
+      challenge = create(:challenge_with_readings)
       membership = create(:membership, user: current_user, challenge: challenge)
       reading = membership.readings.first
       comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
@@ -57,6 +56,7 @@ describe Readings::CommentsController, "Actions" do
 
   describe "POST #create" do
     let!(:current_user) {create(:user)}
+    let(:challenge) { create(:challenge_with_readings) }
     let!(:membership) {create(:membership, user: current_user, challenge: challenge)}
     let(:reading) { membership.readings.first}
     let(:newcomment_attr) {attributes_for(:reading_comment, user: current_user, commentable: membership.readings.first)}

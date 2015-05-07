@@ -23,7 +23,7 @@ class Challenge < ActiveRecord::Base
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
   after_create      :successful_creation_email
-  after_save        :generate_readings
+  #after_save        :generate_readings
 
 
 
@@ -53,6 +53,17 @@ class Challenge < ActiveRecord::Base
       "biblechallenges.com"
   end
 
+  def generate_readings
+    # Only generate the reading on the cases below.
+    #if (id_changed? || begindate_changed? || chapters_to_read_changed?)
+      readings.destroy_all
+      Chapter.search(chapters_to_read).flatten.each_with_index do |chapter,i|
+        readings.create(chapter: chapter, date: (begindate + i.days))
+      end
+    #end
+  end
+
+
   private
 
   # Validations
@@ -75,16 +86,6 @@ class Challenge < ActiveRecord::Base
   # - after_create
   def successful_creation_email
     ChallengeMailer.creation_email(self).deliver_now
-  end
-
-  def generate_readings
-    # Only generate the reading on the cases below.
-    if (id_changed? || begindate_changed? || chapters_to_read_changed?)
-      readings.destroy_all
-      Chapter.search(chapters_to_read).flatten.each_with_index do |chapter,i|
-        readings.create(chapter: chapter, date: (begindate + i.days))
-      end
-    end
   end
 
   # - before_validation
