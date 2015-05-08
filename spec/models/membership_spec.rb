@@ -97,6 +97,25 @@ describe Membership do
       end
     end
 
+    describe '#calculate_record_sequential_reading_count' do
+      it "returns the percentage of time the reader performs the reading according to schedule" do
+        Timecop.travel(4.days.ago)
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
+        membership = create(:membership, challenge: challenge)
+        membership.membership_readings[0..1].each do |mr| # read first two
+          mr.state = 'read'
+          mr.save!
+        end
+        Timecop.return
+        Timecop.travel(1.days.ago)
+        membership.membership_readings.third.update_attributes(state: "read")
+        Timecop.return
+        membership.membership_readings.fourth.update_attributes(state: "read")
+
+        expect(membership.rec_sequential_reading_count).to eq 2
+      end
+    end
+
     describe '#completed?' do
       it "returns true if all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')

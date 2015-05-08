@@ -61,8 +61,20 @@ class Membership < ActiveRecord::Base
     td_total.zero? ? 0 : (punct_total * 100) / td_total
   end
 
-  def record_sequential_reading_count
-  
+  def calculate_record_sequential_reading_count
+    record = 0
+    running_count = 0
+    self.membership_readings.each do |r|
+      if r.state == 'read' && r.punctual == 1
+        running_count += 1
+      else
+        if record < running_count
+          record = running_count
+        end
+      end
+    end
+    self.rec_sequential_reading_count = record
+    self.save
   end
 
   def completed?

@@ -39,6 +39,7 @@ class MembershipReading < ActiveRecord::Base
 
   #Callbacks
   before_update :reading_punctual?
+  after_update :recalculate_rec_sequential_reading_count
 
   def read?
     state == 'read'
@@ -59,5 +60,8 @@ class MembershipReading < ActiveRecord::Base
     else
       self.punctual = 0
     end
+  end
+  def recalculate_rec_sequential_reading_count
+    self.membership.calculate_record_sequential_reading_count
   end
 end
