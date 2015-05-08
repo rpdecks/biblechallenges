@@ -10,7 +10,7 @@ RSpec.describe Group, type: :model do
   describe "#group_punctual_reading_percentage" do
     it "returns the average percentage of time the readers in the group read according to schedule" do
         Timecop.travel(4.days.ago)
-        challenge = create(:challenge, chapters_to_read: 'Matt 1-20')
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
         membership = create(:membership, challenge: challenge)
         membership2 = create(:membership, challenge: challenge, user: User.first)
         group = challenge.groups.create(name: "UC Irvine", user_id: User.first.id)
