@@ -71,6 +71,7 @@ class Membership < ActiveRecord::Base
         if record < running_count
           record = running_count
         end
+        running_count = 0
       end
     end
     self.rec_sequential_reading_count = record
