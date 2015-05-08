@@ -82,7 +82,7 @@ describe Membership do
     describe '#punctual_reading_percentage' do
       it "returns the percentage of time the reader performs the reading according to schedule" do
         Timecop.travel(4.days.ago)
-        challenge = create(:challenge, chapters_to_read: 'Matt 1-20')
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
         membership = create(:membership, challenge: challenge)
         membership.membership_readings[0..1].each do |mr| # read first two
           mr.state = 'read'
