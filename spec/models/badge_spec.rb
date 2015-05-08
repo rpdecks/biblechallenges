@@ -15,9 +15,12 @@ RSpec.describe Badge, type: :model do
 
       expect(user.badges.find_by_type("JoinChallengeBadge").granted).to be false
       expect(user.badges.find_by_type("OneChapterBadge").granted).to be false
+      user2 = create(:user)
 
-      membership = create(:membership, challenge: challenge, user: user)
+      create(:membership, challenge: challenge, user: user)
+      create(:membership, challenge: challenge, user: user2)
       Badge.update_user_badges(user)
+      Badge.update_user_badges(user2)
       expect(user.badges.find_by_type("JoinChallengeBadge").granted).to be true
       expect(user.badges.find_by_type("OneChapterBadge").granted).to be false
 
@@ -25,27 +28,6 @@ RSpec.describe Badge, type: :model do
       user.membership_readings.first.update_attributes(state: "read")
       Badge.update_user_badges(user)
       expect(user.badges.find_by_type("OneChapterBadge").granted).to be true
-
-
-
-
-
-
-
-
-
     end
-
-
-
-
-
-
-
-
   end
-
-
-
-
 end
