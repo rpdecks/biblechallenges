@@ -1,13 +1,11 @@
 class Badge < ActiveRecord::Base
   belongs_to :user
 
-
-
   def self.attach_user_badges(user)
     # Make sure this user has every badge
-    Badge.descendants.each do |pb|
-      unless user.badges.find_by_type(pb.name)
-        user.badges << pb.create
+    Badge.descendants.each do |b|
+      unless user.badges.find_by_type(b.name)
+        user.badges << b.create
       end
     end
   end
@@ -23,8 +21,6 @@ class Badge < ActiveRecord::Base
   def update
     update_attributes(granted: qualify?) 
   end
-
-
 end
 
 
