@@ -5,30 +5,15 @@ RSpec.describe Badge, type: :model do
     it {should belong_to(:user) }
   end
 
-  describe "sandbox" do
-
-    it "should see if a given user qualifies for various badges" do
-      # create a user who has joined a challenge
+  describe "Class Methods" do
+    describe "attach_user_badges(user)" do
+      it "should add any existing badges to a user if he doesn't have them" do
       user = create(:user)
-      challenge = create(:challenge_with_readings)
-      Badge.update_user_badges(user)
 
-      expect(user.badges.find_by_type("JoinChallengeBadge").granted).to be false
-      expect(user.badges.find_by_type("OneChapterBadge").granted).to be false
-      user2 = create(:user)
-
-      create(:membership, challenge: challenge, user: user)
-      create(:membership, challenge: challenge, user: user2)
-      Badge.update_user_badges(user)
-      Badge.update_user_badges(user2)
-      expect(user.badges.find_by_type("JoinChallengeBadge").granted).to be true
-      expect(user.badges.find_by_type("OneChapterBadge").granted).to be false
-
-      binding.pry
-      # check off a reading
-      user.membership_readings.first.update_attributes(state: "read")
-      Badge.update_user_badges(user)
-      expect(user.badges.find_by_type("OneChapterBadge").granted).to be true
+      expect(user.badges).to be_empty
+      Badge.attach_user_badges(user)
+      expect(user.badges.size).to eq Badge.descendants.size
+      end
     end
   end
 end
