@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   has_many :groups, through: :memberships
   has_many :comments
   has_many :badges
+  has_one :one_chapter_badge
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 

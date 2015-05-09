@@ -23,8 +23,6 @@ class Badge < ActiveRecord::Base
   end
 end
 
-
-
 =begin
 
 thought process:
