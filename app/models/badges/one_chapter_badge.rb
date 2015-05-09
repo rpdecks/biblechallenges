@@ -1,5 +1,6 @@
 class OneChapterBadge < Badge
 
+
   def name 
     "Five Chapters Read"
   end

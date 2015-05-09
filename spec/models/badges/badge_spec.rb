@@ -24,6 +24,7 @@ RSpec.describe Badge, type: :model do
       expect(user.badges.find_by_type("JoinChallengeBadge").granted).to be true
       expect(user.badges.find_by_type("OneChapterBadge").granted).to be false
 
+      binding.pry
       # check off a reading
       user.membership_readings.first.update_attributes(state: "read")
       Badge.update_user_badges(user)
