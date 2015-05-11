@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :group do
-    challenge_id 1
-    name "MyString"
+    sequence(:challenge_id) { |n| n }
+    sequence(:name, 50) { |n| "Group name #{n}" }
     user_id 1
   end
 end

@@ -13,6 +13,7 @@ Biblechallenge::Application.routes.draw do
   resource :profile, only: [:update, :edit]
 
   resources :challenges, only: [:new, :index, :show, :create, :destroy] do
+    resources :groups, only: [:show, :index], controller: 'challenges/groups'
     resources :memberships, only: [:update, :index, :show, :create, :destroy] do
       collection do
         post 'create_for_guest'
