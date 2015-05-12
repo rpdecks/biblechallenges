@@ -11,4 +11,4 @@
   - @group.memberships.each do |m|
     = m.user.email
 
-
+= link_to "Join Group", join_challenge_group_path(challenge_id: @challenge.id, id: @group.id), method: :post

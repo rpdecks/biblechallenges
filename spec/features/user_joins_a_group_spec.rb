@@ -33,6 +33,7 @@ feature 'User manages challenges' do
 
     visit(challenge_path(challenge))
     click_link "UC Irvine"
+    click_link "Join"
 
     expect(user.groups).to include group
   end
