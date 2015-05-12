@@ -47,8 +47,6 @@ For every Reading in a Challenge, for every User, there is a MembershipReading t
 
 The Challenge, Membership, Reading, and MembershipReading models are the main classes modified moment by moment.
 
-The Chapter, Bookfrag, and Verse classes are used to parse Bible references and look up chapters in the various versions, and are not altered 
-unless changes are made to the versions of the Bible in the system.
 
 
 

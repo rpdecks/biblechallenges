@@ -54,13 +54,12 @@ class Challenge < ActiveRecord::Base
   end
 
   def generate_readings
-    # Only generate the reading on the cases below.
-    #if (id_changed? || begindate_changed? || chapters_to_read_changed?)
-      readings.destroy_all
-      Chapter.search(chapters_to_read).flatten.each_with_index do |chapter,i|
-        readings.create(chapter: chapter, date: (begindate + i.days))
-      end
-    #end
+    readings.destroy_all
+
+    ActsAsScriptural.new.parse(chapters_to_read).chapters.each_with_index do |chapter, i|
+      chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
+      readings.create(chapter: chapter, date: (begindate + i.days))
+    end
   end
 
 
@@ -90,9 +89,7 @@ class Challenge < ActiveRecord::Base
 
   # - before_validation
   def calculate_enddate
-    chapters_count = Parser.separate_queries(chapters_to_read).inject(0) do |chapters, query|
-      chapters += (Parser.parse_query(query)[1].try(:length) || 0)
-    end
+    chapters_count = ActsAsScriptural.new.parse(chapters_to_read).chapters.size
     self.enddate = begindate + (chapters_count - 1).days if chapters_to_read
   end
 
