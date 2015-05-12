@@ -35,6 +35,7 @@ describe User do
     it { should have_many(:created_challenges) }
     it { should have_many(:memberships) }
     it { should have_many(:comments) }
+    it { should have_many(:badges) }
     it { should have_many(:challenges).through(:memberships)}
     it { should have_many(:groups).through(:memberships)}
   end
