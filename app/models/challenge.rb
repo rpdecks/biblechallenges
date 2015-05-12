@@ -89,9 +89,7 @@ class Challenge < ActiveRecord::Base
 
   # - before_validation
   def calculate_enddate
-    chapters_count = Parser.separate_queries(chapters_to_read).inject(0) do |chapters, query|
-      chapters += (Parser.parse_query(query)[1].try(:length) || 0)
-    end
+    chapters_count = ActsAsScriptural.new.parse(chapters_to_read).chapters.size
     self.enddate = begindate + (chapters_count - 1).days if chapters_to_read
   end
 
