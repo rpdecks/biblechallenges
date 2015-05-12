@@ -28,7 +28,7 @@ RSpec.configure do |config|
 
   config.before :each do
     if Capybara.current_driver == :selenium
-      DatabaseCleaner.strategy = :truncation, {except: %w[chapters bookfrags verses]}
+      DatabaseCleaner.strategy = :truncation, {except: %w[chapters verses]}
     else
       DatabaseCleaner.strategy = :transaction
     end
