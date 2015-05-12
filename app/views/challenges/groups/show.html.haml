@@ -1,0 +1,14 @@
+.pull-right
+
+%h4
+  Group name:
+  = "#{@group.name}"
+%h4
+  Owner:
+  = @group.user.email
+%h4
+  Members:
+  - @group.memberships.each do |m|
+    = m.user.email
+
+= link_to "Join Group", join_challenge_group_path(challenge_id: @challenge.id, id: @group.id), method: :post
