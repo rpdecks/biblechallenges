@@ -1,4 +1,4 @@
-class MembershipStatisticOverallProgressPercentage < MembershipStatistic
+class MembershipStatisticProgressPercentage < MembershipStatistic
 
   def name
     "Overall progress percentage"
