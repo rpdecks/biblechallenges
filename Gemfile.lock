@@ -253,6 +253,10 @@ GEM
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
+    simple_token_authentication (1.9.1)
+      actionmailer (>= 3.2.6, < 5)
+      actionpack (>= 3.2.6, < 5)
+      devise (~> 3.2)
     simplecov (0.5.4)
       multi_json (~> 1.0.3)
       simplecov-html (~> 0.5.3)
@@ -337,6 +341,7 @@ DEPENDENCIES
   shoulda-matchers (= 2.6.1)
   sidekiq
   simple_form
+  simple_token_authentication (~> 1.0)
   simplecov (= 0.5.4)
   sqlite3
   thin
