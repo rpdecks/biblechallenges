@@ -37,6 +37,8 @@ class Membership < ActiveRecord::Base
   # Callbacks
   after_create :associate_readings
 
+  after_update :recalculate_group_stats
+
 #  after_create :successful_creation_email, unless: 'auto_created_user'
 #  after_create :successful_auto_creation_email, if: 'auto_created_user'
 #
@@ -61,7 +63,14 @@ class Membership < ActiveRecord::Base
     td_total.zero? ? 0 : (punct_total * 100) / td_total
   end
 
-  def calculate_record_sequential_reading_count
+  def recalculate_stats
+    self.punctual_reading_percentage = punctual_reading_percentage
+    self.rec_sequential_reading_count = record_sequential_reading_count
+    self.progress_percentage = overall_progress_percentage
+    self.save
+  end
+
+  def record_sequential_reading_count
     record = 0
     running_count = 0
     self.membership_readings.each do |r|
@@ -74,8 +83,7 @@ class Membership < ActiveRecord::Base
         running_count = 0
       end
     end
-    self.rec_sequential_reading_count = record
-    self.save
+    record
   end
 
   def completed?
@@ -93,6 +101,11 @@ class Membership < ActiveRecord::Base
   private
 
   # Callbacks
+  def recalculate_group_stats
+    if self.group_id.present?
+      group.recalculate_stats
+    end
+  end
 
   # - after_create
   def associate_readings

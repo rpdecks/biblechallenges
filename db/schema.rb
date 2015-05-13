@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508163559) do
+ActiveRecord::Schema.define(version: 20150508183340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,11 @@ ActiveRecord::Schema.define(version: 20150508163559) do
     t.integer  "challenge_id"
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "ave_sequential_reading_count",    default: 0
+    t.integer  "ave_punctual_reading_percentage", default: 0
+    t.integer  "ave_progress_percentage",         default: 0
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -88,7 +91,9 @@ ActiveRecord::Schema.define(version: 20150508163559) do
     t.datetime "updated_at"
     t.string   "bible_version",                default: "ASV"
     t.integer  "group_id"
-    t.integer  "rec_sequential_reading_count"
+    t.integer  "rec_sequential_reading_count", default: 0
+    t.integer  "punctual_reading_percentage",  default: 0
+    t.integer  "progress_percentage",          default: 0
   end
 
   create_table "profiles", force: :cascade do |t|
