@@ -41,7 +41,7 @@ namespace :sample_fake do
     puts "creating groups"
     Challenge.all.each do |challenge|
       3.times do
-        challenge.groups.create(name: "#{Faker::Name.name}'s Group")
+        challenge.groups.create!(name: "#{Faker::Name.name}'s Group", user: User.all.sample)
         print "."
       end
     end
