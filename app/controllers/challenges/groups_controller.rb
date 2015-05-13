@@ -13,6 +13,13 @@ class Challenges::GroupsController < ApplicationController
     redirect_to [@challenge, @group]
   end
 
+  def leave
+    membership = @challenge.membership_for(current_user)
+    membership.group = nil
+    membership.save
+    redirect_to [@challenge]
+  end
+
   private
 
   def find_challenge

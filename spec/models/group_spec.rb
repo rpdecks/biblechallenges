@@ -7,6 +7,4 @@ RSpec.describe Group, type: :model do
     it { should have_many(:memberships)} 
   end
 
-
-
 end
