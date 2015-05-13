@@ -40,9 +40,9 @@ Biblechallenge::Application.routes.draw do
   get '/unsubscribe/:hash' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
   match '/unsubscribe/:hash' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
 
-  # Loging readings
-  match '/reading/confirm/:hash' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
-  match '/reading/log/:hash' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
+  # Logging readings
+  match '/reading/confirm/:id' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
+  match '/reading/log/:id' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
 
   # more restful reading logging
   resources :membership_readings, only: [:edit, :update] do
