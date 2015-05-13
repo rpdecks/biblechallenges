@@ -1,8 +1,3 @@
 %h3 Challenge Groups
 - @challenge.groups.each do |g|
-  - if @membership
-    = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
-    =# link_to g.name, join_group_challenge_membership_path(challenge_id: @challenge.id, id: @membership.id, group_id: g.id), method: :post
-  - else
-    = g.name
-    %br
+  = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
