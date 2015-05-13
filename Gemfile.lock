@@ -115,7 +115,6 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    hashids (1.0.2)
     heroku (3.2.3)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -318,7 +317,6 @@ DEPENDENCIES
   font-awesome-rails
   haml
   haml-rails
-  hashids
   heroku
   high_voltage
   hirb

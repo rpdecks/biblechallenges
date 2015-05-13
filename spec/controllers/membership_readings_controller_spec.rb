@@ -51,7 +51,7 @@ describe MembershipReadingsController, type: :controller do
   end
 
   describe 'GET#edit' do
-    context 'with a valid hash' do
+    context 'with a valid token' do
       it "renders the :edit template" do
         get :edit, id: membership_reading.id
         expect(response).to render_template(:edit)
@@ -87,7 +87,7 @@ describe MembershipReadingsController, type: :controller do
 
 
   describe 'GET#confirm' do
-    context 'with a valid hash' do
+    context 'with a valid token' do
 
       it "renders the :new template" do
         get :confirm, id: membership_reading.id
@@ -111,33 +111,12 @@ describe MembershipReadingsController, type: :controller do
 
     end
 
-    context 'with an invalid token' do
-      let(:token){'scoobydoo'}
-
-      it "renders the :new template" do
-        pending
-        get :confirm, hash: hash
-        expect(response).to render_template(:confirm)
-      end
-
-      it "renders with email layout" do
-        pending
-        get :confirm, hash: hash
-        should render_with_layout('from_email')
-      end
-
-      it 'sets a proper flash message' do
-        pending
-        get :confirm, hash: hash
-        should set_the_flash[:error].to("This confirmation link doesn't exist")
-      end
-    end
 
   end
 
   describe 'PUT#log' do
 
-    context 'with a valid hash' do
+    context 'with a valid token' do
       it "finds membership_reading" do
         put :log, id: membership_reading.id, format:'js'
         expect(assigns(:membership_reading)).to eql(membership_reading)

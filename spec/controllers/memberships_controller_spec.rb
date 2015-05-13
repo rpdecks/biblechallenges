@@ -26,27 +26,6 @@ describe MembershipsController do
       end
     end
 
-    context 'with an invalid authtoken' do
-      let(:token){'yeahbuddy'}
-
-      it "renders the :new template" do
-        pending
-        get :unsubscribe_from_email, hash: hash
-        expect(response).to render_template(:unsubscribe_from_email)
-      end
-
-      it "renders with email layout" do
-        pending
-        get :unsubscribe_from_email, hash: hash
-        should render_with_layout('from_email')
-      end
-
-      it 'sets a proper flash message' do
-        pending
-        get :unsubscribe_from_email, hash: hash
-        should set_the_flash[:error].to("This unsubscribe link doesn't exist")
-      end
-    end
 
   end
 
