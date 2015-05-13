@@ -1,9 +1,8 @@
 class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
-  before_filter :find_challenge, except: [:unsubscribe_from_email, :find_challenge]
+  before_filter :find_challenge, except: [:find_challenge, :unsubscribe_from_email]
   before_filter :find_membership, only: [:update, :join_group]
-  before_filter :find_membership_from_hash, only: [:unsubscribe_from_email]
   before_filter :require_challenge_owner, only: [:index]
 
   respond_to :html, :json, :js
@@ -13,7 +12,6 @@ class MembershipsController < ApplicationController
   end
 
   def show
-    @challenge = Challenge.find(params[:challenge_id])
     @membership = @challenge.memberships.find_by_user_id(current_user.id)
     respond_with(@membership)
   end
@@ -44,22 +42,8 @@ class MembershipsController < ApplicationController
     redirect_to @challenge
   end
 
-  # This is to let someone sign up for a challenge with only their email
-#  def create_for_guest
-#    @membership_form = MembershipForm.new(params[:membership_form])
-#    @membership_form.challenge = @challenge
-#    if @membership_form.valid? && @membership_form.subscribe
-#      flash[:notice] = "Thank you for joining. check your email inbox for more details!"
-#      redirect_to @challenge
-#    else
-#      flash[:error] = @membership_form.errors.full_messages.to_sentence
-#      redirect_to @challenge
-#    end
-#  end
-
   def unsubscribe_from_email
-    if @membership
-      @hash = params[:hash]
+    if @membership = Membership.find_by_id(params[:id])
       @user = @membership.user
       sign_in @user
     else
@@ -86,12 +70,6 @@ class MembershipsController < ApplicationController
   def find_membership
     @membership = @challenge.memberships.find(params[:id])
     redirect_to @challenge if @membership.nil?
-  end
-
-  def find_membership_from_hash
-    hashids = HashidsGenerator.instance
-    membership_id = hashids.decrypt(params[:hash])
-    @membership = Membership.find_by_id(membership_id)
   end
 
   def require_challenge_owner

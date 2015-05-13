@@ -37,8 +37,8 @@ Biblechallenge::Application.routes.draw do
   get '/memberships' => 'memberships#index'
 
   # Unsubscribe from email
-  get '/unsubscribe/:hash' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
-  match '/unsubscribe/:hash' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
+  get '/unsubscribe/:id' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
+  match '/unsubscribe/:id' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
 
   # Logging readings
   match '/reading/confirm/:id' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
