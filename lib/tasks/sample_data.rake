@@ -15,6 +15,7 @@ namespace :sample_fake do
     create_challenges(challenges_count)
     create_memberships
     create_groups
+    add_members_to_groups
     mark_chapters_as_read
   end
 
