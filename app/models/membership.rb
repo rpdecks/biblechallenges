@@ -101,6 +101,7 @@ class Membership < ActiveRecord::Base
 
   def associate_statistics
     self.membership_statistics << MembershipStatisticProgressPercentage.create
+    self.membership_statistics << MembershipStatisticPunctualPercentage.create
   end
 
   private
