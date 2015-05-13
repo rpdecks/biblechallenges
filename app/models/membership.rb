@@ -1,7 +1,5 @@
 class Membership < ActiveRecord::Base
 
-  include UrlHashable
-
   attr_accessor :auto_created_user
 
   # Constants
