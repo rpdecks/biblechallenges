@@ -26,6 +26,7 @@ class Membership < ActiveRecord::Base
 
   has_many :membership_readings, dependent: :destroy
   has_many :readings, through: :membership_readings
+  has_many :membership_statistics
 
 
   #  Validations
@@ -98,6 +99,10 @@ class Membership < ActiveRecord::Base
     end
   end
 
+  def associate_statistics
+    self.membership_statistics << MembershipStatisticOverallProgressPercentage.create
+  end
+
   private
 
   # Callbacks
@@ -106,6 +111,7 @@ class Membership < ActiveRecord::Base
       group.recalculate_stats
     end
   end
+
 
   # - after_create
   def associate_readings
