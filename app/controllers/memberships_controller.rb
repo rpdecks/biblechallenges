@@ -2,7 +2,7 @@ class MembershipsController < ApplicationController
 
   before_filter :authenticate_user!, except: [:show, :create, :create_for_guest, :unsubscribe_from_email]
   before_filter :find_challenge, except: [:find_challenge, :unsubscribe_from_email]
-  before_filter :find_membership, only: [:update, :join_group]
+  before_filter :find_membership, only: [:update, :join_group, :destroy]
   before_filter :require_challenge_owner, only: [:index]
 
   respond_to :html, :json, :js
@@ -53,7 +53,6 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    @membership = (params[:id].blank?)? find_membership_from_hash : current_user.memberships.find(params[:id])
     challenge = @membership.challenge
     @membership.destroy
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
