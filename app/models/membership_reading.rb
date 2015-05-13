@@ -39,7 +39,6 @@ class MembershipReading < ActiveRecord::Base
 
   #Callbacks
   before_update :reading_punctual?
-  after_update :recalculate_membership_stats
 
   def read?
     state == 'read'
@@ -60,10 +59,6 @@ class MembershipReading < ActiveRecord::Base
     else
       self.punctual = 0
     end
-  end
-
-  def recalculate_membership_stats
-    self.membership.recalculate_stats
   end
 
 end

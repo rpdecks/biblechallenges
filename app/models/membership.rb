@@ -45,46 +45,10 @@ class Membership < ActiveRecord::Base
 #
 #  after_create :send_todays_reading
 
-
-  def overall_progress_percentage
-    mr_total = membership_readings.count
-    read = membership_readings.read.count
-    mr_total.zero? ? 0 : (read * 100) / mr_total
-  end
-
   def to_date_progress_percentage(adate)
     td_total = readings.to_date(adate).count
     read = membership_readings.read.count
     td_total.zero? ? 0 : (read * 100) / td_total
-  end
-
-  def punctual_reading_percentage
-    td_total = readings.to_date(Date.today).count
-    punct_total = membership_readings.punctual.count
-    td_total.zero? ? 0 : (punct_total * 100) / td_total
-  end
-
-  def recalculate_stats
-    self.punctual_reading_percentage = punctual_reading_percentage
-    self.rec_sequential_reading_count = record_sequential_reading_count
-    self.progress_percentage = overall_progress_percentage
-    self.save
-  end
-
-  def record_sequential_reading_count
-    record = 0
-    running_count = 0
-    self.membership_readings.each do |r|
-      if r.state == 'read' && r.punctual == 1
-        running_count += 1
-      else
-        if record < running_count
-          record = running_count
-        end
-        running_count = 0
-      end
-    end
-    record
   end
 
   def completed?
@@ -102,6 +66,7 @@ class Membership < ActiveRecord::Base
   def associate_statistics
     self.membership_statistics << MembershipStatisticProgressPercentage.create
     self.membership_statistics << MembershipStatisticPunctualPercentage.create
+    self.membership_statistics << MembershipStatisticRecordSequentialReading.create
   end
 
   private

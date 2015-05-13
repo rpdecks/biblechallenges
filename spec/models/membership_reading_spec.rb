@@ -24,6 +24,7 @@ describe MembershipReading do
           it "will record the membership_reading as punctual" do
             Timecop.travel(5.days.ago)
             challenge = create(:challenge_with_readings)
+            challenge.generate_readings
             user = User.first
             membership = challenge.join_new_member(user)
             Timecop.return
