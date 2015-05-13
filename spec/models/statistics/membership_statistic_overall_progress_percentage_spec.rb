@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipStatisticOverallProgressPercentage do
+describe MembershipStatisticProgressPercentage do
 
   describe "#calculate" do
     it "should calculate the proper value" do
@@ -12,10 +12,9 @@ describe MembershipStatisticOverallProgressPercentage do
         mr.save!
       end
 
-      stat = MembershipStatisticOverallProgressPercentage.new(membership: membership)
+      stat = MembershipStatisticProgressPercentage.new(membership: membership)
 
       expect(stat.calculate).to eq 57
-      binding.pry
     end
   end
 
