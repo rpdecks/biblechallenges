@@ -1,3 +1,4 @@
 %h3 Challenge Groups
 - @challenge.groups.each do |g|
   = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
+  %br
