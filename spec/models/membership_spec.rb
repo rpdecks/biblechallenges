@@ -62,6 +62,11 @@ describe Membership do
       it 'returns the progress percentage based on readings' do
         expect(membership.overall_progress_percentage).to eql(57)
       end
+      it 'returns the progress percentage from the associated stat model based on readings' do
+        membership.associate_statistics
+        membership.membership_statistics.each {|m| m.update}
+        expect(membership.membership_statistics.first.value.to_i).to eql(57)
+      end
     end
     describe '#to_date_progress_percentage' do
       let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
