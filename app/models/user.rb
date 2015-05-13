@@ -13,16 +13,15 @@ class User < ActiveRecord::Base
   has_many :groups, through: :memberships
   has_many :comments
   has_many :badges
-  has_one :one_chapter_badge
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
+
 
   #Callbacks
 
   after_create :add_profile
 
   delegate :first_name, :last_name, :username, to: :profile
-
 
   def fullname
     "#{first_name} #{last_name}"
@@ -31,5 +30,7 @@ class User < ActiveRecord::Base
   def add_profile
     self.create_profile
   end
-  
+
+
+
 end
