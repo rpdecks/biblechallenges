@@ -4,6 +4,7 @@ Biblechallenge::Application.configure do
   Biblechallenge::Application.config.session_store :cookie_store, key: 'bible_application_devise_session', domain: ".lvh.me", tld_length: 2
 
 
+  config.eager_load = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
