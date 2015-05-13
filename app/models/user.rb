@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
+  # autogenerate has_one associations for all the badge types
+  Rails.application.eager_load!
+  Badge.descendants.each do |badge| 
+    has_one badge.name.underscore.to_sym
+  end
+
 
   #Callbacks
 
