@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipStatisticRecordSequentialReading do
+describe MembershipStatisticRecordReadingStreak do
   describe "#calculate" do
     it "should calculate the proper value" do
       Timecop.travel(6.days.ago)
