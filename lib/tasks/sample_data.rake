@@ -15,6 +15,7 @@ namespace :sample_fake do
     create_challenges(challenges_count)
     create_memberships
     create_groups
+    add_members_to_groups
     mark_chapters_as_read
   end
 
@@ -41,7 +42,7 @@ namespace :sample_fake do
     puts "creating groups"
     Challenge.all.each do |challenge|
       3.times do
-        challenge.groups.create(name: "#{Faker::Name.name}'s Group")
+        challenge.groups.create!(name: "#{Faker::Name.name}'s Group", user: User.all.sample)
         print "."
       end
     end
