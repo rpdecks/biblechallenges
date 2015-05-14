@@ -13,6 +13,12 @@ class Membership < ActiveRecord::Base
   has_many :membership_readings, dependent: :destroy
   has_many :readings, through: :membership_readings
   has_many :membership_statistics
+  
+  # autogenerate has_one associations for all the membership statistic types
+  Rails.application.eager_load!
+  MembershipStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
 
 
   #  Validations
