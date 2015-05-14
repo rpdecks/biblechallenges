@@ -1,0 +1,17 @@
+= form_for [@challenge, @group] do |f|
+  %legend
+    = controller.action_name.capitalize
+    Group
+  - if @group.errors.any?
+    - flash[:error] = @group.errors.full_messages.to_sentence
+  .control-group
+    = f.label :name, "Group Name", class: "control-label"
+    .controls
+      = f.text_field :name, required: true, class: "form-control"
+      %p.help-block The name of your group, for example "Age Turners"
+  .control-group
+    = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
+    %br
+    %br
+    %br
+

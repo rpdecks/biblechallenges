@@ -1,6 +1,6 @@
 class Challenges::GroupsController < ApplicationController
 
-  before_filter :find_challenge, :find_group
+  before_filter :find_challenge, :find_group, :except => [:create, :new]
 
   def show
   end
@@ -20,6 +20,24 @@ class Challenges::GroupsController < ApplicationController
     redirect_to [@challenge]
   end
 
+  def new
+    @challenge = Challenge.find(params[:challenge_id])
+    @group = Group.new
+  end
+
+  def create
+    binding.pry
+    @challenge = Challenge.find(params[:challenge_id])
+    @group = @challenge.groups.build(group_params)
+    if @group.save
+      flash[:notice] = "Group created successfully"
+      redirect_to @challenge
+    else
+      flash[:notice] = "Group could not be created"
+      render action: :new
+    end
+  end
+
   private
 
   def find_challenge
@@ -30,4 +48,7 @@ class Challenges::GroupsController < ApplicationController
     @group = Group.find(params[:id])
   end
 
+  def group_params
+    params.require(:group).permit(:name)
+  end
 end
