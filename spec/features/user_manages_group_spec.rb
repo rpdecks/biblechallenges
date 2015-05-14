@@ -7,6 +7,12 @@ feature 'User manages groups' do
     login(user)
   end
 
+  scenario 'User creates a group' do
+    challenge = create(:challenge)
+    visit(challenge_path(challenge))
+    click_link 'Create a group'
+  end
+
   scenario 'User joins a group successfully' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
