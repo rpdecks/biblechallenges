@@ -1,0 +1,1 @@
+rake db:migrate && rake db:test:prepare && RAILS_ENV=test rake db:seed
