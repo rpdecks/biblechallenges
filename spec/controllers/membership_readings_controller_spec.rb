@@ -6,7 +6,6 @@ describe MembershipReadingsController, type: :controller do
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
-  let(:hash){membership_reading.hash_for_url}
 
 
   describe 'User access' do
@@ -52,105 +51,77 @@ describe MembershipReadingsController, type: :controller do
   end
 
   describe 'GET#edit' do
-    context 'with a valid hash' do
+    context 'with a valid token' do
       it "renders the :edit template" do
-        get :edit, id: hash
+        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(response).to render_template(:edit)
       end
 
       it "finds the membership_reading's user" do
-        get :edit, id: hash
+        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(assigns(:user)).to eql(membership_reading.membership.user)
       end
 
       it "finds the membership_reading's reading" do
-        get :edit, id: hash
+        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(assigns(:reading)).to eql(membership_reading.reading)
       end
 
       it "assigns a comment to be available in the form" do
-        get :edit, id: hash
+        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(assigns(:comment)).to be_truthy
       end
-
-
     end
 
-    context "with an invalid hash" do
+    context "with an invalid token" do
       it "set the flash with an error message" do
+        pending
         get :edit, id: "blah"
         should set_the_flash
       end
     end
 
-    context "when a user unsubscribes" do
-      # renders the same page but...
-      it "set the flash with an error message" do
-        old_hash = hash
-        membership.destroy
-        get :edit, id: old_hash
-        should set_the_flash
-      end
-    end
   end
 
 
   describe 'GET#confirm' do
-    context 'with a valid hash' do
+    context 'with a valid token' do
 
       it "renders the :new template" do
-        get :confirm, hash: hash
+        get :confirm, id: membership_reading.id
         expect(response).to render_template(:confirm)
       end
 
       it "renders with email layout" do
-        get :confirm, hash: hash
+        get :confirm, id: membership_reading.id
         should render_with_layout('from_email')
       end
 
       it "finds the membership_reading's user" do
-        get :confirm, hash: hash
+        get :confirm, id: membership_reading.id
         expect(assigns(:user)).to eql(membership_reading.membership.user)
       end
 
       it "finds the membership_reading's reading" do
-        get :confirm, hash: hash
+        get :confirm, id: membership_reading.id
         expect(assigns(:reading)).to eql(membership_reading.reading)
       end
 
     end
 
-    context 'with an invalid hash' do
-      let(:hash){'gB0NV05e'}
-
-      it "renders the :new template" do
-        get :confirm, hash: hash
-        expect(response).to render_template(:confirm)
-      end
-
-      it "renders with email layout" do
-        get :confirm, hash: hash
-        should render_with_layout('from_email')
-      end
-
-      it 'sets a proper flash message' do
-        get :confirm, hash: hash
-        should set_the_flash[:error].to("This confirmation link doesn't exist")
-      end
-    end
 
   end
 
   describe 'PUT#log' do
 
-    context 'with a valid hash' do
+    context 'with a valid token' do
       it "finds membership_reading" do
-        put :log, hash: hash, format:'js'
+        put :log, id: membership_reading.id, format:'js'
         expect(assigns(:membership_reading)).to eql(membership_reading)
       end
 
       it "changes membership_reading state to 'read'" do
-        put :log, hash: hash, format:'js'
+        put :log, id: membership_reading.id, format:'js'
         expect(membership_reading.reload.state).to eql('read')
       end
     end

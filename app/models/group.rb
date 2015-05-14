@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   belongs_to :challenge
   has_many :memberships
 
+  validates :user, :challenge, presence: true
 
   def punctual_reading_percentage_average
     sum_of_member_reading_averages = 0
@@ -41,4 +42,5 @@ class Group < ActiveRecord::Base
     self.ave_sequential_reading_count = average_rec_sequential_reading_count
     self.save
   end
+
 end

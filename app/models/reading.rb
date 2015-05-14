@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: readings
-#
-#  id           :integer          not null, primary key
-#  chapter_id   :integer
-#  challenge_id :integer
-#  date         :date
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#
-
 class Reading < ActiveRecord::Base
 
   # Relations

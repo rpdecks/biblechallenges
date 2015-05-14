@@ -1,18 +1,4 @@
-# == Schema Information
-#
-# Table name: memberships
-#
-#  id            :integer          not null, primary key
-#  user_id       :integer
-#  challenge_id  :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  bible_version :string(255)      default("ASV")
-#
-
 class Membership < ActiveRecord::Base
-
-  include UrlHashable
 
   attr_accessor :auto_created_user
 
