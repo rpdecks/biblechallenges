@@ -13,10 +13,12 @@
 
     .row
     - @public_challenges.each do |challenge|
-      .col-md-6
+      .col-md-12
         = link_to challenge.name, challenge_path(challenge)
         %br
         = "Members: #{challenge.members.size}"
+        - challenge.members.each do |m|
+          = image_tag avatar_url(m, 30), title: m.username
         %br
         = "Chapters: #{challenge.readings.size}"
         %br
