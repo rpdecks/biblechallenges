@@ -1,7 +1,7 @@
-class MembershipStatisticRecordSequentialReading < MembershipStatistic
+class MembershipStatisticCurrentSequentialReading < MembershipStatistic
 
   def name
-    "Record Sequential Reading Count"
+    "Current Sequential Reading Count"
   end
 
   def description
@@ -12,7 +12,7 @@ class MembershipStatisticRecordSequentialReading < MembershipStatistic
     record = 0
     running_count = 0
     self.membership.membership_readings.each do |r|
-      if r.state == 'read'
+      if r.state == 'read' && r.punctual == 1
         running_count += 1
       else
         if record < running_count
