@@ -13,6 +13,7 @@ namespace :sample_fake do
 
     create_users(users_count)
     create_challenges(challenges_count)
+    generate_readings
     create_memberships
     create_groups
     add_members_to_groups
@@ -25,7 +26,14 @@ namespace :sample_fake do
     MembershipReading.all.sample(count).each do |mr|
       mr.update_attribute(:state, "read")
     end
+  end
 
+  def generate_readings
+    puts "Generating Readings for each challenge:"
+    Challenge.all.each do |c|
+      print '.'
+      c.generate_readings
+    end
   end
 
   def create_memberships
