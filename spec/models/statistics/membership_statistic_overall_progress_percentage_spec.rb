@@ -15,7 +15,6 @@ describe MembershipStatisticOverallProgressPercentage do
       stat = MembershipStatisticOverallProgressPercentage.new(membership: membership)
 
       expect(stat.calculate).to eq 57
-      binding.pry
     end
   end
 
