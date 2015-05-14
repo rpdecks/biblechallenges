@@ -66,7 +66,8 @@ class Membership < ActiveRecord::Base
   # Callbacks
   def recalculate_group_stats
     if self.group_id.present?
-      group.recalculate_stats
+      #group.recalculate_stats
+      #replace this with calling group's group_statistics
     end
   end
 
