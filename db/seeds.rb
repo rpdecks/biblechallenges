@@ -22,7 +22,6 @@ module MassImporter
 end
 
 MassImporter.import Chapter, "db/chapters.csv", false, headers: true
-MassImporter.import Bookfrag, "db/bookfrags.csv", false, headers: true
 
 MassImporter.import Verse, "db/versions/ALL.tsv", false, :col_sep => "\t", headers: true
 #MassImporter.import Verse, "db/versions/ASV_OLD.tsv", false, :col_sep => "\t", headers: true

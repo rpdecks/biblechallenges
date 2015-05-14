@@ -43,6 +43,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts_as_scriptural (0.0.1)
     addressable (2.3.8)
     annotate (2.6.8)
       activerecord (>= 3.2, <= 4.3)
@@ -114,7 +115,6 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    hashids (1.0.2)
     heroku (3.2.3)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -252,6 +252,10 @@ GEM
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
+    simple_token_authentication (1.9.1)
+      actionmailer (>= 3.2.6, < 5)
+      actionpack (>= 3.2.6, < 5)
+      devise (~> 3.2)
     simplecov (0.5.4)
       multi_json (~> 1.0.3)
       simplecov-html (~> 0.5.3)
@@ -297,6 +301,7 @@ DEPENDENCIES
   actionpack-page_caching
   activerecord-deprecated_finders
   activerecord-import
+  acts_as_scriptural
   annotate
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
@@ -312,7 +317,6 @@ DEPENDENCIES
   font-awesome-rails
   haml
   haml-rails
-  hashids
   heroku
   high_voltage
   hirb
@@ -335,6 +339,7 @@ DEPENDENCIES
   shoulda-matchers (= 2.6.1)
   sidekiq
   simple_form
+  simple_token_authentication (~> 1.0)
   simplecov (= 0.5.4)
   sqlite3
   thin

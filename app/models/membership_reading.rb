@@ -12,9 +12,6 @@
 
 class MembershipReading < ActiveRecord::Base
 
-  include UrlHashable
-
-
   # Scopes
   default_scope {includes(:reading).order('readings.date')}
   scope :read, -> {where(state: 'read')}
