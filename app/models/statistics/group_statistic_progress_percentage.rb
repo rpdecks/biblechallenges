@@ -9,13 +9,8 @@ class GroupStatisticProgressPercentage < GroupStatistic
   end
 
   def calculate
-    sum_of_member_progress_percentages = 0
-    membership_count = self.group.memberships.count
-    self.group.memberships.each do |m| 
-      member = Membership.find(m.id)
-      sum_of_member_progress_percentages += member.progress_percentage
-    end
-    membership_count.zero? ? 0 : sum_of_member_progress_percentages / membership_count
+    member_progress_percentages = group.memberships.map {|m| m.membership_statistic_progress_percentage.value.to_i}
+    member_progress_percentages.inject{|sum, element| sum + element} / member_progress_percentages.size
   end
 
   def update
