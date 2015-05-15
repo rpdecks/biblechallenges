@@ -1,4 +1,4 @@
-class MembershipStatisticRecordSequentialReading < MembershipStatistic
+class MembershipStatisticRecordReadingStreak < MembershipStatistic
 
   def name
     "Record Sequential Reading Count"
@@ -30,6 +30,7 @@ class MembershipStatisticRecordSequentialReading < MembershipStatistic
   end
 
   def current_streak(membership_readings)
+    binding.pry
     membership_readings.uniq!{|mr| Date(mr.update_at) }
     streak_count = 0
     membership_readings.each do |mr|
