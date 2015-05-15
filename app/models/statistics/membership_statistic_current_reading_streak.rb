@@ -1,13 +1,12 @@
 class MembershipStatisticCurrentReadingStreak < MembershipStatistic
 
   def name
-    "Current Sequential Reading Count"
+    "Record Sequential Reading Count"
   end
 
   def description
     "much longer description here.............................."
   end
-
   # sequential means a streak within the challenge.  
 
   # Example 1: 
@@ -20,12 +19,8 @@ class MembershipStatisticCurrentReadingStreak < MembershipStatistic
   # Example 2:  read one chapter, next day read 3, then next day read 1.  streak should be 3
 
   def calculate
-    membership_readings = membership.membership_readings.
-      where("membership_readings.updated_at <= ?", Date.today).
-      where(state: "read").order('membership_readings.updated_at desc')
-      binding.pry
-
-    current_streak(membership_readings)  # some helper method to find the streak; pure ruby
+    readings = self.membership.membership_readings.read
+    current_streak(readings)  # some helper method to find the streak; pure ruby
   end
 
   def update
@@ -33,17 +28,22 @@ class MembershipStatisticCurrentReadingStreak < MembershipStatistic
     save
   end
 
-  def current_streak(membership_readings)
-
-    binding.pry
+  def current_streak(readings)
+    readings = readings.reverse #something in query above is being overriden
+   # membership_readings.uniq!{|mr| Date(mr.update_at) }
     streak_count = 0
-    membership_readings.each do |mr|
-      if #should check for consecutive days
+    days = 0
+    new_readings = readings.map(&:updated_at).collect { |d| d.strftime("%F")}.uniq()
+  
+    new_readings.each do |mr|
+      if mr  == days.day.ago.strftime("%F")
         streak_count+= 1
+        days += 1
       else
-        break
+        return streak_count
       end
     end
-    streak_count
+    return streak_count
   end
+
 end
