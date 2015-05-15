@@ -31,18 +31,30 @@ class MembershipStatisticRecordReadingStreak < MembershipStatistic
   def record_streak(readings)
     readings = readings.reverse
     streak_count = 0
+    record_count = 0
     days = 0
     new_readings = readings.map(&:updated_at).collect { |d| d.strftime("%F")}.uniq()
   
     new_readings.each do |mr|
-      if mr  == days.day.ago.strftime("%F")
+      if mr == days.day.ago.strftime("%F")
         streak_count+= 1
         days += 1
       else
-        return streak_count
+        if streak_count > record_count
+          record_count = streak_count
+          streak_count = 0
+        end
+        until mr > days.day.ago.strftime("%F") do
+          streak_count = 1
+          days += 1
+        end
       end
     end
-    return streak_count
+    if streak_count > record_count
+      return streak_count
+    else
+      return record_count
+    end
   end
 
 end
