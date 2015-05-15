@@ -6,17 +6,12 @@ class Challenges::GroupsController < ApplicationController
   end
 
   def join
-    membership = @challenge.membership_for(current_user) || Membership.new(user_id: current_user.id)
-    membership.challenge = @challenge
-    membership.group = @group
-    membership.save
+    @group.add_user_to_group(@challenge, current_user)
     redirect_to [@challenge, @group]
   end
 
   def leave
-    membership = @challenge.membership_for(current_user)
-    membership.group = nil
-    membership.save
+    @group.remove_user_from_group(@challenge, current_user)
     redirect_to [@challenge]
   end
 
@@ -36,6 +31,17 @@ class Challenges::GroupsController < ApplicationController
     else
       flash[:notice] = "Group could not be created"
       render action: :new
+    end
+  end
+
+  def destroy
+    @group.remove_all_members_from_group
+    if @group.destroy
+      flash[:notice] = "Group deleted successfully"
+      redirect_to @challenge
+    else
+      flash[:notice] = "Group could not be deleted"
+      redirect_to [@challenge, @group]
     end
   end
 

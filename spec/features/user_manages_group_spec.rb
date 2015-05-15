@@ -9,7 +9,7 @@ feature 'User manages groups' do
 
   scenario 'User creates a group' do
     challenge = create(:challenge)
-    visit(challenge_path(challenge))
+    visit challenge_path(challenge)
     click_link 'Create a group'
     fill_in 'Group Name', with: "Test group"
     click_button 'Create Group'
@@ -21,6 +21,24 @@ feature 'User manages groups' do
     expect(group.challenge_id).to eq challenge.id
     expect(group.user_id).to eq user.id
   end
+
+  scenario 'Owner of a group can delete the group with many members in the group' do
+    user1 = create(:user)
+    user2 = create(:user)
+    challenge = create(:challenge)
+    group = challenge.groups.create(name: "UCLA", user_id: user.id)
+    membership = create(:membership, challenge: challenge, group_id: group.id, user_id: user1.id)
+    membership2 = create(:membership, challenge: challenge, group_id: group.id, user_id: user2.id)
+    visit challenge_group_path(challenge, group)
+
+    click_link 'Delete Group'
+    expect(Group.count).to eq 0
+    membership.reload
+    membership2.reload
+    expect(membership.group_id).to eq nil
+    expect(membership2.group_id).to eq nil
+  end
+
 
   scenario 'User joins a group successfully' do
     challenge = create(:challenge)
