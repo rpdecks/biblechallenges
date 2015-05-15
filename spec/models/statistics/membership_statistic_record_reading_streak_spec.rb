@@ -20,7 +20,7 @@ describe MembershipStatisticRecordReadingStreak do
       membership.membership_readings[4].update_attributes(state: "read")
       membership.membership_readings[5].update_attributes(state: "read")
 
-      stat = MembershipStatisticRecordSequentialReading.new(membership: membership)
+      stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
       expect(stat.calculate).to eq 2
     end
   end
