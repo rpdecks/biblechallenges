@@ -11,6 +11,15 @@ feature 'User manages groups' do
     challenge = create(:challenge)
     visit(challenge_path(challenge))
     click_link 'Create a group'
+    fill_in 'Group Name', with: "Test group"
+    click_button 'Create Group'
+
+
+    expect(page).to have_content("Test group")
+    expect(Group.count).to eq 1
+    group = Group.first
+    expect(group.challenge_id).to eq challenge.id
+    expect(group.user_id).to eq user.id
   end
 
   scenario 'User joins a group successfully' do

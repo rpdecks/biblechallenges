@@ -1,5 +1,6 @@
 %h3 Challenge Groups
-= link_to "Create a group", new_challenge_group_path(challenge_id: @challenge.id)
+- if current_user
+  = link_to "Create a group", new_challenge_group_path(challenge_id: @challenge.id)
 %h3 
 - @challenge.groups.each do |g|
   = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
