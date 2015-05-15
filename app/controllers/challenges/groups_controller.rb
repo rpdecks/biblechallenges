@@ -26,9 +26,10 @@ class Challenges::GroupsController < ApplicationController
   end
 
   def create
-    binding.pry
     @challenge = Challenge.find(params[:challenge_id])
     @group = @challenge.groups.build(group_params)
+    @group.user_id = current_user.id
+
     if @group.save
       flash[:notice] = "Group created successfully"
       redirect_to @challenge
