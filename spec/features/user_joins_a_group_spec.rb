@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'User manages groups' do
-  let(:user) {create(:user)}
+  let(:user) {create(:user, :with_profile)}
 
   before(:each) do
     login(user)

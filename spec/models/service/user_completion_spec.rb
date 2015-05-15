@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+#upcase look at this with a coach; can it be better?
 describe UserCompletion do
 
   describe "Badges" do
@@ -13,16 +14,16 @@ describe UserCompletion do
     end
   end
 
-=begin  describe "Statistics" do
-    it "should attach statistics to the user" do
-      allow(StatisticAttacher).to receive(:attach_statistics)
+
+  describe "Profile" do
+    it "should attach a profile to the user" do
+      allow(ProfileAttacher).to receive(:attach_profile)
       user = create(:user)
 
       UserCompletion.new(user)
 
-      expect(StatisticAttacher).to have_received(:attach_statistics)
+      expect(ProfileAttacher).to have_received(:attach_profile)
     end
   end
-=end
 
 end

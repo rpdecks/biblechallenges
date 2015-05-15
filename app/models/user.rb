@@ -27,18 +27,11 @@ class User < ActiveRecord::Base
 
   #Callbacks
 
-  after_create :add_profile
-
   delegate :first_name, :last_name, :username, to: :profile
 
   def fullname
     "#{first_name} #{last_name}"
   end
-
-  def add_profile
-    self.create_profile
-  end
-
 
 
 end
