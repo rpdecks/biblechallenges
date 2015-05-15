@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipStatistictRecordReadingStreak do
+describe MembershipStatisticRecordReadingStreak do
   describe "#calculate" do
     it "should calculate the proper value even when user reads several times in one day" do
       Timecop.travel(8.days.ago)
@@ -45,7 +45,7 @@ describe MembershipStatistictRecordReadingStreak do
       Timecop.return
 
       stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
-      expect(stat.calculate).to eq 3
+      expect(stat.calculate).to eq 2
     end
 
     it "calculates value of reading streak when all days are read" do
@@ -120,6 +120,27 @@ describe MembershipStatistictRecordReadingStreak do
       Timecop.travel(1.day)
       membership.membership_readings[7].update_attributes(state: "read", updated_at: DateTime.now)
       Timecop.return
+
+      stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
+      expect(stat.calculate).to eq 3
+    end
+
+    it "calculates value of reading streak when all days are read and previous record is surpassed" do
+      Timecop.travel(4.days.ago)
+      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
+      membership = create(:membership, challenge: challenge)
+      Timecop.travel(1.day)
+      membership.membership_readings[0].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[1].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[2].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[3].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[4].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[5].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[6].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[7].update_attributes(state: "read", updated_at: DateTime.now)
 
       stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
       expect(stat.calculate).to eq 4

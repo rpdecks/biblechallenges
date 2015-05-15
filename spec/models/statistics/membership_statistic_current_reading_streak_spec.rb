@@ -25,6 +25,52 @@ describe MembershipStatisticCurrentReadingStreak do
       expect(stat.calculate).to eq 3
     end
 
+    it "should calculate the proper value even when user is behind" do
+      Timecop.travel(8.days.ago)
+      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
+      membership = create(:membership, challenge: challenge)
+
+      membership.membership_readings[1].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[2].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(3.day)
+      membership.membership_readings[3].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(2.day)
+      Timecop.travel(1.day)
+      Timecop.travel(1.day)
+      membership.membership_readings[4].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[5].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.return
+
+      stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
+      expect(stat.calculate).to eq 2
+    end
+
+    it "should calculate the proper value even when user is ahead" do
+      Timecop.travel(8.days.ago)
+      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
+      membership = create(:membership, challenge: challenge)
+
+      membership.membership_readings[1].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[2].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[3].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(3.day)
+      Timecop.travel(2.day)
+      membership.membership_readings[4].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[5].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[6].update_attributes(state: "read", updated_at: DateTime.now)
+      membership.membership_readings[7].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[8].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.travel(1.day)
+      membership.membership_readings[9].update_attributes(state: "read", updated_at: DateTime.now)
+      Timecop.return
+
+      stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
+      expect(stat.calculate).to eq 4
+    end
+
     it "calculates value even if user has not read in a while" do
       Timecop.travel(8.days.ago)
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
