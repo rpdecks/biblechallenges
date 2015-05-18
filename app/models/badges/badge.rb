@@ -1,6 +1,9 @@
 class Badge < ActiveRecord::Base
   belongs_to :user
 
+  def self.earned
+    joins(:user).where(granted: true).map {|badge| badge.user}
+  end
 
   def self.attach_user_badges(user)
     # Make sure this user has every badge.
