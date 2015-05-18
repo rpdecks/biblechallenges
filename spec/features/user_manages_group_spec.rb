@@ -23,8 +23,8 @@ feature 'User manages groups' do
   end
 
   scenario 'Owner of a group can delete the group with many members in the group' do
-    user1 = create(:user)
-    user2 = create(:user)
+    user1 = create(:user, :with_profile)
+    user2 = create(:user, :with_profile)
     challenge = create(:challenge)
     group = challenge.groups.create(name: "UCLA", user_id: user.id)
     membership = create(:membership, challenge: challenge, group_id: group.id, user_id: user1.id)

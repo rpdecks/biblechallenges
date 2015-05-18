@@ -7,5 +7,6 @@ class BadgesController < ApplicationController
   def show
     @badge_class = params[:id].constantize
     @badge = @badge_class.new
+    @users = @badge_class.earned
   end
 end
