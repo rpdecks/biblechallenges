@@ -12,7 +12,7 @@
             %br
             - if @membership_reading.state == 'unread'
               = form_tag membership_readings_log_path,method: "put", remote: true, class: 'form-inline' do
-                = hidden_field_tag :hash, @hash
+                = hidden_field_tag :token, "fillitin"
                 Did you complete #{@reading.chapter.book_name} #{@reading.chapter.chapter_number}?
                 = submit_tag "Yes", class: 'btn btn-default btn-xs', disable_with: 'Please wait...'
             - else

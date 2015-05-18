@@ -3,6 +3,9 @@ class Group < ActiveRecord::Base
   belongs_to :user
   belongs_to :challenge
   has_many :memberships
+  has_many :group_statistics
+
+  validates :user, :challenge, presence: true
 
   def remove_all_members_from_group
     self.memberships.each do |m|

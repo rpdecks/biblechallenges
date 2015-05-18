@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508155343) do
+ActiveRecord::Schema.define(version: 20150514124922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,12 +71,25 @@ ActiveRecord::Schema.define(version: 20150508155343) do
     t.datetime "updated_at"
   end
 
+  create_table "group_statistics", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "value"
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "group_statistics", ["group_id"], name: "index_group_statistics_on_group_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.integer  "challenge_id"
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "ave_sequential_reading_count",    default: 0
+    t.integer  "ave_punctual_reading_percentage", default: 0
+    t.integer  "ave_progress_percentage",         default: 0
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -88,15 +101,31 @@ ActiveRecord::Schema.define(version: 20150508155343) do
     t.string   "state",         default: "unread"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "punctual"
   end
+
+  create_table "membership_statistics", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "type"
+    t.string   "value"
+    t.integer  "membership_id"
+  end
+
+  add_index "membership_statistics", ["membership_id"], name: "index_membership_statistics_on_membership_id", using: :btree
+  add_index "membership_statistics", ["user_id"], name: "index_membership_statistics_on_user_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "bible_version", default: "ASV"
+    t.string   "bible_version",                default: "ASV"
     t.integer  "group_id"
+    t.integer  "rec_sequential_reading_count", default: 0
+    t.integer  "punctual_reading_percentage",  default: 0
+    t.integer  "progress_percentage",          default: 0
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -119,6 +148,14 @@ ActiveRecord::Schema.define(version: 20150508155343) do
     t.text     "discussion"
   end
 
+  create_table "user_statistics", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_statistics", ["user_id"], name: "index_user_statistics_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -132,8 +169,10 @@ ActiveRecord::Schema.define(version: 20150508155343) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

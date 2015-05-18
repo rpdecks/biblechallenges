@@ -8,7 +8,7 @@ Biblechallenge::Application.routes.draw do
   #end mail view
 
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   resource :profile, only: [:update, :edit]
 
@@ -38,12 +38,12 @@ Biblechallenge::Application.routes.draw do
   get '/memberships' => 'memberships#index'
 
   # Unsubscribe from email
-  get '/unsubscribe/:hash' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
-  match '/unsubscribe/:hash' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
+  get '/unsubscribe/:id' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
+  match '/unsubscribe/:id' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
 
-  # Loging readings
-  match '/reading/confirm/:hash' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
-  match '/reading/log/:hash' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
+  # Logging readings
+  match '/reading/confirm/:id' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
+  match '/reading/log/:id' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
 
   # more restful reading logging
   resources :membership_readings, only: [:edit, :update] do

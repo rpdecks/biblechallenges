@@ -1,7 +1,9 @@
 class MembershipReadingsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:update]
-  before_filter :find_membership_reading, except: [:update, :edit]
+  before_filter :find_membership_reading, except: [:update ]
+
+  acts_as_token_authentication_handler_for User, only: [:edit]
 
   layout 'from_email'
 
@@ -26,9 +28,6 @@ class MembershipReadingsController < ApplicationController
 
   def edit
     @comment = Comment.new
-    hashids = HashidsGenerator.instance
-    membership_reading_id = hashids.decrypt(params[:id])
-    @membership_reading = MembershipReading.find_by_id(membership_reading_id)
     if @membership_reading
       @user = @membership_reading.membership.user
       sign_in @user
@@ -42,7 +41,6 @@ class MembershipReadingsController < ApplicationController
   def confirm
     @comment = Comment.new
     if @membership_reading
-      @hash = params[:hash]
       @user = @membership_reading.membership.user
       sign_in @user
       @reading = @membership_reading.reading
@@ -62,9 +60,7 @@ class MembershipReadingsController < ApplicationController
   private
 
   def find_membership_reading
-    hashids = HashidsGenerator.instance
-    membership_reading_id = hashids.decrypt(params[:hash])
-    @membership_reading = MembershipReading.find_by_id(membership_reading_id)
+    @membership_reading = MembershipReading.find(params[:id])
   end
 
 end
