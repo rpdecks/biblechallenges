@@ -11,7 +11,7 @@
             %br
             %br
             = form_for(@membership_reading) do
-              = hidden_field_tag :hash, @hash
+              = hidden_field_tag :token, 'token'
               = hidden_field_tag :location, reading_path(@reading)
               - if @membership_reading.state == 'unread'
                 Did you complete #{@reading.chapter.book_name} #{@reading.chapter.chapter_number}?

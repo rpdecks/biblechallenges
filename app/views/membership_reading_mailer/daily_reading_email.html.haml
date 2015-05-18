@@ -7,7 +7,7 @@
         =@chapter.chapter_number
       %div{style:'color: #808080;'}
         %div{style:'float:right;font-size: 12px;'}
-          You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} readings for this challenge (#{@membership.overall_progress_percentage}%)
+          You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} readings for this challenge membership.overall_progress_percentage
         %div{style:'clear:both;'}
         %div{style:'float:right;font-size: 12px;'}
           You have completed #{@membership.membership_readings.read.count} of #{@membership.readings.to_date(@reading_date).count} available readings for this challenge (#{@membership.to_date_progress_percentage(@reading_date)}%)
@@ -35,7 +35,7 @@
 
       %br
       %center
-        = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.hash_for_url)
+        = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.id)
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
@@ -43,5 +43,5 @@
       %br
       %small
         If for ANY reason you would like to opt-out of this bible reading challenge, simply click
-        #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url)} here to be unsubscribed.
+        #{link_to 'here', membership_unsubscribe_url(@membership.id)} here to be unsubscribed.
         

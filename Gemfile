@@ -12,7 +12,6 @@ gem 'bootstrap-datepicker-rails', '1.1.1.9'
 gem 'activerecord-import'
 #gem 'chosen-rails'
 gem 'thin'
-gem 'hashids'
 gem 'sidekiq'
 gem 'rake-performance'
 gem 'pickadate-rails'
@@ -23,6 +22,7 @@ gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'acts_as_scriptural'
+gem 'simple_token_authentication', '~> 1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -64,9 +64,10 @@ group :development, :test do
   gem 'better_errors'
   gem 'quiet_assets'
   gem 'annotate'
-  gem 'timecop', '0.6.3'
+  gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'pry-nav'
 end
 
 group :test do

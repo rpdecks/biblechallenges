@@ -12,12 +12,11 @@
 
 class MembershipReading < ActiveRecord::Base
 
-  include UrlHashable
-
-
   # Scopes
   default_scope {includes(:reading).order('readings.date')}
   scope :read, -> {where(state: 'read')}
+  scope :punctual, -> {where(state: 'read', punctual: 1)}
+  scope :not_punctual, -> {where(state: 'read', punctual: 0)}
   scope :unread, -> {where(state: 'unread')}
 
   # Constants
@@ -35,6 +34,9 @@ class MembershipReading < ActiveRecord::Base
   validates :reading_id, presence: true
   validates :state, inclusion: {in: STATES}
 
+  #Callbacks
+  before_update :mark_punctual
+
   def read?
     state == 'read'
   end
@@ -45,4 +47,16 @@ class MembershipReading < ActiveRecord::Base
       MembershipReadingMailer.daily_reading_email(mr).deliver_now
     end
   end
+
+  private
+  
+  def reading_punctual?
+    self.reading.date.to_date === self.updated_at.to_date
+  end
+
+  def mark_punctual
+    self.punctual = 1 if reading_punctual? 
+  end
+
+
 end

@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+  acts_as_token_authenticatable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
@@ -16,21 +18,19 @@ class User < ActiveRecord::Base
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
+  # autogenerate has_one associations for all the badge types
+  Rails.application.eager_load!
+  Badge.descendants.each do |badge| 
+    has_one badge.name.underscore.to_sym
+  end
+
 
   #Callbacks
-
-  after_create :add_profile
 
   delegate :first_name, :last_name, :username, to: :profile
 
   def fullname
     "#{first_name} #{last_name}"
   end
-
-  def add_profile
-    self.create_profile
-  end
-
-
 
 end
