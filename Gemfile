@@ -35,6 +35,7 @@ end
 
 group :development do
   gem 'mail_view'
+  gem 'better_errors'
 end
 
 # Gems used only for assets and not required
@@ -63,7 +64,6 @@ group :development, :test do
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'better_errors'
   gem 'quiet_assets'
   gem 'annotate'
   gem 'timecop'

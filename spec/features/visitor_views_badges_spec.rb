@@ -5,7 +5,9 @@ feature 'Visitor views badges' do
   scenario 'Visitor views all badges' do
     visit badges_path
   end
+end
 
+=begin
   scenario 'User joins a challenge successfully' do
     challenge = create(:challenge)
     visit public_challenges_path
@@ -43,4 +45,4 @@ feature 'Visitor views badges' do
     expect(challenge.members).not_to include user
     expect(Membership.count).to eq 0
   end
-end
+=end
