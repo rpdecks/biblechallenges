@@ -327,6 +327,7 @@ DEPENDENCIES
   hirb
   hpricot
   jquery-rails
+  launchy
   mail_view
   pg
   pickadate-rails
