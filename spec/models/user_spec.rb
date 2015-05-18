@@ -41,12 +41,9 @@ describe User do
   end
 
   describe "Callbacks" do
-    it "should create a profile record after being created" do
-      expect{FactoryGirl.create(:user)}.to change(Profile, :count).by(1)
-    end
 
     it "deletes the user profile on user deletion" do
-      current_user = FactoryGirl.create(:user)
+      current_user = FactoryGirl.create(:user, :with_profile)
       expect { current_user.destroy }.to change(Profile, :count).by(-1)
     end
   end
