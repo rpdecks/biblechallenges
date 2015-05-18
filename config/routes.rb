@@ -26,7 +26,7 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :badges, only: [:index] 
+  resources :badges, only: [:index, :show]
 
   resources :readings, only: [:show, :edit, :update] do
     resources :comments, only: [:create, :destroy], controller: 'readings/comments' 

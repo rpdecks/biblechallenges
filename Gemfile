@@ -78,5 +78,6 @@ group :test do
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
   gem 'database_cleaner', '~> 1.2.0'
+  gem 'launchy'
 end
 
