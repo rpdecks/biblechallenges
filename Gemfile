@@ -67,6 +67,7 @@ group :development, :test do
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'pry-nav'
 end
 
 group :test do

@@ -23,6 +23,7 @@ describe MembershipReading do
     describe "Before save" do
       describe "#punctual?" do
           it "will record the membership_reading as punctual" do
+            pending
             Timecop.travel(5.days.ago)
             challenge = create(:challenge_with_readings)
             challenge.generate_readings

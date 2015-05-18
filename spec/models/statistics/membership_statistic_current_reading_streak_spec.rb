@@ -41,6 +41,7 @@ describe MembershipStatisticCurrentReadingStreak do
       stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
 
       expect(stat.calculate).to eq 3
+      Timecop.return # is this necessary?
     end
 
     it "should calculate the proper value even when user is ahead" do
@@ -58,6 +59,7 @@ describe MembershipStatisticCurrentReadingStreak do
       stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
 
       expect(stat.calculate).to eq 3
+      Timecop.return # is this necessary?
     end
 
     it "calculates streak of 1 when user resumes today" do
@@ -71,6 +73,7 @@ describe MembershipStatisticCurrentReadingStreak do
       stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
 
       expect(stat.calculate).to eq 1
+      Timecop.return # is this necessary?
     end
 
     it "calculates value of reading streak when all days are read" do
@@ -86,6 +89,7 @@ describe MembershipStatisticCurrentReadingStreak do
       stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
 
       expect(stat.calculate).to eq 5
+      Timecop.return # is this necessary?
     end
 
   end
