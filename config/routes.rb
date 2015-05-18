@@ -8,7 +8,7 @@ Biblechallenge::Application.routes.draw do
   #end mail view
 
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   resource :profile, only: [:update, :edit]
 
