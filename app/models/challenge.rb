@@ -35,6 +35,12 @@ class Challenge < ActiveRecord::Base
     members.include?(member)
   end
 
+  def percentage_completed
+    scheduled = readings.where(date: (self.begindate)..(Date.today)).count
+    total = readings.count
+    scheduled.zero? ? 0 : (scheduled * 100) / total
+  end
+
   # Accepts one or multiple users
   def join_new_member(userz,options={})
     if userz.class == Array

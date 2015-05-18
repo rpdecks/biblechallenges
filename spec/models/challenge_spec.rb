@@ -109,6 +109,17 @@ describe Challenge do
       end
     end
 
+    describe '#progress_percentage' do
+      context 'when the user has already joined the challenge' do
+        it "returns of the percentage of the challenge completed according to schedule" do
+        Timecop.travel(5.days.ago)
+        challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-20")
+        Timecop.return
+        expect(challenge.percentage_completed).to eq 25
+        end
+      end
+    end
+
     describe '#join_new_member' do
       context 'with one user' do
         let(:user){create(:user)}
