@@ -29,6 +29,23 @@ feature 'Visitor views badges' do
     expect(page).to have_content(badge_class.new.description)
   end
 
+  scenario "foo" do
+
+    user2 = create(:user)
+    user2.badges << JoinChallengeBadge.create(granted: false)
+    user2.badges << OneChapterBadge.create(granted: false)
+
+    user = create(:user)
+    user.badges << JoinChallengeBadge.create(granted: true)
+    user.badges << OneChapterBadge.create(granted: false)
+
+
+    binding.pry
+
+
+
+  end
+
 end
 
 
