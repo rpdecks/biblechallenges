@@ -17,7 +17,7 @@ describe MembershipStatisticRecordReadingStreak do
       membership.membership_readings[4].update_attributes(state: "read", updated_at: first_day + 4.days)
       # streak of 2
 
-      Timecop.freeze(first_day + 4.days)
+      Timecop.travel(first_day + 4.days)
 
       stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
       expect(stat.calculate).to eq 2

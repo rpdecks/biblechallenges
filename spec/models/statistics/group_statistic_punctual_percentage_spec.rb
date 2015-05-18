@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+=begin
 describe GroupStatisticPunctualPercentage do
 
   describe "#calculate" do
@@ -32,3 +33,4 @@ describe GroupStatisticPunctualPercentage do
     end
   end
 end
+=end
