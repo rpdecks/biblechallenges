@@ -18,6 +18,7 @@ describe MembershipReading do
     it { should belong_to(:reading) }
   end
 
+
   describe "Callbacks" do
     describe "Before save" do
       describe "#punctual?" do

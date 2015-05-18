@@ -35,7 +35,7 @@ class MembershipReading < ActiveRecord::Base
   validates :state, inclusion: {in: STATES}
 
   #Callbacks
-  before_update :reading_punctual?
+  before_update :mark_punctual
 
   def read?
     state == 'read'
@@ -51,11 +51,12 @@ class MembershipReading < ActiveRecord::Base
   private
   
   def reading_punctual?
-    if self.reading.date == Date.today
-      self.punctual = 1
-    else
-      self.punctual = 0
-    end
+    self.reading.date.to_date === self.updated_at.to_date
   end
+
+  def mark_punctual
+    self.punctual = 1 if reading_punctual? 
+  end
+
 
 end

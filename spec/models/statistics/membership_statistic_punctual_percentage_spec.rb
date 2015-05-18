@@ -1,22 +1,26 @@
 require 'spec_helper'
 
 describe MembershipStatisticPunctualPercentage do
+
   describe "#calculate" do
-    it "should calculate the proper value" do
-      Timecop.travel(4.days.ago)
-      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
+    include ActiveSupport::Testing::TimeHelpers
+
+    it "should calculate a perfect percentage" do
+      # four chapters each read on the right day
+      challenge = create(:challenge_with_readings, 
+                         chapters_to_read: 'Matt 1-4', begindate: Date.today)
+
       membership = create(:membership, challenge: challenge)
-      membership.membership_readings[0..1].each do |mr| # read first two
-        mr.state = 'read'
-        mr.save!
-      end
-      Timecop.return
-      Timecop.travel(1.days.ago)
-      membership.membership_readings.third.update_attributes(state: "read")
-      Timecop.return
+      first_day = challenge.readings.order(:date).first.date
+      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day)
+      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day + 1.days)
+      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day + 2.days)
+      membership.membership_readings[3].update_attributes(state: "read", updated_at: first_day + 3.days)
+
+      travel_to first_day + 3.days
 
       stat = MembershipStatisticPunctualPercentage.new(membership: membership)
-      expect(stat.calculate).to eq 25
+      expect(stat.calculate).to eq 100
     end
   end
 

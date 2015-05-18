@@ -4,6 +4,7 @@ describe GroupStatisticRecordSequentialReading do
 
   describe "#calculate" do
     it "should calculate the proper value" do
+      pending
       Timecop.travel(4.days.ago)
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
       membership = create(:membership, challenge: challenge)
