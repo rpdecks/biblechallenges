@@ -53,6 +53,8 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'spring-commands-rspec'
+  gem 'shoulda-matchers', require: false
   gem 'pry'
   gem 'sqlite3'
   gem 'hpricot'
@@ -76,6 +78,5 @@ group :test do
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
   gem 'database_cleaner', '~> 1.2.0'
-  gem 'shoulda-matchers', '2.6.1'
 end
 
