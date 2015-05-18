@@ -29,21 +29,17 @@ feature 'Visitor views badges' do
     expect(page).to have_content(badge_class.new.description)
   end
 
-  scenario "foo" do
-
-    user2 = create(:user)
-    user2.badges << JoinChallengeBadge.create(granted: false)
-    user2.badges << OneChapterBadge.create(granted: false)
-
+  scenario "Visitor clicks a badge should see only users granted that badge" do
     user = create(:user)
     user.badges << JoinChallengeBadge.create(granted: true)
-    user.badges << OneChapterBadge.create(granted: false)
+    user2 = create(:user)
+    user2.badges << JoinChallengeBadge.create(granted: false)
 
+    visit badges_path
+    click_link JoinChallengeBadge.to_s
 
-    binding.pry
-
-
-
+    expect(page).to have_content(user.email)
+    expect(page).not_to have_content(user2.email)
   end
 
 end

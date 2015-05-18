@@ -63,7 +63,6 @@ group :development, :test do
   gem 'heroku'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails'
-  gem 'capybara'
   gem 'quiet_assets'
   gem 'annotate'
   gem 'timecop'
@@ -74,10 +73,12 @@ end
 
 group :test do
   # pretty print test output
+  gem 'capybara'
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
   gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy'
+  gem 'selenium-webdriver'
 end
 
