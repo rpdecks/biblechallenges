@@ -35,6 +35,7 @@ end
 
 group :development do
   gem 'mail_view'
+  gem 'better_errors'
 end
 
 # Gems used only for assets and not required
@@ -53,6 +54,8 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'spring-commands-rspec'
+  gem 'shoulda-matchers', require: false
   gem 'pry'
   gem 'sqlite3'
   gem 'hpricot'
@@ -60,8 +63,6 @@ group :development, :test do
   gem 'heroku'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails'
-  gem 'capybara'
-  gem 'better_errors'
   gem 'quiet_assets'
   gem 'annotate'
   gem 'timecop'
@@ -72,10 +73,12 @@ end
 
 group :test do
   # pretty print test output
+  gem 'capybara'
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
   gem 'database_cleaner', '~> 1.2.0'
-  gem 'shoulda-matchers', '2.6.1'
+  gem 'launchy'
+  gem 'selenium-webdriver'
 end
 

@@ -1,0 +1,5 @@
+- @badge_classes.each do |bc|
+  = bc.new.name
+  = link_to bc.name, badge_path(id: bc.name)
+  %br
+
