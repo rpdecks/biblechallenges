@@ -35,6 +35,14 @@ class Challenge < ActiveRecord::Base
     members.include?(member)
   end
 
+  def has_ungrouped_member?(member)
+    membership_for(member) && membership_for(member).group.nil?
+  end
+
+  def has_grouped_member?(member)
+    membership_for(member) && membership_for(member).group
+  end
+
   def percentage_completed
     scheduled = readings.where(date: (self.begindate)..(Date.today)).count
     total = readings.count
