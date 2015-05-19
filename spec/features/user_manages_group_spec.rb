@@ -7,36 +7,58 @@ feature 'User manages groups' do
     login(user)
   end
 
-  scenario 'User creates a group' do
-    challenge = create(:challenge)
-    visit challenge_path(challenge)
-    click_link 'Create a group'
-    fill_in 'Group Name', with: "Test group"
-    click_button 'Create Group'
+  context "Not having joined the challenge" do
+    scenario "When joins a group, also joins the challenge" do
+      challenge = create(:challenge)
+      group = challenge.groups.create(name: "UCLA", user_id: user.id)
 
+      visit challenge_group_path(challenge, group)
+      click_link "Join Group"
 
-    expect(page).to have_content("Test group")
-    expect(Group.count).to eq 1
-    group = Group.first
-    expect(group.challenge_id).to eq challenge.id
-    expect(group.user_id).to eq user.id
+      expect(user.challenges).to include challenge
+      expect(user.groups).to include group
+    end
+    scenario "Doesn't see 'create a group' option" do
+      challenge = create(:challenge)
+
+      visit challenge_path(challenge)
+
+      expect(page).not_to have_link "Create a group"
+    end
+  end
+
+  context "Having joined the challenge" do
+    scenario 'User creates a group and is automatically a member of the group' do
+      challenge = create(:challenge)
+      membership = create(:membership, challenge: challenge, user: user)
+
+      visit challenge_path(challenge)
+      click_link 'Create a group'
+      fill_in 'Group Name', with: "Test group"
+      click_button 'Create Group'
+
+      expect(page).to have_content("Test group")
+      expect(Group.count).to eq 1
+      group = Group.first
+      expect(group.challenge_id).to eq challenge.id
+      expect(group.user_id).to eq user.id
+      expect(membership.reload.group).to eq group
+    end
   end
 
   scenario 'Owner of a group can delete the group with many members in the group' do
     user1 = create(:user, :with_profile)
     user2 = create(:user, :with_profile)
     challenge = create(:challenge)
-    group = challenge.groups.create(name: "UCLA", user_id: user.id)
+    group = challenge.groups.create(user_id: user.id)
     membership = create(:membership, challenge: challenge, group_id: group.id, user_id: user1.id)
     membership2 = create(:membership, challenge: challenge, group_id: group.id, user_id: user2.id)
     visit challenge_group_path(challenge, group)
 
     click_link 'Delete Group'
     expect(Group.count).to eq 0
-    membership.reload
-    membership2.reload
-    expect(membership.group_id).to eq nil
-    expect(membership2.group_id).to eq nil
+    expect(membership.reload.group_id).to eq nil
+    expect(membership2.reload.group_id).to eq nil
   end
 
 
