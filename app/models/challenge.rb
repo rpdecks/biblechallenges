@@ -28,11 +28,19 @@ class Challenge < ActiveRecord::Base
 
 
   def membership_for(user)
-    memberships.find_by_user_id(user.id)
+    user && memberships.find_by_user_id(user.id)
   end
 
   def has_member?(member)
     members.include?(member)
+  end
+
+  def has_ungrouped_member?(member)
+    membership_for(member) && membership_for(member).group.nil?
+  end
+
+  def has_grouped_member?(member)
+    membership_for(member) && membership_for(member).group
   end
 
   def percentage_completed
