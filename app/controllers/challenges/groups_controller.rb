@@ -22,10 +22,13 @@ class Challenges::GroupsController < ApplicationController
 
   def create
     @challenge = Challenge.find(params[:challenge_id])
+    membership = @challenge.membership_for(current_user)
     @group = @challenge.groups.build(group_params)
     @group.user_id = current_user.id
 
     if @group.save
+      membership.group = @group 
+      membership.save
       flash[:notice] = "Group created successfully"
       redirect_to @challenge
     else
