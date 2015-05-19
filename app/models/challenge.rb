@@ -28,7 +28,7 @@ class Challenge < ActiveRecord::Base
 
 
   def membership_for(user)
-    memberships.find_by_user_id(user.id)
+    user && memberships.find_by_user_id(user.id)
   end
 
   def has_member?(member)
