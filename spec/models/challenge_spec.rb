@@ -109,6 +109,17 @@ describe Challenge do
       end
     end
 
+    describe '#progress_percentage' do
+      context 'when the user has already joined the challenge' do
+        it "returns of the percentage of the challenge completed according to schedule" do
+        Timecop.travel(5.days.ago)
+        challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-20")
+        Timecop.return
+        expect(challenge.percentage_completed).to eq 25
+        end
+      end
+    end
+
     describe '#join_new_member' do
       context 'with one user' do
         let(:user){create(:user)}
@@ -134,6 +145,21 @@ describe Challenge do
       end
     end
 
+    describe '#has_ungrouped_member?' do
+      it 'returns true if the user is in this challenge but not in a group' do
+        user = create(:user)
+        create(:membership, user: user, challenge: challenge)
+        expect(challenge.has_ungrouped_member?(user)).to be_truthy
+      end
+    end
+    describe '#has_grouped_member?' do
+      it 'returns true if the user is in a group in this challenge' do
+        user = create(:user)
+        group = create(:group, challenge: challenge, user: create(:user))
+        create(:membership, user: user, challenge: challenge, group: group)
+        expect(challenge.has_grouped_member?(user)).to be_truthy
+      end
+    end
     describe '#has_member?' do
       let(:user){create(:user)}
       context 'when the user has already joined the challenge' do

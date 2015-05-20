@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_many :challenges, through: :memberships
   has_many :groups, through: :memberships
   has_many :comments
-  has_many :badges
+  has_many :badges, dependent: :destroy
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
@@ -27,18 +27,10 @@ class User < ActiveRecord::Base
 
   #Callbacks
 
-  after_create :add_profile
-
   delegate :first_name, :last_name, :username, to: :profile
 
   def fullname
     "#{first_name} #{last_name}"
   end
-
-  def add_profile
-    self.create_profile
-  end
-
-
 
 end

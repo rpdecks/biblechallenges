@@ -70,10 +70,7 @@ namespace :sample_fake do
 
   def create_users(users_count)
     users_count.times do
-      User.create!(
-        email: Faker::Internet.email,
-        password: '123123'
-      )
+      FactoryGirl.create(:user, :with_profile)
     end
 
     puts "Created #{User.count} users"
@@ -83,7 +80,7 @@ namespace :sample_fake do
     challenges_count.times do
       user = User.all.sample # warning: all.sample is very slow for large dbs.
                              #          only use this for seeding
-      user.created_challenges << FactoryGirl.create(:challenge)
+      user.created_challenges << FactoryGirl.create(:challenge, owner: user)
     end
     puts "Created #{Challenge.count} challenges"
     puts "Created #{Reading.count} readings"
@@ -108,6 +105,8 @@ namespace :sample_fake do
     # is this by design?
     puts "Deleting Membership Readings"
     MembershipReading.delete_all
+    puts "Deleting Badges"
+    Badge.delete_all
 
     puts "--Finished removing current records----------\n"
   end

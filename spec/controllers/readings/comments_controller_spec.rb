@@ -13,13 +13,13 @@ describe Readings::CommentsController, "Actions" do
 
   describe "Delete #delete" do
 
+    let(:current_user) { create(:user, :with_profile) }
+
     before do
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
     it "should destroy the current comment if the current_user owns it" do
-      current_user= create(:user)
-      current_user.profile = create(:profile, username: "Phil")
       sign_in :user, current_user
       challenge = create(:challenge_with_readings)
       membership = create(:membership, user: current_user, challenge: challenge)
@@ -29,18 +29,16 @@ describe Readings::CommentsController, "Actions" do
     end
 
     it "should not destroy the comment if the current_user does not own it" do
-      current_user= create(:user)
       challenge = create(:challenge_with_readings)
       membership = create(:membership, user: current_user, challenge: challenge)
       reading = membership.readings.first
       comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
-      randomuser = create(:user)
+      randomuser = create(:user, :with_profile)
       sign_in :user, randomuser
       expect{ delete :destroy, reading_id: reading.id, id: comment.id}.not_to change(Comment, :count)
     end
 
     it "should redirect to login if the user is not logged in" do
-      current_user= create(:user)
       challenge = create(:challenge_with_readings)
       membership = create(:membership, user: current_user, challenge: challenge)
       reading = membership.readings.first
@@ -55,7 +53,7 @@ describe Readings::CommentsController, "Actions" do
 
 
   describe "POST #create" do
-    let!(:current_user) {create(:user)}
+    let!(:current_user) {create(:user, :with_profile)}
     let(:challenge) { create(:challenge_with_readings) }
     let!(:membership) {create(:membership, user: current_user, challenge: challenge)}
     let(:reading) { membership.readings.first}
@@ -110,7 +108,7 @@ describe Readings::CommentsController, "Actions" do
     end
 
     it "does not allow a user to create a comment for a reading he is not part of (through a challenge)" do
-      randomuser = FactoryGirl.create(:user)
+      randomuser = FactoryGirl.create(:user, :with_profile)
       sign_out current_user
       sign_in :user, randomuser
       expect{

@@ -3,7 +3,7 @@ require "spec_helper"
 describe MembershipMailer do
   describe '.creation_email' do
 
-    let(:user){create(:user)}
+    let(:user){create(:user, :with_profile)}
     let(:challenge){create(:challenge)}
     let!(:membership){challenge.join_new_member(user)}
 
