@@ -22,6 +22,7 @@ gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'acts_as_scriptural'
 gem 'simple_token_authentication', '~> 1.0'
+gem 'gretel'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
