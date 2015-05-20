@@ -2,11 +2,11 @@ class OneChapterBadge < Badge
 
 
   def name 
-    "Five Chapters Read"
+    "One Chapter Read"
   end
 
   def description
-    "you get this badge when you have read five chapters"
+    "you get this badge when you have read one chapter"
   end
 
   def img

@@ -8,12 +8,12 @@ Biblechallenge::Application.routes.draw do
   #end mail view
 
 
-  devise_for :users
+  devise_for :users, controllers: { registrations: "users/registrations" }
 
   resource :profile, only: [:update, :edit]
 
   resources :challenges, only: [:new, :index, :show, :create, :destroy] do
-    resources :groups, only: [:show], controller: 'challenges/groups' do
+    resources :groups, only: [:show, :create, :new, :destroy], controller: 'challenges/groups' do
       member do
         post 'join'
         post 'leave'
@@ -25,6 +25,8 @@ Biblechallenge::Application.routes.draw do
       end
     end
   end
+
+  resources :badges, only: [:index, :show]
 
   resources :readings, only: [:show, :edit, :update] do
     resources :comments, only: [:create, :destroy], controller: 'readings/comments' 

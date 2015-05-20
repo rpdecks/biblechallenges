@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513141147) do
+ActiveRecord::Schema.define(version: 20150514124922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,16 @@ ActiveRecord::Schema.define(version: 20150513141147) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
   end
+
+  create_table "group_statistics", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "value"
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "group_statistics", ["group_id"], name: "index_group_statistics_on_group_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.integer  "challenge_id"
