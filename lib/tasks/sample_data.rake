@@ -70,14 +70,7 @@ namespace :sample_fake do
 
   def create_users(users_count)
     users_count.times do
-      profile = Profile.create(first_name: Faker::Name.first_name, 
-                               last_name: Faker::Name.last_name,
-                               username: Faker::Internet.user_name)
-      User.create!(
-        email: Faker::Internet.email,
-        password: '123123',
-        profile: profile
-      )
+      FactoryGirl.create(:user, :with_profile)
     end
 
     puts "Created #{User.count} users"
