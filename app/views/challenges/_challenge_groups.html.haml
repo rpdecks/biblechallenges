@@ -1,8 +1,28 @@
-%h3 Challenge Groups
-= render 'create_a_group'
-
-
 %h3 
-- @challenge.groups.each do |g|
-  = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
-  %br
+  Challenge Groups 
+  = render 'create_a_group'
+- @current_challenge = []
+- @current_group = []
+- if current_user.challenges
+  - current_user.challenges.each do |c|
+    - @current_challenge << c.id
+- if current_user.groups
+  - current_user.groups.each do |g|
+    - @current_group << g.id
+%ol.list-group
+  - @challenge.groups.each do |g|
+    - if @current_challenge.include?(@challenge.id) && @current_group.include?(g.id)
+      %li.list-group-item
+        %strong
+          = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id) 
+          (My current group)
+        %span.badge
+          = @challenge.memberships.where(group_id: g).size
+    - else 
+      %li.list-group-item.list-group-item-info
+        = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
+        %span.badge
+          = @challenge.memberships.where(group_id: g).size
+%h5
+  Total Groups:
+  = @challenge.groups.count
