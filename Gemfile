@@ -67,6 +67,7 @@ group :development, :test do
   gem 'timecop', '0.6.3'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'letter_opener'
 end
 
 group :test do
