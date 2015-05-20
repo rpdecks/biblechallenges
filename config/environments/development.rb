@@ -3,7 +3,6 @@ Biblechallenge::Application.configure do
 
   Biblechallenge::Application.config.session_store :cookie_store, key: 'bible_application_devise_session', domain: ".lvh.me", tld_length: 2
 
-
   config.eager_load = false
 
   # In the development environment your application's code is reloaded on
@@ -27,7 +26,6 @@ Biblechallenge::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-
   # Do not compress assets
   config.assets.compress = false
 
@@ -37,11 +35,12 @@ Biblechallenge::Application.configure do
   #devise options
   config.action_mailer.default_url_options = { host: 'lvh.me:3000' }
 
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.smtp_settings = { :address  => "localhost",
-    :port                 => 1025
-    }
-
+  # delivering email
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.smtp_settings = {
+    :address => "localhost",
+    :port    => 1025
+  }
 
   # add db logging
   config.active_record_logger = Logger.new("log/sql.log")
