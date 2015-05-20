@@ -4,16 +4,16 @@
   %legend
     %center
       = render 'join_challenge'
-  %p
-  %br
-  %br
+    %p
+    %br
   %p
     = render 'challenge_instructions'
 
   %hr
-  = render 'challenge_groups'
+  .row.col-md-6
+    = render 'challenge_groups'
 
-
+  .row
   = render 'challenge_details'
 
   = render 'challenge_statistics'
