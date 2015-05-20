@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513161415) do
+ActiveRecord::Schema.define(version: 20150513141147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 20150513161415) do
 
   create_table "bookfrags", force: :cascade do |t|
     t.string   "fragment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "book_id"
   end
 
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.string   "name"
     t.date     "begindate"
     t.date     "enddate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "chapters_to_read"
     t.text     "welcome_message"
   end
@@ -47,16 +47,16 @@ ActiveRecord::Schema.define(version: 20150513161415) do
   create_table "chapter_challenges", force: :cascade do |t|
     t.integer  "challenge_id"
     t.integer  "chapter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "chapters", force: :cascade do |t|
     t.string   "book_name"
     t.integer  "chapter_number"
     t.integer  "chapter_index"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "book_id"
   end
 
@@ -67,19 +67,16 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.string   "commentable_type"
     t.boolean  "invisible",        default: false
     t.integer  "flag_count",       default: 0,     null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   create_table "groups", force: :cascade do |t|
     t.integer  "challenge_id"
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.integer  "ave_sequential_reading_count",    default: 0
-    t.integer  "ave_punctual_reading_percentage", default: 0
-    t.integer  "ave_progress_percentage",         default: 0
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -89,33 +86,17 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.integer  "membership_id"
     t.integer  "reading_id"
     t.string   "state",         default: "unread"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "punctual"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
-
-  create_table "membership_statistics", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.string   "type"
-    t.string   "value"
-    t.integer  "membership_id"
-  end
-
-  add_index "membership_statistics", ["membership_id"], name: "index_membership_statistics_on_membership_id", using: :btree
-  add_index "membership_statistics", ["user_id"], name: "index_membership_statistics_on_user_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "bible_version",                default: "ASV"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "bible_version", default: "ASV"
     t.integer  "group_id"
-    t.integer  "rec_sequential_reading_count", default: 0
-    t.integer  "punctual_reading_percentage",  default: 0
-    t.integer  "progress_percentage",          default: 0
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -123,8 +104,8 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.string   "username"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "time_zone",              default: "UTC"
     t.integer  "preferred_reading_hour", default: 0
   end
@@ -133,18 +114,10 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.integer  "chapter_id"
     t.integer  "challenge_id"
     t.date     "date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.text     "discussion"
   end
-
-  create_table "user_statistics", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "user_statistics", ["user_id"], name: "index_user_statistics_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -157,8 +130,8 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "authentication_token"
   end
 
@@ -173,8 +146,8 @@ ActiveRecord::Schema.define(version: 20150513161415) do
     t.integer  "verse_number"
     t.text     "versetext"
     t.integer  "book_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "chapter_index"
   end
 
