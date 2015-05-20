@@ -148,6 +148,10 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.0)
       launchy (~> 2.2)
+    letter_opener_web (1.3.0)
+      actionmailer (>= 3.2)
+      letter_opener (~> 1.0)
+      railties (>= 3.2)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -340,8 +344,9 @@ DEPENDENCIES
   hirb
   hpricot
   jquery-rails
-  letter_opener
   launchy
+  letter_opener
+  letter_opener_web
   mail_view
   pg
   pickadate-rails
