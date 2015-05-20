@@ -1,12 +1,9 @@
 Biblechallenge::Application.routes.draw do
 
-
-  # mail_view stuff
   if Rails.env.development?
     mount MailPreview => 'mail_view'
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
-  #end mail view
-
 
   devise_for :users, controllers: { registrations: "users/registrations" }
 
