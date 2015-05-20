@@ -9,9 +9,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
-
 class MembershipReading < ActiveRecord::Base
-
   # Scopes
   default_scope {includes(:reading).order('readings.date')}
   scope :read, -> {where(state: 'read')}
@@ -49,7 +47,7 @@ class MembershipReading < ActiveRecord::Base
   end
 
   private
-  
+
   def reading_punctual?
     self.reading.date.to_date === self.updated_at.to_date
   end
@@ -57,6 +55,4 @@ class MembershipReading < ActiveRecord::Base
   def mark_punctual
     self.punctual = 1 if reading_punctual? 
   end
-
-
 end
