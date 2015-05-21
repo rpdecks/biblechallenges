@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Challenges::GroupsController, type: :controller do
+describe Member::GroupsController, type: :controller do
 
   let(:user){create(:user)}
   let(:challenge){create(:challenge)}

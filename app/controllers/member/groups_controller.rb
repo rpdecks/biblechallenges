@@ -1,4 +1,4 @@
-class Challenges::GroupsController < ApplicationController
+class Member::GroupsController < ApplicationController
 
   before_filter :find_challenge, :find_group, :except => [:create, :new]
 
