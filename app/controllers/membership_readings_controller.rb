@@ -1,5 +1,4 @@
 class MembershipReadingsController < ApplicationController
-
   before_filter :authenticate_user!, only: [:update]
   before_filter :find_membership_reading, except: [:update ]
 

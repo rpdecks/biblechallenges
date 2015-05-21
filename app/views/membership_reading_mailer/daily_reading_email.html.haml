@@ -36,7 +36,10 @@
 
       %br
       %center
-        = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.id)
+        = link_to 'Confirm you read this chapter.',
+          edit_membership_reading_url(@membership_reading.id,
+          user_email: @user.email,
+          user_token: @user.authentication_token)
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
