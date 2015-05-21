@@ -7,9 +7,24 @@ describe MembershipReadingsController, type: :controller do
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
 
+  context 'User access through email' do
+    context 'with a valid token' do
+      before(:each) do
+        get :edit,
+          id: membership_reading.id,
+          user_email: user.email,
+          user_token: user.authentication_token
+      end
 
-  describe 'User access' do
+      describe 'GET#edit' do
+        it "finds the membership_reading's reading" do
+          expect(assigns(:reading)).to eql(membership_reading.reading)
+        end
+      end
+    end
+  end
 
+  context 'User access through website' do
     before do
       sign_in :user, user
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
@@ -37,9 +52,7 @@ describe MembershipReadingsController, type: :controller do
         expect(assigns(:reading)).to be_truthy
       end
     end
-
   end
-
 
   describe 'Guest access' do
     describe 'PUT#update' do
@@ -85,10 +98,8 @@ describe MembershipReadingsController, type: :controller do
     end
   end
 
-
   describe 'GET#confirm' do
     context 'with a valid token' do
-
       it "renders the :new template" do
         get :confirm, id: membership_reading.id
         expect(response).to render_template(:confirm)
@@ -108,14 +119,10 @@ describe MembershipReadingsController, type: :controller do
         get :confirm, id: membership_reading.id
         expect(assigns(:reading)).to eql(membership_reading.reading)
       end
-
     end
-
-
   end
 
   describe 'PUT#log' do
-
     context 'with a valid token' do
       it "finds membership_reading" do
         put :log, id: membership_reading.id, format:'js'
@@ -127,7 +134,5 @@ describe MembershipReadingsController, type: :controller do
         expect(membership_reading.reload.state).to eql('read')
       end
     end
-
   end
-
 end

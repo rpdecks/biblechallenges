@@ -37,7 +37,6 @@ class MembershipReadingsController < ApplicationController
     end
   end
 
-
   def confirm
     @comment = Comment.new
     if @membership_reading
