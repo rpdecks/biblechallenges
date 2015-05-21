@@ -30,7 +30,7 @@ class Member::ChallengesController < ApplicationController
 
   def destroy
     @challenge.destroy
-    redirect_to challenges_path
+    redirect_to member_challenges_path
   end
 
   private

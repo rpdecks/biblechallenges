@@ -18,9 +18,8 @@ Biblechallenge::Application.routes.draw do
 #  end
 
   # member is a namespace for users in a challenge
-=begin
   namespace :member do
-    resources :challenges, only: [:index, :show] do
+    resources :challenges, only: [:new, :create, :destroy, :index, :show] do
       resources :groups, only: [:new, :create]
       resources :memberships, only: [:create] 
     end
@@ -32,7 +31,6 @@ Biblechallenge::Application.routes.draw do
     end
     resources :memberships, only: [:update, :index, :show, :destroy] 
   end
-=end
 
 
 
@@ -62,7 +60,7 @@ Biblechallenge::Application.routes.draw do
   end
 
 
-  resources :challenges, only: [:index], controller: 'challenges'
+  resources :challenges, only: [:index, :show], controller: 'challenges'
   root to: 'challenges#index'
 
 end
