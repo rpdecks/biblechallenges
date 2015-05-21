@@ -26,7 +26,7 @@
         %br
         = "Total Chapters Read: #{challenge.membership_readings.read.size}"
         %br
-        = "Start: #{challenge.begindate}"
+        = "Start Date: #{challenge.begindate.strftime("%b %d, %Y")}"
         %br
-        = "Start: #{challenge.enddate}"
+        = "End Date: #{challenge.enddate.strftime("%b %d, %Y")}"
 

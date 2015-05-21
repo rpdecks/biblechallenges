@@ -2,10 +2,15 @@ class Group < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :challenge
+  has_many :members, through: :memberships, source: :user
   has_many :memberships
   has_many :group_statistics
 
   validates :user, :challenge, presence: true
+
+  def has_member?(member)
+    members.include?(member)
+  end
 
   def remove_all_members_from_group
     self.memberships.each do |m|
