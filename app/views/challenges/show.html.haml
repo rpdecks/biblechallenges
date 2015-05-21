@@ -1,19 +1,14 @@
 - breadcrumb :challenge, @challenge
 .container
   = breadcrumbs
+  %center
+    = render 'join_challenge'
+%br
   %legend
-    %center
-      = render 'join_challenge'
-  %p
-  %br
-  %br
-  %p
-    = render 'challenge_instructions'
+  .row.col-md-6
+    = render 'challenge_groups'
 
-  %hr
-  = render 'challenge_groups'
-
-
+  .row
   = render 'challenge_details'
 
   = render 'challenge_statistics'
