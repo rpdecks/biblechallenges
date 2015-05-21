@@ -6,9 +6,6 @@ describe Creator::ChallengesController do
     it { {get: "/creator/challenges"}.should route_to(controller: "creator/challenges", action: "index") }
   end
 
-  let(:challenge_creator) { create(:user) }
-  let(:challenge) { create(:challenge, owner: challenge_creator) }
-
   describe 'Unauthorized access' do
     describe 'GET#index' do
       it "does not renders the :index template" do
@@ -24,7 +21,10 @@ describe Creator::ChallengesController do
   end
 
   describe 'Creator access' do
-    before do
+    let(:challenge_creator) { create(:user) }
+    let(:challenge) { create(:challenge, owner: challenge_creator) }
+
+    before :each do
       sign_in :user, challenge_creator
     end
 
@@ -35,6 +35,7 @@ describe Creator::ChallengesController do
       end
 
       it "removes challenge from database" do
+        challenge
         expect {
          delete :destroy, id: challenge
         }.to change(Challenge, :count).by(-1)
