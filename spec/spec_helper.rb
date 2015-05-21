@@ -4,7 +4,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 #require Rails.root.join("db/seeds.rb")
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 
