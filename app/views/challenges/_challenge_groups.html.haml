@@ -1,18 +1,10 @@
 %h3 
   Challenge Groups 
   = render 'create_a_group'
-- @current_challenge = []
-- @current_group = []
-- if current_user && current_user.challenges
-  - current_user.challenges.each do |c|
-    - @current_challenge << c.id
-- if current_user && current_user.groups
-  - current_user.groups.each do |g|
-    - @current_group << g.id
 %ol.list-group
   - @challenge.groups.each do |g|
     - @group_member_count = @challenge.memberships.where(group_id: g).size
-    - if @current_challenge.include?(@challenge.id) && @current_group.include?(g.id)
+    - if @challenge.has_member?(current_user) && g.has_member?(current_user)
       %li.list-group-item
         %strong
           = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id) 
