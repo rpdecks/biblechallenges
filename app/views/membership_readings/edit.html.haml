@@ -7,7 +7,8 @@
             #{@reading.chapter.book_name}  #{@reading.chapter.chapter_number}
         .panel-body
           %div#confirmation_container
-            Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
+            -#Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
+            Hello,
             %br
             %br
             = form_for(@membership_reading) do
