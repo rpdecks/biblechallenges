@@ -26,6 +26,14 @@ feature 'User manages groups' do
     expect(challenge.members).to include user
   end
 
+  scenario 'User joins own challenge successfully' do
+    challenge = create(:challenge, owner_id: user.id)
+    visit public_challenges_path
+    click_link challenge.name
+    click_link "Join Challenge"
+    expect(challenge.members).to include user
+  end
+
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
