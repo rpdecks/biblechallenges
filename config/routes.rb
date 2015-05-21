@@ -1,7 +1,6 @@
 Biblechallenge::Application.routes.draw do
 
   if Rails.env.development?
-    mount MailPreview => 'mail_view'
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
