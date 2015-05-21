@@ -3,10 +3,10 @@
   = render 'create_a_group'
 - @current_challenge = []
 - @current_group = []
-- if current_user.challenges
+- if current_user && current_user.challenges
   - current_user.challenges.each do |c|
     - @current_challenge << c.id
-- if current_user.groups
+- if current_user && current_user.groups
   - current_user.groups.each do |g|
     - @current_group << g.id
 %ol.list-group
