@@ -1,23 +1,15 @@
 require 'spec_helper'
-require 'challenges_controller'
+#require 'challenges_controller'
 
 
-describe ChallengesController do
+describe Member::ChallengesController do
 
   describe "Routing" do
-    it { {get: "/challenges"}.should route_to(controller: "challenges", action: "index") }
+    it { {get: "/member/challenges"}.should route_to(controller: "member/challenges", action: "index") }
   end
 
   let(:challengeowner) { create(:user) }
   let(:challenge) { create(:challenge, owner: challengeowner) }
-
-
-
-
-
-
-
-
 
   describe 'Guest access' do
 
@@ -48,7 +40,7 @@ describe ChallengesController do
     describe "DELETE#destroy" do
       it "redirects to the challenges page" do
         delete :destroy, id: challenge
-        expect(response).to redirect_to challenges_url
+        expect(response).to redirect_to member_challenges_url
       end
 
       it "removes challenge from database" do
