@@ -52,23 +52,26 @@ describe MembershipReadingsController, type: :controller do
 
   describe 'GET#edit' do
     context 'with a valid token' do
+      before(:each) do
+        get :edit,
+          id: membership_reading.id,
+          user_email: user.email,
+          user_token: user.authentication_token
+      end
+
       it "renders the :edit template" do
-        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(response).to render_template(:edit)
       end
 
       it "finds the membership_reading's user" do
-        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(assigns(:user)).to eql(membership_reading.membership.user)
       end
 
       it "finds the membership_reading's reading" do
-        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(assigns(:reading)).to eql(membership_reading.reading)
       end
 
       it "assigns a comment to be available in the form" do
-        get :edit, id: membership_reading.id, user_email: user.email, user_token: user.authentication_token
         expect(assigns(:comment)).to be_truthy
       end
     end
@@ -80,7 +83,6 @@ describe MembershipReadingsController, type: :controller do
         should set_the_flash
       end
     end
-
   end
 
 
