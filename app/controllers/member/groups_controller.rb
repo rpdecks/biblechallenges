@@ -1,6 +1,7 @@
 class Member::GroupsController < ApplicationController
 
-  before_filter :find_challenge, :find_group, :except => [:create, :new]
+  before_filter :find_challenge, :except => [:create, :new, :show]
+  before_filter :find_group, :except => [:create, :new]
 
   def show
   end
