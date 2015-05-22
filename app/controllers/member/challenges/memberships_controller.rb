@@ -24,7 +24,6 @@ class Member::MembershipsController < ApplicationController
   end
 
   def create
-    binding.pry
     @membership = @challenge.memberships.build(params[:membership])
     @membership.user = current_user if current_user
     if @membership.save
