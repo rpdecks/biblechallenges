@@ -2,7 +2,7 @@ class Member::MembershipsController < ApplicationController
 
   before_filter :authenticate_user!
   
-  before_filter :find_challenge, except: [:show, :find_challenge, :unsubscribe_from_email]
+  before_filter :find_challenge, except: [:destroy, :show, :find_challenge, :unsubscribe_from_email]
   before_filter :find_membership, only: [:update, :join_group, :destroy, :show]
 
   respond_to :html, :json, :js
