@@ -10,6 +10,41 @@ describe Member::MembershipsController do
     sign_in :user, user
   end
 
+  describe 'GET#index' do
+    it "collects memberships into @memberships" do
+      challenge.join_new_member(create(:user))
+
+      get :index, challenge_id: challenge
+
+      expect(assigns(:memberships)).to match_array(challenge.memberships)
+    end
+
+    it "renders the :index template" do
+      get :index, challenge_id: challenge
+
+      expect(response).to render_template :index
+    end
+  end
+
+  describe 'DELETE#destroy' do
+    it "finds the current_user membership" do
+      delete :destroy, id: membership
+      expect(assigns(:membership)).to eql(membership)
+    end
+
+    it "destroys the membership" do
+      pending  #jim 
+      expect{
+        delete :destroy, id: membership
+      }.to change(Membership,:count).by(-1)
+    end
+
+    it "redirects to the challenge url" do
+      delete :destroy, id: membership
+      expect(response).to redirect_to challenge
+    end
+  end
+
   describe  'POST#create' do
     let(:newchallenge){create(:challenge, owner: owner)}
 
