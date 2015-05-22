@@ -4,7 +4,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 #require Rails.root.join("db/seeds.rb")
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 
@@ -15,6 +14,9 @@ Time.zone = 'Eastern Time (US & Canada)'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
+
+  # suppress error backtrace if related to rvm or rbenv
+  config.backtrace_exclusion_patterns = [/\.rvm/, /\.rbenv/]
 
   config.infer_spec_type_from_file_location! 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
