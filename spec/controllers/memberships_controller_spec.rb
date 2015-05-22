@@ -54,6 +54,7 @@ describe MembershipsController do
 
     describe  'POST#create' do
       let(:newchallenge){create(:challenge, owner: owner)}
+
       it "redirects to the challenge page after joining as a logged in user" do
         somechallenge = create(:challenge)  #uses factorygirl
         post :create, challenge_id: somechallenge.id
