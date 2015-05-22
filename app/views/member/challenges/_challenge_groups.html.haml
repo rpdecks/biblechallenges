@@ -14,7 +14,7 @@
           = "member".pluralize(@group_member_count)
     - else 
       %li.list-group-item.list-group-item-info
-        = link_to g.name, challenge_group_path(challenge_id: @challenge.id, id: g.id)
+        = link_to g.name, member_group_path(id: g.id)
         %span.badge
           = @group_member_count
           = "member".pluralize(@group_member_count)
