@@ -1,7 +1,9 @@
 class Member::MembershipsController < ApplicationController
 
-  before_filter :find_challenge, except: [:find_challenge, :unsubscribe_from_email]
-  before_filter :find_membership, only: [:update, :join_group, :destroy]
+  before_filter :authenticate_user!
+  
+  before_filter :find_challenge, except: [:show, :find_challenge, :unsubscribe_from_email]
+  before_filter :find_membership, only: [:update, :join_group, :destroy, :show]
 
   respond_to :html, :json, :js
 
@@ -10,7 +12,6 @@ class Member::MembershipsController < ApplicationController
   end
 
   def show
-    @membership = @challenge.memberships.find_by_user_id(current_user.id)
     respond_with(@membership)
   end
 
@@ -65,7 +66,7 @@ class Member::MembershipsController < ApplicationController
   end
 
   def find_membership
-    @membership = @challenge.memberships.find(params[:id])
+    @membership = current_user.memberships.find(params[:id])
     redirect_to @challenge if @membership.nil?
   end
 
