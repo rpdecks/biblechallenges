@@ -11,7 +11,7 @@ class Membership < ActiveRecord::Base
   belongs_to :group
 
   has_many :membership_readings, dependent: :destroy
-  has_many :readings, through: :membership_readings
+  has_many :readings, through: :challenge
   has_many :membership_statistics
   
   # autogenerate has_one associations for all the membership statistic types
@@ -28,7 +28,6 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
-  after_create :associate_readings
 
   after_update :recalculate_group_stats
 
@@ -44,7 +43,7 @@ class Membership < ActiveRecord::Base
   end
 
   def completed?
-    membership_readings.count == membership_readings.read.count
+    challenge.readings.count == membership_readings.count
   end
 
   def send_todays_reading  #this feels bad ask jose
@@ -72,10 +71,6 @@ class Membership < ActiveRecord::Base
   end
 
 
-  # - after_create
-  def associate_readings
-    self.readings << challenge.readings
-  end
   # -- emails
   def successful_creation_email
     MembershipMailer.creation_email(self).deliver_now

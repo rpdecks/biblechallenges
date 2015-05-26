@@ -8,13 +8,14 @@ describe MembershipStatisticRecordReadingStreak do
     it "should calculate the proper value even when user reads several times in one day" do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
       first_day = challenge.readings.order(:date).first.date
 
-      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[3].update_attributes(state: "read", updated_at: first_day + 3.days)
-      membership.membership_readings[4].update_attributes(state: "read", updated_at: first_day + 4.days)
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day)
+      create(:membership_reading, reading: readings[3], membership: membership, updated_at: first_day + 3)
+      create(:membership_reading, reading: readings[4], membership: membership, updated_at: first_day + 4)
       # streak of 2
 
       Timecop.travel(first_day + 4.days)
@@ -28,11 +29,12 @@ describe MembershipStatisticRecordReadingStreak do
       Timecop.travel(8.days.ago)
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
       first_day = challenge.readings.order(:date).first.date
 
-      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day + 1)
-      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day + 2)
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 1)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 2)
 
       Timecop.freeze(first_day + 5.days)
       stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
@@ -43,13 +45,14 @@ describe MembershipStatisticRecordReadingStreak do
     it "calculates value of reading streak when a reading is logged on each challenge day" do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
       first_day = challenge.readings.order(:date).first.date
 
-      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day + 1)
-      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day + 2)
-      membership.membership_readings[3].update_attributes(state: "read", updated_at: first_day + 3)
-      membership.membership_readings[4].update_attributes(state: "read", updated_at: first_day + 4)
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 1)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 2)
+      create(:membership_reading, reading: readings[3], membership: membership, updated_at: first_day + 3)
+      create(:membership_reading, reading: readings[4], membership: membership, updated_at: first_day + 4)
       Timecop.freeze(first_day + 5.days)
       stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
       expect(stat.calculate).to eq 5
@@ -59,12 +62,13 @@ describe MembershipStatisticRecordReadingStreak do
     it "calculates value of reading streak when no reading occurs on the first day" do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
       first_day = challenge.readings.order(:date).first.date
 
-      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day + 1)
-      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day + 2)
-      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day + 3)
-      membership.membership_readings[3].update_attributes(state: "read", updated_at: first_day + 4)
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day + 1)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 2)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 3)
+      create(:membership_reading, reading: readings[3], membership: membership, updated_at: first_day + 4)
       Timecop.freeze(first_day + 5.days)
       stat = MembershipStatisticRecordReadingStreak.new(membership: membership)
       expect(stat.calculate).to eq 4

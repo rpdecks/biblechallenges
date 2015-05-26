@@ -1,13 +1,12 @@
-class MembershipReadingMailer < ActionMailer::Base
+class ReadingMailer < ActionMailer::Base
   helper ActionView::Helpers::UrlHelper 
   default from: "Bible Challenges <no-reply@biblechallenges.com>"
   layout 'default_mailer'
 
-  def daily_reading_email(membership_reading)
+  def daily_reading_email(reading, membership)
     @reading_date = Date.today
-    @membership_reading = membership_reading
-    @reading = @membership_reading.reading
-    @membership = @membership_reading.membership
+    @reading = reading
+    @membership = membership
     @chapter = @reading.chapter
     @verses = @chapter.verses.by_version(@membership.bible_version)
     @challenge = @membership.challenge

@@ -53,7 +53,7 @@ Biblechallenge::Application.routes.draw do
   match '/reading/log/:id' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
 
   # more restful reading logging
-  resources :membership_readings, only: [:edit, :update] do
+  resources :membership_readings, only: [:edit, :update, :create, :destroy] do
   end
 
 
