@@ -8,15 +8,12 @@
           %th Chapter(comments)
           %th 
             %span.glyphicon.glyphicon-ok
-      - membership.membership_readings.each do |mr|
+      - membership.readings.each do |reading|
         %tr
-          %td= mr.reading.date.strftime("%-m/%-d")
-          %td= link_to mr.reading.chapter.book_and_chapter + "  (#{mr.reading.comments.count})" , mr.reading
-          %td{id: "reading_tr_#{mr.id}"}
-            - if mr.state == 'unread'
-              = link_to raw('<span class="glyphicon glyphicon-unchecked"></span>'), membership_reading_path(id: mr.id), method: :put
-            - else
-              = link_to raw('<span class="glyphicon glyphicon-ok"></span>'), membership_reading_path(id: mr.id), method: :put
+          %td= reading.date.strftime("%-m/%-d")
+          %td= link_to reading.chapter.book_and_chapter + "  (#{reading.comments.count})" , reading
+          %td
+            Checkbox here to read / unread
 
 
 

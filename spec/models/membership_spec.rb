@@ -39,7 +39,7 @@ describe Membership do
     it { should belong_to(:user) }
     it { should belong_to(:challenge) }
     it { should belong_to(:group) }
-    it { should have_many(:readings).through(:membership_readings) }
+    it { should have_many(:readings).through(:challenge) }
     it { should have_many(:membership_readings) }
   end
 
@@ -51,9 +51,8 @@ describe Membership do
       it "returns true if all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
         membership = create(:membership, challenge: challenge)
-        membership.membership_readings[0..1].each do |mr| # read first two
-          mr.state = 'read'
-          mr.save!
+        membership.readings[0..1].each do |r| # read first two
+          create(:membership_reading, reading: r, membership: membership)
         end
         expect(membership.completed?).to eq true
       end
@@ -61,9 +60,8 @@ describe Membership do
         challenge = create(:challenge, chapters_to_read: 'Mar 1-3')
         challenge.generate_readings
         membership = create(:membership, challenge: challenge)
-        membership.membership_readings[0..1].each do |mr| # read first two
-          mr.state = 'read'
-          mr.save!
+        membership.readings[0..1].each do |r| # read first two
+          create(:membership_reading, reading: r, membership: membership)
         end
         expect(membership.completed?).to eq false
       end
@@ -88,14 +86,14 @@ describe Membership do
           challenge = create(:challenge, begindate: Date.today)  
           membership = build(:membership, challenge: challenge, user: user)
           #MembershipReadingMailer.should_receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
-          expect(MembershipReadingMailer).to receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
+          expect(ReadingMailer).to receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
           membership.save
         end
         it "does not send todays reading after creation if it does not exist" do
           user = create(:user)
           challenge = create(:challenge, begindate: Date.tomorrow) 
           membership = build(:membership, challenge: challenge, user: user)
-          MembershipReadingMailer.should_not_receive(:daily_reading_email)
+          ReadingMailer.should_not_receive(:daily_reading_email)
           membership.save
         end
       end

@@ -9,8 +9,8 @@ class MembershipStatisticProgressPercentage < MembershipStatistic
   end
 
   def calculate
-    mr_total = membership.membership_readings.count
-    read = membership.membership_readings.read.count
+    mr_total = membership.readings.count
+    read = membership.membership_readings.count
     mr_total.zero? ? 0 : (read * 100) / mr_total
   end
 

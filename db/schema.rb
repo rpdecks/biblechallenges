@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514124922) do
+ActiveRecord::Schema.define(version: 20150526163834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 20150514124922) do
   create_table "membership_readings", force: :cascade do |t|
     t.integer  "membership_id"
     t.integer  "reading_id"
-    t.string   "state",         default: "unread"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "punctual"
