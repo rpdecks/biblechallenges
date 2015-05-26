@@ -24,6 +24,15 @@ describe MembershipReadingsController, type: :controller do
       end
     end
 
+    describe 'DELETE#destroy' do
+      it "deletes a membership_reading" do
+        pending  #jim   
+        expect { 
+          delete :destroy, id: membership_reading.id
+        }.to change(MembershipReading, :count).by(-1)
+      end
+    end
+
     describe 'PUT#update' do
       it "finds the membership_reading" do
         #membership_reading = create(:membership_reading, membership: membership)

@@ -11,6 +11,13 @@ class MembershipReadingsController < ApplicationController
     redirect_to [:member, membership]
   end
 
+  def destroy
+    membership = membership_reading.membership
+    membership_reading.destroy
+    redirect_to [:member, membership]
+  end
+
+=begin
   def update
     @comment = Comment.new
     @user = current_user
@@ -29,6 +36,7 @@ class MembershipReadingsController < ApplicationController
 
     redirect_to params[:location] || request.referer, notice: notice
   end
+=end
 
   def edit
     @comment = Comment.new
