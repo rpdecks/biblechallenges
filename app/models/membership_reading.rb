@@ -19,9 +19,6 @@ class MembershipReading < ActiveRecord::Base
   scope :not_punctual, -> {where(state: 'read', punctual: 0)}
   scope :unread, -> {where(state: 'unread')}
 
-  # Constants
-  STATES = %w(read unread)
-
   # Relations
   belongs_to :membership
   belongs_to :reading
@@ -32,14 +29,9 @@ class MembershipReading < ActiveRecord::Base
   # Validations
   validates :membership_id, presence: true
   validates :reading_id, presence: true
-  validates :state, inclusion: {in: STATES}
 
   #Callbacks
   before_update :mark_punctual
-
-  def read?
-    state == 'read'
-  end
 
   def self.send_daily_emails
     MembershipReading.unread.joins(:reading).where("readings.date = ?",Date.today).each do |mr|

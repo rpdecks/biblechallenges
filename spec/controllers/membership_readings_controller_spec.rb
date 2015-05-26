@@ -15,6 +15,22 @@ describe MembershipReadingsController, type: :controller do
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
+=begin
+    describe 'POST#create' do
+      it "creates a new membership_reading" do
+        reading = create(:reading)
+        expect {
+          post :create, reading_id: reading.id
+        }.to change(Comment, :count).by(1)
+      end
+
+      it "redirects back to the comment's reading" do
+        post :create, comment_id: @comment.to_param, comment: {content: "Hello"}
+
+        should redirect_to(reading_path(reading))
+      end
+  end
+=end
     describe 'PUT#update' do
       it "finds the membership_reading" do
         #membership_reading = create(:membership_reading, membership: membership)
@@ -75,7 +91,6 @@ describe MembershipReadingsController, type: :controller do
 
     context "with an invalid token" do
       it "set the flash with an error message" do
-        pending
         get :edit, id: "blah"
         should set_the_flash
       end
