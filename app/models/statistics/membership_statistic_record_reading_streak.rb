@@ -19,8 +19,7 @@ class MembershipStatisticRecordReadingStreak < MembershipStatistic
   # Example 2:  read one chapter, next day read 3, then next day read 1.  streak should be 3
 
   def calculate
-    readings = self.membership.membership_readings.read
-    record_streak(readings)
+    record_streak(self.membership.membership_readings)
   end
 
   def update

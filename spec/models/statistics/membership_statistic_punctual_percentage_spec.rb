@@ -10,11 +10,13 @@ describe MembershipStatisticPunctualPercentage do
                          chapters_to_read: 'Matt 1-4', begindate: Date.today)
 
       membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
       first_day = challenge.readings.order(:date).first.date
-      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day + 1.days)
-      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day + 2.days)
-      membership.membership_readings[3].update_attributes(state: "read", updated_at: first_day + 3.days)
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 1)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 2)
+      create(:membership_reading, reading: readings[3], membership: membership, updated_at: first_day + 3)
+
 
       Timecop.travel(first_day + 3.days)
 

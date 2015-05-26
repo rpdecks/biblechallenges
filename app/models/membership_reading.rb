@@ -14,10 +14,8 @@ class MembershipReading < ActiveRecord::Base
 
   # Scopes
   default_scope {includes(:reading).order('readings.date')}
-  scope :read, -> {where(state: 'read')}
-  scope :punctual, -> {where(state: 'read', punctual: 1)}
-  scope :not_punctual, -> {where(state: 'read', punctual: 0)}
-  scope :unread, -> {where(state: 'unread')}
+  scope :punctual, -> {where(punctual: 1)}
+  scope :not_punctual, -> {where(punctual: 0)}
 
   # Relations
   belongs_to :membership
@@ -31,7 +29,7 @@ class MembershipReading < ActiveRecord::Base
   validates :reading_id, presence: true
 
   #Callbacks
-  before_update :mark_punctual
+  before_create :mark_punctual
 
   def self.send_daily_emails
     MembershipReading.unread.joins(:reading).where("readings.date = ?",Date.today).each do |mr|
