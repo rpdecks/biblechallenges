@@ -1,18 +1,18 @@
 class Member::GroupsController < ApplicationController
 
-  before_filter :find_group, :except => [:create, :new]
 
   def show
+    group
   end
 
   def join
-    @group.add_user_to_group(@group.challenge, current_user)
-    redirect_to [:member, @group]
+    group.add_user_to_group(group.challenge, current_user)
+    redirect_to [:member, group]
   end
 
   def leave
-    @group.remove_user_from_group(@group.challenge, current_user)
-    redirect_to [:member, @group.challenge]
+    group.remove_user_from_group(group.challenge, current_user)
+    redirect_to [:member, group.challenge]
   end
 
   def new
@@ -38,21 +38,21 @@ class Member::GroupsController < ApplicationController
   end
 
   def destroy
-    challenge = @group.challenge
-    @group.remove_all_members_from_group
-    if @group.destroy
+    challenge = group.challenge
+    group.remove_all_members_from_group
+    if group.destroy
       flash[:notice] = "Group deleted successfully"
       redirect_to [:member, challenge]
     else
       flash[:notice] = "Group could not be deleted"
-      redirect_to [:member, @group]
+      redirect_to [:member, group]
     end
   end
 
   private
 
-  def find_group
-    @group = Group.find(params[:id])
+  def group
+    @group ||= Group.find(params[:id])
   end
 
   def group_params
