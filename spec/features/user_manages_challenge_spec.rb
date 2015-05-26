@@ -20,7 +20,7 @@ feature 'User manages groups' do
 
   scenario 'User joins a challenge successfully' do
     challenge = create(:challenge)
-    visit public_challenges_path
+    visit challenges_path
     click_link challenge.name
     click_link "Join Challenge"
     expect(challenge.members).to include user
@@ -28,7 +28,7 @@ feature 'User manages groups' do
 
   scenario 'User joins own challenge successfully' do
     challenge = create(:challenge, owner_id: user.id)
-    visit public_challenges_path
+    visit challenges_path
     click_link challenge.name
     click_link "Join Challenge"
     expect(challenge.members).to include user
@@ -37,18 +37,18 @@ feature 'User manages groups' do
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit public_challenges_path
+    visit challenges_path
     click_link challenge.name
 
-    expect(page).to have_content("Leave This Challenge")
+    expect(page).to have_content("Unsubscribe me from this challenge")
   end
 
   scenario 'User leaves a challenge successfully' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit public_challenges_path
+    visit challenges_path
     click_link challenge.name
-    click_link "Leave This Challenge"
+    click_link "Unsubscribe me from this challenge"
     expect(challenge.members).not_to include user
   end
 
@@ -56,9 +56,9 @@ feature 'User manages groups' do
     challenge = create(:challenge)
     group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
     create(:membership, challenge: challenge, user: user, group_id: group.id)
-    visit public_challenges_path
+    visit challenges_path
     click_link challenge.name
-    click_link "Leave This Challenge"
+    click_link "Unsubscribe me from this challenge"
 
     expect(challenge.members).not_to include user
     expect(Membership.count).to eq 0
