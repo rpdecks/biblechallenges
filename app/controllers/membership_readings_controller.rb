@@ -1,12 +1,14 @@
 class MembershipReadingsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:update]
-  before_filter :find_membership_reading, except: [:update ]
 
   acts_as_token_authentication_handler_for User, only: [:edit]
 
   layout 'from_email'
 
+  def create
+
+  end
   def update
     @comment = Comment.new
     @user = current_user
@@ -28,10 +30,10 @@ class MembershipReadingsController < ApplicationController
 
   def edit
     @comment = Comment.new
-    if @membership_reading
-      @user = @membership_reading.membership.user
+    if membership_reading
+      @user = membership_reading.membership.user
       sign_in @user
-      @reading = @membership_reading.reading
+      @reading = membership_reading.reading
     else
       flash[:error] = "This confirmation link doesn't exist or you may have unsubscribed from this challenge"
     end
@@ -40,27 +42,27 @@ class MembershipReadingsController < ApplicationController
 
   def confirm
     @comment = Comment.new
-    if @membership_reading
-      @user = @membership_reading.membership.user
+    if membership_reading
+      @user = membership_reading.membership.user
       sign_in @user
-      @reading = @membership_reading.reading
+      @reading = membership_reading.reading
     else
       flash[:error] = "This confirmation link doesn't exist"
     end
   end
 
   def log
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
+    @membership = membership_reading.membership
+    @reading = membership_reading.reading
 
-    @membership_reading.state = 'read'
-    @membership_reading.save!
+    membership_reading.state = 'read'
+    membership_reading.save!
   end
 
   private
 
-  def find_membership_reading
-    @membership_reading = MembershipReading.find(params[:id])
+  def membership_reading
+    @membership_reading ||= MembershipReading.find(params[:id])
   end
 
 end
