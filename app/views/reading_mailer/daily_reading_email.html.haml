@@ -5,19 +5,6 @@
       %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"}
         =@chapter.book_name
         =@chapter.chapter_number
-      %div{style:'color: #808080;'}
-        %div{style:'float:right;font-size: 12px;'}
-          You have completed #{@membership.membership_readings.read.count} of #{@membership.membership_readings.count} readings for this challenge membership.overall_progress_percentage
-        %div{style:'clear:both;'}
-        %div{style:'float:right;font-size: 12px;'}
-          You have completed #{@membership.membership_readings.read.count} of #{@membership.readings.to_date(@reading_date).count} available readings for this challenge (#{@membership.to_date_progress_percentage(@reading_date)}%)
-        %div{style:'clear:both;'}
-        %div{style:'float:right;font-size: 12px;'}
-          There are #{@membership.challenge.members.count} participants in this bible challenge.
-        %div{style:'clear:both;'}
-        %div{style:'float:right;font-size: 12px;'}
-          A total of #{@membership.challenge.membership_readings.read.count} chapters have been read by all participants.
-      %br
       %br
       Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
       %br
@@ -35,7 +22,7 @@
 
       %br
       %center
-        = link_to 'Confirm you read this chapter.', edit_membership_reading_url(@membership_reading.id)
+        = link_to 'Confirm you read this chapter.', membership_readings_url(membership_id: @membership.id, reading_id: @reading.id)
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
