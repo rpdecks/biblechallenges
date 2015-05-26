@@ -5,10 +5,10 @@
   %hr
     %h4
       .col-md-6.col-md-offset-3
-        = render 'challenge_instructions'
+        = render 'shared/challenges/challenge_instructions'
 - elsif current_user
   %div{:class => 'btn-group'}
-    = link_to "Join Challenge", challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn btn-success'
+    = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn btn-success'
 - unless current_user
   = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
   %p
