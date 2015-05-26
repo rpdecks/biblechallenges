@@ -19,10 +19,10 @@ Biblechallenge::Application.routes.draw do
   # member is a namespace for users in a challenge
   namespace :member do
     resources :challenges, only: [:index, :show] do
-      resources :groups, only: [:new, :create]
+      resources :groups, only: [:new, :create, :index]
       resources :memberships, only: [:create] 
     end
-    resources :groups, except: [:new, :create] do
+    resources :groups, except: [:new, :create, :index] do
       member do
         post 'join'
         post 'leave'
