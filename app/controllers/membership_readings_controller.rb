@@ -7,8 +7,10 @@ class MembershipReadingsController < ApplicationController
   layout 'from_email'
 
   def create
-
+    MembershipReading.create(membership_reading_params)
+    redirect_to [:member, membership]
   end
+
   def update
     @comment = Comment.new
     @user = current_user
@@ -61,8 +63,16 @@ class MembershipReadingsController < ApplicationController
 
   private
 
+  def membership_reading_params
+    params.permit(:reading_id, :membership_id)
+  end
+
   def membership_reading
     @membership_reading ||= MembershipReading.find(params[:id])
+  end
+
+  def membership
+    @membership ||= Membership.find(params[:membership_id])
   end
 
 end
