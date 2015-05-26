@@ -25,7 +25,7 @@
         %tr
           %th Date
           %th Chapter
-      - @readings.each do |reading|
+      - @challenge.readings.each do |reading|
         %tr
           %td= reading.date.strftime("%a, %-d %b %Y")
           %td= reading.chapter.book_and_chapter
