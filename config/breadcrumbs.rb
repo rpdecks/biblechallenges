@@ -8,7 +8,7 @@ crumb :challenge do |challenge|
 end
 
 crumb :group do |group|
-  link group.name, challenge_group_path(group.challenge, group)
+  link group.name, member_group_path(group)
   parent :challenge, group.challenge
 end
 
