@@ -1,0 +1,14 @@
+- if current_user && @membership = @challenge.membership_for(current_user)
+  Bible Version:
+  = @membership.bible_version
+  = link_to 'Change', '/my-membership'
+
+%hr
+
+- if @membership
+  - if @membership.completed?
+    %h4 Congratulations!  You have completed this challenge.
+  %p
+    Bible Version:
+    = @membership.try(:bible_version)
+  #progress-bar-container

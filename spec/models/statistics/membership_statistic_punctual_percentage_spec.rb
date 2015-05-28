@@ -6,17 +6,19 @@ describe MembershipStatisticPunctualPercentage do
 
     it "should calculate a perfect percentage" do
       # four chapters each read on the right day
+      start_date = Date.today
       challenge = create(:challenge_with_readings, 
-                         chapters_to_read: 'Matt 1-4', begindate: Date.today)
+                         chapters_to_read: 'Matt 1-4', begindate: start_date)
 
       membership = create(:membership, challenge: challenge)
-      first_day = challenge.readings.order(:date).first.date
-      membership.membership_readings[0].update_attributes(state: "read", updated_at: first_day)
-      membership.membership_readings[1].update_attributes(state: "read", updated_at: first_day + 1.days)
-      membership.membership_readings[2].update_attributes(state: "read", updated_at: first_day + 2.days)
-      membership.membership_readings[3].update_attributes(state: "read", updated_at: first_day + 3.days)
+      readings = challenge.readings
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: start_date)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: start_date + 1)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: start_date + 2)
+      create(:membership_reading, reading: readings[3], membership: membership, updated_at: start_date + 3)
 
-      Timecop.travel(first_day + 3.days)
+
+      Timecop.travel(3.days)
 
       stat = MembershipStatisticPunctualPercentage.new(membership: membership)
       expect(stat.calculate).to eq 100
