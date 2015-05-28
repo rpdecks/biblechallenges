@@ -1,66 +1,34 @@
 class MembershipReadingsController < ApplicationController
 
-  before_filter :authenticate_user!, only: [:update]
-  before_filter :find_membership_reading, except: [:update ]
+  before_filter :authenticate_user!
 
-  acts_as_token_authentication_handler_for User, only: [:edit]
+  acts_as_token_authentication_handler_for User, only: [:create, :destroy]
 
   layout 'from_email'
 
-  def update
-    @comment = Comment.new
-    @user = current_user
-    @membership_reading = current_user.membership_readings.find_by_id(params[:id])
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
-    #just going to toggle state on any update
-    @membership_reading.state = (@membership_reading.state == 'unread') ? 'read' : 'unread'
-    @membership_reading.save!
-
-    if @membership_reading.state == 'read'
-      notice = "Reading updated!  You have completed #{@reading.chapter.book_and_chapter}."
-    else
-      notice = "Reading updated!"
-    end
-
-    redirect_to params[:location] || request.referer, notice: notice
+  def create
+    MembershipReading.create(membership_reading_params)
+    redirect_to [:member, membership]
   end
 
-  def edit
-    @comment = Comment.new
-    if @membership_reading
-      @user = @membership_reading.membership.user
-      sign_in @user
-      @reading = @membership_reading.reading
-    else
-      flash[:error] = "This confirmation link doesn't exist or you may have unsubscribed from this challenge"
-    end
-  end
-
-
-  def confirm
-    @comment = Comment.new
-    if @membership_reading
-      @user = @membership_reading.membership.user
-      sign_in @user
-      @reading = @membership_reading.reading
-    else
-      flash[:error] = "This confirmation link doesn't exist"
-    end
-  end
-
-  def log
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
-
-    @membership_reading.state = 'read'
-    @membership_reading.save!
+  def destroy
+    membership = membership_reading.membership
+    membership_reading.destroy
+    redirect_to [:member, membership]
   end
 
   private
 
-  def find_membership_reading
-    @membership_reading = MembershipReading.find(params[:id])
+  def membership_reading_params
+    params.permit(:reading_id, :membership_id)
+  end
+
+  def membership_reading
+    @membership_reading ||= MembershipReading.find(params[:id])
+  end
+
+  def membership
+    @membership ||= Membership.find(params[:membership_id])
   end
 
 end

@@ -45,10 +45,8 @@ describe Reading do
         reading = challenge.readings.first
         m1 = create(:membership, challenge: challenge)
         m2 = create(:membership, challenge: challenge)
-        reading.membership_readings.each do |m|
-          m.state = 'read'
-          m.save!
-        end
+        create(:membership_reading, reading: reading, membership: m1)
+        create(:membership_reading, reading: reading, membership: m2)
         expect(reading.last_readers(2)).to match_array [m1.user, m2.user]
         
       end
