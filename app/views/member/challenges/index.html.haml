@@ -13,7 +13,7 @@
   - @challenges.each do |challenge|
     %tr
       %td= "X" if challenge.owner == current_user
-      %td= link_to challenge.name, challenge
+      %td= link_to challenge.name, member_challenge_path(challenge)
       %td= challenge.begindate
       %td.hidden-xs= challenge.enddate
       %td= link_to "delete", challenge, method: :delete
