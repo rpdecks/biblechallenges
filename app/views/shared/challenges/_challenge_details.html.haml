@@ -2,13 +2,19 @@
 
 %table.table.table-striped.table-condensed
   %tr
-    %td Challenge Members:
+    %td Owner:
+    %td
+      - owner = @challenge.owner
+      = image_tag avatar_url(owner, 35), title: owner.username 
+
+  %tr
+    %td Members:
     %td
       - @challenge.members.each do |m|
         = image_tag avatar_url(m, 35), title: m.username
 
   %tr
-    %td Challenge Dates:
+    %td Dates:
     %td
       =@challenge.begindate.strftime("%-m/%-d/%Y") 
       = "-" 
