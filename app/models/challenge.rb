@@ -1,4 +1,6 @@
 class Challenge < ActiveRecord::Base
+  include PgSearch
+  pg_search_scope :search_by_name, against: :name
 
   # Relations
   has_many :memberships, dependent: :destroy
