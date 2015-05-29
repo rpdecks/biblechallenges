@@ -93,7 +93,7 @@ describe Membership do
           user = create(:user)
           challenge = create(:challenge, begindate: Date.tomorrow) 
           membership = build(:membership, challenge: challenge, user: user)
-          ReadingMailer.should_not_receive(:daily_reading_email)
+          expect(ReadingMailer).not_to receive(:daily_reading_email)
           membership.save
         end
       end

@@ -32,7 +32,7 @@ class Member::MembershipsController < ApplicationController
     else
       flash[:error] = @membership.errors.full_messages.to_sentence
     end
-    redirect_to @challenge
+    redirect_to [:member, @challenge]
   end
 
   def join_group

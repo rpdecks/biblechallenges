@@ -51,7 +51,7 @@ describe Member::MembershipsController do
     it "redirects to the challenge page after joining as a logged in user" do
       somechallenge = create(:challenge)  #uses factorygirl
       post :create, challenge_id: somechallenge.id
-      expect(response).to redirect_to somechallenge
+      expect(response).to redirect_to [:member, somechallenge]
     end
 
     it "creates a membership" do
