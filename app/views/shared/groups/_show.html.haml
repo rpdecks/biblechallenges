@@ -1,0 +1,25 @@
+%h3
+  =@group.name
+%ol.list-group
+  %li.list-group-item
+    - @group.members.each do |m|
+      = image_tag avatar_url(m, 30), title: m.username
+    %span.badge
+      = @group.members.count
+      = "member".pluralize(@group_member_count)
+%h4
+  Group name:
+  = "#{@group.name}"
+%h4
+  Owner:
+  = @group.user.email
+
+- if current_user
+  - if current_user.groups.include?(@group)
+    = link_to "Leave Group", leave_member_group_path(id: @group.id), method: :post
+  -else 
+    = link_to "Join Group", join_member_group_path(id: @group.id), method: :post
+- else
+  = link_to "Sign me up", new_user_registration_path
+- if current_user && @group.user_id == current_user.id
+  = link_to "Delete Group", member_group_path(id: @group.id), method: :delete

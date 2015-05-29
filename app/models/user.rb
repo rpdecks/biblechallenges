@@ -44,4 +44,9 @@ class User < ActiveRecord::Base
     profile && profile.first_name
   end
 
+  def find_challenge_group(challenge)
+    cg = challenge.groups
+    ug = self.groups
+    (cg & ug).first
+  end
 end

@@ -25,7 +25,10 @@
       .tab-pane#readings{role: "tabpanel"}
         = render 'shared/challenges/readings_table'
       .tab-pane#mygroup{role: "tabpanel"}
-        My Group
+        - if current_user.find_challenge_group(@challenge) != nil
+          = render 'shared/groups/show'
+        - else
+          You are not currently in a group.
       .tab-pane#groups{role: "tabpanel"}
         = render 'shared/challenges/challenge_groups'
       .tab-pane#statistics{role: "tabpanel"}
