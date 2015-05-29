@@ -13,7 +13,7 @@
           %td= reading.date.strftime("%-m/%-d")
           %td= link_to reading.chapter.book_and_chapter + "  (#{reading.comments.count})" , reading
           %td
-            = button_to "Read", membership_readings_path(reading_id: reading.id, membership_id: membership.id)
+            = link_to "Read", membership_readings_path(reading_id: reading.id, membership_id: membership.id), remote: true, class: "btn btn-primary", method: :post
             = "X" if reading.read_by?(current_user)
 
 
