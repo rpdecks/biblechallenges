@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: membership_readings
-#
-#  id            :integer          not null, primary key
-#  membership_id :integer
-#  reading_id    :integer
-#  state         :string(255)      default("unread")
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#
-
 class MembershipReading < ActiveRecord::Base
 
   # Scopes

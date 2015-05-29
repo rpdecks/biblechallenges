@@ -8,7 +8,7 @@ class MembershipReadingsController < ApplicationController
 
   def create
     MembershipReading.create(membership_reading_params)
-    redirect_to [:member, membership]
+    redirect_to :back
   end
 
   def destroy

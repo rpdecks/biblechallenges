@@ -22,7 +22,7 @@
           %ul.nav.navbar-nav.navbar-right
             %li
               - if user_signed_in?
-                = link_to('My Challenges', challenges_path)
+                = link_to('My Challenges', member_challenges_path)
             %li
               - if user_signed_in?
                 = link_to('Edit Profile', edit_profile_path)
