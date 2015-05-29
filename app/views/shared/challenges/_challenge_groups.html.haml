@@ -1,0 +1,34 @@
+:javascript
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+    })
+
+
+%h3 
+  Challenge Groups
+  %a.btn.btn-default{tabindex: "0", role: "button", :data => {:trigger => 'focus', :placement => 'right', :toggle => 'popover', :content => 'Information here' }, :title => 'Awesome'}
+    %span.glyphicon.glyphicon-info-sign
+%ol.list-group
+  - @challenge.groups.each do |g|
+    - @group_member_count = @challenge.memberships.where(group_id: g).size
+    - if @challenge.has_member?(current_user) && g.has_member?(current_user)
+      %li.list-group-item
+        %strong
+          = link_to g.name, member_group_path(challenge_id: @challenge.id, id: g.id) 
+          (My current group)
+        %span.badge
+          = @group_member_count
+          = "member".pluralize(@group_member_count)
+    - else 
+      %li.list-group-item.list-group-item-info
+        = link_to g.name, member_group_path(id: g.id)
+        %span.badge
+          = @group_member_count
+          = "member".pluralize(@group_member_count)
+.right
+  = render 'shared/challenges/create_a_group'
+
+.left-bold
+  Total Groups:
+  = @challenge.groups.count
+

@@ -24,6 +24,7 @@ gem 'acts_as_scriptural'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'gretel'
 gem 'figaro'
+gem 'draper'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

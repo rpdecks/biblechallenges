@@ -1,0 +1,39 @@
+- breadcrumb :challenge, @challenge
+.container
+  = breadcrumbs
+  %br
+  %br
+  %div{role: "tabpanel"}
+    %ul.nav.nav-tabs{role: "tablist"}
+      %li.active{role: "presentation"}
+        %a{href: "#today", role: "tab", aria: {controls: "today"}, data: {toggle: "tab"}} Today
+      %li{role: "presentation"}
+        %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
+      %li{role: "presentation"}
+        %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
+      %li{role: "presentation"}
+        %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
+      %li{role: "presentation"}
+        %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
+      %li{role: "presentation"}
+        %a{href: "#details", role: "tab", aria: {controls: "details"}, data: {toggle: "tab"}} Details
+    .tab-content
+      .tab-pane.active#today{role: "tabpanel"}
+        %br
+        Today
+        Today's reading should go here, and other stuff
+      .tab-pane#readings{role: "tabpanel"}
+        = render 'shared/challenges/readings_table'
+      .tab-pane#mygroup{role: "tabpanel"}
+        My Group
+      .tab-pane#groups{role: "tabpanel"}
+        = render 'shared/challenges/challenge_groups'
+      .tab-pane#statistics{role: "tabpanel"}
+        = render 'shared/challenges/challenge_statistics'
+      .tab-pane#details{role: "tabpanel"}
+        = render 'shared/challenges/challenge_details'
+        = render 'shared/challenges/challenge_unsubscribe'
+
+
+
+

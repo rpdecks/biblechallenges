@@ -1,64 +1,47 @@
 class MembershipReadingsController < ApplicationController
-  before_filter :authenticate_user!, only: [:update]
-  before_filter :find_membership_reading, except: [:update ]
+  before_filter :authenticate_user!
+  respond_to :html, :js
 
-  acts_as_token_authentication_handler_for User, only: [:edit]
+  acts_as_token_authentication_handler_for User, only: [:create, :destroy]
 
   layout 'from_email'
 
-  def update
-    @comment = Comment.new
-    @user = current_user
-    @membership_reading = current_user.membership_readings.find_by_id(params[:id])
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
-    #just going to toggle state on any update
-    @membership_reading.state = (@membership_reading.state == 'unread') ? 'read' : 'unread'
-    @membership_reading.save!
-
-    if @membership_reading.state == 'read'
-      notice = "Reading updated!  You have completed #{@reading.chapter.book_and_chapter}."
-    else
-      notice = "Reading updated!"
-    end
-
-    redirect_to params[:location] || request.referer, notice: notice
-  end
-
-  def edit
-    @comment = Comment.new
-    if @membership_reading
-      @user = @membership_reading.membership.user
-      sign_in @user
-      @reading = @membership_reading.reading
-    else
-      flash[:error] = "This confirmation link doesn't exist or you may have unsubscribed from this challenge"
+  def create
+    #jim do I need to instantiate @challenge @reading etc even though I may not need them?
+    # can I re-render a smaller piece of the page to avoid needing these variables
+    # how can I structure this create method so I can hit it from multiple places
+    @challenge = membership.challenge
+    reading
+    MembershipReading.create(membership_reading_params)
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { render :create }
     end
   end
 
-  def confirm
-    @comment = Comment.new
-    if @membership_reading
-      @user = @membership_reading.membership.user
-      sign_in @user
-      @reading = @membership_reading.reading
-    else
-      flash[:error] = "This confirmation link doesn't exist"
-    end
+  def destroy
+    #jim this feel hokey because I want to pass in the id of the membership reading
+    #but since I want to display this link before the actual record exists I'm 
+    # doing it this way
+    membership_reading = current_user.membership_readings.
+      find_by_reading_id_and_membership_id(params[:reading_id], params[:membership_id])
+    reading
+    membership_reading.destroy
   end
 
-  def log
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
-
-    @membership_reading.state = 'read'
-    @membership_reading.save!
+  def membership_reading_params
+    params.permit(:reading_id, :membership_id)
   end
 
-  private
-
-  def find_membership_reading
-    @membership_reading = MembershipReading.find(params[:id])
+  def membership_reading
+    @membership_reading ||= MembershipReading.find(params[:id])
   end
 
+  def membership
+    @membership ||= Membership.find(params[:membership_id])
+  end
+
+  def reading
+    @reading ||= Reading.find(params[:reading_id])
+  end
 end

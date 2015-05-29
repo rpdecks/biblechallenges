@@ -9,4 +9,8 @@ module ReadingsHelper
     raw avatarlist
   end
 
+  def reading_css(reading)
+    reading.read_by?(current_user) ? 'read' : 'unread'
+  end
+
 end

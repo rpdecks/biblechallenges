@@ -30,40 +30,26 @@ describe MembershipReadingsController, type: :controller do
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
-    describe 'PUT#update' do
-      it "finds the membership_reading" do
-        #membership_reading = create(:membership_reading, membership: membership)
-        put :update, id: membership_reading, format: 'js'
-        expect(assigns(:membership_reading)).to eql(membership_reading)
+    describe 'POST#create' do
+      it "creates a new membership_reading" do
+        reading = create(:reading)
+        expect {
+          post :create, reading_id: reading.id, membership_id: membership.id
+        }.to change(MembershipReading, :count).by(1)
       end
+    end
 
-      it "assigns comment" do
-        put :update, id: membership_reading
-        expect(assigns(:comment)).to be_truthy
-      end
-
-      it "assigns user" do
-        put :update, id: membership_reading
-        expect(assigns(:user)).to be_truthy
-      end
-
-      it "assigns reading" do
-        put :update, id: membership_reading
-        expect(assigns(:reading)).to be_truthy
+    describe 'DELETE#destroy' do
+      it "deletes a membership_reading" do
+        pending  #jim   
+        expect { 
+          delete :destroy, id: membership_reading.id
+        }.to change(MembershipReading, :count).by(-1)
       end
     end
   end
 
-  describe 'Guest access' do
-    describe 'PUT#update' do
-      it "redirects to the log in page" do
-        put :update, id: membership_reading
-        expect(response).to redirect_to new_user_session_path
-      end
-    end
-  end
-
-  describe 'GET#edit' do
+  describe 'GET#create' do
     context 'with a valid token' do
       before(:each) do
         get :edit,
@@ -92,46 +78,8 @@ describe MembershipReadingsController, type: :controller do
     context "with an invalid token" do
       it "set the flash with an error message" do
         pending
-        get :edit, id: "blah"
+        post :create, id: "blah"
         should set_the_flash
-      end
-    end
-  end
-
-  describe 'GET#confirm' do
-    context 'with a valid token' do
-      it "renders the :new template" do
-        get :confirm, id: membership_reading.id
-        expect(response).to render_template(:confirm)
-      end
-
-      it "renders with email layout" do
-        get :confirm, id: membership_reading.id
-        should render_with_layout('from_email')
-      end
-
-      it "finds the membership_reading's user" do
-        get :confirm, id: membership_reading.id
-        expect(assigns(:user)).to eql(membership_reading.membership.user)
-      end
-
-      it "finds the membership_reading's reading" do
-        get :confirm, id: membership_reading.id
-        expect(assigns(:reading)).to eql(membership_reading.reading)
-      end
-    end
-  end
-
-  describe 'PUT#log' do
-    context 'with a valid token' do
-      it "finds membership_reading" do
-        put :log, id: membership_reading.id, format:'js'
-        expect(assigns(:membership_reading)).to eql(membership_reading)
-      end
-
-      it "changes membership_reading state to 'read'" do
-        put :log, id: membership_reading.id, format:'js'
-        expect(membership_reading.reload.state).to eql('read')
       end
     end
   end
