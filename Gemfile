@@ -23,6 +23,7 @@ gem 'activerecord-deprecated_finders'
 gem 'acts_as_scriptural'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'gretel'
+gem 'figaro'
 gem 'draper'
 
 # Bundle edge Rails instead:

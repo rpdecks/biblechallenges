@@ -1,7 +1,6 @@
 Biblechallenge::Application.routes.draw do
 
   if Rails.env.development?
-    mount MailPreview => 'mail_view'
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
@@ -50,7 +49,7 @@ Biblechallenge::Application.routes.draw do
   match '/reading/log/:id' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
 
   # more restful reading logging
-  resources :membership_readings, only: [:edit, :update, :create, :destroy] do
+  resources :membership_readings, only: [:create, :destroy] do
   end
 
 
