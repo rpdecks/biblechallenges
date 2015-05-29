@@ -1,7 +1,12 @@
+:javascript
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+    })
+
+
 %h3 
   Challenge Groups
-  %popover.btn.btn-default{:data => {:toggle => 'popover', :title => 'Awesome', :content => 'Information here' }}
-    %b
+  %a.btn.btn-default{tabindex: "0", role: "button", :data => {:trigger => 'focus', :placement => 'right', :toggle => 'popover', :content => 'Information here' }, :title => 'Awesome'}
     %span.glyphicon.glyphicon-info-sign
 %ol.list-group
   - @challenge.groups.each do |g|

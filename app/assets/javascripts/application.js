@@ -17,4 +17,3 @@
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require public
-//= require bootstrap
