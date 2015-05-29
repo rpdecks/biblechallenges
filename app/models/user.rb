@@ -27,10 +27,21 @@ class User < ActiveRecord::Base
 
   #Callbacks
 
-  delegate :first_name, :last_name, :username, to: :profile
 
   def fullname
     "#{first_name} #{last_name}"
+  end
+
+  def first_name
+    profile && profile.first_name
+  end
+
+  def last_name
+    profile && profile.first_name
+  end
+
+  def username
+    profile && profile.first_name
   end
 
 end

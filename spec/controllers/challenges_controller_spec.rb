@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ChallengesController, "Routing" do
-  it { {get: "/"}.should route_to(controller: "challenges", action: "index") }
+  it { expect({get: "/"}).to route_to(controller: "challenges", action: "index") }
 end
 
 describe ChallengesController, "Actions" do

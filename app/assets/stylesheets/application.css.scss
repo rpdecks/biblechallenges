@@ -27,3 +27,13 @@
 
 }
 
+.reading.read {
+  #read { display: none; }
+  #unread { display: inline-block; }
+}
+
+.reading.unread {
+  #read { display: inline-block; }
+  #unread { display: none; }
+}
+
