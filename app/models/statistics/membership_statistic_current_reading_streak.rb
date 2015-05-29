@@ -19,8 +19,7 @@ class MembershipStatisticCurrentReadingStreak < MembershipStatistic
   # Example 2:  read one chapter, next day read 3, then next day read 1.  streak should be 3
 
   def calculate
-    readings = self.membership.membership_readings.read
-    current_streak(readings)  # some helper method to find the streak; pure ruby
+    current_streak(self.membership.membership_readings)  # some helper method to find the streak; pure ruby
   end
 
   def update

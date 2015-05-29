@@ -14,7 +14,7 @@ class OneChapterBadge < Badge
   end
 
   def qualify?
-    user.membership_readings.read.count > 0 
+    user.membership_readings.count > 0 
   end
 
 

@@ -38,6 +38,23 @@ describe Reading do
   end
 
   describe "Instance Methods" do
+    describe "read_by?" do
+      it "returns false if the reading has been read by the passed in user" do
+        user = create(:user)
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Mar 1 -2')
+        create(:membership, user: user, challenge: challenge)
+        reading = challenge.readings.first
+        expect(reading.read_by?(user)).to eq false
+      end
+      it "returns true if the reading has been read by the passed in user" do
+        user = create(:user)
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Mar 1 -2')
+        membership = create(:membership, user: user, challenge: challenge)
+        reading = challenge.readings.first
+        create(:membership_reading, membership: membership, reading: reading)
+        expect(reading.read_by?(user)).to eq true
+      end
+    end
     describe "last_readers" do
       it "should return a collection of the last x readers" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
@@ -45,10 +62,8 @@ describe Reading do
         reading = challenge.readings.first
         m1 = create(:membership, challenge: challenge)
         m2 = create(:membership, challenge: challenge)
-        reading.membership_readings.each do |m|
-          m.state = 'read'
-          m.save!
-        end
+        create(:membership_reading, reading: reading, membership: m1)
+        create(:membership_reading, reading: reading, membership: m2)
         expect(reading.last_readers(2)).to match_array [m1.user, m2.user]
         
       end

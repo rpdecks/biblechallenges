@@ -8,18 +8,23 @@ Biblechallenge::Application.routes.draw do
 
   resource :profile, only: [:update, :edit]
 
-  resources :challenges, only: [:new, :index, :show, :create, :destroy] do
-    resources :groups, only: [:show, :create, :new, :destroy], controller: 'challenges/groups' do
+  namespace :creator do
+    resources :challenges
+  end
+
+  # member is a namespace for users in a challenge
+  namespace :member do
+    resources :challenges, only: [:index, :show] do
+      resources :groups, only: [:new, :create, :index]
+      resources :memberships, only: [:create] 
+    end
+    resources :groups, except: [:new, :create, :index] do
       member do
         post 'join'
         post 'leave'
       end
     end
-    resources :memberships, only: [:update, :index, :show, :create, :destroy] do
-      collection do
-        post 'create_for_guest'
-      end
-    end
+    resources :memberships, only: [:update, :index, :show, :destroy] 
   end
 
   resources :badges, only: [:index, :show]
@@ -44,11 +49,11 @@ Biblechallenge::Application.routes.draw do
   match '/reading/log/:id' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
 
   # more restful reading logging
-  resources :membership_readings, only: [:edit, :update] do
+  resources :membership_readings, only: [:edit, :update, :create, :destroy] do
   end
 
 
-  resources :public_challenges, only: [:index]
-  root to: 'public_challenges#index'
+  resources :challenges, only: [:index, :show], controller: 'challenges'
+  root to: 'challenges#index'
 
 end
