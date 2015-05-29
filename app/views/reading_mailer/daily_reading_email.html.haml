@@ -6,7 +6,8 @@
         =@chapter.book_name
         =@chapter.chapter_number
       %br
-      Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
+      -# Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
+      Hello,
       %br
       Today's reading, for #{@reading.date.strftime("%b %-d %Y")}, is below.
       %br
@@ -22,7 +23,11 @@
 
       %br
       %center
-        = link_to 'Confirm you read this chapter.', membership_readings_url(membership_id: @membership.id, reading_id: @reading.id)
+      = link_to 'Confirm you read this chapter.',
+        membership_readings_url(membership_id: @membership.id,
+                                reading_id: @reading.id,
+                                user_token: @user.authentication_token),
+        method: :post
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
