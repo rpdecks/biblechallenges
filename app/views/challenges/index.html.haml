@@ -21,12 +21,12 @@
           = image_tag avatar_url(m, 30), title: m.username
         %br
         = "Chapters: #{challenge.readings.size}"
-        %br
+      .col-md-3
         = "Total Chapters To Read: #{challenge.readings.size}"
-        %br
+      .col-md-3
         = "Total Chapters Read: #{challenge.membership_readings.size}"
-        %br
+      .col-md-3
         = "Start Date: #{challenge.begindate.strftime("%b %d, %Y")}"
-        %br
+      .col-md-3
         = "End Date: #{challenge.enddate.strftime("%b %d, %Y")}"
 
