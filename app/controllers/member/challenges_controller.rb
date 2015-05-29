@@ -14,6 +14,7 @@ class Member::ChallengesController < ApplicationController
 
   def show
     @readings  = @challenge.readings.order(:date)
+    @group = current_user.find_challenge_group(@challenge)
   end
 
   def find_challenge
