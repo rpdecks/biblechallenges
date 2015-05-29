@@ -1,1 +1,2 @@
-$('#readings').html("<%= j render(:partial => 'shared/challenges/readings_table') %>");
+$('#reading_<%= @reading.id %>').removeClass('unread');
+$('#reading_<%= @reading.id %>').addClass('read');
