@@ -1,8 +1,7 @@
 class MembershipReadingsController < ApplicationController
-  before_filter :authenticate_user!
   respond_to :html, :js
-
-  acts_as_token_authentication_handler_for User, only: [:create, :destroy]
+  acts_as_token_authentication_handler_for User, only: [:create]
+  before_filter :authenticate_user! # needs to follow token_authentication_handler
 
   layout 'from_email'
 
@@ -14,7 +13,7 @@ class MembershipReadingsController < ApplicationController
     reading
     MembershipReading.create(membership_reading_params)
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to member_challenge_path reading.challenge }
       format.js { render :create }
     end
   end
@@ -23,10 +22,12 @@ class MembershipReadingsController < ApplicationController
     #jim this feel hokey because I want to pass in the id of the membership reading
     #but since I want to display this link before the actual record exists I'm 
     # doing it this way
-    membership_reading = current_user.membership_readings.
-      find_by_reading_id_and_membership_id(params[:reading_id], params[:membership_id])
-    reading
+    challenge = membership_reading.reading.challenge
     membership_reading.destroy
+    respond_to do |format|
+      format.html { redirect_to member_challenge_path challenge }
+      format.js { render :destroy }
+    end
   end
 
   def membership_reading_params
