@@ -1,0 +1,8 @@
+%tr
+  %td= reading.date.strftime("%-m/%-d")
+  %td= link_to reading.chapter.book_and_chapter + "  (#{reading.comments.count})" , reading
+  %td[reading]{class: reading_css(reading)}
+    - if reading.read_by?(current_user)
+      = link_to "Mark as Unread", membership_reading_path(id: reading.membership_reading_for(membership)), class: "btn btn-primary delete", id: "unread",  method: :delete
+    - else
+      = link_to "Read", membership_readings_path(reading_id: reading.id, membership_id: membership.id), class: "btn btn-primary", id: "read",  method: :post

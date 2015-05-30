@@ -175,6 +175,10 @@ GEM
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
     pg (0.18.1)
+    pg_search (1.0.3)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     pickadate-rails (3.5.5.0)
       railties (>= 3.1.0)
     pry (0.10.1)
@@ -359,6 +363,7 @@ DEPENDENCIES
   letter_opener_web
   mail_view
   pg
+  pg_search
   pickadate-rails
   pry
   pry-nav

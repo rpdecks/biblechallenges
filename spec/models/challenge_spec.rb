@@ -174,6 +174,15 @@ describe Challenge do
         end
       end
     end
-
+  end
+  describe "Search scopes" do
+    it "#search_by_name should not find a challenge when searching by name" do
+      challenge = create(:challenge, name: "Guy Challenge")
+      expect(Challenge.search_by_name('Phil')).not_to include [challenge]
+    end
+    it "#search_by_name should find a challenge when searching by name" do
+      challenge = create(:challenge, name: "Guy Challenge")
+      expect(Challenge.search_by_name('Guy')).to match_array [challenge]
+    end
   end
 end
