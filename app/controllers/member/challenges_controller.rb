@@ -1,6 +1,6 @@
 class Member::ChallengesController < ApplicationController
 
-  before_filter :authenticate_user!, except: [:show]
+  before_filter :authenticate_user!
   before_filter :find_challenge, only: [:show, :destroy]
 
   def new
