@@ -23,7 +23,7 @@
         Today
         Today's reading should go here, and other stuff
       .tab-pane#readings{role: "tabpanel"}
-        = render 'shared/challenges/readings_table'
+        = render 'shared/challenges/readings_table'  # why can I not pass local vars here #jim
       .tab-pane#mygroup{role: "tabpanel"}
         - if current_user.find_challenge_group(@challenge) != nil
           = render 'shared/groups/show'
