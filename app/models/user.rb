@@ -45,8 +45,6 @@ class User < ActiveRecord::Base
   end
 
   def find_challenge_group(challenge)
-    cg = challenge.groups
-    ug = self.groups
-    (cg & ug).first
+    groups.where(challenge: challenge).first
   end
 end
