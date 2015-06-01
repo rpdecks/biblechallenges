@@ -4,7 +4,7 @@
   %br
   %br
   %div{role: "tabpanel"}
-    %ul.nav.nav-tabs{role: "tablist"}
+    %ul#grouptabs.nav.nav-tabs{role: "tablist"}
       %li.active{role: "presentation"}
         %a{href: "#today", role: "tab", aria: {controls: "today"}, data: {toggle: "tab"}} Today
       %li{role: "presentation"}
@@ -34,6 +34,18 @@
         = render 'shared/challenges/challenge_details'
         = render 'shared/challenges/challenge_unsubscribe'
 
+
+:javascript
+  // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
+  // store the currently selected tab in the hash value
+  $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+    var id = $(e.target).attr("href").substr(1);
+    window.location.hash = id;
+  });
+
+  // on load of the page: switch to the currently selected tab
+  var hash = window.location.hash;
+    $('#grouptabs a[href="' + hash + '"]').tab('show');
 
 
 
