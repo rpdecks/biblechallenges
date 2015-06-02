@@ -1,29 +1,12 @@
 %h4 Readings
 %table.table.table-striped.table-bordered.table-hover.table-centered-text
   %tbody
-    - if current_user && membership = @challenge.membership_for(current_user)
-      %thead
-        %tr
-          %th Date
-          %th Chapter(comments)
-          %th 
-            %span.glyphicon.glyphicon-ok
-      - membership.readings.each do |reading|
-        %tr
-          %td= reading.date.strftime("%-m/%-d")
-          %td= link_to reading.chapter.book_and_chapter + "  (#{reading.comments.count})" , reading
-          %td[reading]{class: reading_css(reading)}
-            = link_to "Read", membership_readings_path(reading_id: reading.id, membership_id: membership.id), remote: true, class: "btn btn-primary", id: "read",  method: :post
-            = link_to "Unread", membership_reading_path(reading_id: reading.id, membership_id: membership.id), remote: true, class: "btn btn-primary delete", id: "unread",  method: :delete
-
-
-
-    - else
-      %thead
-        %tr
-          %th Date
-          %th Chapter
-      - @challenge.readings.each do |reading|
-        %tr
-          %td= reading.date.strftime("%a, %-d %b %Y")
-          %td= reading.chapter.book_and_chapter
+    %thead
+      %tr
+        %th Date
+        %th Chapter(comments)
+        %th 
+          %span.glyphicon.glyphicon-ok
+    - @readings.each do |reading|
+      = render partial: 'shared/challenges/readings_table_row',
+        locals: {reading: reading, membership: @membership}
