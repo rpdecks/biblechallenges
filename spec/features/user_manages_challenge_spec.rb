@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'User manages groups' do
+feature 'User manages challenges' do
   let(:user) {create(:user, :with_profile)}
 
   before(:each) do
