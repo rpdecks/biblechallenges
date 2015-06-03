@@ -66,7 +66,7 @@ describe MembershipStatisticCurrentReadingStreak do
       Timecop.return
     end
 
-    it "will calculate reset active streak if the day that breaks streak has not passed" do
+    it "will reset active streak to zero if the day that breaks streak has passed" do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
