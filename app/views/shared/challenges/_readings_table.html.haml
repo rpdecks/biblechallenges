@@ -7,6 +7,6 @@
         %th Chapter(comments)
         %th 
           %span.glyphicon.glyphicon-ok
-    - @readings.each do |reading|
+    - @challenge.readings.each do |reading|
       = render partial: 'shared/challenges/readings_table_row',
         locals: {reading: reading, membership: @membership}

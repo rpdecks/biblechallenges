@@ -19,7 +19,7 @@ feature 'User manages groups' do
   end
 
   scenario 'User joins a challenge successfully' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     visit challenges_path
     click_link challenge.name
     click_link "Join Challenge"
