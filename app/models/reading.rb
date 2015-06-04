@@ -19,6 +19,7 @@ class Reading < ActiveRecord::Base
 
   #Scopes
   scope :to_date, lambda { | a_date | where("date <= ?", a_date) }
+  scope :todays_reading, -> { where("date" => Date.today) }
 
 
   def last_read_by
