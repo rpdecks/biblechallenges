@@ -9,6 +9,7 @@ feature 'User manages member/challenge' do
   end
 
   scenario 'User is able to see Todays reading' do
+    pending
     membership = create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
     membership.readings.to_date(Date.today).first.chapter.verses.by_version(membership.bible_version).each do |v|

@@ -41,7 +41,7 @@ class MembershipReadingsController < ApplicationController
     end
   end
 
-  def show
+  def confirmation
 
   end
 
