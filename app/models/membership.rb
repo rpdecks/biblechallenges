@@ -1,5 +1,4 @@
 class Membership < ActiveRecord::Base
-  include TimezoneMatcher
 
   attr_accessor :auto_created_user
 
@@ -51,7 +50,8 @@ class Membership < ActiveRecord::Base
     #scope by retrieving users according to timezone that match designated time, DateTime.now.strftime("%Y%m%d %H")
     #Time.now.in_time_zone(m.user.profile.time_zone).strftime("%Y%m%d %H")
     #other method would be to find all timezones where the time matches the designated time.
-    tzones = TimezoneMatcher.timezones_where_the_day_and_hour_are()
+    tzones = TimezoneMatcher.foo(DateTime.now.strftime("%A"), "3")
+
     Membership.all.each do |m|
       reading = m.readings.todays_reading.first
       if reading
