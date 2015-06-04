@@ -1,2 +1,16 @@
-.container
-  = render 'form'
+You are choosing to unsubscribe from the 
+=@membership.challenge.name
+Bible Challenge.
+
+=button_to "Unsubscribe Me", member_membership_path(@membership,
+                              user_email: @membership.user.email,
+                              user_token: @membership.user.authentication_token), method: :delete
+                                
+=button_to "Never Mind", challenge_path(@membership.challenge)
+
+
+
+
+
+
+
