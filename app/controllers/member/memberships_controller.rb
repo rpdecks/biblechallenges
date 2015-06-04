@@ -1,14 +1,20 @@
 class Member::MembershipsController < ApplicationController
 
+  acts_as_token_authentication_handler_for User, only: [:edit, :destroy]
+
   before_filter :authenticate_user!
   
-  before_filter :find_challenge, except: [:destroy, :show, :find_challenge, :unsubscribe_from_email]
-  before_filter :find_membership, only: [:update, :join_group, :destroy, :show]
+  before_filter :find_challenge, except: [:edit, :destroy, :show, :find_challenge, :unsubscribe_from_email]
+  before_filter :find_membership, only: [:edit, :update, :join_group, :destroy, :show]
 
   respond_to :html, :json, :js
 
   def index
     @memberships = @challenge.memberships
+  end
+
+  def edit
+
   end
 
   def show
