@@ -50,6 +50,9 @@ Biblechallenge::Application.routes.draw do
 
   # more restful reading logging
   resources :membership_readings, only: [:create, :destroy] do
+    member do
+      get 'confirmation'
+    end
   end
 
 
