@@ -1,4 +1,5 @@
 class Membership < ActiveRecord::Base
+  include TimezoneMatcher
 
   attr_accessor :auto_created_user
 
@@ -46,11 +47,16 @@ class Membership < ActiveRecord::Base
     challenge.readings.count == membership_readings.count
   end
 
-  def send_todays_reading  #this feels bad ask jose
-    r = readings.find_by_date(Date.today)
-    if r
-      mr = r.membership_readings.find_by_reading_id_and_membership_id(r.id, self.id)
-      MembershipReadingMailer.daily_reading_email(mr).deliver_now if mr
+  def self.send_daily_emails
+    #scope by retrieving users according to timezone that match designated time, DateTime.now.strftime("%Y%m%d %H")
+    #Time.now.in_time_zone(m.user.profile.time_zone).strftime("%Y%m%d %H")
+    #other method would be to find all timezones where the time matches the designated time.
+    tzones = TimezoneMatcher.timezones_where_the_day_and_hour_are()
+    Membership.all.each do |m|
+      reading = m.readings.todays_reading.first
+      if reading
+        ReadingMailer.daily_reading_email(reading, m).deliver_now
+      end
     end
   end
 
@@ -61,7 +67,6 @@ class Membership < ActiveRecord::Base
   end
 
   private
-
   # Callbacks
   def recalculate_group_stats
     if self.group_id.present?
@@ -72,12 +77,12 @@ class Membership < ActiveRecord::Base
 
 
   # -- emails
+
   def successful_creation_email
     MembershipMailer.creation_email(self).deliver_now
   end
+
   def successful_auto_creation_email
     MembershipMailer.auto_creation_email(self).deliver_now
   end
-
-
 end
