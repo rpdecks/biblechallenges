@@ -26,7 +26,8 @@
       = link_to 'Confirm you read this chapter.',
         membership_readings_url(membership_id: @membership.id,
                                 reading_id: @reading.id,
-                                user_token: @user.authentication_token),
+                                user_token: @user.authentication_token,
+              location: confirmation_membership_reading_path(id: @reading.id)),
         method: :post
       %br
       %small
