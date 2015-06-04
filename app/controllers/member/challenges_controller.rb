@@ -1,6 +1,6 @@
 class Member::ChallengesController < ApplicationController
 
-  before_filter :authenticate_user!, except: [:show]
+  before_filter :authenticate_user!
   before_filter :find_challenge, only: [:show, :destroy]
 
   def new
@@ -14,13 +14,10 @@ class Member::ChallengesController < ApplicationController
 
   def show
     @readings  = @challenge.readings.order(:date)
+    @group = current_user.find_challenge_group(@challenge)
     @membership = @challenge.membership_for(current_user)
   end
 
-  def find_challenge
-    @challenge = Challenge.find_by_id(params[:id])
-    redirect_to challenges_url if @challenge.nil?
-  end
 
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
@@ -35,6 +32,11 @@ class Member::ChallengesController < ApplicationController
   end
 
   private
+
+  def find_challenge
+    @challenge = Challenge.find_by_id(params[:id])
+    redirect_to challenges_url if @challenge.nil?
+  end
 
   def challenge_params
     params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read)
