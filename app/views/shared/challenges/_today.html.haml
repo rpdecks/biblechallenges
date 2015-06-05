@@ -1,0 +1,4 @@
+-if @todays_reading
+  = @todays_reading.chapter.decorate.by_version(@membership.bible_version)
+-else
+  No reading today :(
