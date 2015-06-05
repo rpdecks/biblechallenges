@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-feature 'User unsubscribes via email' do
+feature 'User logs reading via email' do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
 
-  scenario 'User unsubscribes from a challenge via the link in the daily email' do
+  scenario 'User logs his reading from the link at the bottom of the daily reading email' do
 
     user = create(:user)
     challenge = create(:challenge, :with_readings)
@@ -13,10 +13,8 @@ feature 'User unsubscribes via email' do
 
     expect{
     open_last_email
-    path = parse_email_for_link(current_email, "here")# the link is Click *here* to unsubsubscribe
-    visit(path)
-    click_button("Unsubscribe")
-    }.to change(Membership, :count).by(-1)
+    visit_in_email("Confirm")
+    }.to change(user.membership_readings, :count).by(1)
 
   end
 end
