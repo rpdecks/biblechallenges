@@ -78,6 +78,10 @@ class Challenge < ActiveRecord::Base
     end
   end
 
+  def todays_reading
+    readings.find_by_date(Date.today)
+  end
+
 
   private
 
