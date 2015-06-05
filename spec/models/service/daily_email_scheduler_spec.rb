@@ -18,9 +18,10 @@ describe DailyEmailScheduler do
 
     it "schedules an email according to the user's preferences for a user" do
       today = DateTime.now
-      user1 = create(:user, :with_profile) #time_zone: "UTC", preferred_reading_hour: 6
-      user2 = create(:user, profile: create(:profile, time_zone: "UTC",
-                                           preferred_reading_hour: 8))
+      user1 = create(:user, profile: create(:profile, time_zone: "EST",
+                                           preferred_reading_hour: 7))
+      user2 = create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)",
+                                           preferred_reading_hour: 7))
       challenge = create(:challenge, :with_readings, begindate: today)
       create(:membership, user: user1, challenge: challenge)
       create(:membership, user: user2, challenge: challenge)
@@ -33,7 +34,7 @@ describe DailyEmailScheduler do
       a = Time.at(DailyEmailWorker.jobs.first["at"])
       b = Time.at(DailyEmailWorker.jobs.last["at"])
       time_lapse = ( b -a ) / 3600
-      expect(time_lapse).to eq 2
+      expect(time_lapse).to eq 3
       
       Timecop.return
     end
