@@ -41,8 +41,7 @@
 
       %br
       %small
-        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.id)} here to be unsubscribed.
-      %br
+        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', unsubscribe_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form there.
