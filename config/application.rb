@@ -22,6 +22,9 @@ module Biblechallenge
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
+    #setup sidekiq for active jobs
+    config.active_job.queue_adapter = :sidekiq
+
     # Activate observers that should always be running.
     config.active_record.observers = :comment_observer
 

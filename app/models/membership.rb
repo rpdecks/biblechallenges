@@ -46,16 +46,23 @@ class Membership < ActiveRecord::Base
     challenge.readings.count == membership_readings.count
   end
 
-  def self.send_daily_emails
-    #scope by retrieving users according to timezone that match designated time, DateTime.now.strftime("%Y%m%d %H")
-    #Time.now.in_time_zone(m.user.profile.time_zone).strftime("%Y%m%d %H")
-    #other method would be to find all timezones where the time matches the designated time.
-    tzones = TimezoneMatcher.foo(DateTime.now.strftime("%A"), "3")
-
+  def self.set_daily_email_jobs
     Membership.all.each do |m|
       reading = m.readings.todays_reading.first
-      if reading
-        ReadingMailer.daily_reading_email(reading, m).deliver_now
+
+      #set time_zone to the user's time_zone
+      user_time_zone = m.user.profile.time_zone
+      Time.zone = user_time_zone
+
+      #convert user_time to UTC
+      user_reading_hour = m.user.profile.preferred_reading_hour
+      user_reading_hour_string = DateTime.now.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"
+      user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
+
+      #schedule the sidekiq job
+
+      if reading #schedule may be done, but still active
+        DailyEmailWorker.perform_at(user_reading_hour_utc, reading.id, m.user.id)
       end
     end
   end
