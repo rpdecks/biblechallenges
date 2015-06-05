@@ -99,6 +99,9 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0)
+    email_spec (1.6.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
     erubis (2.7.0)
     eventmachine (1.0.7)
     excon (0.25.3)
@@ -346,6 +349,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   draper
+  email_spec
   factory_girl_rails (= 4.1.0)
   faker (~> 1.4.3)
   figaro
