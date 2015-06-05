@@ -5,10 +5,10 @@ feature 'User unsubscribes via email' do
   include EmailSpec::Matchers
 
   scenario 'User unsubscribes from a challenge via the link in the daily email' do
+
     user = create(:user)
     challenge = create(:challenge, :with_readings)
     membership = create(:membership, user: user, challenge: challenge)
-
     ReadingMailer.daily_reading_email(challenge.readings.first, membership).deliver
 
     expect{

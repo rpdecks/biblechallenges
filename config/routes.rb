@@ -24,7 +24,11 @@ Biblechallenge::Application.routes.draw do
         post 'leave'
       end
     end
-    resources :memberships, only: [:update, :index, :show, :destroy, :edit] 
+    resources :memberships, only: [:update, :index, :show, :destroy, :edit] do
+      member do
+        get 'unsubscribe'
+      end
+    end
   end
 
   resources :badges, only: [:index, :show]
@@ -36,9 +40,6 @@ Biblechallenge::Application.routes.draw do
   resources :comments, only: [] do
     resources :comments, only: [:create], controller: "comments/comments"
   end
-
-#  get '/my-membership' => 'memberships#show', as: 'my_membership'
-#  get '/memberships' => 'memberships#index'
 
   # Unsubscribe from email
 #  get '/unsubscribe/:id' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'

@@ -37,4 +37,4 @@
       %br
       %small
         If for ANY reason you would like to opt-out of this bible reading challenge, simply click
-        #{link_to 'here', edit_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
+        #{link_to 'here', unsubscribe_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
