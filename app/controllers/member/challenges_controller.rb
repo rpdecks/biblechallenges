@@ -16,6 +16,7 @@ class Member::ChallengesController < ApplicationController
     @readings  = @challenge.readings.order(:date)
     @group = current_user.find_challenge_group(@challenge)
     @membership = @challenge.membership_for(current_user)
+    @todays_reading = @challenge.todays_reading
   end
 
 
