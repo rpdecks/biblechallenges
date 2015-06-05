@@ -47,7 +47,6 @@ Biblechallenge::Application.routes.draw do
 
   # Logging readings
   match '/reading/confirm/:id' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
-  match '/reading/log/:id' => 'membership_readings#log', via: [:put], as: 'membership_readings_log'
 
   # more restful reading logging
   resources :membership_readings, only: [:create, :destroy] do
@@ -55,6 +54,8 @@ Biblechallenge::Application.routes.draw do
       get 'confirmation'
     end
   end
+
+  match '/log_reading/' => 'membership_readings#create', via: [:get], as: 'log_reading'
 
 
   resources :challenges, only: [:index, :show], controller: 'challenges'

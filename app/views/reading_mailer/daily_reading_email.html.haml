@@ -24,12 +24,11 @@
       %br
       %center
       = link_to 'Confirm you read this chapter.',
-        membership_readings_url(membership_id: @membership.id,
+        log_reading_url(membership_id: @membership.id,
                                 reading_id: @reading.id,
                                 user_email: @user.email,
                                 user_token: @user.authentication_token,
-              location: confirmation_membership_reading_path(id: @reading.id)),
-        method: :post
+              location: confirmation_membership_reading_path(id: @reading.id))
       %br
       %small
         If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
