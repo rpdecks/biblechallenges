@@ -11,8 +11,7 @@ describe Reading do
     it { should validate_presence_of(:chapter_id) }
     it { should validate_presence_of(:challenge_id) }
     it { should validate_presence_of(:read_on) }
-  end
-
+  end 
   describe "Delegations" do
     it { should delegate_method(:owner).to(:challenge) }
   end
@@ -28,6 +27,10 @@ describe Reading do
 
     describe "on_date" do
       it "should return all readings scheduled for the given date" do
+        create_list(:reading, 2, read_on: "2050-01-01")
+        create_list(:reading, 1, read_on: "2050-01-02")
+
+        expect(Reading.on_date("2050-01-01").size).to eq 2
         
       end
     end
