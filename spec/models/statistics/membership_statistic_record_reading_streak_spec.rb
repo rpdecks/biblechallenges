@@ -9,7 +9,7 @@ describe MembershipStatisticRecordReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day)
@@ -30,7 +30,7 @@ describe MembershipStatisticRecordReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 1)
@@ -46,7 +46,7 @@ describe MembershipStatisticRecordReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 1)
@@ -63,7 +63,7 @@ describe MembershipStatisticRecordReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day + 1)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 2)

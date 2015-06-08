@@ -11,14 +11,13 @@ class Reading < ActiveRecord::Base
   #delegations
   delegate :members, to: :challenge
   delegate :owner, to: :challenge
-  
   # Validations
   validates :chapter_id, presence: true
   validates :challenge_id, presence: true
-  validates :date, presence: true
+  validates :read_on, presence: true
 
   #Scopes
-  scope :to_date, lambda { | a_date | where("date <= ?", a_date) }
+  scope :to_date, lambda { | a_date | where("read_on <= ?", a_date) }
 
 
   def last_read_by
