@@ -41,13 +41,6 @@ Biblechallenge::Application.routes.draw do
     resources :comments, only: [:create], controller: "comments/comments"
   end
 
-  # Unsubscribe from email
-#  get '/unsubscribe/:id' => 'memberships#unsubscribe_from_email', via: [:get], as: 'membership_unsubscribe'
-#  match '/unsubscribe/:id' => 'memberships#destroy', via: [:delete], as: 'membership_unsubscribe_destroy'
-
-  # Logging readings
-  match '/reading/confirm/:id' => 'membership_readings#confirm', via: [:get], as: 'membership_readings_confirm'
-
   # more restful reading logging
   resources :membership_readings, only: [:create, :destroy] do
     member do
@@ -55,8 +48,7 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  match '/log_reading/' => 'membership_readings#create', via: [:get], as: 'log_reading'
-
+  get '/log_reading/' => 'membership_readings#create', as: 'log_reading'
 
   resources :challenges, only: [:index, :show], controller: 'challenges'
   root to: 'challenges#index'
