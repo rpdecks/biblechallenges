@@ -26,6 +26,11 @@ describe Reading do
 
   describe "Scopes" do
 
+    describe "on_date" do
+      it "should return all readings scheduled for the given date" do
+        
+      end
+    end
     describe "to_date" do
       let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
       let(:membership){create(:membership, challenge: challenge)}
