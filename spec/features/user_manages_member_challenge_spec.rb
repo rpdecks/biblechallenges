@@ -2,18 +2,16 @@ require 'spec_helper'
 
 feature 'User manages member/challenge' do
   let(:user) {create(:user, :with_profile)}
-  let(:challenge) {create(:challenge_with_readings)}
 
   before(:each) do
     login(user)
   end
 
   scenario 'User is able to see Todays reading' do
-    pending
-    membership = create(:membership, challenge: challenge, user: user)
+    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
+    create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
-    membership.readings.to_date(Date.today).first.chapter.verses.by_version(membership.bible_version).each do |v|
-      expect(page).to have_content(v.versetext)
-    end
+    expect(page).to have_content("David")
+    expect(page).to have_content("Abraham")
   end
 end

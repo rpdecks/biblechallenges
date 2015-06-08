@@ -21,10 +21,8 @@ class Member::MembershipsController < ApplicationController
   def update
     if membership.update_attributes(params[:membership])
       flash[:notice] = "You have successfully updated your challenge settings."
-      redirect_to challenge_path(membership.challenge)
-    else
-      render action: 'show'
     end
+    redirect_to member_challenge_path(membership.challenge)
   end
 
   def create
@@ -40,7 +38,9 @@ class Member::MembershipsController < ApplicationController
 
   def join_group
     membership.group_id = params[:group_id] if params[:group_id]
-    membership.save
+    if membership.save
+      flash[:notice] = "You have successfully joined this group"
+    end
     redirect_to challenge
   end
 
