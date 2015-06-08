@@ -1,5 +1,5 @@
 %tr
-  %td= reading.date.strftime("%-m/%-d")
+  %td= reading.read_on.strftime("%-m/%-d")
   %td= link_to reading.chapter.book_and_chapter + "  (#{reading.comments.count})" , reading
   - if membership 
     %td[reading]{class: reading_css(reading)}
