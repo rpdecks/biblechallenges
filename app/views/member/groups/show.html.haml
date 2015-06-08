@@ -2,23 +2,5 @@
 .pull-right
 
 = breadcrumbs
-%h4
-  Group name:
-  = "#{@group.name}"
-%h4
-  Owner:
-  = @group.user.email
-%h4
-  Members:
-  - @group.memberships.each do |m|
-    = m.user.email
 
-- if current_user
-  - if current_user.groups.include?(@group)
-    = link_to "Leave Group", leave_member_group_path(id: @group.id), method: :post
-  -else 
-    = link_to "Join Group", join_member_group_path(id: @group.id), method: :post
-- else
-  = link_to "Sign me up", new_user_registration_path
-- if current_user && @group.user_id == current_user.id
-  = link_to "Delete Group", member_group_path(id: @group.id), method: :delete
+= render 'shared/groups/show'

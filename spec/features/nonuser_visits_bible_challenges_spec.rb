@@ -5,7 +5,7 @@ feature 'Nonuser visits BibleChallenges' do
     user = create(:user)
     challenge = create(:challenge)
     challenge.groups.create(name: "My group", user: user)
-    visit member_challenge_path(challenge)
+    visit challenge_path(challenge)
     click_link "My group"
 
     expect(page).to have_content("My group")
@@ -15,7 +15,7 @@ feature 'Nonuser visits BibleChallenges' do
     user = create(:user)
     challenge = create(:challenge)
     challenge.groups.create(name: "My group", user_id: user.id, challenge_id: challenge.id)
-    visit member_challenge_path(challenge)
+    visit challenge_path(challenge)
     click_link "My group"
     click_link "Sign me up"
 
@@ -26,7 +26,7 @@ feature 'Nonuser visits BibleChallenges' do
     user = create(:user)
     challenge = create(:challenge)
     challenge.groups.create(name: "My group", user: user)
-    visit member_challenge_path(challenge)
+    visit challenge_path(challenge)
     expect(page).not_to have_content("Create a group")
   end
 end

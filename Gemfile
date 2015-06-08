@@ -86,5 +86,6 @@ group :test do
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'rspec-sidekiq'
+  gem 'email_spec'
 end
 

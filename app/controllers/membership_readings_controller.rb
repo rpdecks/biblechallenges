@@ -13,7 +13,13 @@ class MembershipReadingsController < ApplicationController
     reading
     MembershipReading.create(membership_reading_params)
     respond_to do |format|
-      format.html { redirect_to member_challenge_path reading.challenge }
+      format.html { 
+        # go back to referer unless alternate location passed in
+        redirect = params[:location] || request.referer
+        # might be an anchor tag
+        redirect += params[:anchor] if params[:anchor]
+        redirect_to redirect
+      }
       format.js { render :create }
     end
   end
@@ -22,12 +28,21 @@ class MembershipReadingsController < ApplicationController
     #jim this feel hokey because I want to pass in the id of the membership reading
     #but since I want to display this link before the actual record exists I'm 
     # doing it this way
-    challenge = membership_reading.reading.challenge
     membership_reading.destroy
     respond_to do |format|
-      format.html { redirect_to member_challenge_path challenge }
+      format.html { 
+        # go back to referer unless alternate location passed in
+        redirect = params[:location] || request.referer
+        # might be an anchor tag
+        redirect += params[:anchor] if params[:anchor]
+        redirect_to redirect
+      }
       format.js { render :destroy }
     end
+  end
+
+  def confirmation
+
   end
 
   def membership_reading_params

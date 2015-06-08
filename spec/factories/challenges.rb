@@ -5,7 +5,7 @@ FactoryGirl.define do
 
   factory :challenge do
     name          { Faker::Commerce.product_name + " Challenge"}
-    begindate     {Date.tomorrow}
+    begindate     {Date.today}
     chapters_to_read { ["Matthew 1-2", "John 7-9", "Acts 5-8", "Romans 1-4"].sample }
     association :owner, factory: :user
 
