@@ -70,6 +70,22 @@ describe Challenge do
 
     let(:challenge){create(:challenge)}
 
+    describe "#todays_reading" do
+      it "does not return today's reading if it does not exist for this challenge" do
+        challenge = create(:challenge, chapters_to_read: 'Matt 1-2', begindate: "2050-01-01")
+        challenge.generate_readings
+
+        Timecop.travel("2050-01-03")
+        expect(challenge.todays_reading).to eq nil
+      end
+      it "returns today's reading if it exists for this challenge" do
+        challenge = create(:challenge, chapters_to_read: 'Matt 1-2', begindate: "2050-01-01")
+        challenge.generate_readings
+
+        Timecop.travel("2050-01-02")
+        expect(challenge.todays_reading).to eq challenge.readings.last
+      end
+    end
     describe '#generate_readings' do
       let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
       let(:expected_readings) { 6 } # avoiding magic numbers
@@ -112,10 +128,10 @@ describe Challenge do
     describe '#progress_percentage' do
       context 'when the user has already joined the challenge' do
         it "returns of the percentage of the challenge completed according to schedule" do
-        Timecop.travel(5.days.ago)
-        challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-20")
-        Timecop.return
+        challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-20", begindate: "2050-01-01")
+        Timecop.travel("2050-01-05")
         expect(challenge.percentage_completed).to eq 25
+        Timecop.return
         end
       end
     end

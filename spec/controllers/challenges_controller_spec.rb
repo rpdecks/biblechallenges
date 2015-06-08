@@ -11,4 +11,23 @@ describe ChallengesController, "Actions" do
       assigns(:public_challenges).should_not be_nil
     end
   end
+
+  context "GET #show" do
+    it "renders show template if user is not a member of this challenge" do
+      challenge = create(:challenge)
+      get :show, id: challenge
+      expect(response).to render_template(:show)
+
+    end
+    it "redirects to member/challenges#show if the user is a member of this challenge" do
+      user = create(:user)
+      challenge = create(:challenge)
+      create(:membership, challenge: challenge, user: user)
+      sign_in :user, user
+
+      get :show, id: challenge
+      expect(response).to redirect_to member_challenge_path(challenge)
+
+    end
+  end
 end
