@@ -41,6 +41,23 @@ describe DailyEmailScheduler do
   end
 
 
+  describe "set_daily_email_jobs2" do  # another approach
+    it "schedules an email job for a user" do
+      user = create(:user, :with_profile)
+      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      create(:membership, user: user, challenge: challenge)
+
+      Timecop.travel("2050-01-01")
+
+      DailyEmailScheduler.set_daily_email_jobs
+
+      expect(DailyEmailWorker.jobs.size).to eq 1
+
+      Timecop.return
+    end
+  end
+
+
 
 end
 
