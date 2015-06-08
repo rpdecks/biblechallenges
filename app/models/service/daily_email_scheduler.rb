@@ -16,7 +16,7 @@ class DailyEmailScheduler
       #schedule the sidekiq job
 
       if reading #schedule may be done, but still active
-        DailyEmailWorker.perform_at(user_reading_hour_utc, reading.id, m.user.id)
+        DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, reading.id, m.user.id)
       end
     end
   end

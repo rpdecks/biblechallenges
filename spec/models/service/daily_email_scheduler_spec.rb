@@ -17,17 +17,26 @@ describe DailyEmailScheduler do
     end
 
     it "schedules an email according to the user's preferences for a user" do
-      include ActiveJob::TestHelper
-      user = create(:user, profile: create(:profile, time_zone: "UTC",
-                                           preferred_reading_hour: 6))
-      challenge = create(:challenge, :with_readings, begindate: "2050-06-01")
-      create(:membership, user: user, challenge: challenge)
+      today = DateTime.now
+      user1 = create(:user, profile: create(:profile, time_zone: "EST",
+                                           preferred_reading_hour: 7))
+      user2 = create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)",
+                                           preferred_reading_hour: 7))
+      challenge = create(:challenge, :with_readings, begindate: today)
+      create(:membership, user: user1, challenge: challenge)
+      create(:membership, user: user2, challenge: challenge)
 
-      Timecop.travel("2050-06-01")
+      #traveling to next day 0-hours
+      t = Time.local(today.year, today.month, today.day + 1, 0, 0, 0)
+      Timecop.travel(t)
+
       DailyEmailScheduler.set_daily_email_jobs
-      binding.pry
-      enqueued_jobs
-      expect(DailyEmailWorker.method :perform).to be_delayed(DailyEmailWorker).for 6.hour
+      a = Time.at(DailyEmailWorker.jobs.first["at"])
+      b = Time.at(DailyEmailWorker.jobs.last["at"])
+      time_lapse = ( b -a ) / 3600
+      expect(time_lapse).to eq 3
+      
+      Timecop.return
     end
   end
 
