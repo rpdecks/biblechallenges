@@ -43,10 +43,28 @@ describe DailyEmailScheduler do
 
   describe "set_daily_email_jobs2" do  # another approach
     it "schedules an email job for a user" do
-      user = create(:user, :with_profile)
+      user1 = user_7am_eastern_time 
+      user2 = user_7am_pacific_time
       challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
-      create(:membership, user: user, challenge: challenge)
+      create(:membership, user: user1, challenge: challenge)
+      create(:membership, user: user2, challenge: challenge)
+
+      todays_date = Date.parse("2050-01-01")
+      DailyEmailScheduler.set_daily_email_jobs2(todays_date)
+      a = Time.at(DailyEmailWorker.jobs.first["at"])
+      b = Time.at(DailyEmailWorker.jobs.last["at"])
+      time_lapse = ( b - a ) / 3600
+      expect(time_lapse).to eq 3
     end
+  end
+
+
+  def user_7am_pacific_time
+    create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 7))
+  end
+
+  def user_7am_eastern_time
+    create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)", preferred_reading_hour: 7))
   end
 
 
