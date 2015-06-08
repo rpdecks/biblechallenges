@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :reading do
     challenge
     chapter
-    date      {Date.today}
+    read_on      {Date.today}
     discussion "This is so interesting"
   end
 end
