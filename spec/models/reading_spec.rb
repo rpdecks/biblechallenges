@@ -55,7 +55,7 @@ describe Reading do
         expect(reading.read_by?(user)).to eq false
       end
       it "returns true if the reading has been read by the passed in user" do
-        user = create(:user)
+        user = create(:user, :with_profile)
         challenge = create(:challenge_with_readings, chapters_to_read: 'Mar 1 -2')
         membership = create(:membership, user: user, challenge: challenge)
         reading = challenge.readings.first

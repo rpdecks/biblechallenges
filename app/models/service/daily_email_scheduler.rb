@@ -29,7 +29,7 @@ class DailyEmailScheduler
       # find all the members for this reading
       reading.members.each do |member|
         # when exactly should the email be scheduled
-        time_for_email = TimeZoneConverter.new.time_from_hour_date_and_zone(member.profile.preferred_reading_hour, reading.read_on, member.profile.time_zone)
+        time_for_email = ZoneConverter.new.time_from_hour_date_and_zone(member.profile.preferred_reading_hour, reading.read_on, member.profile.time_zone)
         # schedule the email
         DailyEmailWorker.perform_at(time_for_email, reading.id, member.id)
       end

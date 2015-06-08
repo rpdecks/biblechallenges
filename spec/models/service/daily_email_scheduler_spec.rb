@@ -42,12 +42,10 @@ describe DailyEmailScheduler do
 
 
   describe "set_daily_email_jobs2" do  # another approach
-    it "schedules an email job for a user" do
-      user1 = user_7am_eastern_time 
-      user2 = user_7am_pacific_time
+    it "schedules an email job for two users with the same hour preference in different timezones" do
       challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
-      create(:membership, user: user1, challenge: challenge)
-      create(:membership, user: user2, challenge: challenge)
+      create(:membership, user: user_7am_eastern_time, challenge: challenge)
+      create(:membership, user: user_7am_pacific_time, challenge: challenge)
 
       todays_date = Date.parse("2050-01-01")
       DailyEmailScheduler.set_daily_email_jobs2(todays_date)
@@ -56,8 +54,27 @@ describe DailyEmailScheduler do
       time_lapse = ( b - a ) / 3600
       expect(time_lapse).to eq 3
     end
+    it "schedules an email job for users in different timezones but at the same scheduled universal time" do
+      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      create(:membership, user: user_7am_eastern_time, challenge: challenge)
+      create(:membership, user: user_4am_pacific_time, challenge: challenge)
+
+      todays_date = Date.parse("2050-01-01")
+      DailyEmailScheduler.set_daily_email_jobs2(todays_date)
+      a = Time.at(DailyEmailWorker.jobs.first["at"])
+      b = Time.at(DailyEmailWorker.jobs.last["at"])
+      
+      expect(a).to eq b
+    end
   end
 
+
+
+
+
+  def user_4am_pacific_time
+    create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 4))
+  end
 
   def user_7am_pacific_time
     create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 7))
