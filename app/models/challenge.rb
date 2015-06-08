@@ -46,7 +46,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def percentage_completed
-    scheduled = readings.where(date: (self.begindate)..(Date.today)).count
+    scheduled = readings.where(read_on: (self.begindate)..(Date.today)).count
     total = readings.count
     scheduled.zero? ? 0 : (scheduled * 100) / total
   end
@@ -74,12 +74,12 @@ class Challenge < ActiveRecord::Base
 
     ActsAsScriptural.new.parse(chapters_to_read).chapters.each_with_index do |chapter, i|
       chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
-      readings.create(chapter: chapter, date: (begindate + i.days))
+      readings.create(chapter: chapter, read_on: (begindate + i.days))
     end
   end
 
   def todays_reading
-    readings.find_by_date(Date.today)
+    readings.find_by_read_on(Date.today)
   end
 
 

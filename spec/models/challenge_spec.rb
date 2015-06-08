@@ -101,9 +101,9 @@ describe Challenge do
         it 'creates the readings with its corresponding date' do
           challenge.generate_readings
           challenge.readings.each_with_index do |reading,index|
-            expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
+            expect(reading.read_on.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
           end
-          expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
+          expect(challenge.readings.last.read_on.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
         end
 
       end

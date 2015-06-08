@@ -14,7 +14,7 @@ describe MembershipStatisticCurrentReadingStreak do
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
       # challenge has five days, read 1,0,0,2,1, checking on the last day,  giving a streak of 2
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 3.days)
@@ -35,7 +35,7 @@ describe MembershipStatisticCurrentReadingStreak do
       # reading will skip the first day but then proceed daily, so on day four of the 
       # challenge the user should have a 3 day streak
 
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day + 1)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 2)
       create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 3)
@@ -51,7 +51,7 @@ describe MembershipStatisticCurrentReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       # user reads all 5 chapters in first three days.  stat measured on day 3
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
@@ -71,7 +71,7 @@ describe MembershipStatisticCurrentReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
 
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
       create(:membership_reading, reading: readings[4], membership: membership, updated_at: first_day + 4.days)
@@ -86,7 +86,7 @@ describe MembershipStatisticCurrentReadingStreak do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
       readings = challenge.readings
-      first_day = challenge.readings.order(:date).first.date
+      first_day = challenge.readings.order(:read_on).first.read_on
       create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day)
       create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 1)
       create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 2)
