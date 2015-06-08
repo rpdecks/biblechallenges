@@ -6,10 +6,12 @@
       %p.lead Create a Bible Reading Challenge for a church, small group, or student organization.  Or just for yourself.
       %br
       %a.btn.btn-lg.btn-success{href: new_creator_challenge_path} Create a Challenge
-
+      %br
+      %br
+      %br
       = form_tag challenges_path, { method: :get, class: "input-xxlarge form-query" } do
         = text_field_tag :query, params[:query], class: "search-input"
-        = submit_tag "Search", class: "btn btn-default query"
+        = submit_tag "Search for a Challenge", class: "btn btn-primary query"
 
       
   - unless @public_challenges.empty?
