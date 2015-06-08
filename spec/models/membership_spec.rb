@@ -43,6 +43,7 @@ describe Membership do
   describe "Class methods" do
     describe '#send_daily_emails' do
       it "sends email according to user's timezone and time preference" do
+        pending
         challenge = create(:challenge, :with_readings, begindate: Date.today)
         membership = create(:membership, challenge: challenge)
         user = membership.user
@@ -53,6 +54,7 @@ describe Membership do
       end
 
       it "sends email according to user's timezone and time preference" do
+        pending
         challenge = create(:challenge, :with_readings, begindate: Date.today)
         membership = create(:membership, challenge: challenge)
         user = membership.user
