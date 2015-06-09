@@ -30,6 +30,22 @@
           = f.text_field :dates_to_skip, required: false, class: "form-control"
           %p.help-block Enter the dates you want to skip (explain format later)
 
+
+      Sunday
+      = check_box_tag 'days_to_skip[]', '0', false
+      Monday
+      = check_box_tag 'days_to_skip[]', '1', false
+      Tuesday
+      = check_box_tag 'days_to_skip[]', '2', false
+      Wednesday
+      = check_box_tag 'days_to_skip[]', '3', false
+      Thursday
+      = check_box_tag 'days_to_skip[]', '4', false
+      Friday
+      = check_box_tag 'days_to_skip[]', '5', false
+      Saturday
+      = check_box_tag 'days_to_skip[]', '6', false
+
       .control-group
         = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
         %br
