@@ -6,7 +6,7 @@ feature 'User logs reading via email' do
 
   scenario 'User logs his reading from the link at the bottom of the daily reading email' do
 
-    user = create(:user)
+    user = create(:user, :with_profile)
     challenge = create(:challenge, :with_readings)
     membership = create(:membership, user: user, challenge: challenge)
     ReadingMailer.daily_reading_email(challenge.readings.first, membership).deliver_now

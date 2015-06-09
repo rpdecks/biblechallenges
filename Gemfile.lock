@@ -238,6 +238,10 @@ GEM
     rest-client (1.6.8)
       mime-types (~> 1.16)
       rdoc (>= 2.4.2)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
     rspec-collection_matchers (1.1.2)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.2.3)
@@ -256,6 +260,9 @@ GEM
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
+    rspec-sidekiq (2.0.0)
+      rspec (~> 3.0, >= 3.0.0)
+      sidekiq (>= 2.4.0)
     rspec-support (3.2.2)
     ruby_parser (3.6.5)
       sexp_processor (~> 4.1)
@@ -378,6 +385,7 @@ DEPENDENCIES
   redcarpet
   rspec-collection_matchers
   rspec-rails
+  rspec-sidekiq
   ruby_parser
   sass-rails
   selenium-webdriver

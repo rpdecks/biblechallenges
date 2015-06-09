@@ -85,6 +85,7 @@ group :test do
   gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy'
   gem 'selenium-webdriver'
+  gem 'rspec-sidekiq'
   gem 'email_spec'
 end
 

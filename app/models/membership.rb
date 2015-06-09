@@ -46,13 +46,6 @@ class Membership < ActiveRecord::Base
     challenge.readings.count == membership_readings.count
   end
 
-  def send_todays_reading  #this feels bad ask jose
-    r = readings.find_by_date(Date.today)
-    if r
-      mr = r.membership_readings.find_by_reading_id_and_membership_id(r.id, self.id)
-      MembershipReadingMailer.daily_reading_email(mr).deliver_now if mr
-    end
-  end
 
   def associate_statistics
     self.membership_statistics << MembershipStatisticProgressPercentage.create
@@ -61,7 +54,6 @@ class Membership < ActiveRecord::Base
   end
 
   private
-
   # Callbacks
   def recalculate_group_stats
     if self.group_id.present?
@@ -72,12 +64,12 @@ class Membership < ActiveRecord::Base
 
 
   # -- emails
+
   def successful_creation_email
     MembershipMailer.creation_email(self).deliver_now
   end
+
   def successful_auto_creation_email
     MembershipMailer.auto_creation_email(self).deliver_now
   end
-
-
 end
