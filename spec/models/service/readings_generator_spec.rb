@@ -61,7 +61,7 @@ describe ReadingsGenerator do
 
       it "does not create readings for selected date ranges" do
         begindate = Date.parse "2050-01-01"  # this is a Saturday
-        readings = ReadingsGenerator.new(begindate, "Matthew 1-5", date_ranges_to_skip: ["2050-01-02..2050-01-07"]).generate
+        readings = ReadingsGenerator.new(begindate, "Matthew 1-5", dates_to_skip: "2050-01-02..2050-01-07").generate
 
         expect(readings.last.read_on).to eq Date.parse("2050-01-11")
         expect(readings.size).to eq 5
@@ -69,7 +69,7 @@ describe ReadingsGenerator do
 
       it "does not create readings for selected skip date ranges and days of week" do
         begindate = Date.parse "2050-01-14"  # this is a Friday
-        readings = ReadingsGenerator.new(begindate, "Matthew 1-5", days_of_week_to_skip: [6,0], date_ranges_to_skip: ["2050-01-17..2050-01-20"]).generate  # skipping weekends(Sat-Sun) & next Mon-Thu(date-range)
+        readings = ReadingsGenerator.new(begindate, "Matthew 1-5", days_of_week_to_skip: [6,0], dates_to_skip: "2050-01-17..2050-01-20").generate  # skipping weekends(Sat-Sun) & next Mon-Thu(date-range)
 
         expect(readings.first.read_on).to eq Date.parse("2050-01-14")
         expect(readings.second.read_on).to eq Date.parse("2050-01-21")
