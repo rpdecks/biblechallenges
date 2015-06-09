@@ -28,7 +28,7 @@ class MembershipReading < ActiveRecord::Base
   private
 
   def reading_punctual?
-    self.reading.read_on.to_date === self.updated_at.to_date
+    ZoneConverter.new.on_date_in_zone?(date: reading.read_on, timestamp: self.updated_at, timezone: membership.user.profile.time_zone)
   end
 
   def mark_punctual

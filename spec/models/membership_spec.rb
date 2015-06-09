@@ -29,10 +29,7 @@ describe Membership do
       it 'does not allow to re-join again' do
         expect(build(:membership, challenge: challenge, user: user)).to_not be_valid
       end
-
     end
-
-
   end
 
   describe "Relations" do
@@ -44,6 +41,29 @@ describe Membership do
   end
 
   describe "Class methods" do
+    describe '#send_daily_emails' do
+      it "sends email according to user's timezone and time preference" do
+        pending
+        challenge = create(:challenge, :with_readings, begindate: Date.today)
+        membership = create(:membership, challenge: challenge)
+        user = membership.user
+        create(:profile, time_zone: 'Eastern Time (US & Canada)', preferred_reading_hour: DateTime.now.strftime("%H"), user: user)
+        Membership.send_daily_emails
+        successful_sending_email = ActionMailer::Base.deliveries.last
+        expect(successful_sending_email.to).to match_array [user.email] 
+      end
+
+      it "sends email according to user's timezone and time preference" do
+        pending
+        challenge = create(:challenge, :with_readings, begindate: Date.today)
+        membership = create(:membership, challenge: challenge)
+        user = membership.user
+        create(:profile, time_zone: 'Hawaii', preferred_reading_hour: 6)
+        Membership.send_daily_emails
+        successful_sending_email = ActionMailer::Base.deliveries.last
+        expect(successful_sending_email.to).to match_array [user.email] 
+      end
+    end
   end
 
   describe 'Instance methods' do
@@ -66,8 +86,6 @@ describe Membership do
         expect(membership.completed?).to eq false
       end
     end
-
-
   end
 
   describe 'Callbacks' do
@@ -97,8 +115,6 @@ describe Membership do
           membership.save
         end
       end
-
     end
   end
-
 end

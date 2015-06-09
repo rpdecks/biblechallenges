@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MembershipReadingsController, type: :controller do
 
   let(:challenge){create(:challenge, chapters_to_read:'mi 1-4')} 
-  let(:user){create(:user)}
+  let(:user){create(:user, :with_profile)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
 
