@@ -25,6 +25,12 @@
           %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
 
       .control-group
+        = f.label :dates_to_skip, "Dates to skip", class: "control-label"
+        .controls
+          = f.text_field :dates_to_skip, required: false, class: "form-control"
+          %p.help-block Enter the dates you want to skip (explain format later)
+
+      .control-group
         = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
         %br
         %br
