@@ -1,8 +1,6 @@
 -if @todays_reading
   = @todays_reading.chapter.decorate.by_version(@membership.bible_version)
-  - if @todays_reading.read_by?(current_user)
-    = link_to "Read", "#", class: "btn btn-primary"
-  - else 
+  - unless @todays_reading.read_by?(current_user)
     = link_to "Log my reading", membership_readings_path(reading_id: @todays_reading.id, membership_id: @membership.id, anchor: "readings"), class: "btn btn-primary", method: :post
 -else
   No reading today :(

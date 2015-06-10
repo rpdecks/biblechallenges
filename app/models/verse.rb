@@ -1,4 +1,5 @@
 class Verse < ActiveRecord::Base
+  require 'htmlentities'
 
 
   # Relations
@@ -11,4 +12,8 @@ class Verse < ActiveRecord::Base
     response.any? ? response : where(version: "ASV")
   end
 
+  def text
+    coder = HTMLEntities.new
+    coder.decode(self.versetext)
+  end
 end
