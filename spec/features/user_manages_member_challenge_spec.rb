@@ -14,4 +14,12 @@ feature 'User manages member/challenge' do
     expect(page).to have_content("David")
     expect(page).to have_content("Abraham")
   end
+
+  scenario 'User is able to log todays reading' do
+    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
+    create(:membership, challenge: challenge, user: user)
+    visit member_challenge_path(challenge)
+    click_link 'Log my reading'
+    expect(MembershipReading.count).to eq 1
+  end
 end
