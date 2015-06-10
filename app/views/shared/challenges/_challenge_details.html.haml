@@ -22,3 +22,10 @@
   %tr
     %td Bible Reading Overview:
     %td= @challenge.chapters_to_read
+
+  - if current_user && @membership = @challenge.membership_for(current_user)
+    %tr
+      %td Bible Version:
+      %td
+        = @membership.bible_version
+        =link_to "Change", member_membership_path(@membership), :method => :get
