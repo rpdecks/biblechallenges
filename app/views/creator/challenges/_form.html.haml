@@ -5,7 +5,7 @@
   - if @challenge.errors.any?
     - flash[:error] = @challenge.errors.full_messages.to_sentence
   .row
-    .col-md-6
+    .col-md-8
       .control-group
         = f.label :name, "Challenge Name", class: "control-label"
         .controls
@@ -23,6 +23,32 @@
         .controls
           = f.text_field :chapters_to_read, required: true, class: "form-control"
           %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
+
+      .control-group
+        = f.label :dates_to_skip, "Dates to skip", class: "control-label"
+        .controls
+          = f.text_field :dates_to_skip, required: false, class: "form-control"
+          %p.help-block Enter the dates you want to skip (explain format later)
+
+      %h5.strong Days to skip
+      Sunday
+      = check_box_tag 'days_to_skip[]', '0', false
+      &nbsp; Monday
+      = check_box_tag 'days_to_skip[]', '1', false
+      &nbsp; Tuesday
+      = check_box_tag 'days_to_skip[]', '2', false
+      &nbsp; Wednesday
+      = check_box_tag 'days_to_skip[]', '3', false
+      &nbsp; Thursday
+      = check_box_tag 'days_to_skip[]', '4', false
+      &nbsp; Friday
+      = check_box_tag 'days_to_skip[]', '5', false
+      &nbsp; Saturday
+      = check_box_tag 'days_to_skip[]', '6', false
+
+      %br
+      %br
+      %legend
 
       .control-group
         = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
