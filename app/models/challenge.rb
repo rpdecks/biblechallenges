@@ -70,7 +70,6 @@ class Challenge < ActiveRecord::Base
   end
 
   def generate_readings
-    readings.destroy_all
 
     ActsAsScriptural.new.parse(chapters_to_read).chapters.each_with_index do |chapter, i|
       chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
