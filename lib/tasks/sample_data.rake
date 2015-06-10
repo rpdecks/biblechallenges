@@ -1,4 +1,4 @@
-require 'faker'
+require 'faker' if Rails.env.test?
 # todo: update this in readme.md 
 # run with: rake sample_fake:users[:count]
 
