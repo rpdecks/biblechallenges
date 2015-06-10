@@ -88,25 +88,25 @@ namespace :sample_fake do
 
   def remove_current_records
     puts "Deleting Users"
-    User.delete_all
+    User.destroy_all
     puts "Deleting Challenges"
-    Challenge.delete_all
+    Challenge.destroy_all
 
     #todo: how come removing challenges doesn't remove readings?
     # is this by design?
     puts "Deleting Readings"
-    Reading.delete_all
+    Reading.destroy_all
     puts "Deleting Memberships"
-    Membership.delete_all
+    Membership.destroy_all
     puts "Deleting Groups"
-    Group.delete_all
+    Group.destroy_all
 
     #todo: how come removing membership doesn't remve membership readings?
     # is this by design?
     puts "Deleting Membership Readings"
-    MembershipReading.delete_all
+    MembershipReading.destroy_all
     puts "Deleting Badges"
-    Badge.delete_all
+    Badge.destroy_all
 
     puts "--Finished removing current records----------\n"
   end
