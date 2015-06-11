@@ -33,6 +33,8 @@ gem 'bootstrap_form'
 
 
 group :production do
+  gem 'unicorn'
+  gem 'unicorn-worker-killer'
   gem 'rails_12factor'
   gem 'hirb'
 end
