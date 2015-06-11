@@ -1,0 +1,42 @@
+%h3
+  ="Today's Readings (#{DateTime.now.strftime("%m/%d/%Y")})"
+  -if @todays_reading
+    - unless @todays_reading.read_by?(current_user)
+      = link_to "Log my reading", membership_readings_path(reading_id: @todays_reading.id, membership_id: @membership.id, anchor: "readings"), class: "pull-right btn btn-primary", method: :post
+-if @todays_reading
+  %br
+  %p.minimize
+    = simple_format(@todays_reading.chapter.decorate.by_version(@membership.bible_version)) #To Evan: delete this line and see the page in local browser
+-else
+  No reading today :(
+
+:javascript
+  jQuery(function(){
+
+    var minimized_elements = $('p.minimize');
+
+    minimized_elements.each(function(){    
+      var t = #{@todays_reading.chapter.decorate.by_version(@membership.bible_version).to_json.html_safe};
+      console.log(t);
+      if(t.length < 100) return;
+
+      $(this).html(
+        t.slice(0,1000)+'<span>... </span><a href="#" class="more">More</a>'+
+        '<span style="display:none;">'+ t.slice(1000,t.length)+' <a href="#" class="less">Less</a></span>'
+        );
+
+    }); 
+
+    $('a.more', minimized_elements).click(function(event){
+      event.preventDefault();
+      $(this).hide().prev().hide();
+      $(this).next().show();        
+    });
+
+    $('a.less', minimized_elements).click(function(event){
+      event.preventDefault();
+      $(this).parent().hide().prev().show().prev().show();    
+    });
+
+  });
+

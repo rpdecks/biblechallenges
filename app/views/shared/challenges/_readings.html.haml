@@ -1,0 +1,14 @@
+.container
+  .row
+    .col-md-8
+      = render 'shared/challenges/todays_reading'
+      %br
+      %br
+      #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+        .panel.panel-default
+          #headingOne.panel-heading{:role => "tab"}
+            %h4.panel-title
+              %a{"aria-controls" => "collapseOne", "class" => "collapsed", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
+                Show / hide all readings
+          #collapseOne.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+            = render 'shared/challenges/readings_table'
