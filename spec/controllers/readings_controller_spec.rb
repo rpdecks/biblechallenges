@@ -62,7 +62,9 @@ describe ReadingsController do
     end
 
     describe "GET #edit" do
-      it "does not show the edit form"
+      it "does not show the edit form", skip: true do
+        pending
+      end
     end
     describe "GET #show" do
       context "the user is part of this challenge and reading" do

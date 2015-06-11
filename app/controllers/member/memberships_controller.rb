@@ -19,10 +19,11 @@ class Member::MembershipsController < ApplicationController
   end
 
   def update
-    if membership.update_attributes(params[:membership])
+    if membership.update_attributes(membership_update_params)
       flash[:notice] = "You have successfully updated your challenge settings."
     end
-    redirect_to member_challenge_path(membership.challenge)
+    challenge = membership.challenge
+    redirect_to member_challenge_path(challenge)
   end
 
   def create
@@ -52,6 +53,9 @@ class Member::MembershipsController < ApplicationController
   end
 
   private
+  def membership_update_params
+    params.require(:membership).permit(:bible_version)
+  end
 
   def challenge
     @challenge ||= Challenge.find_by_id(params[:challenge_id])
@@ -64,5 +68,4 @@ class Member::MembershipsController < ApplicationController
   def require_challenge_owner
     redirect_to root_url if challenge.owner != current_user
   end
-
 end
