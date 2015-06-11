@@ -17,6 +17,3 @@ script:
 notifications:
   slack:
     secure: ktukof7f55ioje7tklWIlQ1CuDKWiE6lHpOpyDiravbUxUYBUuXfwZxEj8NOtVZditHU8qOdR3sNUvHXyDC/qaglyfyQKYC96KBa/zKW4huT79osespdX48JvwyvLZjpMclTRQsmXF0WKBns8c4/N5pbQ8SrbFWpO4x+lh5dTTs=
-    rooms:
-      - bfa:ldmdbzMqZ1jE4Z9470Ft73jP#code_notifications
-      - bfa:ldmdbzMqZ1jE4Z9470Ft73jP#biblechallenges
