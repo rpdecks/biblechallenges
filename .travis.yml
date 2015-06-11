@@ -3,8 +3,6 @@ cache: bundler
 rvm:
 - 2.2.1
 
-env:
-  - DB=postgresql
 addons:
   postgresql: "9.3"
 
@@ -17,6 +15,8 @@ before_script:
     # - cp config/database.yml.travis config/database.yml
 
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - 
+  - bundle exec rake db:migrate RAILS_ENV=test --trace
+  - bundle exec rake db:seed RAILS_ENV=test
   - bundle exec rake db:test:prepare
   - bundle exec rspec -fp spec/
