@@ -1,6 +1,8 @@
 BIBLECHALLENGES.COM
 ==================
 
+[![Build
+Status](https://magnum.travis-ci.com/biblesforamerica/biblechallenges.svg?token=FPGcoGHoxfQhf2jcpsha&branch=master)](https://magnum.travis-ci.com/biblesforamerica/biblechallenges)
 ## Setup on heroku
 
 Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis to go nano, and zerigo dns tier 1 ($7)

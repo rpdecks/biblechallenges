@@ -27,6 +27,7 @@ gem 'figaro'
 gem 'draper'
 gem 'pg_search'
 gem 'bootstrap_form'
+gem 'htmlentities'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe GroupStatisticRecordSequentialReading do
 
   describe "#calculate" do
-    it "should calculate the proper value" do
+    it "should calculate the proper value", skip: true do
       pending
       Timecop.travel(4.days.ago)
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-20')
