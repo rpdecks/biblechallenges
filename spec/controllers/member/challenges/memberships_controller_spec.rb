@@ -32,8 +32,8 @@ describe Member::MembershipsController do
       expect(assigns(:membership)).to eql(membership)
     end
 
-    it "destroys the membership" do
-      pending  #jim 
+    it "destroys the membership", skip: true do
+      pending
       expect{
         delete :destroy, id: membership
       }.to change(Membership,:count).by(-1)
