@@ -1,6 +1,10 @@
+%h3
+  ="Today's Readings (#{DateTime.now.strftime("%m/%d/%Y")})"
+  -if @todays_reading
+    - unless @todays_reading.read_by?(current_user)
+      = link_to "Log my reading", membership_readings_path(reading_id: @todays_reading.id, membership_id: @membership.id, anchor: "readings"), class: "pull-right btn btn-primary", method: :post
 -if @todays_reading
+  %br
   = @todays_reading.chapter.decorate.by_version(@membership.bible_version)
-  - unless @todays_reading.read_by?(current_user)
-    = link_to "Log my reading", membership_readings_path(reading_id: @todays_reading.id, membership_id: @membership.id, anchor: "readings"), class: "btn btn-primary", method: :post
 -else
   No reading today :(
