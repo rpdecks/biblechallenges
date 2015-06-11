@@ -16,7 +16,6 @@ before_script:
 
 script:
   - 
-  - bundle exec rake db:migrate RAILS_ENV=test VERBOSE=false --trace
+  - bundle exec rake db:migrate RAILS_ENV=test VERBOSE=false
   - bundle exec rake db:seed RAILS_ENV=test
-    # - bundle exec rake db:test:prepare
   - bundle exec rspec -fp spec/
