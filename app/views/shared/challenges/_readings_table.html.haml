@@ -1,24 +1,11 @@
-.container
-  .row
-    .col-md-8
-      = render 'shared/challenges/today'
-      %br
-      %br
-      #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
-        .panel.panel-default
-          #headingOne.panel-heading{:role => "tab"}
-            %h4.panel-title
-              %a{"aria-controls" => "collapseOne", "class" => "collapsed", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
-                Show / hide all readings
-          #collapseOne.panel-collapse.collapse{"aria-labelledby" => "headingOne", :role => "tabpanel"}
-            %table.table.table-striped.table-bordered.table-hover.table-centered-text
-              %tbody
-                %thead
-                  %tr
-                    %th Date
-                    %th Chapter(comments)
-                    %th 
-                      %span.glyphicon.glyphicon-ok
-                        - @challenge.readings.each do |reading|
-                          = render partial: 'shared/challenges/readings_table_row',
-                            locals: {reading: reading, membership: @membership}
+%table.table.table-striped.table-bordered.table-hover.table-centered-text
+  %tbody
+    %thead
+      %tr
+        %th Date
+        %th Chapter(comments)
+        %th 
+          %span.glyphicon.glyphicon-ok
+            - @challenge.readings.each do |reading|
+              = render partial: 'shared/challenges/readings_table_row',
+                locals: {reading: reading, membership: @membership}
