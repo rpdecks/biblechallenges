@@ -1,13 +1,10 @@
-%h3
-  Challenge settings for 
-  = link_to @challenge.name + " bible challenge", challenge_path(@challenge)
 
 %br
 
-= form_for [@membership.challenge, @membership], method: :put do |f|
+= form_for [:member, @membership], method: :put do |f|
   .row
     .col-md-6
-      .control-group
+      .contrl-group
         = f.label :bible_version, "Preferred Bible Version", class: "control-label"
         .controls
           = f.select :bible_version,  select_options_for_bible,  { include_blank: false },  { class: 'chosen-select' }
