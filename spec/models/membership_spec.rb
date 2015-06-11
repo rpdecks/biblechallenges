@@ -42,7 +42,7 @@ describe Membership do
 
   describe "Class methods" do
     describe '#send_daily_emails' do
-      it "sends email according to user's timezone and time preference" do
+      it "sends email according to user's timezone and time preference", skip: true do
         pending
         challenge = create(:challenge, :with_readings, begindate: Date.today)
         membership = create(:membership, challenge: challenge)
@@ -53,7 +53,7 @@ describe Membership do
         expect(successful_sending_email.to).to match_array [user.email] 
       end
 
-      it "sends email according to user's timezone and time preference" do
+      it "sends email according to user's timezone and time preference", skip: true do
         pending
         challenge = create(:challenge, :with_readings, begindate: Date.today)
         membership = create(:membership, challenge: challenge)
@@ -98,7 +98,7 @@ describe Membership do
       end
 
       describe '#send_todays_reading' do
-        it "sends todays reading after creation if it exists" do
+        it "sends todays reading after creation if it exists", skip: true do
           pending
           user = create(:user)
           challenge = create(:challenge, begindate: Date.today)  

@@ -1,0 +1,22 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.2.1
+addons:
+  postgresql: '9.3'
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+before_script:
+- psql -c 'create database bc_test;' -U postgres
+script:
+- 
+- bundle exec rake db:migrate RAILS_ENV=test VERBOSE=false
+- bundle exec rake db:seed RAILS_ENV=test
+- bundle exec rspec -fp -t ~skip spec/
+notifications:
+  slack:
+    secure: ktukof7f55ioje7tklWIlQ1CuDKWiE6lHpOpyDiravbUxUYBUuXfwZxEj8NOtVZditHU8qOdR3sNUvHXyDC/qaglyfyQKYC96KBa/zKW4huT79osespdX48JvwyvLZjpMclTRQsmXF0WKBns8c4/N5pbQ8SrbFWpO4x+lh5dTTs=
+    rooms:
+      - bfa:ldmdbzMqZ1jE4Z9470Ft73jP#code_notifications
+      - bfa:ldmdbzMqZ1jE4Z9470Ft73jP#biblechallenges

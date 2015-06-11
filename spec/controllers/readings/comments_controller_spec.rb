@@ -94,7 +94,7 @@ describe Readings::CommentsController, "Actions" do
       should redirect_to(new_user_session_path)
     end
 
-    it "should redirect to params[:location] if the comment is invalid" do
+    it "should redirect to params[:location] if the comment is invalid", skip: true do
       pending
       current_user.profile.username = "Phil"
       current_user.profile.save
