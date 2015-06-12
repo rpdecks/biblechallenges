@@ -6,8 +6,6 @@
   %div{role: "tabpanel"}
     %ul#grouptabs.nav.nav-tabs{role: "tablist"}
       %li.active{role: "presentation"}
-        %a{href: "#today", role: "tab", aria: {controls: "today"}, data: {toggle: "tab"}} Today
-      %li{role: "presentation"}
         %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
       %li{role: "presentation"}
         %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
@@ -18,10 +16,8 @@
       %li{role: "presentation"}
         %a{href: "#details", role: "tab", aria: {controls: "details"}, data: {toggle: "tab"}} Details
     .tab-content
-      .tab-pane.active#today{role: "tabpanel"}
-        = render 'shared/challenges/today'
-      .tab-pane#readings{role: "tabpanel"}
-        = render 'shared/challenges/readings_table'  # why can I not pass local vars here #jim
+      .tab-pane.active#readings{role: "tabpanel"}
+        = render 'shared/challenges/readings'  # why can I not pass local vars here #jim
       .tab-pane#mygroup{role: "tabpanel"}
         - if current_user.find_challenge_group(@challenge) != nil
           = render 'shared/groups/show'

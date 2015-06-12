@@ -1,6 +1,4 @@
 class Verse < ActiveRecord::Base
-  require 'htmlentities'
-
 
   # Relations
   belongs_to :chapter, foreign_key: :chapter_index
@@ -10,10 +8,5 @@ class Verse < ActiveRecord::Base
     #this default version should probably be in a constant  (ASV)
     response = where(version: version)
     response.any? ? response : where(version: "ASV")
-  end
-
-  def text
-    coder = HTMLEntities.new
-    coder.decode(self.versetext)
   end
 end

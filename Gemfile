@@ -35,6 +35,9 @@ gem 'htmlentities'
 
 
 group :production do
+  gem 'unicorn'
+  gem 'unicorn-worker-killer'
+  gem 'rack-timeout'
   gem 'rails_12factor'
   gem 'hirb'
 end
@@ -82,6 +85,7 @@ end
 group :test do
   # pretty print test output
   gem 'capybara'
+  gem 'capybara-webkit'
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
