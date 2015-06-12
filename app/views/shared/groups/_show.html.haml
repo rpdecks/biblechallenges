@@ -1,25 +1,29 @@
-%h3
-  =@group.name
-%ol.list-group
-  %li.list-group-item
-    - @group.members.each do |m|
-      = image_tag avatar_url(m, 30), title: m.username
-    %span.badge
-      = @group.members.count
-      = "member".pluralize(@group_member_count)
-%h4
-  Group name:
-  = "#{@group.name}"
-%h4
-  Owner:
-  = @group.user.email
+.container
+  .row
+    .col-md-8
+      %h3
+        =@group.name
+        %span.badge
+          = @group.members.count
+          = "member".pluralize(@group_member_count)
+      %table.table.table-striped.table-bordered.table-hover
+        %thead
+          %tr
+            %th Members
+            %th Stats
+            %th Last Read
+        %tbody
+        - @group.members.each do |m|
+          %tr
+            %td= m.username
 
-- if current_user
-  - if current_user.groups.include?(@group)
-    = link_to "Leave Group", leave_member_group_path(id: @group.id), method: :post
-  -else 
-    = link_to "Join Group", join_member_group_path(id: @group.id), method: :post
-- else
-  = link_to "Sign me up", new_user_registration_path
-- if current_user && @group.user_id == current_user.id
-  = link_to "Delete Group", member_group_path(id: @group.id), method: :delete
+      - if current_user
+        - if current_user.groups.include?(@group)
+          = link_to "Leave Group", leave_member_group_path(id: @group.id), :class=>"btn btn-warning btn-sm", method: :post
+        -else 
+          = link_to "Join Group", join_member_group_path(id: @group.id), :class=> "btn btn-primary btn-sm", method: :post
+      - else
+        = link_to "Sign me up", new_user_registration_path, :class=> "btn btn-success btn-sm"
+      %br
+      - if current_user && @group.user_id == current_user.id
+        = link_to "Delete Group", member_group_path(id: @group.id), :class=>"btn btn-danger btn-sm", method: :delete
