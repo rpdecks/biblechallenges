@@ -27,21 +27,15 @@ class User < ActiveRecord::Base
 
   #Callbacks
 
-  def show_progress_percentage(group)
-    self.memberships.where(challenge_id: group.challenge.id).first.progress_percentage
-  end
-
-  def show_last_recorded_reading(group)
-    self.memberships.where(challenge_id: group.challenge.id).first.membership_readings.last.created_at
+  def has_logged_a_reading?(group)
+    membership_id = self.memberships.where(challenge_id: group.challenge.id).first.id
+    MembershipReading.where(membership_id: membership_id).present?
   end
 
   def find_challenge_group(challenge)
     groups.where(challenge: challenge).first
   end
 
-  def fullname
-    "#{first_name} #{last_name}"
-  end
 
   def first_name
     profile && profile.first_name
