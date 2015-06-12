@@ -3,7 +3,8 @@
     .col-md-8
       %h3
         =@group.name
-        %span.badge
+        %span
+        .badge
           = @group.members.count
           = "member".pluralize(@group_member_count)
       %table.table.table-striped.table-bordered.table-hover
@@ -15,9 +16,12 @@
         %tbody
         - @group.members.each do |m|
           %tr
-            %td= m.username
-            %td= "Member's reading percentage"
-            %td= "Last read days ago"
+            %td
+              = image_tag avatar_url(m,30)
+              %span 
+                = m.decorate.fullname
+            %td= m.decorate.show_progress_percentage(@group)
+            %td= m.decorate.show_last_recorded_reading(@group)
 
       - if current_user
         - if current_user.groups.include?(@group)

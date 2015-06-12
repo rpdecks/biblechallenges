@@ -1,6 +1,4 @@
 class Member::GroupsController < ApplicationController
-
-
   def show
     group
   end
