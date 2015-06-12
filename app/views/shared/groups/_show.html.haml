@@ -16,6 +16,8 @@
         - @group.members.each do |m|
           %tr
             %td= m.username
+            %td= "Member's reading percentage"
+            %td= "Last read days ago"
 
       - if current_user
         - if current_user.groups.include?(@group)
@@ -24,6 +26,6 @@
           = link_to "Join Group", join_member_group_path(id: @group.id), :class=> "btn btn-primary btn-sm", method: :post
       - else
         = link_to "Sign me up", new_user_registration_path, :class=> "btn btn-success btn-sm"
-      %br
+      %span
       - if current_user && @group.user_id == current_user.id
         = link_to "Delete Group", member_group_path(id: @group.id), :class=>"btn btn-danger btn-sm", method: :delete
