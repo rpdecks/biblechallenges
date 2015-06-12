@@ -1,4 +1,5 @@
 class Member::ChallengesController < ApplicationController
+  respond_to :html, :js
 
   before_filter :authenticate_user!
   before_filter :find_challenge, only: [:show, :destroy]
@@ -40,6 +41,6 @@ class Member::ChallengesController < ApplicationController
   end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read)
+    params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read, :dates_to_skip)
   end
 end
