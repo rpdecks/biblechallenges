@@ -34,6 +34,9 @@ gem 'htmlentities'
 
 
 group :production do
+  gem 'unicorn'
+  gem 'unicorn-worker-killer'
+  gem 'rack-timeout'
   gem 'rails_12factor'
   gem 'hirb'
 end
