@@ -1,9 +1,10 @@
-class Verse < Draper::Decorator
+class VerseDecorator < Draper::Decorator
   delegate_all
 
-  def to_divvv(verse_class: nil, number_class: nil)
-    content_tag(:div, object.versetext) do
-      content_tag(:span, object.verse_number) 
+  def to_div(verse_class: "verse", number_class: "verse_number")
+    h.content_tag(:div, class: verse_class) do
+      h.content_tag(:span, object.verse_number, class: number_class) +
+      object.versetext
     end
   end
 

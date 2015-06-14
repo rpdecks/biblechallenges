@@ -10,5 +10,17 @@ class Chapter < ActiveRecord::Base
   end
 
 
+  def verses_by_range(start_verse: nil, end_verse: nil)
+    if start_verse && end_verse
+      verses.where(verse_number: [start_verse..end_verse]).order(:verse_number)
+    elsif start_verse
+      verses.where("verse_number >= ?", start_verse).order(:verse_number)
+    elsif end_verse
+      verses.where("verse_number <= ?", end_verse).order(:verse_number)
+    else 
+      verses.order(:verse_number)
+    end
+  end
+
 
 end
