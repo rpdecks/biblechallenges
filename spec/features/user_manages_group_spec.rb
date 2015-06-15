@@ -89,7 +89,6 @@ feature 'User manages groups' do
       group1 = challenge.groups.create(name: "UCLA", user_id: user.id)
       create(:membership, challenge: challenge, user: user, group_id: group1.id)
       visit(challenge_path(challenge))
-      click_link group1.name
       expect(page).not_to have_content("Join Group")
       expect(page).to have_content("Leave Group")
     end
@@ -100,7 +99,6 @@ feature 'User manages groups' do
       create(:membership, challenge: challenge, user: user, group_id: group.id)
 
       visit(challenge_path(challenge))
-      click_link "UC Irvine"
       click_link "Leave Group"
 
       expect(user.groups).not_to include group
