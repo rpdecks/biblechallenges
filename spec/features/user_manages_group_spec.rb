@@ -55,6 +55,11 @@ feature 'User manages groups' do
 
       expect(user.groups).to include group
     end
+
+    scenario 'User sees members of a group without joining the group' do
+
+    end
+
   end
 
   context "Already in a group" do
