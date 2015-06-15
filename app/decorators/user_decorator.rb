@@ -6,11 +6,11 @@ class UserDecorator < Draper::Decorator
     "#{first_name} #{last_name}"
   end
 
-  def show_progress_percentage(group)
-    self.memberships.where(challenge_id: group.challenge.id).first.progress_percentage
+  def show_progress_percentage(membership)
+    self.memberships.find(membership).progress_percentage
   end
 
-  def show_last_recorded_reading(group)
-    self.memberships.where(challenge_id: group.challenge.id).first.membership_readings.last.created_at.to_pretty
+  def show_last_recorded_reading(membership)
+    self.memberships.find(membership).membership_readings.last.created_at.to_pretty
   end
 end
