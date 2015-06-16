@@ -12,6 +12,7 @@ class MembershipReadingsController < ApplicationController
     @challenge = membership.challenge
     reading
     MembershipReading.create(membership_reading_params)
+    membership.update_stats
     respond_to do |format|
       format.html { 
         # go back to referer unless alternate location passed in
