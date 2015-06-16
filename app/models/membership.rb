@@ -44,7 +44,8 @@ class Membership < ActiveRecord::Base
   def associate_statistics
     self.membership_statistics << MembershipStatisticProgressPercentage.create
     self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
-    #self.membership_statistics << MembershipStatisticRecordSequentialReading.create
+    self.membership_statistics << MembershipStatisticRecordReadingStreak.create
+    self.membership_statistics << MembershipStatisticCurrentReadingStreak.create
   end
 
   private
