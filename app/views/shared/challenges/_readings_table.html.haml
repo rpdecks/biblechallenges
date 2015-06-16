@@ -1,4 +1,3 @@
-%h4 Readings
 %table.table.table-striped.table-bordered.table-hover.table-centered-text
   %tbody
     %thead
@@ -7,6 +6,6 @@
         %th Chapter(comments)
         %th 
           %span.glyphicon.glyphicon-ok
-    - @challenge.readings.each do |reading|
-      = render partial: 'shared/challenges/readings_table_row',
-        locals: {reading: reading, membership: @membership}
+            - @challenge.readings.each do |reading|
+              = render partial: 'shared/challenges/readings_table_row',
+                locals: {reading: reading, membership: @membership}
