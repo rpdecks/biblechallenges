@@ -50,7 +50,6 @@ feature 'User manages groups' do
       group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
 
       visit(challenge_path(challenge))
-      click_link "UC Irvine"
       click_link "Join Group"
 
       expect(user.groups).to include group
@@ -68,7 +67,6 @@ feature 'User manages groups' do
       login(user2)
       visit(challenge_path(challenge))
 
-      click_link "UC Irvine"
       click_link "Join Group"
 
       expect(user2.groups).to include group
