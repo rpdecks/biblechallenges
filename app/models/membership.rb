@@ -41,6 +41,12 @@ class Membership < ActiveRecord::Base
     challenge.readings.count == membership_readings.count
   end
 
+  def update_stats
+    membership_statistics.each do |ms|
+      ms.update
+    end
+  end
+
   def associate_statistics
     self.membership_statistics << MembershipStatisticProgressPercentage.create
     self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
