@@ -6,7 +6,7 @@ class Member::GroupsController < ApplicationController
   def join
     group.add_user_to_group(group.challenge, current_user)
     flash[:notice] = "Joined group successfully"
-    redirect_to [:member, group]
+    redirect_to member_challenge_path(group.challenge, anchor: "readings")
   end
 
   def leave
