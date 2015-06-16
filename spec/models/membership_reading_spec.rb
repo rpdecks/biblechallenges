@@ -20,8 +20,8 @@ describe MembershipReading do
 
   describe "Callbacks" do
     describe "Before save" do
-      describe "#punctual?" do
-        it "will record the membership_reading as punctual", skip: true do
+      describe "#on_schedule?" do
+        it "will record the membership_reading as on_schedule", skip: true do
           pending
           Timecop.travel(5.days.ago)
           challenge = create(:challenge_with_readings)
@@ -39,9 +39,9 @@ describe MembershipReading do
           Timecop.return
           membership_reading = membership.membership_readings.third
           membership_reading.update_attributes(state: "read")
-          expect(membership.membership_readings.first.punctual).to eq 1
-          expect(membership.membership_readings.second.punctual).to eq 1
-          expect(membership.membership_readings.third.punctual).to eq 0
+          expect(membership.membership_readings.first.on_schedule).to eq 1
+          expect(membership.membership_readings.second.on_schedule).to eq 1
+          expect(membership.membership_readings.third.on_schedule).to eq 0
         end
       end
     end
