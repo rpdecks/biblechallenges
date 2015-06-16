@@ -25,10 +25,10 @@
               %td.text-center
                 - unless current_user.groups.include?(g)
                   = link_to "Join Group", join_member_group_path(id: g.id), :class=> "btn btn-primary btn-sm", method: :post
-      .right
-        = render 'shared/challenges/create_a_group'
 
       .left-bold
         Total Groups:
         = @challenge.groups.count
+        &nbsp;
+        = render 'shared/challenges/create_a_group'
 
