@@ -20,9 +20,9 @@
               = image_tag avatar_url(m,30)
               %span 
                 = m.decorate.fullname
-            %td= m.decorate.show_progress_percentage(@membership)
-            - if m.has_logged_a_reading?(@membership)
-              %td= m.decorate.show_last_recorded_reading(@membership)
+            %td= m.show_progress_percentage(m, @group)
+            - if m.has_logged_a_reading?(m, @group)
+              %td= m.decorate.show_last_recorded_reading(m, @group)
             - else
               %td
                 No readings yet
