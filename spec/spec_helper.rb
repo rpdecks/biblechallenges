@@ -15,6 +15,7 @@ Time.zone = 'Eastern Time (US & Canada)'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
+  Capybara.javascript_driver = :webkit
 
   # suppress error backtrace if related to rvm or rbenv
   config.backtrace_exclusion_patterns = [/\.rvm/, /\.rbenv/, /\.gem/]
