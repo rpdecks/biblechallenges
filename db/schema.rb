@@ -169,11 +169,11 @@ ActiveRecord::Schema.define(version: 20150609190941) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.string   "image"
-    t.string   "authentication_token"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
