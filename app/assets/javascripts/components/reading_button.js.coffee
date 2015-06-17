@@ -11,6 +11,10 @@
     reading_id: null
     membership_id: null
 
+  handleCreate: ->
+    e.preventDefault()
+    $.post
+
   render: ->
     if @state.membership_reading_id
       React.DOM.button null, "Mark Unread"
