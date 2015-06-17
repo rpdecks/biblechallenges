@@ -29,75 +29,63 @@ describe Membership do
       it 'does not allow to re-join again' do
         expect(build(:membership, challenge: challenge, user: user)).to_not be_valid
       end
-
     end
-
-
   end
 
   describe "Relations" do
     it { should belong_to(:user) }
     it { should belong_to(:challenge) }
-    it { should have_many(:readings).through(:membership_readings) }
+    it { should belong_to(:group) }
+    it { should have_many(:readings).through(:challenge) }
     it { should have_many(:membership_readings) }
   end
 
   describe "Class methods" do
+    describe '#send_daily_emails' do
+      it "sends email according to user's timezone and time preference", skip: true do
+        pending
+        challenge = create(:challenge, :with_readings, begindate: Date.today)
+        membership = create(:membership, challenge: challenge)
+        user = membership.user
+        create(:profile, time_zone: 'Eastern Time (US & Canada)', preferred_reading_hour: DateTime.now.strftime("%H"), user: user)
+        Membership.send_daily_emails
+        successful_sending_email = ActionMailer::Base.deliveries.last
+        expect(successful_sending_email.to).to match_array [user.email] 
+      end
+
+      it "sends email according to user's timezone and time preference", skip: true do
+        pending
+        challenge = create(:challenge, :with_readings, begindate: Date.today)
+        membership = create(:membership, challenge: challenge)
+        user = membership.user
+        create(:profile, time_zone: 'Hawaii', preferred_reading_hour: 6)
+        Membership.send_daily_emails
+        successful_sending_email = ActionMailer::Base.deliveries.last
+        expect(successful_sending_email.to).to match_array [user.email] 
+      end
+    end
   end
 
   describe 'Instance methods' do
-    describe '#overall_progress_percentage' do
-      let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
-      let(:membership){create(:membership, challenge: challenge)}
-
-      before do
-        membership.membership_readings[0..3].each do |mr|
-          mr.state = 'read'
-          mr.save!
-        end
-      end
-
-      it 'returns the progress percentage based on readings' do
-        expect(membership.overall_progress_percentage).to eql(57)
-      end
-    end
-    describe '#to_date_progress_percentage' do
-      let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
-      let(:membership){create(:membership, challenge: challenge)}
-      before do
-        membership.membership_readings[0..1].each do |mr| # read first two
-          mr.state = 'read'
-          mr.save!
-        end
-      end
-      it 'returns the progress percentage of the readings up to and including the passed in date' do
-        # total of four days elapsed with two readings completed
-        expect(membership.to_date_progress_percentage(challenge.begindate + 3.days)).to eql(50)
-      end
-    end
-
     describe '#completed?' do
       it "returns true if all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
         membership = create(:membership, challenge: challenge)
-        membership.membership_readings[0..1].each do |mr| # read first two
-          mr.state = 'read'
-          mr.save!
+        membership.readings[0..1].each do |r| # read first two
+          create(:membership_reading, reading: r, membership: membership)
         end
         expect(membership.completed?).to eq true
       end
       it "returns false if not all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1-3')
+        challenge.generate_readings
         membership = create(:membership, challenge: challenge)
-        membership.membership_readings[0..1].each do |mr| # read first two
-          mr.state = 'read'
-          mr.save!
+        membership.readings[0..1].each do |r| # read first two
+          create(:membership_reading, reading: r, membership: membership)
         end
         expect(membership.completed?).to eq false
       end
     end
-
-
   end
 
   describe 'Callbacks' do
@@ -110,24 +98,23 @@ describe Membership do
       end
 
       describe '#send_todays_reading' do
-        it "sends todays reading after creation if it exists" do
+        it "sends todays reading after creation if it exists", skip: true do
+          pending
           user = create(:user)
           challenge = create(:challenge, begindate: Date.today)  
           membership = build(:membership, challenge: challenge, user: user)
           #MembershipReadingMailer.should_receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
-          expect(MembershipReadingMailer).to receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
+          expect(ReadingMailer).to receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
           membership.save
         end
         it "does not send todays reading after creation if it does not exist" do
           user = create(:user)
           challenge = create(:challenge, begindate: Date.tomorrow) 
           membership = build(:membership, challenge: challenge, user: user)
-          MembershipReadingMailer.should_not_receive(:daily_reading_email)
+          expect(ReadingMailer).not_to receive(:daily_reading_email)
           membership.save
         end
       end
-
     end
   end
-
 end

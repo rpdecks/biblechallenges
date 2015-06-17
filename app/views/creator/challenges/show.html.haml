@@ -1,0 +1,21 @@
+- breadcrumb :challenge, @challenge
+.container
+  = breadcrumbs
+  %center
+    = render 'shared/challenges/join_challenge'
+%br
+  %legend
+  .row.col-md-6
+    = render 'shared/challenges/challenge_groups'
+
+  .row
+  = render 'shared/challenges/challenge_details'
+
+  = render 'shared/challenges/challenge_statistics'
+
+
+
+  %br
+  %br
+
+  = render 'shared/challenges/challenge_unsubscribe'

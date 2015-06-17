@@ -1,11 +1,13 @@
 class Challenge < ActiveRecord::Base
-  attr_accessible :begindate, :enddate, :name, :owner_id, :chapters_to_read, :public, :welcome_message
+  include PgSearch
+  pg_search_scope :search_by_name, against: :name
 
   # Relations
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
-  has_many :membership_readings, through: :readings  # needs default order #todo 
+  has_many :membership_readings, through: :members  # needs default order #todo 
+  has_many :groups
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
@@ -23,16 +25,30 @@ class Challenge < ActiveRecord::Base
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
   after_create      :successful_creation_email
-  after_save        :generate_readings
+  #after_save        :generate_readings
 
 
 
   def membership_for(user)
-    memberships.find_by_user_id(user.id)
+    user && memberships.find_by_user_id(user.id)
   end
 
   def has_member?(member)
     members.include?(member)
+  end
+
+  def has_ungrouped_member?(member)
+    membership_for(member) && membership_for(member).group.nil?
+  end
+
+  def has_grouped_member?(member)
+    membership_for(member) && membership_for(member).group
+  end
+
+  def percentage_completed
+    scheduled = readings.where(read_on: (self.begindate)..(Date.today)).count
+    total = readings.count
+    scheduled.zero? ? 0 : (scheduled * 100) / total
   end
 
   # Accepts one or multiple users
@@ -49,14 +65,22 @@ class Challenge < ActiveRecord::Base
     end
   end
 
-  def welcome_message_markdown
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-    markdown.render(self.welcome_message || "")
-  end
-
   def url
       "biblechallenges.com"
   end
+
+  def generate_readings
+
+    ActsAsScriptural.new.parse(chapters_to_read).chapters.each_with_index do |chapter, i|
+      chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
+      readings.create(chapter: chapter, read_on: (begindate + i.days))
+    end
+  end
+
+  def todays_reading
+    readings.find_by_read_on(Date.today)
+  end
+
 
   private
 
@@ -82,21 +106,9 @@ class Challenge < ActiveRecord::Base
     ChallengeMailer.creation_email(self).deliver_now
   end
 
-  def generate_readings
-    # Only generate the reading on the cases below.
-    if (id_changed? || begindate_changed? || chapters_to_read_changed?)
-      readings.destroy_all
-      Chapter.search(chapters_to_read).flatten.each_with_index do |chapter,i|
-        readings.create(chapter: chapter, date: (begindate + i.days))
-      end
-    end
-  end
-
   # - before_validation
   def calculate_enddate
-    chapters_count = Parser.separate_queries(chapters_to_read).inject(0) do |chapters, query|
-      chapters += (Parser.parse_query(query)[1].try(:length) || 0)
-    end
+    chapters_count = ActsAsScriptural.new.parse(chapters_to_read).chapters.size
     self.enddate = begindate + (chapters_count - 1).days if chapters_to_read
   end
 

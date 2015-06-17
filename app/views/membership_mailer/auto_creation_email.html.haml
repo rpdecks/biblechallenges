@@ -28,8 +28,6 @@
       %br
       You can log into your account #{link_to "here", root_url} to update your profile and set other preferences.
       %br
-      =raw @challenge.welcome_message_markdown
-      %br
       This challenge begins on #{@challenge.begindate.strftime("%b %-d, %Y")} and ends on #{@challenge.enddate.strftime("%b %-d, %Y")}.
       You can see a detailed schedule of readings below.
       %br
@@ -62,7 +60,7 @@
 
       %br
       %small
-        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.hash_for_url)} here to be unsubscribed.
+        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.id)} here to be unsubscribed.
       %br
       %br
       %small

@@ -1,20 +1,5 @@
-# == Schema Information
-#
-# Table name: memberships
-#
-#  id            :integer          not null, primary key
-#  user_id       :integer
-#  challenge_id  :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  bible_version :string(255)      default("ASV")
-#
-
 class Membership < ActiveRecord::Base
 
-  include UrlHashable
-
-  attr_accessible :challenge, :user, :bible_version
   attr_accessor :auto_created_user
 
   # Constants
@@ -23,8 +8,17 @@ class Membership < ActiveRecord::Base
   # Relations
   belongs_to :user
   belongs_to :challenge
+  belongs_to :group
+
   has_many :membership_readings, dependent: :destroy
-  has_many :readings, through: :membership_readings
+  has_many :readings, through: :challenge
+  has_many :membership_statistics
+  
+  # autogenerate has_one associations for all the membership statistic types
+  Rails.application.eager_load!
+  MembershipStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
 
 
   #  Validations
@@ -34,19 +28,13 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
-  after_create :associate_readings
 
-  after_create :successful_creation_email, unless: 'auto_created_user'
-  after_create :successful_auto_creation_email, if: 'auto_created_user'
+  after_update :recalculate_group_stats
 
-  after_create :send_todays_reading
-
-
-  def overall_progress_percentage
-    mr_total = membership_readings.count
-    read = membership_readings.read.count
-    mr_total.zero? ? 0 : (read * 100) / mr_total
-  end
+#  after_create :successful_creation_email, unless: 'auto_created_user'
+#  after_create :successful_auto_creation_email, if: 'auto_created_user'
+#
+#  after_create :send_todays_reading
 
   def to_date_progress_percentage(adate)
     td_total = readings.to_date(adate).count
@@ -55,32 +43,33 @@ class Membership < ActiveRecord::Base
   end
 
   def completed?
-    membership_readings.count == membership_readings.read.count
+    challenge.readings.count == membership_readings.count
   end
 
-  def send_todays_reading  #this feels bad ask jose
-    r = readings.find_by_date(Date.today)
-    if r
-      mr = r.membership_readings.find_by_reading_id_and_membership_id(r.id, self.id)
-      MembershipReadingMailer.daily_reading_email(mr).deliver if mr
-    end
+
+  def associate_statistics
+    self.membership_statistics << MembershipStatisticProgressPercentage.create
+    self.membership_statistics << MembershipStatisticPunctualPercentage.create
+    self.membership_statistics << MembershipStatisticRecordSequentialReading.create
   end
 
   private
-
   # Callbacks
-
-  # - after_create
-  def associate_readings
-    self.readings << challenge.readings
+  def recalculate_group_stats
+    if self.group_id.present?
+      #group.recalculate_stats
+      #replace this with calling group's group_statistics
+    end
   end
+
+
   # -- emails
+
   def successful_creation_email
     MembershipMailer.creation_email(self).deliver_now
   end
+
   def successful_auto_creation_email
     MembershipMailer.auto_creation_email(self).deliver_now
   end
-
-
 end
