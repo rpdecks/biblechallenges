@@ -18,6 +18,8 @@ class Member::ChallengesController < ApplicationController
     @group = current_user.find_challenge_group(@challenge)
     @membership = @challenge.membership_for(current_user)
     @todays_reading = @challenge.todays_reading
+
+    @readings_json = @challenge.readings.to_json(include: :chapter)
   end
 
 
