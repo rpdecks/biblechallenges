@@ -36,7 +36,7 @@ class MembershipReadingsController < ApplicationController
         redirect += params[:anchor] if params[:anchor]
         redirect_to redirect
       }
-      format.js { render :destroy }
+      format.json { head :no_content }
     end
   end
 
