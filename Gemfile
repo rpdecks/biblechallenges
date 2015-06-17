@@ -29,6 +29,7 @@ gem 'draper'
 gem 'pg_search'
 gem 'bootstrap_form'
 gem 'htmlentities'
+gem 'react-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
