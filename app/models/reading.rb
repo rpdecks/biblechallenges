@@ -21,7 +21,6 @@ class Reading < ActiveRecord::Base
   scope :to_date, lambda { | a_date | where("read_on <= ?", a_date) }
   scope :on_date, lambda { | a_date | where("read_on = ?", a_date) }
 
-
   def last_read_by
     #returns the user who last read this reading
     #last_reading.try(:membership).try(:user)
@@ -39,4 +38,5 @@ class Reading < ActiveRecord::Base
   def last_readers(num = 50)
     membership_readings.order("membership_readings.updated_at").limit(num).map {|r| r.membership.user}  #is this as ugly as it feels?  jose
   end
+
 end

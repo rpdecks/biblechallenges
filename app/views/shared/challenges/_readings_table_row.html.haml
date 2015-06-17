@@ -7,3 +7,4 @@
         = link_to " ", membership_reading_path(id: reading.membership_reading_for(membership), anchor: "readings"), class: "glyphicon glyphicon-check btn btn-success delete", id: "unread",  method: :delete
       - else
         = link_to " ", membership_readings_path(reading_id: reading.id, membership_id: membership.id, anchor: "readings"), class: "glyphicon glyphicon-unchecked btn btn-primary", id: "read",  method: :post
+  %td= react_component 'ReadingButton', { reading_id: reading.id, membership_id: membership.id, membership_reading_id: reading.membership_reading_for(membership) }
