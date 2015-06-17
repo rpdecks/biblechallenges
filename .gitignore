@@ -27,5 +27,7 @@
 # dotenv
 .env
 
+quickfix.out
+
 # Ignore application configuration
 /config/application.yml

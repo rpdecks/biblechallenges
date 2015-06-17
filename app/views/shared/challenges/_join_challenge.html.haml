@@ -1,0 +1,14 @@
+%legend
+%h1= @challenge.name
+- if current_user  && @membership = @challenge.membership_for(current_user)
+  %hr
+    %h4 
+      %b
+        Challenge Instructions:
+      %i
+        = render 'shared/challenges/challenge_instructions'
+- elsif current_user
+  = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn btn-success', display: 'inline'
+- unless current_user
+  = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
+  %p

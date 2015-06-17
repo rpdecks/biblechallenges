@@ -1,58 +1,64 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id                     :integer          not null, primary key
-#  email                  :string(255)      default(""), not null
-#  encrypted_password     :string(255)      default(""), not null
-#  reset_password_token   :string(255)
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0)
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  username               :string(255)
-#  first_name             :string(255)
-#  last_name              :string(255)
-#
-
 class User < ActiveRecord::Base
+  include PrettyDate
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+  acts_as_token_authenticatable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
 
 
-  attr_accessible :email, :password, 
-    :password_confirmation, :remember_me, :provider, :uid
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
+  has_many :groups, through: :memberships
   has_many :comments
+  has_many :badges, dependent: :destroy
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
-  #Callbacks
-
-  before_create :add_profile
-
-  delegate :first_name, :last_name, :username, to: :profile
-
-
-  def fullname
-    "#{first_name} #{last_name}"
+  # autogenerate has_one associations for all the badge types
+  Rails.application.eager_load!
+  Badge.descendants.each do |badge| 
+    has_one badge.name.underscore.to_sym
   end
 
-  def add_profile
-    self.create_profile
+
+  #Callbacks
+
+  def show_progress_percentage(member, group)
+    user_membership = (member.memberships & group.memberships).first
+    user_membership.progress_percentage
+  end
+
+  def show_last_recorded_reading(member, group)
+    user_membership = (member.memberships & group.memberships).first
+    user_membership.membership_readings.last.created_at.to_pretty
+  end
+
+  def has_logged_a_reading?(member, group)
+    user_membership = (member.memberships & group.memberships).first
+    MembershipReading.where(membership_id: user_membership).present?
+  end
+
+  def find_challenge_group(challenge)
+    groups.where(challenge: challenge).first
+  end
+
+  def first_name
+    profile && profile.first_name
+  end
+
+  def last_name
+    profile && profile.last_name
+  end
+
+  def username
+    profile && profile.first_name
   end
 
   def self.from_omniauth(auth)

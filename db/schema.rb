@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430142154) do
+ActiveRecord::Schema.define(version: 20150609190941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "badges", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "granted",    default: false
+  end
+
+  add_index "badges", ["user_id"], name: "index_badges_on_user_id", using: :btree
 
   create_table "bookfrags", force: :cascade do |t|
     t.string   "fragment"
@@ -32,6 +42,7 @@ ActiveRecord::Schema.define(version: 20150430142154) do
     t.datetime "updated_at"
     t.string   "chapters_to_read"
     t.text     "welcome_message"
+    t.string   "dates_to_skip"
   end
 
   create_table "chapter_challenges", force: :cascade do |t|
@@ -61,30 +72,60 @@ ActiveRecord::Schema.define(version: 20150430142154) do
     t.datetime "updated_at"
   end
 
+  create_table "group_statistics", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "value"
+    t.string   "type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "group_statistics", ["group_id"], name: "index_group_statistics_on_group_id", using: :btree
+
   create_table "groups", force: :cascade do |t|
     t.integer  "challenge_id"
-    t.integer  "owner_id"
     t.string   "name"
-    t.string   "bible_version", default: "ASV"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "user_id"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "ave_sequential_reading_count",    default: 0
+    t.integer  "ave_punctual_reading_percentage", default: 0
+    t.integer  "ave_progress_percentage",         default: 0
   end
+
+  add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "membership_readings", force: :cascade do |t|
     t.integer  "membership_id"
     t.integer  "reading_id"
-    t.string   "state",         default: "unread"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "punctual"
   end
+
+  create_table "membership_statistics", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "type"
+    t.string   "value"
+    t.integer  "membership_id"
+  end
+
+  add_index "membership_statistics", ["membership_id"], name: "index_membership_statistics_on_membership_id", using: :btree
+  add_index "membership_statistics", ["user_id"], name: "index_membership_statistics_on_user_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "challenge_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "bible_version", default: "ASV"
+    t.string   "bible_version",                default: "ASV"
     t.integer  "group_id"
+    t.integer  "rec_sequential_reading_count", default: 0
+    t.integer  "punctual_reading_percentage",  default: 0
+    t.integer  "progress_percentage",          default: 0
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -101,11 +142,19 @@ ActiveRecord::Schema.define(version: 20150430142154) do
   create_table "readings", force: :cascade do |t|
     t.integer  "chapter_id"
     t.integer  "challenge_id"
-    t.date     "date"
+    t.date     "read_on"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "discussion"
   end
+
+  create_table "user_statistics", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_statistics", ["user_id"], name: "index_user_statistics_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -124,8 +173,10 @@ ActiveRecord::Schema.define(version: 20150430142154) do
     t.string   "uid"
     t.string   "name"
     t.string   "image"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
@@ -141,4 +192,5 @@ ActiveRecord::Schema.define(version: 20150430142154) do
     t.integer  "chapter_index"
   end
 
+  add_foreign_key "badges", "users"
 end

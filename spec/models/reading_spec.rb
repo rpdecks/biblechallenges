@@ -10,9 +10,8 @@ describe Reading do
 
     it { should validate_presence_of(:chapter_id) }
     it { should validate_presence_of(:challenge_id) }
-    it { should validate_presence_of(:date) }
-  end
-
+    it { should validate_presence_of(:read_on) }
+  end 
   describe "Delegations" do
     it { should delegate_method(:owner).to(:challenge) }
   end
@@ -26,33 +25,60 @@ describe Reading do
 
   describe "Scopes" do
 
+    describe "on_date" do
+      it "should return all readings scheduled for the given date" do
+        create_list(:reading, 2, read_on: "2050-01-01")
+        create_list(:reading, 1, read_on: "2050-01-02")
+
+        expect(Reading.on_date("2050-01-01").size).to eq 2
+        
+      end
+    end
     describe "to_date" do
       let!(:challenge){create(:challenge, chapters_to_read: 'Mar 1 -7')}
       let(:membership){create(:membership, challenge: challenge)}
 
       it "should find all readings up to and including the passed date" do
+        challenge.generate_readings
         expect(membership.readings.to_date(challenge.begindate + 1.day)).to have(2).items
       end
     end
   end
 
   describe "Instance Methods" do
+    describe "read_by?" do
+      it "returns false if the reading has been read by the passed in user" do
+        user = create(:user)
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Mar 1 -2')
+        create(:membership, user: user, challenge: challenge)
+        reading = challenge.readings.first
+        expect(reading.read_by?(user)).to eq false
+      end
+      it "returns true if the reading has been read by the passed in user" do
+        user = create(:user, :with_profile)
+        challenge = create(:challenge_with_readings, chapters_to_read: 'Mar 1 -2')
+        membership = create(:membership, user: user, challenge: challenge)
+        reading = challenge.readings.first
+        create(:membership_reading, membership: membership, reading: reading)
+        expect(reading.read_by?(user)).to eq true
+      end
+    end
     describe "last_readers" do
       it "should return a collection of the last x readers" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        challenge.generate_readings
         reading = challenge.readings.first
         m1 = create(:membership, challenge: challenge)
         m2 = create(:membership, challenge: challenge)
-        reading.membership_readings.each do |m|
-          m.state = 'read'
-          m.save!
-        end
+        create(:membership_reading, reading: reading, membership: m1)
+        create(:membership_reading, reading: reading, membership: m2)
         expect(reading.last_readers(2)).to match_array [m1.user, m2.user]
         
       end
 
       it "should return an empty collection of noone has read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')
+        challenge.generate_readings
         reading = challenge.readings.first
         create(:membership, challenge: challenge)
         create(:membership, challenge: challenge)

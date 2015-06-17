@@ -9,16 +9,17 @@ describe ProfilesController do
 
   context "User Access" do
 
+    let(:current_user) { create(:user, :with_profile) }
+
+
     describe "GET#edit" do
       it "assigns the current user's profile to @profile" do
-        current_user = create(:user)
         sign_in :user, current_user
         get :edit
         expect(assigns(:profile)).to eql(current_user.profile)
       end
 
       it "renders the :edit template" do
-        current_user = create(:user)
         sign_in :user, current_user
         get :edit
         expect(response).to render_template(:edit)
@@ -28,7 +29,6 @@ describe ProfilesController do
     describe "PUT#update" do
       context "with valid attributes" do
         it "updates the profile in the database" do
-          current_user = create(:user)
           sign_in :user, current_user
           put :update, profile: attributes_for(:profile, first_name: "Phil",
                                                last_name: "Bradley",
@@ -39,7 +39,6 @@ describe ProfilesController do
       end
 
         it "renders the profile edit page" do
-          current_user = create(:user)
           sign_in :user, current_user
           put :update, profile: attributes_for(:profile, first_name: "Phil",
                                                last_name: "Bradley",

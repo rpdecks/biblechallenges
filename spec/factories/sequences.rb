@@ -1,3 +1,3 @@
 FactoryGirl.define do
-  sequence(:email) { |n| "bc#{n}@test.com" }
+  sequence(:email) { |n| "user#{n}@test.com" }
 end

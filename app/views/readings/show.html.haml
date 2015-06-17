@@ -6,14 +6,6 @@
 
   = render 'challengestattable'
 
-  - if @reading.owner == current_user || !@discussion_md.blank?
-    %h4 Discussion / Questions
-    %p
-      = raw @discussion_md
-    - if @reading.owner == current_user
-      %p
-        = link_to "Edit Discussion Question(s)", edit_reading_path(@reading)
-    %br
   = render 'showhidechapter'
   = render partial: 'comment_form', locals: {comment: @comment, reading: @reading}
   %br
@@ -25,7 +17,7 @@
       - @comments.each do |c|
         %tr
           %td 
-            %div
+            %di
               %i= c.content
             %div
               %b

@@ -1,64 +1,20 @@
+- breadcrumb :challenge, @challenge
 .container
+  = breadcrumbs
+  = render 'shared/challenges/join_challenge'
+  .container
+    .row
+      = render 'shared/challenges/challenge_groups'
 
-  %legend
-    %center
-      - unless current_user && @membership = @challenge.membership_for(current_user)
-        Join the challenge!
-        %p
-      Challenge Name:
-      = @challenge.name
-      = link_to "Join Challenge", challenge_memberships_path(challenge_id: @challenge.id), method: :post
-  %p
+    .row
+    = render 'shared/challenges/challenge_details'
 
-  %br
-  %br
-  %p
-    Each day a scheduled reading of Scripture for this challenge will be sent to your inbox.  Once you've read that day's reading, you can click on a link in the email you received to update your progress and comment on that day's reading.
+    = render 'shared/challenges/challenge_statistics'
 
-  %hr
 
-  %h3 Challenge Details
+    = render 'shared/challenges/readings_table'
 
-  %table.table.table-striped.table-condensed
-    %tr
-      %td Challenge Members:
-      %td
-        - @challenge.members.each do |m|
-          = image_tag avatar_url(m, 35), title: m.username
+    %br
+    %br
 
-    %tr
-      %td Challenge Dates:
-      %td
-        =@challenge.begindate.strftime("%-m/%-d/%Y") 
-        = "-" 
-        =@challenge.enddate.strftime("%-m/%-d/%Y") 
-    %tr
-      %td Bible Reading Overview:
-      %td= @challenge.chapters_to_read
-    - if current_user && @membership = @challenge.membership_for(current_user)
-      %tr
-        %td Bible Version:
-        %td
-          = @membership.bible_version
-          = link_to 'Change', '/my-membership'
-
-  %hr
-
-  - if @membership
-    - if @membership.completed?
-      %h4 Congratulations!  You have completed this challenge.
-    %p
-      Bible Version:
-      = @membership.try(:bible_version)
-    #progress-bar-container
-      = render 'memberships/reading_progress'
-
-  %h4 Readings
-
-  = render 'readings_table'
-
-  %br
-  %br
-
-  - if current_user && @membership = @challenge.membership_for(current_user)
-    = link_to raw("<i class='icon-warning-sign'></i>Unsubscribe me from this challenge"),challenge_membership_path(@challenge,@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger btn-sm"
+    = render 'shared/challenges/challenge_unsubscribe'

@@ -1,0 +1,49 @@
+- breadcrumb :challenge, @challenge
+.container
+  = breadcrumbs
+  %br
+  %br
+  %div{role: "tabpanel"}
+    %ul#grouptabs.nav.nav-tabs{role: "tablist"}
+      %li.active{role: "presentation"}
+        %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
+      - if current_user.find_challenge_group(@challenge) != nil
+        %li{role: "presentation"}
+          %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
+      - else
+        %li{role: "presentation"}
+          %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
+      %li{role: "presentation"}
+        %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
+      %li{role: "presentation"}
+        %a{href: "#details", role: "tab", aria: {controls: "details"}, data: {toggle: "tab"}} Details
+    .tab-content
+      .tab-pane.active#readings{role: "tabpanel"}
+        = render 'shared/challenges/readings'  # why can I not pass local vars here #jim
+      - if current_user.find_challenge_group(@challenge) != nil
+        .tab-pane#mygroup{role: "tabpanel"}
+          = render 'shared/groups/show'
+      - else
+        .tab-pane#groups{role: "tabpanel"}
+          = render 'shared/challenges/challenge_groups'
+      .tab-pane#statistics{role: "tabpanel"}
+        = render 'shared/challenges/challenge_statistics'
+      .tab-pane#details{role: "tabpanel"}
+        = render 'shared/challenges/challenge_details'
+        = render 'shared/challenges/challenge_unsubscribe'
+
+
+:javascript
+  // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
+  // store the currently selected tab in the hash value
+  $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+    var id = $(e.target).attr("href").substr(1);
+    window.location.hash = id;
+  });
+
+  // on load of the page: switch to the currently selected tab
+  var hash = window.location.hash;
+    $('#grouptabs a[href="' + hash + '"]').tab('show');
+
+
+

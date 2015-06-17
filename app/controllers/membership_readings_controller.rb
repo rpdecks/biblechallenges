@@ -1,70 +1,63 @@
 class MembershipReadingsController < ApplicationController
-
-  before_filter :authenticate_user!, only: [:update]
-  before_filter :find_membership_reading, except: [:update, :edit]
+  respond_to :html, :js
+  acts_as_token_authentication_handler_for User, only: [:create]
+  before_filter :authenticate_user! # needs to follow token_authentication_handler
 
   layout 'from_email'
 
-  def update
-    @comment = Comment.new
-    @user = current_user
-    @membership_reading = current_user.membership_readings.find_by_id(params[:id])
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
-    #just going to toggle state on any update
-    @membership_reading.state = (@membership_reading.state == 'unread') ? 'read' : 'unread'
-    @membership_reading.save!
-
-    if @membership_reading.state == 'read'
-      notice = "Reading updated!  You have completed #{@reading.chapter.book_and_chapter}."
-    else
-      notice = "Reading updated!"
-    end
-
-    redirect_to params[:location] || request.referer, notice: notice
-  end
-
-  def edit
-    @comment = Comment.new
-    hashids = HashidsGenerator.instance
-    membership_reading_id = hashids.decrypt(params[:id])
-    @membership_reading = MembershipReading.find_by_id(membership_reading_id)
-    if @membership_reading
-      @user = @membership_reading.membership.user
-      sign_in @user
-      @reading = @membership_reading.reading
-    else
-      flash[:error] = "This confirmation link doesn't exist or you may have unsubscribed from this challenge"
+  def create
+    #jim do I need to instantiate @challenge @reading etc even though I may not need them?
+    # can I re-render a smaller piece of the page to avoid needing these variables
+    # how can I structure this create method so I can hit it from multiple places
+    @challenge = membership.challenge
+    reading
+    MembershipReading.create(membership_reading_params)
+    respond_to do |format|
+      format.html { 
+        # go back to referer unless alternate location passed in
+        redirect = params[:location] || request.referer
+        # might be an anchor tag
+        redirect += params[:anchor] if params[:anchor]
+        redirect_to redirect
+      }
+      format.js { render :create }
     end
   end
 
-
-  def confirm
-    @comment = Comment.new
-    if @membership_reading
-      @hash = params[:hash]
-      @user = @membership_reading.membership.user
-      sign_in @user
-      @reading = @membership_reading.reading
-    else
-      flash[:error] = "This confirmation link doesn't exist"
+  def destroy
+    #jim this feel hokey because I want to pass in the id of the membership reading
+    #but since I want to display this link before the actual record exists I'm 
+    # doing it this way
+    membership_reading.destroy
+    respond_to do |format|
+      format.html { 
+        # go back to referer unless alternate location passed in
+        redirect = params[:location] || request.referer
+        # might be an anchor tag
+        redirect += params[:anchor] if params[:anchor]
+        redirect_to redirect
+      }
+      format.js { render :destroy }
     end
   end
 
-  def log
-    @membership = @membership_reading.membership
-    @reading = @membership_reading.reading
+  def confirmation
 
-    @membership_reading.state = 'read'
-    @membership_reading.save!
   end
 
-  private
-
-  def find_membership_reading
-    hashids = HashidsGenerator.instance
-    membership_reading_id = hashids.decrypt(params[:hash])
-    @membership_reading = MembershipReading.find_by_id(membership_reading_id)
+  def membership_reading_params
+    params.permit(:reading_id, :membership_id)
   end
 
+  def membership_reading
+    @membership_reading ||= MembershipReading.find(params[:id])
+  end
+
+  def membership
+    @membership ||= Membership.find(params[:membership_id])
+  end
+
+  def reading
+    @reading ||= Reading.find(params[:reading_id])
+  end
 end

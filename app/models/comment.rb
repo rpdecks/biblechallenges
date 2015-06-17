@@ -1,5 +1,4 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :commentable_id, :commentable_type, :content, :flag_count, :invisible, :user_id
 
 
   belongs_to :user

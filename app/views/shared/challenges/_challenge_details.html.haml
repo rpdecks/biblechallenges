@@ -1,0 +1,31 @@
+%h3 Challenge Details
+
+%table.table.table-striped.table-condensed
+  %tr
+    %td Owner:
+    %td
+      - owner = @challenge.owner
+      = image_tag avatar_url(owner, 35), title: owner.username 
+
+  %tr
+    %td Members:
+    %td
+      - @challenge.members.each do |m|
+        = image_tag avatar_url(m, 35), title: m.username
+
+  %tr
+    %td Dates:
+    %td
+      =@challenge.begindate.strftime("%-m/%-d/%Y") 
+      = "-" 
+      =@challenge.enddate.strftime("%-m/%-d/%Y") 
+  %tr
+    %td Bible Reading Overview:
+    %td= @challenge.chapters_to_read
+
+  - if current_user && @membership = @challenge.membership_for(current_user)
+    %tr
+      %td Bible Version:
+      %td
+        = @membership.bible_version
+        =link_to "Change", member_membership_path(@membership), :method => :get

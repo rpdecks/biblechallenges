@@ -64,84 +64,52 @@ describe Challenge do
     it { should have_many(:membership_readings) }
   end
 
-  describe 'Callbacks' do
-    describe 'After save' do
-      describe '#generate_readings' do
-        let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
-        let(:expected_readings) { 6 } # avoiding magic numbers
-
-        context 'when the challenge is being created' do
-
-          it 'creates a reading for every chapter assigned in the challenge'do
-            expect(challenge.readings.length).to eql 6
-          end
-
-          it 'creates the readings with its corresponding date' do
-            challenge.readings.each_with_index do |reading,index|
-              expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
-            end
-            expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
-          end
-
-        end
-
-        context "when the challenge isn't active" do
-          context "when 'begindate' has changed" do
-
-            before do
-              # challenge.chapters_to_read = 'Phile'
-              challenge.begindate = Date.today + 7.days
-              challenge.save
-            end
-
-            it 're-creates a reading for every chapter assigned in the challenge'do
-              expect(challenge.readings.length).to eql(expected_readings)
-            end
-
-            it 're-creates the readings with its corresponding date' do
-              challenge.readings.each_with_index do |reading,index|
-                expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
-              end
-              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
-            end
-
-          end
-
-          context "when 'chapters_to_read' has changed" do
-
-            before do
-              challenge.chapters_to_read = 'Phil 1 - 4'
-              challenge.save
-            end
-
-            it 're-creates a reading for every chapter assigned in the challenge'do
-              expect(challenge.readings.length).to eql 4
-            end
-
-            it 're-creates the readings with its corresponding date' do
-              challenge.readings.each_with_index do |reading,index|
-                expect(reading.date.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
-              end
-              expect(challenge.readings.last.date.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
-            end
-
-          end
-        end
-      end
-    end
-  end
 
 
   describe 'Instance methods' do
 
-    let(:challenge){create(:challenge, welcome_message: "# This")}
+    let(:challenge){create(:challenge)}
 
-    describe '#welcome_message_markdown' do
-      it "should parse and render the contents of welcome_message as html" do
-        expect(challenge.welcome_message_markdown).to eq "<h1>This</h1>\n"
+    describe "#todays_reading" do
+      it "does not return today's reading if it does not exist for this challenge" do
+        challenge = create(:challenge, chapters_to_read: 'Matt 1-2', begindate: "2050-01-01")
+        challenge.generate_readings
+
+        Timecop.travel("2050-01-03")
+        expect(challenge.todays_reading).to eq nil
+      end
+      it "returns today's reading if it exists for this challenge" do
+        challenge = create(:challenge, chapters_to_read: 'Matt 1-2', begindate: "2050-01-01")
+        challenge.generate_readings
+
+        Timecop.travel("2050-01-02")
+        expect(challenge.todays_reading).to eq challenge.readings.last
+      end
+    end
+    describe '#generate_readings' do
+      let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
+      let(:expected_readings) { 6 } # avoiding magic numbers
+
+      context 'when the challenge is being created' do
+
+        it 'creates a reading for every chapter assigned in the challenge'do
+          challenge.generate_readings
+          
+          expect(challenge.readings.length).to eql 6
+        end
+
+        it 'creates the readings with its corresponding date' do
+          challenge.generate_readings
+          challenge.readings.each_with_index do |reading,index|
+            expect(reading.read_on.strftime("%a, %-d %b %Y")).to eql((challenge.begindate + index.day).strftime("%a, %-d %b %Y"))
+          end
+          expect(challenge.readings.last.read_on.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
+        end
+
       end
 
     end
+
     describe '#membership_for' do
       let(:user){create(:user)}
       context 'when the user has already joined the challenge' do
@@ -153,6 +121,17 @@ describe Challenge do
       context "when the user hasn't already joined the challenge" do
         it 'returns nil' do
           expect(challenge.membership_for(user)).to be_nil
+        end
+      end
+    end
+
+    describe '#progress_percentage' do
+      context 'when the user has already joined the challenge' do
+        it "returns of the percentage of the challenge completed according to schedule" do
+        challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-20", begindate: "2050-01-01")
+        Timecop.travel("2050-01-05")
+        expect(challenge.percentage_completed).to eq 25
+        Timecop.return
         end
       end
     end
@@ -182,6 +161,21 @@ describe Challenge do
       end
     end
 
+    describe '#has_ungrouped_member?' do
+      it 'returns true if the user is in this challenge but not in a group' do
+        user = create(:user)
+        create(:membership, user: user, challenge: challenge)
+        expect(challenge.has_ungrouped_member?(user)).to be_truthy
+      end
+    end
+    describe '#has_grouped_member?' do
+      it 'returns true if the user is in a group in this challenge' do
+        user = create(:user)
+        group = create(:group, challenge: challenge, user: create(:user))
+        create(:membership, user: user, challenge: challenge, group: group)
+        expect(challenge.has_grouped_member?(user)).to be_truthy
+      end
+    end
     describe '#has_member?' do
       let(:user){create(:user)}
       context 'when the user has already joined the challenge' do
@@ -196,6 +190,15 @@ describe Challenge do
         end
       end
     end
-
+  end
+  describe "Search scopes" do
+    it "#search_by_name should not find a challenge when searching by name" do
+      challenge = create(:challenge, name: "Guy Challenge")
+      expect(Challenge.search_by_name('Phil')).not_to include [challenge]
+    end
+    it "#search_by_name should find a challenge when searching by name" do
+      challenge = create(:challenge, name: "Guy Challenge")
+      expect(Challenge.search_by_name('Guy')).to match_array [challenge]
+    end
   end
 end
