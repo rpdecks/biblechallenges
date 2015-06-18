@@ -1,8 +1,8 @@
 class MembershipReading < ActiveRecord::Base
   # Scopes
   default_scope {includes(:reading).order('readings.read_on')}
-  scope :punctual, -> {where(punctual: 1)}
-  scope :not_punctual, -> {where(punctual: 0)}
+  scope :on_schedule, -> {where(on_schedule: 1)}
+  scope :not_on_schedule, -> {where(on_schedule: 0)}
 
   # Relations
   belongs_to :membership
@@ -16,7 +16,7 @@ class MembershipReading < ActiveRecord::Base
   validates :reading_id, presence: true
 
   #Callbacks
-  before_create :mark_punctual
+  before_create :mark_on_schedule
 
   def self.send_daily_emails
     MembershipReading.unread.joins(:reading).where("readings.date = ?",Date.today).each do |mr|
@@ -27,11 +27,11 @@ class MembershipReading < ActiveRecord::Base
 
   private
 
-  def reading_punctual?
+  def reading_on_schedule?
     ZoneConverter.new.on_date_in_zone?(date: reading.read_on, timestamp: self.updated_at, timezone: membership.user.profile.time_zone)
   end
 
-  def mark_punctual
-    self.punctual = 1 if reading_punctual? 
+  def mark_on_schedule
+    self.on_schedule = 1 if reading_on_schedule? 
   end
 end

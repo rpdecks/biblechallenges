@@ -3,8 +3,9 @@ require 'spec_helper'
 describe DailyEmailScheduler do
   describe "self.set_daily_email_jobs" do
     it "schedules an email job for a user" do
+      #Membership.delete_all  #todo this should not be necesssary
       user = create(:user, :with_profile)
-      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      challenge = create(:challenge, :with_readings, begindate: "2050-01-01", owner: user)
       create(:membership, user: user, challenge: challenge)
 
       Timecop.travel("2050-01-01")
@@ -22,7 +23,7 @@ describe DailyEmailScheduler do
                                            preferred_reading_hour: 7))
       user2 = create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)",
                                            preferred_reading_hour: 7))
-      challenge = create(:challenge, :with_readings, begindate: today)
+      challenge = create(:challenge, :with_readings, begindate: today, owner: user1)
       create(:membership, user: user1, challenge: challenge)
       create(:membership, user: user2, challenge: challenge)
 
