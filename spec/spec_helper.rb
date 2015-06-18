@@ -26,19 +26,29 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
+  config.before :suite do
+    DatabaseCleaner.clean
+  end
+
+  config.before :suite do
+    DatabaseCleaner.clean_with(:truncation, {except: %w[chapters verses]})
+  end
 
   config.before :each do
-    if Capybara.current_driver == :selenium
-      DatabaseCleaner.strategy = :truncation, {except: %w[chapters verses]}
-    else
-      DatabaseCleaner.strategy = :transaction
-    end
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation, {except: %w[chapters verses]}
+  end
+
+  config.before :each do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after :each do
     DatabaseCleaner.clean
     Timecop.return
   end

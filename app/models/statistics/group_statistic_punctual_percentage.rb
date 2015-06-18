@@ -1,7 +1,7 @@
-class GroupStatisticPunctualPercentage < GroupStatistic
+class GroupStatisticOnSchedulePercentage < GroupStatistic
 
   def name
-    "Group punctual percentage"
+    "Group on_schedule percentage"
   end
 
   def description
@@ -9,8 +9,8 @@ class GroupStatisticPunctualPercentage < GroupStatistic
   end
 
   def calculate
-    member_punctual_percentages = group.memberships.map {|m| m.membership_statistic_punctual_percentage.value.to_i}
-    member_punctual_percentages.inject{|sum, element| sum + element} / member_punctual_percentages.size
+    member_on_schedule_percentages = group.memberships.map {|m| m.membership_statistic_on_schedule_percentage.value.to_i}
+    member_on_schedule_percentages.inject{|sum, element| sum + element} / member_on_schedule_percentages.size
   end
 
   def update

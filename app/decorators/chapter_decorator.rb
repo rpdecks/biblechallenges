@@ -20,8 +20,11 @@ class ChapterDecorator < Draper::Decorator
     object.chapter_number
   end
 
-  def verses_by_version(version)
-    ordered_verses = object.verses.by_version(version).sort_by { |verse| verse.verse_number }
-    ordered_verses.map {|verse| "#{verse.verse_number} #{verse.versetext}" }.join("</br>")
+  def verses_by_version(version, start_verse: nil, end_verse: nil)
+    ordered_verses = object.verses.order(:verse_number).by_version(version).decorate
+    ordered_verses.map {|verse| verse.to_div}.join
   end
+
+#  verse_range should go on the model
+
 end
