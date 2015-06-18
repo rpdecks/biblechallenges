@@ -31,3 +31,6 @@ quickfix.out
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore tags folder from ctags
+tags
