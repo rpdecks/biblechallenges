@@ -11,8 +11,8 @@ class Member::ChallengesController < ApplicationController
   end
 
   def index
-    # this gets all challenges that you own or are a member of
-    @challenges = (current_user.created_challenges + current_user.challenges).uniq
+    # all challenges that user is a member of
+    @challenges = current_user.challenges.uniq
   end
 
   def show
@@ -28,6 +28,8 @@ class Member::ChallengesController < ApplicationController
         by_version(@membership.bible_version).
         by_range(start_verse: FIRST_VERSES_LIMIT + 1)
     end
+
+    @readings_json = @challenge.readings.to_json(include: :chapter)
   end
 
   def create

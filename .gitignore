@@ -31,3 +31,6 @@ quickfix.out
 
 # Ignore application configuration
 /config/application.yml
+
+# ignore dump file from redis
+dump.rdb
