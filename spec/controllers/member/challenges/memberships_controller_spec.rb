@@ -55,6 +55,7 @@ describe Member::MembershipsController do
     end
 
     it "creates a membership" do
+      newchallenge
       expect {
         post :create, challenge_id: newchallenge
       }.to change(Membership, :count).by(1)
