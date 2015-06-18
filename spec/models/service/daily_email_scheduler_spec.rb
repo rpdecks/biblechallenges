@@ -16,7 +16,7 @@ describe DailyEmailScheduler do
       Timecop.return
     end
 
-    it "schedules an email according to the user's preferences for a user" do
+    it "schedules email's timing according to the user's preferences" do
       today = DateTime.now
       user1 = create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)",
                                            preferred_reading_hour: 7))
@@ -27,14 +27,40 @@ describe DailyEmailScheduler do
       create(:membership, user: user2, challenge: challenge)
 
       #traveling to next day 0-hours
-      t = Time.local(today.year, today.month, today.day + 1, 0, 0, 0)
+      Time.zone = "UTC"
+      t = Time.local(today.year, today.month, today.day, 20, 0, 0)
       Timecop.travel(t)
 
       DailyEmailScheduler.set_daily_email_jobs
+
       a = Time.at(DailyEmailWorker.jobs.first["at"])
       b = Time.at(DailyEmailWorker.jobs.last["at"])
       time_lapse = ( b - a ) / 3600
+
       expect(time_lapse).to eq 3
+
+      Timecop.return
+    end
+
+    it "schedules tomorrows reading according to the user's preferences" do
+      today = DateTime.now
+      user1 = create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)",
+                                           preferred_reading_hour: 7))
+      challenge = create(:challenge, :with_readings, begindate: today)
+      create(:membership, user: user1, challenge: challenge)
+
+      #traveling to next day 0-hours
+      Time.zone = "UTC"
+      t = Time.local(today.year, today.month, today.day, 20, 0, 0)
+      Timecop.travel(t)
+
+      DailyEmailScheduler.set_daily_email_jobs
+
+      reading_id_a = Time.at(DailyEmailWorker.jobs.first["args"][0])
+      reading_date_a = Reading.find(reading_id_a).read_on.strftime("%D")
+
+      tomorrow = DateTime.now+1
+      expect(reading_date_a).to eq tomorrow.strftime("%D")
 
       Timecop.return
     end

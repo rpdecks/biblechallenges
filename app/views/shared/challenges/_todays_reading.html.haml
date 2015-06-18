@@ -19,7 +19,6 @@
 
     minimized_elements.each(function(){
       var t = #{@minimized_verses.to_json.html_safe};
-      console.log(t);
       if(t.length < 100) return;
 
       $(this).html(

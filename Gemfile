@@ -13,6 +13,7 @@ gem 'activerecord-import'
 #gem 'chosen-rails'
 gem 'thin'
 gem 'sidekiq'
+gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
 gem 'font-awesome-rails'
 gem 'redcarpet'
@@ -30,6 +31,7 @@ gem 'draper'
 gem 'pg_search'
 gem 'bootstrap_form'
 gem 'htmlentities'
+gem 'react-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
