@@ -1,4 +1,6 @@
 Biblechallenge::Application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web, at: '/sidekiq'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
