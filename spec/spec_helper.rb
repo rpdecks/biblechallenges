@@ -15,7 +15,6 @@ Time.zone = 'Eastern Time (US & Canada)'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
-  Capybara.javascript_driver = :webkit
 
   # suppress error backtrace if related to rvm or rbenv
   config.backtrace_exclusion_patterns = [/\.rvm/, /\.rbenv/, /\.gem/]
@@ -33,16 +32,23 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.before :suite do
+    DatabaseCleaner.clean_with(:truncation, {except: %w[chapters verses]})
+  end
+
   config.before :each do
-    if Capybara.current_driver == :selenium
-      DatabaseCleaner.strategy = :truncation, {except: %w[chapters verses]}
-    else
-      DatabaseCleaner.strategy = :transaction
-    end
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = :truncation, {except: %w[chapters verses]}
+  end
+
+  config.before :each do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after :each do
     DatabaseCleaner.clean
     Timecop.return
   end
