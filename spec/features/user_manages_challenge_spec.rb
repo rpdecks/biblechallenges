@@ -18,6 +18,19 @@ feature 'User manages challenges' do
     }.to change(Challenge, :count).by(1)
   end
 
+  scenario 'User creates a challenge and automatically joins the challenge' do
+    visit root_path
+    click_link 'Create a Challenge'
+    expect{
+      fill_in 'challenge[name]', with: "challenge 1"
+      fill_in 'challenge[begindate]', with: Date.today
+      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+      click_button "Create Challenge"
+    }.to change(Challenge, :count).by(1)
+    expect(Membership.count).to be 1
+    expect(Membership.first.user).to eq user
+  end
+
   scenario 'User joins a challenge successfully' do
     challenge = create(:challenge, :with_readings)
     visit challenges_path
