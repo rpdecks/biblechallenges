@@ -67,6 +67,22 @@ describe Membership do
   end
 
   describe 'Instance methods' do
+    describe "#associate_statistics" do
+      it "creates named statistics and associates them with new membership" do
+        challenge = create(:challenge)
+        membership = create(:membership, challenge: challenge)
+
+        membership.associate_statistics
+
+        # somehow verify that all the statistics are present
+        MembershipStatistic.descendants.each do |mem_stat|
+          #mem_stat.name will holdl the type of each possible membership statistic
+          result = membership.membership_statistics.find_by_type(mem_stat.name)
+          expect(result).to_not be_nil
+        end
+      end
+    end
+
     describe '#completed?' do
       it "returns true if all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')

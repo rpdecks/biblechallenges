@@ -1,7 +1,7 @@
 class GroupStatisticRecordSequentialReading < GroupStatistic
 
   def name
-    "Group punctual percentage"
+    "Group on schedule percentage"
   end
 
   def description
