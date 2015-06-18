@@ -1,6 +1,8 @@
 class Member::ChallengesController < ApplicationController
   respond_to :html, :js
 
+  FIRST_VERSES_LIMIT = 10
+
   before_filter :authenticate_user!
   before_filter :find_challenge, only: [:show, :destroy]
 
@@ -18,10 +20,17 @@ class Member::ChallengesController < ApplicationController
     @group = current_user.find_challenge_group(@challenge)
     @membership = @challenge.membership_for(current_user)
     @todays_reading = @challenge.todays_reading
+    if @todays_reading
+      @first_verses_in_todays_reading = @todays_reading.chapter.verses.
+        by_version(@membership.bible_version).
+        by_range(end_verse: FIRST_VERSES_LIMIT)
+      @remaining_verses_in_todays_reading = @todays_reading.chapter.verses.
+        by_version(@membership.bible_version).
+        by_range(start_verse: FIRST_VERSES_LIMIT + 1)
+    end
 
     @readings_json = @challenge.readings.to_json(include: :chapter)
   end
-
 
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
