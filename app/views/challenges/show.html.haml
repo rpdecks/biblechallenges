@@ -2,19 +2,21 @@
 .container
   = breadcrumbs
   = render 'shared/challenges/join_challenge'
-  .container
-    .row
-      = render 'shared/challenges/challenge_groups'
-
-    .row
-    = render 'shared/challenges/challenge_details'
-
-    = render 'shared/challenges/challenge_statistics'
+  .row
+  %br
+  %br
+  = render 'shared/challenges/challenge_details'
+  %h4 Groups
+  = render partial: 'groups', locals: { groups: @challenge.groups }
 
 
-    = render 'shared/challenges/readings_table'
+  = render 'shared/challenges/challenge_statistics'
 
-    %br
-    %br
 
-    = render 'shared/challenges/challenge_unsubscribe'
+  %h4 Readings
+  = render partial: 'readings', locals: {readings: @challenge.readings }
+
+  %br
+  %br
+
+  = render 'shared/challenges/challenge_unsubscribe'

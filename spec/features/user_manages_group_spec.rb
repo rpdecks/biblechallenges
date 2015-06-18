@@ -55,22 +55,6 @@ feature 'User manages groups' do
       expect(user.groups).to include group
     end
 
-    scenario 'User sees members of a group without being in the group' do
-      challenge = create(:challenge)
-      user2 = create(:user, :with_profile)
-      create(:membership, challenge: challenge, user: user)
-      create(:membership, challenge: challenge, user: user2)
-      group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
-      group.add_user_to_group(challenge, user)
-      user2 = create(:user, :with_profile)
-      visit(challenge_path(challenge))
-      login(user2)
-      visit(challenge_path(challenge))
-
-      click_link "Join Group"
-
-      expect(user2.groups).to include group
-    end
 
   end
 
