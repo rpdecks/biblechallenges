@@ -17,10 +17,9 @@ class Reading < ActiveRecord::Base
   validates :read_on, presence: true
 
   #Scopes
-  scope :todays_reading, -> { where("read_on" => Date.today) }
+  scope :tomorrows_reading, -> { where("read_on" => Date.today+1) }
   scope :to_date, lambda { | a_date | where("read_on <= ?", a_date) }
   scope :on_date, lambda { | a_date | where("read_on = ?", a_date) }
-
 
   def last_read_by
     #returns the user who last read this reading
@@ -39,4 +38,5 @@ class Reading < ActiveRecord::Base
   def last_readers(num = 50)
     membership_readings.order("membership_readings.updated_at").limit(num).map {|r| r.membership.user}  #is this as ugly as it feels?  jose
   end
+
 end
