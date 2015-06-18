@@ -68,6 +68,10 @@ describe Creator::ChallengesController do
 
     describe "POST #create" do
       describe "with valid attributes" do
+        it "joins the creator to the challenge he created" do
+          post :create, challenge: attributes_for(:challenge)
+          expect(Challenge.first.members).to include challenge_creator
+        end
         it "creates a new challenge" do
           expect {
             post :create, challenge: attributes_for(:challenge)
