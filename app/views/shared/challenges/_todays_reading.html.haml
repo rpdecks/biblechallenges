@@ -6,38 +6,26 @@
       membership_readings_path(reading_id: @todays_reading.id, membership_id: @membership.id, anchor: "readings"),
       class: "btn btn-sm btn-primary", method: :post
   %br
-  %br
-  %p.minimize
-    - @minimized_verses = @todays_reading.chapter.decorate.by_version(@membership.bible_version)
+
+  #first_verses
+    - @first_verses_in_todays_reading.each do |verse|
+      = verse.decorate.to_div
+  #remaining_verses
+    - @remaining_verses_in_todays_reading.each do |verse|
+      = verse.decorate.to_div
+  %a#toggle_todays_reading{href: '#'}More
 -else
   No reading today :(
 
 :javascript
-  jQuery(function(){
 
-    var minimized_elements = $('p.minimize');
+  function toggle_todays_reading_link_text() {
+    current_text = $("#toggle_todays_reading").text()
+    $("#toggle_todays_reading").text(
+      current_text == "More" ? "Less" : "More")
+  }
 
-    minimized_elements.each(function(){
-      var t = #{@minimized_verses.to_json.html_safe};
-      if(t.length < 100) return;
-
-      $(this).html(
-        t.slice(0,400)+'<span>... </span><a href="#" class="more">More</a>'+
-        '<span style="display:none;">'+ t.slice(400,t.length)+' <a href="#" class="less">Less</a></span>'
-        );
-
-    });
-
-    $('a.more', minimized_elements).click(function(event){
-      event.preventDefault();
-      $(this).hide().prev().hide();
-      $(this).next().show();
-    });
-
-    $('a.less', minimized_elements).click(function(event){
-      event.preventDefault();
-      $(this).parent().hide().prev().show().prev().show();
-    });
-
-  });
-
+  $( "#toggle_todays_reading" ).on("click", function(){
+    $( "#remaining_verses" ).slideToggle()
+    toggle_todays_reading_link_text()
+  })
