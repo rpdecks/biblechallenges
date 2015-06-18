@@ -1,17 +1,14 @@
 class MembershipReadingsController < ApplicationController
-  respond_to :html, :js
+  respond_to :html, :json
   acts_as_token_authentication_handler_for User, only: [:create]
   before_filter :authenticate_user! # needs to follow token_authentication_handler
 
   layout 'from_email'
 
   def create
-    #jim do I need to instantiate @challenge @reading etc even though I may not need them?
-    # can I re-render a smaller piece of the page to avoid needing these variables
-    # how can I structure this create method so I can hit it from multiple places
     @challenge = membership.challenge
     reading
-    MembershipReading.create(membership_reading_params)
+    @membership_reading = MembershipReading.create(membership_reading_params)
     respond_to do |format|
       format.html { 
         # go back to referer unless alternate location passed in
@@ -20,7 +17,9 @@ class MembershipReadingsController < ApplicationController
         redirect += params[:anchor] if params[:anchor]
         redirect_to redirect
       }
-      format.js { render :create }
+      format.json { 
+        render json: @membership_reading
+      }
     end
   end
 
@@ -37,7 +36,7 @@ class MembershipReadingsController < ApplicationController
         redirect += params[:anchor] if params[:anchor]
         redirect_to redirect
       }
-      format.js { render :destroy }
+      format.json { head :no_content }
     end
   end
 
