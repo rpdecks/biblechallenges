@@ -22,6 +22,7 @@ feature 'User manages challenges' do
     challenge = create(:challenge, :with_readings)
     visit challenges_path
     click_link challenge.name
+    click_link "Show Challenge"
     click_link "Join Challenge"
     expect(challenge.members).to include user
   end
@@ -30,6 +31,7 @@ feature 'User manages challenges' do
     challenge = create(:challenge, owner_id: user.id)
     visit challenges_path
     click_link challenge.name
+    click_link "Show Challenge"
     click_link "Join Challenge"
     expect(challenge.members).to include user
   end
@@ -39,6 +41,7 @@ feature 'User manages challenges' do
     create(:membership, challenge: challenge, user: user)
     visit challenges_path
     click_link challenge.name
+    click_link "Show Challenge"
 
     expect(page).to have_content("Unsubscribe me from this challenge")
   end
@@ -48,6 +51,7 @@ feature 'User manages challenges' do
     create(:membership, challenge: challenge, user: user)
     visit challenges_path
     click_link challenge.name
+    click_link "Show Challenge"
     click_link "Unsubscribe me from this challenge"
     expect(challenge.members).not_to include user
   end
@@ -58,6 +62,7 @@ feature 'User manages challenges' do
     create(:membership, challenge: challenge, user: user, group_id: group.id)
     visit challenges_path
     click_link challenge.name
+    click_link "Show Challenge"
     click_link "Unsubscribe me from this challenge"
 
     expect(challenge.members).not_to include user
