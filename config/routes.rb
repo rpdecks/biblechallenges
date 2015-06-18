@@ -4,7 +4,10 @@ Biblechallenge::Application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  devise_for :users, controllers: { registrations: "users/registrations", omniauth_callbacks: "users/omiauth_callbacks" }
+  devise_for :users, controllers: { 
+    registrations: "users/registrations", 
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
 
   resource :profile, only: [:update, :edit]
 
