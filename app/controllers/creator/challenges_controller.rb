@@ -35,7 +35,7 @@ class Creator::ChallengesController < ApplicationController
       r.save
     end
 
-    redirect_to [:creator, @challenge]
+    redirect_to [:member, @challenge]
   end
 
   def destroy
