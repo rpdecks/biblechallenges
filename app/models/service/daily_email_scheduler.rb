@@ -1,22 +1,22 @@
 class DailyEmailScheduler
 
   def self.set_daily_email_jobs
-    Membership.all.each do |m|
-      reading = m.readings.todays_reading.first
+    tomorrows_readings = Reading.tomorrows_reading
 
-      #set time_zone to the user's time_zone
-      user_time_zone = m.user.profile.time_zone
-      Time.zone = user_time_zone
+    tomorrows_readings.each do |reading|
+      reading.members.each do |m|
 
-      #convert user_time to UTC
-      user_reading_hour = m.user.profile.preferred_reading_hour
-      user_reading_hour_string = DateTime.now.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"  # --> "2050-05-02 07:00:00"
-      user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
+        #set time_zone to the user's time_zone
+        Time.zone = m.profile.time_zone
 
-      #schedule the sidekiq job
+        #convert user_time to UTC
+        user_reading_hour = m.profile.preferred_reading_hour
 
-      if reading #schedule may be done, but still active
-        DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, reading.id, m.user.id)
+        # e.g. format => "2050-05-02 07:00:00"
+        user_reading_hour_string = DateTime.tomorrow.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"
+        user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
+
+        DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, reading.id, m.id)
       end
     end
   end

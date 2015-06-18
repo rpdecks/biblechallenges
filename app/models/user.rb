@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include PrettyDate
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -27,9 +28,23 @@ class User < ActiveRecord::Base
 
   #Callbacks
 
+  def show_progress_percentage(member, group)
+    user_membership = (member.memberships & group.memberships).first
+    user_membership.progress_percentage
+  end
 
-  def fullname
-    "#{first_name} #{last_name}"
+  def show_last_recorded_reading(member, group)
+    user_membership = (member.memberships & group.memberships).first
+    user_membership.membership_readings.last.created_at.to_pretty
+  end
+
+  def has_logged_a_reading?(member, group)
+    user_membership = (member.memberships & group.memberships).first
+    MembershipReading.where(membership_id: user_membership).present?
+  end
+
+  def find_challenge_group(challenge)
+    groups.where(challenge: challenge).first
   end
 
   def first_name
@@ -37,14 +52,10 @@ class User < ActiveRecord::Base
   end
 
   def last_name
-    profile && profile.first_name
+    profile && profile.last_name
   end
 
   def username
     profile && profile.first_name
-  end
-
-  def find_challenge_group(challenge)
-    groups.where(challenge: challenge).first
   end
 end
