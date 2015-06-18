@@ -18,6 +18,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
+            %span.icon-bar
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li
@@ -31,6 +32,11 @@
                 = link_to('Logout', destroy_user_session_path, :method => :delete)
               - else
                 = link_to('Login', new_user_session_path)
+            %li
+              .form-inline.search_challenge
+                = bootstrap_form_tag url: challenges_path, method: :get, class: "input-xxlarge form-query" do |f|
+                  = f.text_field :query, class: "search-input", hide_label: true
+                  = f.submit "Search for a Challenge", class: "btn btn-primary query"
     .container
       .flash-messages
         =render partial: "shared/flash_messages", flash: flash
