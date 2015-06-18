@@ -22,17 +22,17 @@
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li
+              .form-inline.search_challenge
+                = bootstrap_form_tag url: challenges_path, method: :get, class: "input-xxlarge form-query" do |f|
+                  = f.text_field :query, class: "search-input", hide_label: true, placeholder: "Search Challenge"
+                  %a{class: "btn btn-primary query", type: "submit"}
+                    %span.glyphicon.glyphicon-search
+            %li
               - if user_signed_in?
                 = link_to('My Challenges', member_challenges_path)
             %li
               - if user_signed_in?
                 = link_to('Edit Profile', edit_profile_path)
-            %li
-              .form-inline.search_challenge
-                = bootstrap_form_tag url: challenges_path, method: :get, class: "input-xxlarge form-query" do |f|
-                  = f.text_field :query, class: "search-input", hide_label: true
-                  %a{class: "btn btn-primary query", type: "submit"}
-                    %span.glyphicon.glyphicon-search
             %li
               - if user_signed_in?
                 = link_to('Logout', destroy_user_session_path, :method => :delete)
