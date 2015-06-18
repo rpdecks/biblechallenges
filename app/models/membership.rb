@@ -12,7 +12,7 @@ class Membership < ActiveRecord::Base
 
   has_many :membership_readings, dependent: :destroy
   has_many :readings, through: :challenge
-  has_many :membership_statistics
+  has_many :membership_statistics, dependent: :destroy
   
   # autogenerate has_one associations for all the membership statistic types
   Rails.application.eager_load!
@@ -31,11 +31,6 @@ class Membership < ActiveRecord::Base
 
   after_update :recalculate_group_stats
 
-#  after_create :successful_creation_email, unless: 'auto_created_user'
-#  after_create :successful_auto_creation_email, if: 'auto_created_user'
-#
-#  after_create :send_todays_reading
-
   def to_date_progress_percentage(adate)
     td_total = readings.to_date(adate).count
     read = membership_readings.read.count
@@ -46,11 +41,17 @@ class Membership < ActiveRecord::Base
     challenge.readings.count == membership_readings.count
   end
 
+  def update_stats
+    membership_statistics.each do |ms|
+      ms.update
+    end
+  end
 
   def associate_statistics
     self.membership_statistics << MembershipStatisticProgressPercentage.create
-    self.membership_statistics << MembershipStatisticPunctualPercentage.create
-    self.membership_statistics << MembershipStatisticRecordSequentialReading.create
+    self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
+    self.membership_statistics << MembershipStatisticRecordReadingStreak.create
+    self.membership_statistics << MembershipStatisticCurrentReadingStreak.create
   end
 
   private

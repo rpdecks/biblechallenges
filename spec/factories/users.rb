@@ -10,6 +10,8 @@ FactoryGirl.define do
       profile
     end
 
+    factory :user_with_profile, traits: [:with_profile]
+
   end
 
 end
