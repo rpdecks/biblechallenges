@@ -7,7 +7,7 @@ feature 'Visitor searches for a challenge' do
     create(:challenge, name: 'Phil')
     visit challenges_path
     fill_in "query", with: "Guy"
-    click_button "Search"
+    find('#challenge_search').click
     expect(page).to have_content 'Guy'
     expect(page).not_to have_content 'Phil'
   end
