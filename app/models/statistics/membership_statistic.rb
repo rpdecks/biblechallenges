@@ -9,9 +9,5 @@ class MembershipStatistic < ActiveRecord::Base
     value
   end
 
-  # a default value; this should be overriden in subclasses
-  def value
-    ""
-  end
 
 end
