@@ -26,7 +26,7 @@ class Creator::ChallengesController < ApplicationController
     # this seems terrible; is there a better way?  #jim
     if @challenge.save
       flash[:notice] = "Successfully created Challenge" 
-      @challenge.members << current_user
+      #@challenge.members << current_user @Phil - we wrote a call back in user model. Which should we keep?
       readings = ReadingsGenerator.new(@challenge.begindate, 
                                       @challenge.chapters_to_read,
                                       days_of_week_to_skip: days_of_week_to_skip,
@@ -38,7 +38,7 @@ class Creator::ChallengesController < ApplicationController
       end
     end
 
-    redirect_to [:creator, @challenge]
+    redirect_to [:member, @challenge]
   end
 
   def destroy

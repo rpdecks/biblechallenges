@@ -5,7 +5,7 @@ describe ReadingMailer do
   describe '.daily_reading_email' do
 
     it "sends a successful daily email" do
-      user = create(:user, :with_profile)
+      user = create(:user)
       challenge = create(:challenge, :with_readings)
       create(:membership, user: user, challenge: challenge)
 

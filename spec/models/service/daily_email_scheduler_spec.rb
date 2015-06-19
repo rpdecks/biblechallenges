@@ -3,16 +3,16 @@ require 'spec_helper'
 describe DailyEmailScheduler do
   describe "self.set_daily_email_jobs" do
     it "schedules an email job for a user" do
-      #Membership.delete_all  #todo this should not be necesssary
-      user = create(:user, :with_profile)
-      challenge = create(:challenge, :with_readings, begindate: "2050-01-01", owner: user)
+      user = create(:user)
+      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      #membership is automatically created when challenge is created.
       create(:membership, user: user, challenge: challenge)
 
       Timecop.travel("2050-01-01")
 
       DailyEmailScheduler.set_daily_email_jobs
 
-      expect(DailyEmailWorker.jobs.size).to eq 1
+      expect(DailyEmailWorker.jobs.size).to eq 2
 
       Timecop.return
     end
@@ -23,7 +23,7 @@ describe DailyEmailScheduler do
                                            preferred_reading_hour: 7))
       user2 = create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)",
                                            preferred_reading_hour: 7))
-      challenge = create(:challenge, :with_readings, begindate: today, owner: user1)
+      challenge = create(:challenge, :with_readings, begindate: today)
       create(:membership, user: user1, challenge: challenge)
       create(:membership, user: user2, challenge: challenge)
 
@@ -35,7 +35,7 @@ describe DailyEmailScheduler do
       DailyEmailScheduler.set_daily_email_jobs
 
       a = Time.at(DailyEmailWorker.jobs.first["at"])
-      b = Time.at(DailyEmailWorker.jobs.last["at"])
+      b = Time.at(DailyEmailWorker.jobs.second["at"])
       time_lapse = ( b - a ) / 3600
 
       expect(time_lapse).to eq 3
@@ -47,8 +47,7 @@ describe DailyEmailScheduler do
       today = DateTime.now
       user1 = create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)",
                                            preferred_reading_hour: 7))
-      challenge = create(:challenge, :with_readings, begindate: today)
-      create(:membership, user: user1, challenge: challenge)
+      create(:challenge, :with_readings, begindate: today, owner: user1)
 
       #traveling to next day 0-hours
       Time.zone = "UTC"
@@ -76,7 +75,7 @@ describe DailyEmailScheduler do
 
       todays_date = Date.parse("2050-01-01")
       DailyEmailScheduler.set_daily_email_jobs2(todays_date)
-      a = Time.at(DailyEmailWorker.jobs.first["at"])
+      a = Time.at(DailyEmailWorker.jobs.second["at"])
       b = Time.at(DailyEmailWorker.jobs.last["at"])
       time_lapse = ( b - a ) / 3600
       expect(time_lapse).to eq 3
@@ -88,7 +87,7 @@ describe DailyEmailScheduler do
 
       todays_date = Date.parse("2050-01-01")
       DailyEmailScheduler.set_daily_email_jobs2(todays_date)
-      a = Time.at(DailyEmailWorker.jobs.first["at"])
+      a = Time.at(DailyEmailWorker.jobs.second["at"])
       b = Time.at(DailyEmailWorker.jobs.last["at"])
       
       expect(a).to eq b

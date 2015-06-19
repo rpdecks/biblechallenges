@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'User manages readings' do
   background do
-    @user = create(:user, :with_profile)
+    @user = create(:user)
     @challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-2")
     create(:membership, challenge: @challenge, user: @user)
     login(@user)

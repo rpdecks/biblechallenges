@@ -18,8 +18,15 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
+            %span.icon-bar
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
+            %li
+              .form-inline.search_challenge
+                = bootstrap_form_tag url: challenges_path, method: :get, class: "input-xxlarge form-query" do |f|
+                  = f.text_field :query, class: "search-input", hide_label: true, placeholder: "Search Challenge"
+                  %a{class: "btn btn-primary query", type: "submit", id: "challenge_search"}
+                    %span.glyphicon.glyphicon-search
             %li
               - if user_signed_in?
                 = link_to('My Challenges', member_challenges_path)
