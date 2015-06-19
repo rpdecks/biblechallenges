@@ -5,11 +5,6 @@ FactoryGirl.define do
     email                 {generate(:email)}
     password              "password"
     password_confirmation "password"
-
-    trait :with_profile do
-      profile
-    end
-
+    profile
   end
-
 end

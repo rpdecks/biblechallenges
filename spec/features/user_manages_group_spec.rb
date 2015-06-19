@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'User manages groups' do
-  let(:user) {create(:user, :with_profile)}
+  let(:user) {create(:user)}
 
   before(:each) do
     login(user)
@@ -57,12 +57,12 @@ feature 'User manages groups' do
 
     scenario 'User sees members of a group without being in the group' do
       challenge = create(:challenge)
-      user2 = create(:user, :with_profile)
+      user2 = create(:user)
       create(:membership, challenge: challenge, user: user)
       create(:membership, challenge: challenge, user: user2)
       group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
       group.add_user_to_group(challenge, user)
-      user2 = create(:user, :with_profile)
+      user2 = create(:user)
       visit(challenge_path(challenge))
       login(user2)
       visit(challenge_path(challenge))
@@ -76,8 +76,8 @@ feature 'User manages groups' do
 
   context "Already in a group" do
     scenario 'Owner of a group can delete the group and will unsubscribe all members in the group' do
-      user1 = create(:user, :with_profile)
-      user2 = create(:user, :with_profile)
+      user1 = create(:user)
+      user2 = create(:user)
       challenge = create(:challenge)
       group = challenge.groups.create(user_id: user.id)
       membership = create(:membership, challenge: challenge, group: group, user: user1)

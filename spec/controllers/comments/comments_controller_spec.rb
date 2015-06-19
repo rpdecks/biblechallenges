@@ -8,7 +8,7 @@ end
 
 describe Comments::CommentsController, "Actions" do
   context "with an existing comment" do
-    let(:user) { create(:user, :with_profile) }
+    let(:user) { create(:user) }
     let(:reading) { create(:reading) }
 
     before do
