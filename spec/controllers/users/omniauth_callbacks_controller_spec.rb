@@ -13,9 +13,10 @@ describe Users::OmniauthCallbacksController do
       }.to change{ User.count }.by(1)
     end
 
-    it "should redirect the user to the root url" do
+    it "should redirect first-time sign-ups to finish_signup url" do
       post :facebook, provider: :facebook
-      response.should redirect_to root_url
+      user = User.first
+      expect(response).to redirect_to finish_signup_path user
     end
   end
 end
