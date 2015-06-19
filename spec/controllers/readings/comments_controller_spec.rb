@@ -13,7 +13,7 @@ describe Readings::CommentsController, "Actions" do
 
   describe "Delete #delete" do
 
-    let(:current_user) { create(:user, :with_profile) }
+    let(:current_user) { create(:user) }
 
     before do
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
@@ -33,7 +33,7 @@ describe Readings::CommentsController, "Actions" do
       membership = create(:membership, user: current_user, challenge: challenge)
       reading = membership.readings.first
       comment = create(:reading_comment, user: current_user, commentable: reading) #comment on a reading
-      randomuser = create(:user, :with_profile)
+      randomuser = create(:user)
       sign_in :user, randomuser
       expect{ delete :destroy, reading_id: reading.id, id: comment.id}.not_to change(Comment, :count)
     end
@@ -53,7 +53,7 @@ describe Readings::CommentsController, "Actions" do
 
 
   describe "POST #create" do
-    let!(:current_user) {create(:user, :with_profile)}
+    let!(:current_user) {create(:user)}
     let(:challenge) { create(:challenge_with_readings) }
     let!(:membership) {create(:membership, user: current_user, challenge: challenge)}
     let(:reading) { membership.readings.first}
@@ -108,7 +108,7 @@ describe Readings::CommentsController, "Actions" do
     end
 
     it "does not allow a user to create a comment for a reading he is not part of (through a challenge)" do
-      randomuser = FactoryGirl.create(:user, :with_profile)
+      randomuser = FactoryGirl.create(:user)
       sign_out current_user
       sign_in :user, randomuser
       expect{

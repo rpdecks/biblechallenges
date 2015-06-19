@@ -5,9 +5,6 @@ describe Member::ChallengesController do
     it { {get: "/member/challenges"}.should route_to(controller: "member/challenges", action: "index") }
   end
 
-  let(:challengeowner) { create(:user) }
-  let(:challenge) { create(:challenge, owner: challengeowner) }
-
   describe 'Guest access' do
     describe 'GET#index' do
       it "does not renders the :index template" do
@@ -24,7 +21,6 @@ describe Member::ChallengesController do
 
   describe 'User access' do
     let(:current_user) { create(:user) }
-    let!(:membership) {create(:membership, user: current_user, challenge: challenge)}
 
     before do
       sign_in :user, current_user
@@ -32,9 +28,9 @@ describe Member::ChallengesController do
 
     describe 'GET#index' do
       it "collects challenges into @challenges" do
-        create(:challenge, owner: current_user)
+        current_challenge = create(:challenge, owner: current_user)
         get :index
-        expect(assigns(:challenges)).to match_array [challenge]
+        expect(assigns(:challenges)).to match_array [current_challenge]
       end
 
       it "renders the :index template" do
