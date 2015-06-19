@@ -62,7 +62,6 @@ feature 'User manages groups' do
       create(:membership, challenge: challenge, user: user2)
       group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
       group.add_user_to_group(challenge, user)
-      user2 = create(:user)
       visit(challenge_path(challenge))
       login(user2)
       visit(challenge_path(challenge))
@@ -71,7 +70,6 @@ feature 'User manages groups' do
 
       expect(user2.groups).to include group
     end
-
   end
 
   context "Already in a group" do

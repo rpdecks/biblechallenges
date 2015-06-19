@@ -59,7 +59,12 @@ describe Member::MembershipsController do
       expect {
         post :create, challenge_id: newchallenge
       }.to change(Membership, :count).by(1)
-
+    end
+    it "associates statistics with membership" do
+      number_of_stats = MembershipStatistic.descendants.size
+      expect {
+        post :create, challenge_id: newchallenge
+      }.to change(MembershipStatistic, :count).by(number_of_stats) 
     end
   end
 

@@ -1,5 +1,3 @@
-%h3 Challenge Details
-
 %table.table.table-striped.table-condensed
   %tr
     %td Owner:
@@ -20,7 +18,7 @@
       = "-" 
       =@challenge.enddate.strftime("%-m/%-d/%Y") 
   %tr
-    %td Bible Reading Overview:
+    %td Chapters:
     %td= @challenge.chapters_to_read
 
   - if current_user && @membership = @challenge.membership_for(current_user)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipStatisticPunctualPercentage do
+describe MembershipStatisticOnSchedulePercentage do
 
   describe "#calculate" do
 
@@ -20,7 +20,7 @@ describe MembershipStatisticPunctualPercentage do
 
       Timecop.travel(3.days)
 
-      stat = MembershipStatisticPunctualPercentage.new(membership: membership)
+      stat = MembershipStatisticOnSchedulePercentage.new(membership: membership)
       expect(stat.calculate).to eq 100
       Timecop.return
     end

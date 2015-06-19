@@ -1,0 +1,5 @@
+- groups.each do |g|
+  %b= g.name
+  = "(#{g.members.size}"
+  = "#{"member".pluralize(g.members.size)})"
+  %br
