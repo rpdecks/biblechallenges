@@ -1,38 +1,32 @@
 .container
   .row
     .col-md-12
-      %h1 Bible Challenges
-      %br
-      %p.lead Create a Bible Reading Challenge for a church, small group, or student organization.  Or just for yourself.
-      %br
-      %a.btn.btn-lg.btn-success{href: new_creator_challenge_path} Create a Challenge
-      %br
-      %br
-      %br
-      = form_tag challenges_path, { method: :get, class: "input-xxlarge form-query" } do
-        = text_field_tag :query, params[:query], class: "search-input"
-        = submit_tag "Search for a Challenge", class: "btn btn-primary query"
-
+      .jumbotron
+        %h1 Bible Challenges
+        %p.lead Create a Bible Reading Challenge for a church, small group, or student organization.  Or just for yourself.
+        %a.btn.btn-lg.btn-success{href: new_creator_challenge_path} Create a Challenge
       
   - unless @public_challenges.empty?
-    %h2 Or take a look at some of the current challenges
+    .col-md-10
+      %i
+        %h2 Check out the current challenges!
 
-    .row
-    - @public_challenges.each do |challenge|
-      .col-md-12
-        = link_to challenge.name, challenge_path(challenge)
-        %br
-        = "Members: #{challenge.members.size}"
-        - challenge.members.each do |m|
-          = image_tag avatar_url(m, 30), title: m.username
-        %br
-        = "Chapters: #{challenge.readings.size}"
-      .col-md-3
-        = "Total Chapters To Read: #{challenge.readings.size}"
-      .col-md-3
-        = "Total Chapters Read: #{challenge.membership_readings.size}"
-      .col-md-3
-        = "Start Date: #{challenge.begindate.strftime("%b %d, %Y")}"
-      .col-md-3
-        = "End Date: #{challenge.enddate.strftime("%b %d, %Y")}"
-
+      .row
+        - first_challenge = @public_challenges.first
+        #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
+          .panel.panel-default
+            #headingOne.panel-heading{:role => "tab"}
+              %h4.panel-title
+                %a{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne", :role => "button"}
+                  = first_challenge.name
+            #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
+              = render 'challenge_body_row', challenge: first_challenge
+          - @public_challenges.each do |challenge|
+            - unless challenge == first_challenge
+              .panel.panel-default
+                %div.panel-heading{id: "heading_#{challenge.id}", :role => "tab"}
+                  %h4.panel-title
+                    %a.collapsed{"aria-controls" => "collapse_#{challenge.id}", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse_#{challenge.id}", :role => "button"}
+                      = challenge.name
+                %div.panel-collapse.collapse{id: "collapse_#{challenge.id}", "aria-labelledby" => "collapse_#{challenge.id}", :role => "tabpanel"}
+                  = render 'challenge_body_row', challenge: challenge

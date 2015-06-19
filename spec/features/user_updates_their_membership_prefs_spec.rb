@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'User updates membership preferences' do
-  let(:user) {create(:user, :with_profile)}
+  let(:user) {create(:user)}
 
   before(:each) do
     login(user)

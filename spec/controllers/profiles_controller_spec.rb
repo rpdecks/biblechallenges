@@ -9,7 +9,7 @@ describe ProfilesController do
 
   context "User Access" do
 
-    let(:current_user) { create(:user, :with_profile) }
+    let(:current_user) { create(:user) }
 
 
     describe "GET#edit" do
