@@ -4,8 +4,8 @@ class ReadingMailer < ActionMailer::Base
   layout 'default_mailer'
 
   def daily_reading_email(reading, membership)
+    @reading = Reading.find(reading)
     @reading_date = Date.today
-    @reading = reading
     @membership = membership
     @chapter = @reading.chapter
     @verses = @chapter.verses.by_version(@membership.bible_version)
