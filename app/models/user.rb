@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     profile && profile.first_name
   end
 
+  def existing_user?
+    !last_sign_in_at.nil?
+  end
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -70,4 +74,5 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
+
 end
