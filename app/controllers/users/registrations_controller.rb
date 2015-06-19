@@ -1,6 +1,12 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
   after_action :complete_user, only: :create
+  after_action :finish_signup, only: :create
+
+  def finish_signup
+    if request.patch? && params[:user]
+      binding.pry
+    end
+  end
 
   private
 
@@ -8,9 +14,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     UserCompletion.new(@user)
   end
 
+
 # leaving this boilerplate below because it is rather helpful 
-
-
 
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]

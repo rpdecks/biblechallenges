@@ -1,0 +1,15 @@
+.row
+  .col-md-4.col-md-offset-4
+    %h3 Please choose a password for your BibleChallenges account
+    -binding.pry
+    = form_for(resource, as: resource_name,
+      url: password_path(resource_name),
+      html: {method: :post,role: 'form'}) do |f|
+      = devise_error_messages!
+      %fieldset
+        .form-group
+          = f.label :email
+          = f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control'
+        = f.submit 'Send me reset password instructions', disable_with: 'Please Wait...', class: 'btn btn-success btn-block'
+        %br
+        = render 'devise/shared/links'
