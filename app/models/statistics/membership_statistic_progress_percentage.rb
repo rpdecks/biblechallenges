@@ -1,5 +1,6 @@
 class MembershipStatisticProgressPercentage < MembershipStatistic
 
+
   def name
     "Overall progress percentage"
   end
