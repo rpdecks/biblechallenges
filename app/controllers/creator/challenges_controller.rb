@@ -24,15 +24,18 @@ class Creator::ChallengesController < ApplicationController
     @challenge = current_user.created_challenges.build(challenge_params)
 
     # this seems terrible; is there a better way?  #jim
-    flash[:notice] = "Successfully created Challenge" if @challenge.save
-    readings = ReadingsGenerator.new(@challenge.begindate, 
-                                     @challenge.chapters_to_read,
-                                     days_of_week_to_skip: days_of_week_to_skip,
-                                     dates_to_skip: challenge_params[:dates_to_skip],
-                                    ).generate
-    readings.each do |r|
-      r.challenge_id = @challenge.id
-      r.save
+    if @challenge.save
+      flash[:notice] = "Successfully created Challenge" 
+      #@challenge.members << current_user @Phil - we wrote a call back in user model. Which should we keep?
+      readings = ReadingsGenerator.new(@challenge.begindate, 
+                                      @challenge.chapters_to_read,
+                                      days_of_week_to_skip: days_of_week_to_skip,
+                                      dates_to_skip: challenge_params[:dates_to_skip],
+                                      ).generate
+      readings.each do |r|
+        r.challenge_id = @challenge.id
+        r.save
+      end
     end
 
     redirect_to [:member, @challenge]

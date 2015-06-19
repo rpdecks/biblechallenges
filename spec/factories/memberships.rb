@@ -5,5 +5,10 @@ FactoryGirl.define do
     bible_version { %w(ASV ESV KJV NASB NKJV).sample }
     user {create(:user) }
     challenge
+
+    trait :with_statistics do
+      after(:create) { |object| object.associate_statistics }
+    end
+
   end
 end

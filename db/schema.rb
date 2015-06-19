@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150609190941) do
+ActiveRecord::Schema.define(version: 20150616180201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20150609190941) do
     t.integer  "reading_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "punctual"
+    t.integer  "on_schedule"
   end
 
   create_table "membership_statistics", force: :cascade do |t|
@@ -170,6 +170,10 @@ ActiveRecord::Schema.define(version: 20150609190941) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "authentication_token"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "image"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree

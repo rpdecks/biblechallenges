@@ -1,0 +1,11 @@
+%table.table.table-striped.table-bordered.table-hover.table-centered-text
+  %tbody
+    %thead
+      %tr
+        %th Date
+        %th Chapter
+      - readings.each do |reading|
+        %tr
+          %td= reading.read_on.strftime("%-m/%-d")
+          %td= reading.chapter.book_and_chapter
+

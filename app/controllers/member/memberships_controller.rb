@@ -30,6 +30,8 @@ class Member::MembershipsController < ApplicationController
     @membership = challenge.memberships.build(params[:membership])
     @membership.user = current_user if current_user
     if @membership.save
+      # associate stats here
+      @membership.associate_statistics
       flash[:notice] = "Thank you for joining!" 
     else
       flash[:error] = @membership.errors.full_messages.to_sentence

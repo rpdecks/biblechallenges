@@ -46,6 +46,36 @@ describe MembershipReadingsController, type: :controller do
         post :create, reading_id: reading.id, membership_id: membership.id, location: root_path
         should redirect_to(root_path)
       end
+      it "should update one of the membership statistics (lamo test)" do 
+        challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
+        user = create(:user)
+        membership = challenge.join_new_member(user)
+
+        membership.associate_statistics
+
+        post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
+
+        expect(membership.membership_statistic_progress_percentage.value.to_i).to eq 50
+
+      end
+
+      it "should update the membership statistics" do #todo this should use mocks/spies
+        pending
+        reading = create(:reading)
+        membership.associate_statistics
+        MembershipStatistic.descendants.each do |desc|
+          desc.name.constantize.stub(:update)
+       end
+
+        post :create, reading_id: reading.id, membership_id: membership.id
+
+        MembershipStatistic.descendants.each do |desc|
+          expect(desc.name.constantize).to have_received(:update)
+        end
+        membership.membership_statistics.each do |ms|
+          expect(ms).to have_received(:update)
+        end
+      end
 
     end
 
