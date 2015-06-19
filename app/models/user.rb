@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
+  has_many :user_statistics
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
   has_many :groups, through: :memberships
@@ -28,6 +29,10 @@ class User < ActiveRecord::Base
 
   #Callbacks
 
+  def associate_statistics
+    self.user_statistics << UserStatisticChaptersReadAllTime.create
+  end
+  
   def show_progress_percentage(member, group)
     user_membership = (member.memberships & group.memberships).first
     user_membership.progress_percentage
