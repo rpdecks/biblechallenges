@@ -50,6 +50,7 @@ namespace :sample_fake do
     puts "creating membership statistics:"
     Membership.all.each do |m|
       m.associate_statistics
+      m.update_stats
       print "."
     end
   end
@@ -96,6 +97,7 @@ namespace :sample_fake do
   end
 
   def remove_current_records
+    MembershipStatistic.destroy_all
     puts "Deleting Users"
     User.destroy_all
     puts "Deleting Challenges"
