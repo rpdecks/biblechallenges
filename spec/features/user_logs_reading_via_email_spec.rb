@@ -8,8 +8,8 @@ feature 'User logs reading via email' do
 
     user = create(:user, :with_profile)
     challenge = create(:challenge, :with_readings)
-    membership = create(:membership, user: user, challenge: challenge)
-    ReadingMailer.daily_reading_email(challenge.readings.first, membership).deliver_now
+    create(:membership, user: user, challenge: challenge)
+    ReadingMailer.daily_reading_email(challenge.readings.first.id, user.id).deliver_now
 
     expect{
     open_last_email
