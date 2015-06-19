@@ -15,6 +15,7 @@ namespace :sample_fake do
     create_challenges(challenges_count)
     generate_readings
     create_memberships
+    create_membership_stats
     create_groups
     add_members_to_groups
     mark_chapters_as_read
@@ -43,6 +44,15 @@ namespace :sample_fake do
       challenge.members << User.all.sample(rand(15) + 5)
     end
     puts " Created #{Membership.count} memberships"
+  end
+
+  def create_membership_stats
+    puts "creating membership statistics:"
+    Membership.all.each do |m|
+      m.associate_statistics
+      m.update_stats
+      print "."
+    end
   end
 
   def create_groups
@@ -87,6 +97,7 @@ namespace :sample_fake do
   end
 
   def remove_current_records
+    MembershipStatistic.destroy_all
     puts "Deleting Users"
     User.destroy_all
     puts "Deleting Challenges"
