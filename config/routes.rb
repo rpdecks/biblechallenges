@@ -27,7 +27,7 @@ Biblechallenge::Application.routes.draw do
   namespace :member do
     resources :challenges, only: [:index, :show] do
       resources :groups, only: [:new, :create, :index]
-      resources :memberships, only: [:create] 
+      resources :memberships, only: [:create]
     end
     resources :groups, except: [:new, :create, :index] do
       member do
