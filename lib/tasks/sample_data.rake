@@ -70,7 +70,7 @@ namespace :sample_fake do
 
   def create_users(users_count)
     users_count.times do
-      FactoryGirl.create(:user, :with_profile)
+      FactoryGirl.create(:user)
     end
 
     puts "Created #{User.count} users"

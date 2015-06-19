@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MembershipReadingsController, type: :controller do
 
   let(:challenge){create(:challenge, chapters_to_read:'mi 1-4')} 
-  let(:user){create(:user, :with_profile)}
+  let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
 
@@ -48,7 +48,7 @@ describe MembershipReadingsController, type: :controller do
       end
       it "should update one of the membership statistics (lamo test)" do 
         challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
-        user = create(:user, :with_profile)
+        user = create(:user)
         membership = challenge.join_new_member(user)
 
         membership.associate_statistics
