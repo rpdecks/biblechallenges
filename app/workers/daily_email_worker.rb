@@ -3,7 +3,7 @@ class DailyEmailWorker
   #if there is a problem with the email we don't want the worker retrying the job
   sidekiq_options retry: false
 
-    def perform(user_reading_utc, reading, user)
+    def perform(user_reading_utc, reading, m)
         ReadingMailer.daily_reading_email(reading, m).deliver_now
     end
 end
