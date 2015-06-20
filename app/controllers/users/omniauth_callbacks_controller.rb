@@ -15,7 +15,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           set_flash_message(:notice, :success, :kind => "Facebook")
         end
       else
-        redirect_to finish_signup_path(@user)
+        sign_in @user
+        redirect_to finish_signup_path
       end
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]

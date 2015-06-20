@@ -1,7 +1,6 @@
 .row
   .col-md-4.col-md-offset-4
     %h3 Please choose a password for your BibleChallenges account
-    -binding.pry
     = form_for(resource, as: resource_name,
       url: password_path(resource_name),
       html: {method: :post,role: 'form'}) do |f|
