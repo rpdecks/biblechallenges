@@ -34,5 +34,21 @@ describe UserStatisticChaptersReadAllTime do
       user_stat = UserStatisticChaptersReadAllTime.new(user: user)
       expect(user_stat.calculate).to eq 8
     end
+
+    #it "should update the proper value for user even if user leaves a challenge" do
+    #  challenge = create(:challenge, chapters_to_read: 'Mark 1-7')
+    #  user = challenge.members.first
+    #  membership = challenge.memberships.first
+    #  challenge.generate_readings
+    #  challenge.readings[0..3].each do |mr|
+    #    create(:membership_reading, membership: membership, reading: mr)
+    #  end
+    #  
+    #  membership.destroy
+
+    #  user_stat = UserStatisticChaptersReadAllTime.new(user: user)
+    #  user_stat.update
+    #  expect(user_stat.value).to eq 4
+    #end
   end
 end
