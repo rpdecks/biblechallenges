@@ -19,7 +19,17 @@ class UserStatisticChaptersReadAllTime < UserStatistic
   end
 
   def update
-    self.value = calculate
+    if self.value == nil
+      self.value = calculate
+    else
+      old_value = self.value.to_i
+    binding.pry
+      new_value = calculate
+    binding.pry
+      total_value = old_value + new_value
+    binding.pry
+      self.update_attributes(value: total_value.to_s)
+    end
     save
   end
 
