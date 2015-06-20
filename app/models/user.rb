@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
     has_one badge.name.underscore.to_sym
   end
 
+  UserStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
 
   #Callbacks
 
@@ -50,6 +53,12 @@ class User < ActiveRecord::Base
 
   def find_challenge_group(challenge)
     groups.where(challenge: challenge).first
+  end
+
+  def update_stats
+    user_statistics.each do |us|
+      us.update
+    end
   end
 
   def first_name
