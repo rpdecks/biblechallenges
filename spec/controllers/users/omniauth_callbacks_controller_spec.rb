@@ -15,8 +15,7 @@ describe Users::OmniauthCallbacksController do
 
     it "should redirect first-time sign-ups to finish_signup url" do
       post :facebook, provider: :facebook
-      user = User.first
-      expect(response).to redirect_to finish_signup_path user
+      expect(response).to redirect_to finish_signup_path
     end
   end
 end
