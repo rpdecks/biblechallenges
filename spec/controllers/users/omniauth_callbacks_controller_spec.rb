@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe Users::OmniauthCallbacksController do
   before do
+    mock_auth_hash
     request.env['devise.mapping'] = Devise.mappings[:user]
-    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:facebook]
+    request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:google]
   end
 
   describe "#facebook" do
