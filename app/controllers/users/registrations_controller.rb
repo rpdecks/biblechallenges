@@ -1,6 +1,16 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
   after_action :complete_user, only: :create
+
+  def finish_signup
+    if request.patch? && params[:user]
+      @user = User.find(params[:user][:id])
+      if @user.update(user_params)
+        @user.skip_reconfirmation! if @user.respond_to?(:skip_confirmation)
+        flash[:notice] = "Succesfully signed up with facebook"
+        sign_in_and_redirect(@user)
+      end
+    end
+  end
 
   private
 
@@ -8,9 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     UserCompletion.new(@user)
   end
 
-# leaving this boilerplate below because it is rather helpful 
-
-
+# leaving this boilerplate below because it is rather helpful
 
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
@@ -69,5 +77,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
-  # end
+
+  private
+
+  def user_params
+    accessible = [ :name, :email ]
+    unless params[:user][:password].blank?
+      accessible << [ :password, :password_confirmation ]
+    end
+    params.require(:user).permit(accessible)
+  end
 end

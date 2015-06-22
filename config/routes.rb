@@ -6,7 +6,16 @@ Biblechallenge::Application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
+    #,passwords: "passwords"
+  }
+
+  devise_scope :user do
+    match '/users/finish_signup' => 'users/registrations#finish_signup', via: [:get, :patch],
+      :as => :finish_signup
+  end
 
   resource :profile, only: [:update, :edit]
 
@@ -18,7 +27,7 @@ Biblechallenge::Application.routes.draw do
   namespace :member do
     resources :challenges, only: [:index, :show] do
       resources :groups, only: [:new, :create, :index]
-      resources :memberships, only: [:create] 
+      resources :memberships, only: [:create]
     end
     resources :groups, except: [:new, :create, :index] do
       member do
