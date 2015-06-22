@@ -4,6 +4,7 @@
       - flash[:error] = comment.errors.full_messages.to_sentence
     .control-group
       .controls
+        = hidden_field_tag :location, location
         = f.text_area :content, rows: 5, required: true, class: "form-control"
 
     .control-group
