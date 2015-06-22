@@ -42,6 +42,10 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
+  resources :groups, only: [] do
+    resources :comments, only: [:create, :destroy], controller: 'groups/comments'
+  end
+
   resources :badges, only: [:index, :show]
 
   resources :readings, only: [:show, :edit, :update] do
