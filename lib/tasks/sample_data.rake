@@ -41,6 +41,7 @@ namespace :sample_fake do
     puts "Creating memberships: "
     # just add a random number of users between 5 and 20 to each challenge
     Challenge.all.each do |challenge|
+      challenge.members.destroy_all
       challenge.members << User.all.sample(rand(15) + 5)
     end
     puts " Created #{Membership.count} memberships"

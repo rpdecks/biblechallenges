@@ -12,7 +12,7 @@ class Groups::CommentsController < ApplicationController
 
       if @comment.save
         flash[:notice] = "Successfully created comment!"
-        respond_with([@reading,@comment], location: params[:location] || request.referer)
+        redirect_to params[:location] || request.referer
       else
         flash[:alert] = @comment.errors.full_messages.to_sentence
         redirect_to params[:location] || request.referer
@@ -27,7 +27,7 @@ class Groups::CommentsController < ApplicationController
     if (@comment = current_user.comments.find_by_id(params[:id]))
       @comment.destroy
       flash[:notice] = "Successfully deleted comment"
-      redirect_to member_challenge_path(@group.challenge, anchor: "groups")
+      redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
     else
       redirect_to root_url
     end
