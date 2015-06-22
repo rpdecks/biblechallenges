@@ -22,13 +22,15 @@ class UserStatisticChaptersReadAllTime < UserStatistic
     if self.value == nil
       self.value = calculate
     else
-      old_value = self.value.to_i
-    binding.pry
-      new_value = calculate
-    binding.pry
-      total_value = old_value + new_value
-    binding.pry
-      self.update_attributes(value: total_value.to_s)
+      if calculate != 0
+        old_value = self.value.to_i
+        new_value = calculate
+        diff = new_value - old_value
+        updated_value = old_value + diff
+        self.update_attributes(value: updated_value.to_s)
+      else
+        self.value
+      end
     end
     save
   end
