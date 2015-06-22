@@ -18,13 +18,15 @@ namespace :sample_fake do
     create_groups
     add_members_to_groups
     mark_chapters_as_read
+    create_membership_stats
   end
 
   def mark_chapters_as_read
     # just randomly mark about half of them as read
-    count = MembershipReading.count / 2
-    MembershipReading.all.sample(count).each do |mr|
-      mr.update_attribute(:state, "read")
+    Membership.all.each do |m|
+      m.readings.each do |r|
+        MembershipReading.create(membership_id: m.id, reading_id: r.id) if rand(2) == 1
+      end
     end
   end
 
@@ -40,9 +42,19 @@ namespace :sample_fake do
     puts "Creating memberships: "
     # just add a random number of users between 5 and 20 to each challenge
     Challenge.all.each do |challenge|
+      challenge.members.destroy_all
       challenge.members << User.all.sample(rand(15) + 5)
     end
     puts " Created #{Membership.count} memberships"
+  end
+
+  def create_membership_stats
+    puts "creating membership statistics:"
+    Membership.all.each do |m|
+      m.associate_statistics
+      m.update_stats
+      print "."
+    end
   end
 
   def create_groups
@@ -87,6 +99,7 @@ namespace :sample_fake do
   end
 
   def remove_current_records
+    MembershipStatistic.destroy_all
     puts "Deleting Users"
     User.destroy_all
     puts "Deleting Challenges"
