@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
   has_many :members, through: :memberships, source: :user
   has_many :memberships
   has_many :group_statistics
+  has_many :comments, as: :commentable
 
   validates :user, :challenge, presence: true
 
