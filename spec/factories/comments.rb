@@ -8,4 +8,13 @@ FactoryGirl.define do
     invisible false
     flag_count 0
   end
+
+  factory :group_comment, class: "Comment" do
+    association :commentable, factory: :group
+    content "A message!"
+    association :user
+    invisible false
+    flag_count 0
+  end
+
 end
