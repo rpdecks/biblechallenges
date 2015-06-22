@@ -15,17 +15,18 @@ namespace :sample_fake do
     create_challenges(challenges_count)
     generate_readings
     create_memberships
-    create_membership_stats
     create_groups
     add_members_to_groups
     mark_chapters_as_read
+    create_membership_stats
   end
 
   def mark_chapters_as_read
     # just randomly mark about half of them as read
-    count = MembershipReading.count / 2
-    MembershipReading.all.sample(count).each do |mr|
-      mr.update_attribute(:state, "read")
+    Membership.all.each do |m|
+      m.readings.each do |r|
+        MembershipReading.create(membership_id: m.id, reading_id: r.id) if rand(2) == 1
+      end
     end
   end
 
