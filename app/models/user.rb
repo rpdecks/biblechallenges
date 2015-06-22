@@ -72,6 +72,15 @@ class User < ActiveRecord::Base
       user.name = auth.info.name
       user.image = auth.info.image
       user.save!
+
+      if user.profile.nil?
+        name_array = user.name.split(" ")
+        profile = Profile.create(username: user.email,
+                                 first_name: name_array[0],
+                                 last_name: name_array[1])
+        user.profile = profile
+        user.save!
+      end
     end
   end
 
