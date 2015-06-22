@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Users::RegistrationsController do
   describe "#create" do
     it "should complete the user after creating via controller" do
-      binding.pry
       @request.env["devise.mapping"] = Devise.mappings[:user]
       allow(UserCompletion).to receive(:new)
       post :create, user: attributes_for(:user)
