@@ -6,6 +6,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @user = User.find(params[:user][:id])
       if @user.update(user_params)
         @user.skip_reconfirmation! if @user.respond_to?(:skip_confirmation)
+        flash[:notice] = "Succesfully signed up with facebook"
         sign_in_and_redirect(@user)
       end
     end
@@ -17,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     UserCompletion.new(@user)
   end
 
-# leaving this boilerplate below because it is rather helpful 
+# leaving this boilerplate below because it is rather helpful
 
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
