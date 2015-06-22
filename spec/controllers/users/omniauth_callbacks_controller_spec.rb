@@ -19,4 +19,17 @@ describe Users::OmniauthCallbacksController do
       expect(response).to redirect_to finish_signup_path
     end
   end
+
+  describe "#google" do
+    it "should successfully create a user" do
+      expect {
+        post :google, provider: :google
+      }.to change{ User.count }.by(1)
+    end
+
+    it "should redirect first-time sign-ups to finish_signup url" do
+      post :google, provider: :google
+      expect(response).to redirect_to finish_signup_path
+    end
+  end
 end
