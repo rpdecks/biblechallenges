@@ -3,8 +3,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     omniauth("facebook")
   end
 
-  def google
-    omniauth("google")
+  def google_oauth2
+    omniauth("google_oauth2")
   end
 
   def omniauth(provider)
