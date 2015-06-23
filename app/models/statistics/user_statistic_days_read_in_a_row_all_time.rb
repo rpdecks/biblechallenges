@@ -15,7 +15,6 @@ class UserStatisticDaysReadInARowAllTime < UserStatistic
       self.value = current_streak.to_s 
       save
     end
-    
     current_streak(self.membership.membership_readings)  # some helper method to find the streak; pure ruby
   end
 
