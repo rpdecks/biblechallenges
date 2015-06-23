@@ -43,7 +43,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_scriptural (0.0.1)
+    acts_as_scriptural (0.0.3)
     addressable (2.3.8)
     annotate (2.6.10)
       activerecord (>= 3.2, <= 4.3)
@@ -200,6 +200,9 @@ GEM
       rack (~> 1.0)
     omniauth-facebook (1.6.0)
       omniauth-oauth2 (~> 1.1)
+    omniauth-google-oauth2 (0.2.6)
+      omniauth (> 1.0)
+      omniauth-oauth2 (~> 1.1)
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
@@ -258,7 +261,6 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
-    rdoc (4.2.0)
     react-rails (1.0.0)
       coffee-script-source (~> 1.8)
       connection_pool
@@ -389,7 +391,7 @@ DEPENDENCIES
   actionpack-page_caching
   activerecord-deprecated_finders
   activerecord-import
-  acts_as_scriptural
+  acts_as_scriptural (= 0.0.3)
   annotate
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
@@ -423,6 +425,7 @@ DEPENDENCIES
   mail_view
   omniauth
   omniauth-facebook
+  omniauth-google-oauth2
   pg
   pg_search
   pickadate-rails
