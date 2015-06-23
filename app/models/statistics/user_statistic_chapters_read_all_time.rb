@@ -8,31 +8,10 @@ class UserStatisticChaptersReadAllTime < UserStatistic
     "Records the number of chapters that the user has logged since joining as a member of Bible Challenges."
   end
 
-
-  def calculate
-    @total_read = []
-    all_user_memberships = self.user.memberships
-    all_user_memberships.each do |m|
-      @total_read << m.membership_readings.count
-    end
-    @total_read.inject{|sum,x| sum + x }
-  end
-
   def update
-    if self.value == nil
-      self.value = calculate
-    else
-      if calculate != 0
-        old_value = self.value.to_i
-        new_value = calculate
-        diff = new_value - old_value
-        updated_value = old_value + diff
-        self.update_attributes(value: updated_value.to_s)
-      else
-        self.value
-      end
-    end
+    current_count = self.value.to_i
+    total_count = current_count += 1
+    self.value = total_count.to_s
     save
   end
-
 end
