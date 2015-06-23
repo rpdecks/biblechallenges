@@ -30,9 +30,10 @@
             %li
               - if user_signed_in?
                 = link_to('My Challenges', member_challenges_path)
-            %li
+            %li.profile-link
               - if user_signed_in?
-                = link_to('Edit Profile', edit_profile_path)
+                = link_to edit_profile_path, class: "btn btn-block" do
+                  = image_tag current_user.image, class: "img-circle img-thumbnail"
             - if user_signed_in?
               %li
                 = link_to('Logout', destroy_user_session_path, :method => :delete)

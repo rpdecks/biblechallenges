@@ -16,6 +16,18 @@
  *= require bootstrap
  */
 
+.profile-link a {
+  border: none;
+  height: 20px;
+  margin-top:-10px;
+  margin-bottom:0px;
+  //overflow: hidden;
+}
+
+.profile-img {
+  height: 90%;
+  width: 90%;
+}
 
 .reading.read {
   #read { display: none; }
