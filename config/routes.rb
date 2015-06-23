@@ -9,11 +9,11 @@ Biblechallenge::Application.routes.draw do
   devise_for :users, controllers: {
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
-    #,passwords: "passwords"
   }
 
   devise_scope :user do
-    match '/users/finish_signup' => 'users/registrations#finish_signup', via: [:get, :patch],
+    match '/users/finish_signup' => 'users/registrations#finish_signup', 
+      via: [:get, :patch],
       :as => :finish_signup
   end
 
