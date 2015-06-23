@@ -127,6 +127,8 @@ GEM
     get_process_mem (0.2.0)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    google-instant-hangouts (0.0.3)
+      railties (>= 3.1)
     gretel (3.0.8)
       rails (>= 3.2.0)
     haml (4.0.6)
@@ -407,6 +409,7 @@ DEPENDENCIES
   faker (~> 1.4.3)
   figaro
   font-awesome-rails
+  google-instant-hangouts
   gretel
   haml
   haml-rails
