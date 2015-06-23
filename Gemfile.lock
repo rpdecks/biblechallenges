@@ -200,6 +200,9 @@ GEM
       rack (~> 1.0)
     omniauth-facebook (1.6.0)
       omniauth-oauth2 (~> 1.1)
+    omniauth-google-oauth2 (0.2.6)
+      omniauth (> 1.0)
+      omniauth-oauth2 (~> 1.1)
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
@@ -422,6 +425,7 @@ DEPENDENCIES
   mail_view
   omniauth
   omniauth-facebook
+  omniauth-google-oauth2
   pg
   pg_search
   pickadate-rails

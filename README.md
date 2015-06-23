@@ -18,12 +18,20 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 
 ## Environmental Variables
 
-In order to setup omniauth login such as facebook,
-you will need two environment variables:
+In order to setup omniauth login, you will need
+two environment variables for each provider.
+The instruction are different for each provider.
+
+### Facebook
+You will need two environment variables:
 `FACEBOOK_APP_ID` and `FACEBOOK_SECRET`
 which will hold the id and secret keys for each omniauth app.
-You can obtain these keys by setting up the app.
-The instruction are different for each provider.
+You can obtain these keys by setting up the app at `facebook.com/developer`
+
+### Google
+You will need two environment variables:
+`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
+Which you can obtain from registering app at to `console.developers.google.com`
 
 ##Tests
 
