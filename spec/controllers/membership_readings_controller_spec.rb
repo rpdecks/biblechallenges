@@ -58,7 +58,46 @@ describe MembershipReadingsController, type: :controller do
         expect(membership.membership_statistic_progress_percentage.value.to_i).to eq 50
 
       end
+      it "should update the chapters_all_time_read statistics after posting a reading" do challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
+        user = create(:user)
+        membership = challenge.join_new_member(user)
 
+        user.associate_statistics
+
+        post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
+
+        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 1
+      end
+      it "should update chapter_read_all_time value with multiple memberships" do 
+        challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
+        challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
+        user = create(:user)
+        membership1 = challenge1.join_new_member(user)
+        membership2 = challenge2.join_new_member(user)
+
+        user.associate_statistics
+
+        post :create, reading_id: challenge1.readings.first.id, membership_id: membership1.id
+        post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
+
+        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 2
+      end
+      it "should update chapters_read_all_time statistics even after leaving challenge" do 
+        challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
+        challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
+        user = create(:user)
+        membership1 = challenge1.join_new_member(user)
+        user.associate_statistics
+
+        post :create, reading_id: challenge1.readings.first.id, membership_id: membership1.id
+        post :create, reading_id: challenge1.readings.second.id, membership_id: membership1.id
+        membership1.destroy
+
+        membership2 = challenge2.join_new_member(user)
+        post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
+
+        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 3
+      end
       it "should update the membership statistics" do #todo this should use mocks/spies
         pending
         reading = create(:reading)
@@ -76,7 +115,6 @@ describe MembershipReadingsController, type: :controller do
           expect(ms).to have_received(:update)
         end
       end
-
     end
 
     describe 'DELETE#destroy' do

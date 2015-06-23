@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
+  has_many :user_statistics
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
   has_many :groups, through: :memberships
@@ -25,9 +26,18 @@ class User < ActiveRecord::Base
     has_one badge.name.underscore.to_sym
   end
 
+  UserStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
 
   #Callbacks
 
+  def associate_statistics
+    self.user_statistics << UserStatisticChaptersReadAllTime.create
+    self.user_statistics << UserStatisticDaysReadInARowCurrent.create
+    self.user_statistics << UserStatisticDaysReadInARowAllTime.create
+  end
+  
   def show_progress_percentage(member, group)
     user_membership = (member.memberships & group.memberships).first
     user_membership.progress_percentage
@@ -45,6 +55,12 @@ class User < ActiveRecord::Base
 
   def find_challenge_group(challenge)
     groups.where(challenge: challenge).first
+  end
+
+  def update_stats
+    user_statistics.each do |us|
+      us.update
+    end
   end
 
   def first_name
