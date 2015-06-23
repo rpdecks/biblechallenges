@@ -7,20 +7,26 @@ describe UserStatisticDaysReadInARowAllTime do
       user = challenge.members.first
       membership = challenge.memberships.first
       challenge.generate_readings
-      user_stat = UserStatisticDaysReadInARowAllTime.new(user: user)
+      user.associate_statistics
+      current_stat = user.user_statistics.find_by_type("UserStatisticDaysReadInARowCurrent")
+      all_time_stat = user.user_statistics.find_by_type("UserStatisticDaysReadInARowAllTime")
+
       challenge.readings[0..4].each do |mr|
         create(:membership_reading, membership: membership, reading: mr)
         Timecop.travel(1.day)
-        user_stat.update
+        current_stat.update
+        all_time_stat.update
       end
-      Timecop.travel(2.days)
+      Timecop.travel(1.days) # skip one day
       challenge.readings[5..6].each do |mr|
         create(:membership_reading, membership: membership, reading: mr)
         Timecop.travel(1.day)
-        user_stat.update
+        current_stat.update
+        all_time_stat.update
       end
+      Timecop.return
 
-      expect(user_stat.value.to_i).to eq 5
+      expect(all_time_stat.value.to_i).to eq 5
     end
   end
 end

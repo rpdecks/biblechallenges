@@ -36,8 +36,19 @@ describe User do
 
         expect(u.find_challenge_group(c)).to eq g
       end
+    end
+    describe "#associate_statistics" do
+      it "creates named statistics and associates them with new user" do
+        user = create(:user)
+        user.associate_statistics
 
+        # somehow verify that all the statistics are present
+        UserStatistic.descendants.each do |user_stat|
+          #user_stat.name will hold the type of each possible membership statistic
+          result = user.user_statistics.find_by_type(user_stat.name)
+          expect(result).to_not be_nil
+        end
+      end
     end
   end
-
 end
