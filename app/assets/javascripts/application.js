@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require google-instant-hangouts
 //= require jquery_ujs
 //= require react
 //= require react_ujs
