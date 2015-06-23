@@ -37,3 +37,8 @@
       %span
       - if current_user && @group.user_id == current_user.id
         = link_to "Delete Group", member_group_path(id: @group.id), :class=>"btn btn-danger btn-sm", method: :delete, data: {confirm: "Are you sure you want to delete this group?"}
+
+
+  %h4 Group Comments
+  = render partial: 'groups/comment_form', locals: {comment: Comment.new, group: @group}
+  = render partial: 'groups/comments', locals: {comments: @group.comments, group: @group}

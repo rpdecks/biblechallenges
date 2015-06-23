@@ -3,7 +3,7 @@ class Comments::CommentsController < ApplicationController
     @existing_comment = Comment.find(params[:comment_id])
     @existing_comment.comments.create!(comment_params.merge(user_id: current_user.id))
 
-    redirect_to @existing_comment.commentable
+    redirect_to params[:location] || @existing_comment.commentable
   end
 
   private

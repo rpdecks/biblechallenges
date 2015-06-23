@@ -16,7 +16,14 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 7.  rake db:migrate
 8.  rake db:seed  (to get the verse data in there)
 
+## Environmental Variables
 
+In order to setup omniauth login such as facebook,
+you will need two environment variables:
+`FACEBOOK_APP_ID` and `FACEBOOK_SECRET`
+which will hold the id and secret keys for each omniauth app.
+You can obtain these keys by setting up the app.
+The instruction are different for each provider.
 
 ##Tests
 
@@ -48,8 +55,4 @@ Each Challenge has many Readings, which are the chapters covered by that Challen
 For every Reading in a Challenge, for every User, there is a MembershipReading that represents the "read" state of that reading for that user
 
 The Challenge, Membership, Reading, and MembershipReading models are the main classes modified moment by moment.
-
-
-
-
 
