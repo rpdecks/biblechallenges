@@ -10,10 +10,14 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
 
   def calculate
     user = self.user
-    readings = user.membership_readings.all
+    all_user_readings = user.membership_readings.all
     current_reading = user.membership_readings.last
-    current_reading_date = Time.now.utc.to_date
-    if current_reading_date == current_reading.created_at.time.utc.to_date
+    previous_day = (current_reading.created_at - 1.day).utc.to_date
+    @days_read = []
+    all_user_readings.each do |r|
+      @days_read << r.created_at.utc.to_date
+    end
+    if @days_read.include? previous_day
       reading_streak = self.value.to_i
       new_reading_streak = reading_streak += 1
       self.value = new_reading_streak
