@@ -17,7 +17,7 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
     all_user_readings.each do |r|
       @days_read << r.created_at.utc.to_date
     end
-    if @days_read.include? previous_day
+    if @days_read.include? previous_day #Is there a reading 1 day before the current_reading day?
       reading_streak = self.value.to_i
       new_reading_streak = reading_streak += 1
       self.value = new_reading_streak

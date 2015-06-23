@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
 
   def associate_statistics
     self.user_statistics << UserStatisticChaptersReadAllTime.create
+    self.user_statistics << UserStatisticDaysReadInARowCurrent.create
+    self.user_statistics << UserStatisticDaysReadInARowAllTime.create
   end
   
   def show_progress_percentage(member, group)
