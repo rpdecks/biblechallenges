@@ -22,7 +22,7 @@
                 = g.name
               .pull-right
                 - g.members.each do |m|
-                  = image_tag avatar_url(m, 30)
+                  = render 'shared/avatar', user: m
                 %span.badge
                   = @group_member_count
                   = "member".pluralize(@group_member_count)

@@ -20,7 +20,7 @@
         - @group.members.sort_by(&:last_name).each do |m|
           %tr
             %td
-              = image_tag avatar_url(m,30)
+              = render 'shared/avatar', user: m
               %span 
                 = m.decorate.fullname
             %td= m.show_progress_percentage(m, @group)
