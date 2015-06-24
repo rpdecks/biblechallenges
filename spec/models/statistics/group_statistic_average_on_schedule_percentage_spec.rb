@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GroupStatisticAverageOnSchedulePercentage do
+describe GroupStatisticOnSchedulePercentage do
 
   describe "#calculate" do
     it "should calculate the average onschedule percentage for the group" do
@@ -26,9 +26,8 @@ describe GroupStatisticAverageOnSchedulePercentage do
       MembershipStatisticOnSchedulePercentage.new(membership: m1).update
       MembershipStatisticOnSchedulePercentage.new(membership: m2).update
 
-      group_stat = GroupStatisticAverageOnSchedulePercentage.new(group: group)
+      group_stat = GroupStatisticOnSchedulePercentage.new(group: group)
       expect(group_stat.calculate).to eq 75
-      Timecop.return
-    end
+      Timecop.return end
   end
 end

@@ -1,4 +1,4 @@
-class GroupStatisticAverageOnSchedulePercentage < GroupStatistic
+class GroupStatisticOnSchedulePercentage < GroupStatistic
   def name
     "Group's on schedule percentage"
   end
