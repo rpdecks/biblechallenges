@@ -18,7 +18,7 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
 
   def calculate
 
-    dates_read = user.membership_readings.map do |r| 
+    dates_read = user.membership_readings.reload.map do |r| 
       r.created_at.utc.to_date.jd  # converts days to integers
     end
 
