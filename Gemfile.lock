@@ -63,6 +63,9 @@ GEM
     bootswatch-rails (3.3.4)
       railties (>= 3.1)
     builder (3.2.2)
+    bullet (4.14.7)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.9.0)
     capybara (2.4.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -379,6 +382,7 @@ GEM
     unicorn-worker-killer (0.4.3)
       get_process_mem (~> 0)
       unicorn (~> 4)
+    uniform_notifier (1.9.0)
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.2.2)
@@ -400,6 +404,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.0.2.0)
   bootstrap_form
   bootswatch-rails
+  bullet
   capybara
   capybara-webkit
   coffee-rails

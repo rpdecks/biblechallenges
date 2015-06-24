@@ -35,6 +35,7 @@ gem 'htmlentities'
 gem 'react-rails'
 gem 'google-instant-hangouts'
 
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -50,6 +51,7 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
+  gem 'bullet'
 end
 
 # Gems used only for assets and not required
