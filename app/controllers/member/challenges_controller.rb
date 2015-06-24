@@ -17,10 +17,9 @@ class Member::ChallengesController < ApplicationController
 
   def show
     @membership = @challenge.membership_for(current_user)
-    @membership_readings = @membership.membership_readings
+    @membership_readings = @membership.membership_readings if @membership
     @readings  = @challenge.readings.order(:date)
     @group = current_user.find_challenge_group(@challenge)
-    @membership = @challenge.membership_for(current_user)
     @todays_reading = @challenge.todays_reading
     if @todays_reading
       @first_verses_in_todays_reading = @todays_reading.chapter.verses.
