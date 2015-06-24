@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150619183144) do
+ActiveRecord::Schema.define(version: 20150624232941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,17 +128,6 @@ ActiveRecord::Schema.define(version: 20150619183144) do
     t.integer  "progress_percentage",          default: 0
   end
 
-  create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "username"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "time_zone",              default: "UTC"
-    t.integer  "preferred_reading_hour", default: 0
-  end
-
   create_table "readings", force: :cascade do |t|
     t.integer  "chapter_id"
     t.integer  "challenge_id"
@@ -159,8 +148,8 @@ ActiveRecord::Schema.define(version: 20150619183144) do
   add_index "user_statistics", ["user_id"], name: "index_user_statistics_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -176,6 +165,9 @@ ActiveRecord::Schema.define(version: 20150619183144) do
     t.string   "name"
     t.string   "image"
     t.string   "authentication_token"
+    t.string   "username"
+    t.string   "time_zone",              default: "EST"
+    t.integer  "preferred_reading_hour", default: 12
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
