@@ -28,7 +28,7 @@ class MembershipReading < ActiveRecord::Base
   private
 
   def reading_on_schedule?
-    ZoneConverter.new.on_date_in_zone?(date: reading.read_on, timestamp: self.updated_at, timezone: membership.user.profile.time_zone)
+    ZoneConverter.new.on_date_in_zone?(date: reading.read_on, timestamp: self.updated_at, timezone: membership.user.time_zone)
   end
 
   def mark_on_schedule

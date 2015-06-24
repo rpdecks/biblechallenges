@@ -67,37 +67,37 @@ describe Readings::CommentsController, "Actions" do
     end
 
     it "redirects to the user's profile if the user does not have a username" do
-      current_user.profile.username = nil
-      current_user.profile.save
+      current_user.username = nil
+      current_user.save
       post :create, reading_id: reading.id, comment: newcomment_attr
-      expect(response).to redirect_to edit_profile_url
+      expect(response).to redirect_to edit_user_registration_url
     end
 
     it "creates a new reading comment" do
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       expect{post :create, reading_id: reading.id, comment: newcomment_attr
       }.to change(Comment, :count).by(1)
 
     end
     it "should redirect to :back if not params[:location] is not  provided" do
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       post :create, reading_id: reading.id, comment: newcomment_attr
       expect(response).to redirect_to "where_i_came_from"
     end
 
     it "should redirect to params[:location] if it's provided" do
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       post :create, reading_id: reading.id, comment: newcomment_attr, location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
 
     it "should redirect to params[:location] if the comment is invalid", skip: true do
       pending
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       post :create, reading_id: reading.id, comment: build(:reading_comment, content: nil), location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
