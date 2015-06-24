@@ -47,7 +47,7 @@ class Member::ChallengesController < ApplicationController
   private
 
   def find_challenge
-    @challenge = Challenge.find_by_id(params[:id])
+    @challenge = Challenge.includes(:chapters).find_by_id(params[:id])
     redirect_to challenges_url if @challenge.nil?
   end
 

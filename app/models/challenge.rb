@@ -8,6 +8,7 @@ class Challenge < ActiveRecord::Base
   has_many :readings, dependent: :destroy
   has_many :membership_readings, through: :members  # needs default order #todo 
   has_many :groups
+  has_many :chapters, through: :readings
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
