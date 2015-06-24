@@ -1,7 +1,7 @@
 .panel-body
   = "Members: #{challenge.members.size}"
   - challenge.members.each do |m|
-    = image_tag avatar_url(m, 30), title: m.username
+    = image_tag m.image, title: m.username, class: "img-circle"
   = "Chapters: #{challenge.readings.size}"
   .pull-right
     = link_to "Show Challenge", challenge_path(challenge), :class => 'btn btn-info', display: 'inline'
