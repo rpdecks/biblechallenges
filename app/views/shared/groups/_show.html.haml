@@ -7,6 +7,9 @@
         .badge
           = @group.members.count
           = "member".pluralize(@group_member_count)
+        %span
+        .pull-right
+          = instant_hangout
       %table.table.table-striped.table-bordered.table-hover
         %thead
           %tr
