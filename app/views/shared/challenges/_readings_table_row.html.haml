@@ -5,4 +5,4 @@
     - if membership
       = react_component 'ReadingButton', 
         { reading_id: reading.id, membership_id: membership.id, 
-        membership_reading_id: reading.membership_reading_for(membership).try(:id) }
+        membership_reading_id: membership_reading_id }

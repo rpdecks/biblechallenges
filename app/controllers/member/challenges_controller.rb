@@ -16,6 +16,8 @@ class Member::ChallengesController < ApplicationController
   end
 
   def show
+    @membership = @challenge.membership_for(current_user)
+    @membership_readings = @membership.membership_readings
     @readings  = @challenge.readings.order(:date)
     @group = current_user.find_challenge_group(@challenge)
     @membership = @challenge.membership_for(current_user)
@@ -29,7 +31,7 @@ class Member::ChallengesController < ApplicationController
         by_range(start_verse: FIRST_VERSES_LIMIT + 1)
     end
 
-    @readings_json = @challenge.readings.to_json(include: :chapter)
+#    @readings_json = @challenge.readings.to_json(include: :chapter)
   end
 
   def create
