@@ -16,9 +16,10 @@ class Member::ChallengesController < ApplicationController
   end
 
   def show
+    @membership = @challenge.membership_for(current_user)
+    @membership_readings = @membership.membership_readings if @membership
     @readings  = @challenge.readings.order(:date)
     @group = current_user.find_challenge_group(@challenge)
-    @membership = @challenge.membership_for(current_user)
     @todays_reading = @challenge.todays_reading
     if @todays_reading
       @first_verses_in_todays_reading = @todays_reading.chapter.verses.
@@ -29,7 +30,7 @@ class Member::ChallengesController < ApplicationController
         by_range(start_verse: FIRST_VERSES_LIMIT + 1)
     end
 
-    @readings_json = @challenge.readings.to_json(include: :chapter)
+#    @readings_json = @challenge.readings.to_json(include: :chapter)
   end
 
   def create
@@ -47,7 +48,7 @@ class Member::ChallengesController < ApplicationController
   private
 
   def find_challenge
-    @challenge = Challenge.find_by_id(params[:id])
+    @challenge = Challenge.includes(:chapters).find_by_id(params[:id])
     redirect_to challenges_url if @challenge.nil?
   end
 

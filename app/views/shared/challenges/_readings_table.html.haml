@@ -8,4 +8,5 @@
           %span.glyphicon.glyphicon-ok
             - @challenge.readings.each do |reading|
               = render partial: 'shared/challenges/readings_table_row',
-                locals: {reading: reading, membership: @membership}
+                locals: {reading: reading, membership: @membership,
+                membership_reading_id: @membership_readings.find{|mr| mr.reading_id == reading.id && mr.membership_id = @membership.id}.try(:id) }
