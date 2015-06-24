@@ -76,7 +76,7 @@ describe Membership do
 
         # somehow verify that all the statistics are present
         MembershipStatistic.descendants.each do |mem_stat|
-          #mem_stat.name will holdl the type of each possible membership statistic
+          #mem_stat.name will hold the type of each possible membership statistic
           result = membership.membership_statistics.find_by_type(mem_stat.name)
           expect(result).to_not be_nil
         end
