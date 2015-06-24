@@ -28,14 +28,16 @@ You will need two environment variables:
  - `FACEBOOK_SECRET`  
 
 They will hold the id and secret keys for each omniauth app.  
-You can obtain these keys by setting up the app at `facebook.com/developer`
+You can obtain these keys by setting up the app at `facebook.com/developer`  
+Note: on facebook.com, go to `Settings` and then `Add Platform` for website.
 
 #### Google
 You will need two environment variables:
  - `GOOGLE_CLIENT_ID`
  - `GOOGLE_CLIENT_SECRET`
  
-You can obtain from registering app at to `console.developers.google.com`
+You can obtain from registering app at to `console.developers.google.com` 
+Note: Under `APIs` remember to enable (Contacts API) and (Google+ API). Under `Credentials`, click `Create new client id`.
 
 ##Tests
 
