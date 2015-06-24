@@ -22,16 +22,20 @@ In order to setup omniauth login, you will need
 two environment variables for each provider.
 The instruction are different for each provider.
 
-### Facebook
+#### Facebook
 You will need two environment variables:
-`FACEBOOK_APP_ID` and `FACEBOOK_SECRET`
-which will hold the id and secret keys for each omniauth app.
+ - `FACEBOOK_APP_ID` 
+ - `FACEBOOK_SECRET`  
+
+They will hold the id and secret keys for each omniauth app.  
 You can obtain these keys by setting up the app at `facebook.com/developer`
 
-### Google
+#### Google
 You will need two environment variables:
-`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
-Which you can obtain from registering app at to `console.developers.google.com`
+ - `GOOGLE_CLIENT_ID`
+ - `GOOGLE_CLIENT_SECRET`
+ 
+You can obtain from registering app at to `console.developers.google.com`
 
 ##Tests
 
