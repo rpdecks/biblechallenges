@@ -7,10 +7,10 @@ class DailyEmailScheduler
       reading.members.each do |m|
 
         #set time_zone to the user's time_zone
-        Time.zone = m.profile.time_zone
+        Time.zone = m.time_zone
 
         #convert user_time to UTC
-        user_reading_hour = m.profile.preferred_reading_hour
+        user_reading_hour = m.preferred_reading_hour
 
         # e.g. format => "2050-05-02 07:00:00"
         user_reading_hour_string = DateTime.tomorrow.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"
@@ -29,7 +29,7 @@ class DailyEmailScheduler
       # find all the members for this reading
       reading.members.each do |member|
         # when exactly should the email be scheduled
-        time_for_email = ZoneConverter.new.time_from_hour_date_and_zone(member.profile.preferred_reading_hour, reading.read_on, member.profile.time_zone)
+        time_for_email = ZoneConverter.new.time_from_hour_date_and_zone(member.preferred_reading_hour, reading.read_on, member.time_zone)
         # schedule the email
         DailyEmailWorker.perform_at(time_for_email, reading.id, member.id)
       end

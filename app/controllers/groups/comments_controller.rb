@@ -41,7 +41,7 @@ class Groups::CommentsController < ApplicationController
   def verify_username
     if current_user.username.blank?
       flash[:notice] = "You must set a username before you can post comments"
-      redirect_to edit_profile_url
+      redirect_to edit_user_registration_path
     end
   end
 
