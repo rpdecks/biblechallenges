@@ -3,13 +3,13 @@
     %td Owner:
     %td
       - owner = @challenge.owner
-      = image_tag avatar_url(owner, 35), title: owner.username 
+      = image_tag owner.image, title: owner.username, class: "img-circle"
 
   %tr
     %td Members:
     %td
       - @challenge.members.each do |m|
-        = image_tag avatar_url(m, 35), title: m.username
+        = image_tag m.image, title: m.username, class: "img-circle"
 
   %tr
     %td Dates:
