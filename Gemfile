@@ -33,6 +33,7 @@ gem 'pg_search'
 gem 'bootstrap_form'
 gem 'htmlentities'
 gem 'react-rails'
+gem 'google-instant-hangouts'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
