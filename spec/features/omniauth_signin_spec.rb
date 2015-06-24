@@ -10,7 +10,7 @@ feature "Omniauth Sign In / Sign Up" do
     fill_in 'user[password]', with: password
     fill_in 'user[password_confirmation]', with: password
     click_button "Continue"
-    expect(page).to have_content("You have signed up succesfully")
+    expect(page).to have_content("You have signed up successfully")
 
     click_link "Logout"
 
@@ -43,5 +43,15 @@ feature "Omniauth Sign In / Sign Up" do
     expect(page).to have_content("Signed in successfully")
   end
 
-  scenario "Reject registration if password is different from password confirmation"
+  scenario "Reject if password is different from password confirmation" do
+    mock_auth_hash("google_oauth2", "peter.parker@spider.man")
+    password = Faker::Internet.password
+    visit root_path
+    click_link "Sign in with Google"
+    fill_in 'user[password]', with: password
+    fill_in 'user[password_confirmation]', with: password+"2"
+    click_button "Continue"
+    expect(page).to have_content("Password confirmation doesn't match Password")
+  end
+
 end
