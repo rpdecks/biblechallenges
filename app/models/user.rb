@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :membership_readings, through: :memberships
 
   #Callbacks
-  after_create :associate_statistics
+  #after_create :associate_statistics
 
   # autogenerate has_one associations for all the badge types
   Rails.application.eager_load!
