@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625131809) do
+ActiveRecord::Schema.define(version: 20150625132225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150625131809) do
     t.text     "welcome_message"
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
+    t.integer  "readings_count"
   end
 
   create_table "chapter_challenges", force: :cascade do |t|
