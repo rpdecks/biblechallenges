@@ -7,8 +7,8 @@ class Membership < ActiveRecord::Base
 
   # Relations
   belongs_to :user
-  belongs_to :challenge
-  belongs_to :group
+  belongs_to :challenge, counter_cache: true
+  belongs_to :group, counter_cache: true
 
   has_many :membership_readings, dependent: :destroy
   has_many :readings, through: :challenge
