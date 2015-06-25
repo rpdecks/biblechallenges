@@ -2,28 +2,28 @@
   %tr
     %td Owner:
     %td
-      - owner = @challenge.owner
+      - owner = challenge.owner
       = image_tag owner.image, title: owner.username, class: "img-circle"
 
   %tr
     %td Members:
     %td
-      - @challenge.members.each do |m|
+      - challenge.members.each do |m|
         = image_tag m.image, title: m.username, class: "img-circle"
 
   %tr
     %td Dates:
     %td
-      =@challenge.begindate.strftime("%-m/%-d/%Y") 
+      =challenge.begindate.strftime("%-m/%-d/%Y") 
       = "-" 
-      =@challenge.enddate.strftime("%-m/%-d/%Y") 
+      =challenge.enddate.strftime("%-m/%-d/%Y") 
   %tr
     %td Chapters:
-    %td= @challenge.chapters_to_read
+    %td= challenge.chapters_to_read
 
-  - if current_user && @membership = @challenge.membership_for(current_user)
+  - if current_user && membership = challenge.membership_for(current_user)
     %tr
       %td Bible Version:
       %td
-        = @membership.bible_version
-        =link_to "Change", member_membership_path(@membership), :method => :get
+        = membership.bible_version
+        =link_to "Change", member_membership_path(membership), :method => :get

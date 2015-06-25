@@ -7,8 +7,8 @@ class Membership < ActiveRecord::Base
 
   # Relations
   belongs_to :user
-  belongs_to :challenge
-  belongs_to :group
+  belongs_to :challenge, counter_cache: true
+  belongs_to :group, counter_cache: true
 
   has_many :membership_readings, dependent: :destroy
   has_many :readings, through: :challenge
@@ -52,6 +52,7 @@ class Membership < ActiveRecord::Base
     self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
     self.membership_statistics << MembershipStatisticRecordReadingStreak.create
     self.membership_statistics << MembershipStatisticCurrentReadingStreak.create
+    self.membership_statistics << MembershipStatisticTotalChaptersRead.create
   end
 
   private
