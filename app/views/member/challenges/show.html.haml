@@ -22,15 +22,15 @@
         = render 'shared/challenges/readings'  # why can I not pass local vars here #jim
       - if current_user.find_challenge_group(@challenge) != nil
         .tab-pane#mygroup{role: "tabpanel"}
-          = render 'shared/groups/show'
+          = render partial: 'shared/groups/show', locals: {group: @group}
       - else
         .tab-pane#groups{role: "tabpanel"}
-          = render 'shared/challenges/challenge_groups'
+          = render partial: 'shared/challenges/challenge_groups', locals: {challenge: @challenge}
       .tab-pane#statistics{role: "tabpanel"}
-        = render 'shared/challenges/challenge_statistics'
+        = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge}
       .tab-pane#details{role: "tabpanel"}
-        = render 'shared/challenges/challenge_details'
-        = render 'shared/challenges/challenge_unsubscribe'
+        = render partial:  'shared/challenges/challenge_details', locals: {challenge: @challenge}
+        = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
 
 :javascript

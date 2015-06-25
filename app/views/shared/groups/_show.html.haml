@@ -2,11 +2,11 @@
   .row
     .col-md-8
       %h3
-        =@group.name
+        =group.name
         %span
         .badge
-          = @group.members.count
-          = "member".pluralize(@group_member_count)
+          = group.members.count
+          = "member".pluralize(group.members.count)
         %span
         .pull-right
           = instant_hangout
@@ -17,31 +17,31 @@
             %th Stats
             %th Last Read
         %tbody
-        - @group.members.sort_by(&:last_name).each do |m|
+        - group.members.sort_by(&:last_name).each do |m|
           %tr
             %td
               = image_tag avatar_url(m,30)
               %span 
                 = m.decorate.fullname
-            %td= m.show_progress_percentage(m, @group)
-            - if m.has_logged_a_reading?(m, @group)
-              %td= m.decorate.show_last_recorded_reading(m, @group)
+            %td= m.show_progress_percentage(m, group)
+            - if m.has_logged_a_reading?(m, group)
+              %td= m.decorate.show_last_recorded_reading(m, group)
             - else
               %td
                 No readings yet
 
       - if current_user
-        - if current_user.groups.include?(@group)
-          = link_to "Leave Group", leave_member_group_path(id: @group.id), :class=>"btn btn-warning btn-sm", method: :post, data: {confirm: "Are you sure you want to leave this group?"}
+        - if current_user.groups.include?(group)
+          = link_to "Leave Group", leave_member_group_path(id: group.id), :class=>"btn btn-warning btn-sm", method: :post, data: {confirm: "Are you sure you want to leave this group?"}
         -else 
-          = link_to "Join Group", join_member_group_path(id: @group.id), :class=> "btn btn-primary btn-sm", method: :post
+          = link_to "Join Group", join_member_group_path(id: group.id), :class=> "btn btn-primary btn-sm", method: :post
       - else
         = link_to "Sign me up", new_user_registration_path, :class=> "btn btn-success btn-sm"
       %span
-      - if current_user && @group.user_id == current_user.id
-        = link_to "Delete Group", member_group_path(id: @group.id), :class=>"btn btn-danger btn-sm", method: :delete, data: {confirm: "Are you sure you want to delete this group?"}
+      - if current_user && group.user_id == current_user.id
+        = link_to "Delete Group", member_group_path(id: group.id), :class=>"btn btn-danger btn-sm", method: :delete, data: {confirm: "Are you sure you want to delete this group?"}
 
 
   %h4 Group Comments
-  = render partial: 'groups/comment_form', locals: {comment: Comment.new, group: @group}
-  = render partial: 'groups/comments', locals: {comments: @group.comments, group: @group}
+  = render partial: 'groups/comment_form', locals: {comment: Comment.new, group: group}
+  = render partial: 'groups/comments', locals: {comments: group.comments, group: group}
