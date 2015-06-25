@@ -1,11 +1,11 @@
 - breadcrumb :challenge, @challenge
 .container
   = breadcrumbs
-  = render 'shared/challenges/join_challenge'
+  = render partial: 'shared/challenges/join_challenge', locals: { challenge: @challenge }
   .row
   %br
   %br
-  = render 'shared/challenges/challenge_details'
+  = render partial:  'shared/challenges/challenge_details', locals: { challenge: @challenge }
   %h4 Groups
   = render partial: 'groups', locals: { groups: @challenge.groups }
 
@@ -14,7 +14,7 @@
 
 
   %h4 Readings
-  = render partial: 'readings', locals: {readings: @challenge.readings }
+  = render partial: 'readings', locals: {readings: @readings }
 
   %br
   %br
