@@ -8,22 +8,36 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
     "Records the active streak of consecutive days with a membership reading, regardless of challenge."
   end
 
+  def most_recent_streak
+    @streaks.last
+  end
+
+  def most_recent_day_in_most_recent_streak
+    most_recent_streak.last
+  end
+
   def calculate
-    user = self.user
-    all_user_readings = user.membership_readings.all
-    current_reading = user.membership_readings.last
-    previous_day = (current_reading.created_at - 1.day).utc.to_date
-    @days_read = []
-    all_user_readings.each do |r|
-      @days_read << r.created_at.utc.to_date
+
+    dates_read = user.membership_readings.reload.map do |r| 
+      r.created_at.utc.to_date.jd  # converts days to integers
     end
-    if @days_read.include? previous_day #Is there a reading 1 day before the current_reading day?
-      reading_streak = self.value.to_i
-      new_reading_streak = reading_streak += 1
-      self.value = new_reading_streak
-    else
-      self.value = 1
+
+    dates_read.sort!  # dates as integers in ascending order
+
+    # find_consecutive doesn't count one day streaks so this is a
+    # special case to check for.  if a bigger streak is in the works
+    # the value of streak will be overwritten by it
+    if  [Date.yesterday.jd, Date.today.jd].include? dates_read.last
+      streak = 1
     end
+
+    @streaks = dates_read.find_consecutive
+
+    if @streaks.any? && ([Date.yesterday.jd, Date.today.jd].include? most_recent_day_in_most_recent_streak)
+      streak = most_recent_streak.size
+    end
+
+    return streak
   end
 
   def update

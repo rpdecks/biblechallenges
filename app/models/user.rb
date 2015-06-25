@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
+  #Callbacks
+  after_create :associate_statistics
+
   # autogenerate has_one associations for all the badge types
   Rails.application.eager_load!
   Badge.descendants.each do |badge| 
@@ -30,7 +33,6 @@ class User < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
-  #Callbacks
 
   def associate_statistics
     self.user_statistics << UserStatisticChaptersReadAllTime.create

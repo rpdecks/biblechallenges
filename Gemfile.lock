@@ -308,6 +308,7 @@ GEM
       rspec (~> 3.0, >= 3.0.0)
       sidekiq (>= 2.4.0)
     rspec-support (3.3.0)
+    ruby_array_find_consecutive (0.0.3)
     ruby_parser (3.7.0)
       sexp_processor (~> 4.1)
     rubyzip (1.1.7)
@@ -449,6 +450,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails
   rspec-sidekiq
+  ruby_array_find_consecutive
   ruby_parser
   sass-rails
   selenium-webdriver
