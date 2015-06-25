@@ -10,7 +10,7 @@
   = render partial: 'groups', locals: { groups: @challenge.groups }
 
 
-  = render 'shared/challenges/challenge_statistics'
+  = render partial: 'shared/challenges/challenge_statistics', locals: {challenge: @challenge}
 
 
   %h4 Readings
@@ -19,4 +19,4 @@
   %br
   %br
 
-  = render 'shared/challenges/challenge_unsubscribe'
+  = render partial: 'shared/challenges/challenge_unsubscribe', locals: {challenge: @challenge}

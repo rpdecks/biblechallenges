@@ -1,6 +1,6 @@
 %hr
 
-- if membership
+- if membership = challenge.membership_for(current_user)
   - if membership.completed?
     %h4 Congratulations!  You have completed this challenge.
   %p
