@@ -6,12 +6,12 @@
     - when 'UserStatisticDaysReadInARowCurrent'
       %tr
         %td= stat.name
-        %td= user.user_statistics.find_by_type("UserStatisticDaysReadInARowCurrent")
+        %td= user.user_statistics.find_by_type("UserStatisticDaysReadInARowCurrent").value
     - when 'UserStatisticChaptersReadAllTime'
       %tr
         %td= stat.name
-        %td= user.user_statistics.find_by_type("UserStatisticChaptersReadAllTime")
+        %td= user.user_statistics.find_by_type("UserStatisticChaptersReadAllTime").value
     - when 'UserStatisticDaysReadInARowAllTime'
       %tr
         %td= stat.name
-        %td= user.user_statistics.find_by_type("UserStatisticDaysReadInARowAllTime")
+        %td= user.user_statistics.find_by_type("UserStatisticDaysReadInARowAllTime").value

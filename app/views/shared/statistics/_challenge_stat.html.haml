@@ -7,9 +7,9 @@
       %th By All Members
     %tbody
     - ChallengeStatistic.descendants.each do |stat|
-      %tr
-        %td= stat.name
-        - case stat.name
-        - when 'ChallengeStatisticChaptersRead'
+      - case stat.name
+      - when 'ChallengeStatisticChaptersRead'
+        %tr
+          %td= stat.name
           %td= membership.membership_statistics.find_by_type("MembershipStatisticTotalChaptersRead")
           %td= challenge.challenge_statistics.find_by_type("ChallengeStatisticChaptersRead")
