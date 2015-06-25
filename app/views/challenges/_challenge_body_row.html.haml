@@ -1,5 +1,5 @@
 .panel-body
-  = "Members: #{challenge.members.size}"
+  = "Members: #{challenge.memberships_count}"
   - challenge.members.each do |m|
     = image_tag m.image, title: m.username, class: "img-circle"
   = "Chapters: #{challenge.readings.size}"
