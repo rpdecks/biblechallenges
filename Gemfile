@@ -34,6 +34,7 @@ gem 'bootstrap_form'
 gem 'htmlentities'
 gem 'react-rails'
 gem 'google-instant-hangouts'
+gem 'ruby_array_find_consecutive'
 
 
 # Bundle edge Rails instead:
