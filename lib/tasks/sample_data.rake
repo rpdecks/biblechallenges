@@ -7,7 +7,8 @@ namespace :sample_fake do
   task data: :environment do
     Rails.env = 'development'  # this rake task should only be run in development
     users_count = 25
-    challenges_count = 10 
+    challenges_count = 3  #used to be 10 but takes a while
+    DAYS_AGO = 15
 
     remove_current_records
 
@@ -18,15 +19,28 @@ namespace :sample_fake do
     create_groups
     add_members_to_groups
     mark_chapters_as_read
+
     create_membership_stats
+    create_group_stats
+    create_user_stats
+
+    puts ""
+    puts ""
+    puts ""
+    puts "Log in with user1@test.com / password"
+
+
   end
 
   def mark_chapters_as_read
     # just randomly mark about half of them as read
     Membership.all.each do |m|
-      m.readings.each do |r|
+    Timecop.travel(-15.days)
+      m.readings.limit(DAYS_AGO).each do |r|
         MembershipReading.create(membership_id: m.id, reading_id: r.id) if rand(2) == 1
+        Timecop.travel(1.day)
       end
+    Timecop.return
     end
   end
 
@@ -46,6 +60,24 @@ namespace :sample_fake do
       challenge.members << User.all.sample(rand(15) + 5)
     end
     puts " Created #{Membership.count} memberships"
+  end
+
+  def create_group_stats
+    puts "creating group statistics:"
+    Group.all.each do |g|
+      g.associate_statistics
+      g.update_stats
+      print "."
+    end
+  end
+
+  def create_user_stats
+    puts "creating user statistics:"
+    User.all.each do |u|
+      u.associate_statistics
+      u.update_stats
+      print "."
+    end
   end
 
   def create_membership_stats
@@ -89,11 +121,12 @@ namespace :sample_fake do
   end
 
   def create_challenges(challenges_count)
-    challenges_count.times do
-      user = User.all.sample # warning: all.sample is very slow for large dbs.
-                             #          only use this for seeding
-      user.created_challenges << FactoryGirl.create(:challenge, owner: user)
+    # first X users own the challenges
+    Timecop.travel(- DAYS_AGO.days)
+    User.limit(challenges_count).each do |u|
+      u.created_challenges << FactoryGirl.create(:challenge, chapters_to_read: "Matt 1-28", owner: u)
     end
+    Timecop.return
     puts "Created #{Challenge.count} challenges"
     puts "Created #{Reading.count} readings"
   end
@@ -118,6 +151,10 @@ namespace :sample_fake do
     # is this by design?
     puts "Deleting Membership Readings"
     MembershipReading.destroy_all
+    puts "Deleting Statistics"
+    MembershipStatistic.destroy_all
+    GroupStatistic.destroy_all
+    UserStatistic.destroy_all
     puts "Deleting Badges"
     Badge.destroy_all
 
