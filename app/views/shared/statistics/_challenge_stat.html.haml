@@ -2,12 +2,14 @@
 %table.table.table-bordered.table-hover.table-condensed
   %thead
     %tr
-      %th 
+      %th= challenge.name
       %th By Me
       %th By All Members
-      - binding.pry
     %tbody
+    - ChallengeStatistic.descendants.each do |stat|
       %tr
-        %td 
-        %td 
-        %td
+        %td= stat.name
+        - case stat.name
+        - when 'ChallengeStatisticChaptersRead'
+          %td= membership.membership_statistics.find_by_type("MembershipStatisticTotalChaptersRead")
+          %td= challenge.challenge_statistics.find_by_type("ChallengeStatisticChaptersRead")

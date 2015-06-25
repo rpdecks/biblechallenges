@@ -22,6 +22,7 @@ class Member::ChallengesController < ApplicationController
     @readings  = @challenge.readings.includes(:chapter).order(:read_on)
     @group = current_user.find_challenge_group(@challenge)
     @groups = @challenge.groups.includes(:members)
+    @user = current_user
     @todays_reading = @challenge.todays_reading
     if @todays_reading
       @first_verses_in_todays_reading = @todays_reading.chapter.verses.
