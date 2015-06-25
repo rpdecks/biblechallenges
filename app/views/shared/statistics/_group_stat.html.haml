@@ -5,9 +5,11 @@
       %th Group Name
       %th Progress Percentage
       %th On-schedule Percentage
+      %th Total Chapters Read
   - groups.each do |g|
     %tbody
       %tr
         %td= g.name
         %td= g.group_statistics.find_by_type("GroupStatisticsProgressPercentage")
         %td= g.group_statistics.find_by_type("GroupStatisticsOnSchedulePercentage")
+        %td= g.group_statistics.find_by_type("GroupStatisticsTotalChaptersRead")
