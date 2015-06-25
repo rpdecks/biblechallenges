@@ -9,8 +9,13 @@ class MembershipReadingsController < ApplicationController
     @challenge = membership.challenge
     reading
     @membership_reading = MembershipReading.create(membership_reading_params)
+
+    current_user.update_stats  #needs to be backgrounded!
     membership.update_stats  #needs to be backgrounded!
+    membership.group.update_stats if membership.group  #needs to be backgrounded!
+
     membership.user.update_stats
+
     respond_to do |format|
       format.html { 
         # go back to referer unless alternate location passed in
@@ -26,10 +31,14 @@ class MembershipReadingsController < ApplicationController
   end
 
   def destroy
-    #jim this feel hokey because I want to pass in the id of the membership reading
-    #but since I want to display this link before the actual record exists I'm 
-    # doing it this way
-    membership_reading.destroy
+    @membership = membership_reading.membership
+
+    membership_reading.destroy  # this needs to only destroy membershipreadings the user owns!! write test todo
+
+    current_user.update_stats  #needs to be backgrounded!
+    @membership.update_stats  #needs to be backgrounded!
+    @membership.group.update_stats if @membership.group  #needs to be backgrounded!
+
     respond_to do |format|
       format.html { 
         # go back to referer unless alternate location passed in
