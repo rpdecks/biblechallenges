@@ -9,6 +9,7 @@ class Group < ActiveRecord::Base
 
   validates :user, :challenge, presence: true
 
+  Rails.application.eager_load!
   GroupStatistic.descendants.each do |stat| 
     has_one stat.name.underscore.to_sym
   end
