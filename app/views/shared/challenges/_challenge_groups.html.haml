@@ -14,7 +14,7 @@
       %br
       %table.table.table-bordered.table-hover
         %tbody
-        - challenge.groups.each do |g|
+        - groups.each do |g|
           - group_member_count = challenge.memberships.where(group_id: g).size
           %tr
             %td

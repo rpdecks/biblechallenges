@@ -1,6 +1,5 @@
 .container
   .row
     .col-md-8
-      = render 'shared/challenges/todays_reading'
       %br
-      = render 'shared/challenges/readings_table'
+      = render partial: 'shared/challenges/readings_table', locals: {readings: readings}
