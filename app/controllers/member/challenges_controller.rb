@@ -4,7 +4,7 @@ class Member::ChallengesController < ApplicationController
   FIRST_VERSES_LIMIT = 10
 
   before_filter :authenticate_user!
-  before_filter :find_challenge, only: [:show, :destroy]
+  before_filter :find_challenge, only: [:destroy]
 
   def new
     @challenge = Challenge.new
@@ -16,10 +16,12 @@ class Member::ChallengesController < ApplicationController
   end
 
   def show
+    @challenge = Challenge.includes({members: :profile}).find_by_id(params[:id])
     @membership = @challenge.membership_for(current_user)
     @membership_readings = @membership.membership_readings if @membership
-    @readings  = @challenge.readings.order(:date)
+    @readings  = @challenge.readings.includes(:chapter).order(:read_on)
     @group = current_user.find_challenge_group(@challenge)
+    @groups = @challenge.groups.includes(:members)
     @todays_reading = @challenge.todays_reading
     if @todays_reading
       @first_verses_in_todays_reading = @todays_reading.chapter.verses.
@@ -30,7 +32,6 @@ class Member::ChallengesController < ApplicationController
         by_range(start_verse: FIRST_VERSES_LIMIT + 1)
     end
 
-#    @readings_json = @challenge.readings.to_json(include: :chapter)
   end
 
   def create
