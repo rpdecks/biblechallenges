@@ -14,6 +14,16 @@ describe UserCompletion do
     end
   end
 
+  describe "UserStatistics" do
+    it "should attach user statistics to the user" do
+      allow(UserStatisticAttacher).to receive(:attach_statistics)
+      user = create(:user)
+
+      UserCompletion.new(user)
+
+      expect(UserStatisticAttacher).to have_received(:attach_statistics)
+    end
+  end
 
   describe "Profile" do
     it "should attach a profile to the user" do
