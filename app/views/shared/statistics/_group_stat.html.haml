@@ -10,6 +10,6 @@
     %tbody
       %tr
         %td= g.name
-        %td= g.group_statistics.find_by_type("GroupStatisticsProgressPercentage")
-        %td= g.group_statistics.find_by_type("GroupStatisticsOnSchedulePercentage")
-        %td= g.group_statistics.find_by_type("GroupStatisticsTotalChaptersRead")
+        %td= g.group_statistic_progress_percentage
+        %td= g.group_statistic_on_schedule_percentage
+        %td= g.group_statistic_total_chapters_read

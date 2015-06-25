@@ -11,5 +11,7 @@
       - when 'ChallengeStatisticChaptersRead'
         %tr
           %td= stat.name
-          %td= membership.membership_statistics.find_by_type("MembershipStatisticTotalChaptersRead")
+          %td= membership.membership_statistics.find_by_type("MembershipStatisticTotalChaptersRead").value
           %td= challenge.challenge_statistics.find_by_type("ChallengeStatisticChaptersRead")
+      - when 'ChallengeStatisticChaptersRead'
+        %tr

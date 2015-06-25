@@ -23,6 +23,7 @@ class Challenge < ActiveRecord::Base
                         message: 'invalid format'
   validate  :validate_dates
 
+  Rails.application.eager_load!
   ChallengeStatistic.descendants.each do |stat| 
     has_one stat.name.underscore.to_sym
   end
