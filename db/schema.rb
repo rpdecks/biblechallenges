@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150625132225) do
+ActiveRecord::Schema.define(version: 20150625135146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20150625132225) do
     t.integer  "ave_sequential_reading_count",    default: 0
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
+    t.integer  "memberships_count"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
