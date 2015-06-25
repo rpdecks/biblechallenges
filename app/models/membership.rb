@@ -52,6 +52,7 @@ class Membership < ActiveRecord::Base
     self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
     self.membership_statistics << MembershipStatisticRecordReadingStreak.create
     self.membership_statistics << MembershipStatisticCurrentReadingStreak.create
+    self.membership_statistics << MembershipStatisticTotalChaptersRead.create
   end
 
   private
