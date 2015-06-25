@@ -1,2 +1,2 @@
-- if current_user && @membership = @challenge.membership_for(current_user)
-  = link_to raw("<i class='icon-warning-sign'></i>Unsubscribe me from this challenge"),member_membership_path(@membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger btn-sm"
+- if current_user && membership = challenge.membership_for(current_user)
+  = link_to raw("<i class='icon-warning-sign'></i>Unsubscribe me from this challenge"),member_membership_path(membership),method: :delete,confirm: 'Are you sure?',:class=>"btn btn-danger btn-sm"
