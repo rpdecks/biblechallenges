@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20150625183000) do
     t.string   "chapters_to_read"
     t.text     "welcome_message"
     t.string   "dates_to_skip"
+    t.integer  "memberships_count"
+    t.integer  "readings_count"
   end
 
   create_table "chapter_challenges", force: :cascade do |t|
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(version: 20150625183000) do
     t.integer  "ave_sequential_reading_count",    default: 0
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
+    t.integer  "memberships_count"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree

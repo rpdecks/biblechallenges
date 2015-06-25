@@ -14,8 +14,8 @@
       %br
       %table.table.table-bordered.table-hover
         %tbody
-        - @challenge.groups.each do |g|
-          - @group_member_count = @challenge.memberships.where(group_id: g).size
+        - groups.each do |g|
+          - group_member_count = challenge.memberships.where(group_id: g).size
           %tr
             %td
               %strong
@@ -24,8 +24,8 @@
                 - g.members.each do |m|
                   = image_tag avatar_url(m, 30)
                 %span.badge
-                  = @group_member_count
-                  = "member".pluralize(@group_member_count)
+                  = group_member_count
+                  = "member".pluralize(group_member_count)
             - if current_user
               %td.text-center
                 - unless current_user.groups.include?(g)

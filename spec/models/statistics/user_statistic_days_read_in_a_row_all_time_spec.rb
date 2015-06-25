@@ -14,19 +14,22 @@ describe UserStatisticDaysReadInARowAllTime do
       challenge.readings[0..4].each do |mr|
         create(:membership_reading, membership: membership, reading: mr)
         Timecop.travel(1.day)
-        current_stat.update
-        all_time_stat.update
       end
+      current_stat.update
+      all_time_stat.update
+
       Timecop.travel(1.days) # skip one day
+
       challenge.readings[5..6].each do |mr|
         create(:membership_reading, membership: membership, reading: mr)
         Timecop.travel(1.day)
-        current_stat.update
-        all_time_stat.update
       end
-      Timecop.return
+      current_stat.update
+      all_time_stat.update
 
+      expect(current_stat.value.to_i).to eq 2
       expect(all_time_stat.value.to_i).to eq 5
+      Timecop.return
     end
   end
 end
