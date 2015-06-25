@@ -14,10 +14,8 @@ class MembershipReadingsController < ApplicationController
     membership.update_stats  #needs to be backgrounded!
     membership.group.update_stats if membership.group  #needs to be backgrounded!
 
-
-
-
     membership.user.update_stats
+
     respond_to do |format|
       format.html { 
         # go back to referer unless alternate location passed in
@@ -33,11 +31,13 @@ class MembershipReadingsController < ApplicationController
   end
 
   def destroy
+    @membership = membership_reading.membership
+
     membership_reading.destroy  # this needs to only destroy membershipreadings the user owns!! write test todo
 
     current_user.update_stats  #needs to be backgrounded!
-    membership.update_stats  #needs to be backgrounded!
-    membership.group.update_stats if membership.group  #needs to be backgrounded!
+    @membership.update_stats  #needs to be backgrounded!
+    @membership.group.update_stats if @membership.group  #needs to be backgrounded!
 
     respond_to do |format|
       format.html { 
