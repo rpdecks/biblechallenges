@@ -9,6 +9,10 @@ class Group < ActiveRecord::Base
 
   validates :user, :challenge, presence: true
 
+  GroupStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
+
   def has_member?(member)
     members.include?(member)
   end

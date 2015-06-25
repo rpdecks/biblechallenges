@@ -23,6 +23,10 @@ class Challenge < ActiveRecord::Base
                         message: 'invalid format'
   validate  :validate_dates
 
+  ChallengeStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
+
   # Callbacks
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"

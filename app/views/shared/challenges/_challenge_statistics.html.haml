@@ -1,7 +1,14 @@
-%hr
+.container
+  .row
+    .col-md-10
+      - if membership = challenge.membership_for(current_user)
+        - if membership.completed?
+          %h4 Congratulations!  You have completed this challenge.
+        - else
+          %h2 Group Statistics
+          = render partial: 'shared/statistics/group_stat', locals: {groups: groups}
+          %h2 Challenge Statistics
+          = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
+          %h2 Personal Statistics
+          = render partial: 'shared/statistics/personal_stat', locals: {user: current_user}
 
-- if membership = challenge.membership_for(current_user)
-  - if membership.completed?
-    %h4 Congratulations!  You have completed this challenge.
-  %p
-  #progress-bar-container
