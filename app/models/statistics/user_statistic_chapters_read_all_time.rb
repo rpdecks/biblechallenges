@@ -9,7 +9,7 @@ class UserStatisticChaptersReadAllTime < UserStatistic
   end
 
   def calculate
-    user.membership_readings.size
+    user.membership_readings.count
   end
 
   def update
