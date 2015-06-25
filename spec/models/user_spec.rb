@@ -24,14 +24,6 @@ describe User do
       current_user = FactoryGirl.create(:user)
       expect { current_user.destroy }.to change(Profile, :count).by(-1)
     end
-    it "deletes the user profile on user deletion" do
-      user = create(:user)
-      UserStatistic.descendants.each do |user_stat|
-        #user_stat.name will hold the type of each possible membership statistic
-        result = user.user_statistics.find_by_type(user_stat.name)
-        expect(result).to_not be_nil
-      end
-    end
   end
 
   describe "Instance Methods" do
