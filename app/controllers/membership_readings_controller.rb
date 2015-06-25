@@ -9,7 +9,14 @@ class MembershipReadingsController < ApplicationController
     @challenge = membership.challenge
     reading
     @membership_reading = MembershipReading.create(membership_reading_params)
+
     membership.update_stats  #needs to be backgrounded!
+    membership.group.update_stats if membership.group  #needs to be backgrounded!
+    current_user.update_stats  #needs to be backgrounded!
+
+
+
+
     membership.user.update_stats
     respond_to do |format|
       format.html { 
