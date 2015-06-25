@@ -23,6 +23,13 @@ namespace :sample_fake do
     create_membership_stats
     create_group_stats
     create_user_stats
+
+    puts ""
+    puts ""
+    puts ""
+    puts "Log in with user1@test.com / password"
+
+
   end
 
   def mark_chapters_as_read
