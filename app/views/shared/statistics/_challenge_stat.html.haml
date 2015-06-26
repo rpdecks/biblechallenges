@@ -6,12 +6,15 @@
       %th By Me
       %th By All Members
     %tbody
-    - ChallengeStatistic.descendants.each do |stat|
-      - case stat.name
-      - when 'ChallengeStatisticChaptersRead'
-        %tr
-          %td= stat.name
-          %td= membership.membership_statistics.find_by_type("MembershipStatisticTotalChaptersRead")
-          %td= challenge.challenge_statistics.find_by_type("ChallengeStatisticChaptersRead")
-      - when 'ChallengeStatisticChaptersRead'
-        %tr
+      %tr
+        %td= challenge.challenge_statistic_chapters_read.name
+        %td= membership.membership_statistic_total_chapters_read
+        %td= challenge.challenge_statistic_chapters_read
+      %tr
+        %td= challenge.challenge_statistic_on_schedule_percentage.name
+        %td= membership.membership_statistic_on_schedule_percentage
+        %td= challenge.challenge_statistics.find_by_type("ChallengeStatisticOnSchedulePercentage")
+      %tr
+        %td= challenge.challenge_statistic_progress_percentage.name
+        %td= membership.membership_statistic_progress_percentage
+        %td= challenge.challenge_statistic_progress_percentage

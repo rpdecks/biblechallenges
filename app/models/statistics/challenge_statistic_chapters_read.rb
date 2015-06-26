@@ -1,7 +1,7 @@
 class ChallengeStatisticChaptersRead < ChallengeStatistic
 
   def name
-    "Chapters Read"
+    "Total chapters Read"
   end
 
   def description
