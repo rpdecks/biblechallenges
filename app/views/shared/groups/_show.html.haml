@@ -17,12 +17,12 @@
             %th Stats
             %th Last Read
         %tbody
-        - group.members.sort_by(&:last_name).each do |m|
+        - group.members.sort_by(&:username).each do |m|
           %tr
             %td
               = render 'shared/avatar', user: m
-              %span 
-                = m.decorate.fullname
+              %span
+                = m.decorate.name
             %td= m.show_progress_percentage(m, group)
             - if m.has_logged_a_reading?(m, group)
               %td= m.decorate.show_last_recorded_reading(m, group)
