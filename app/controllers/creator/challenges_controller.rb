@@ -36,6 +36,7 @@ class Creator::ChallengesController < ApplicationController
         r.challenge_id = @challenge.id
         r.save
       end
+      ChallengeCompletion.new(@challenge)
     end
 
     redirect_to [:member, @challenge]

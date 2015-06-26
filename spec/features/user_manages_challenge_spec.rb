@@ -16,6 +16,8 @@ feature 'User manages challenges' do
       fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
       click_button "Create Challenge"
     }.to change(Challenge, :count).by(1)
+    number_of_stats = ChallengeStatistic.descendants.size
+    expect(ChallengeStatistic.count).to eq number_of_stats
   end
 
   scenario 'User creates a challenge and automatically joins the challenge' do
@@ -33,6 +35,7 @@ feature 'User manages challenges' do
 
   scenario 'User joins a challenge successfully' do
     challenge = create(:challenge, :with_readings)
+    ChallengeCompletion.new(challenge)
     visit challenges_path
     click_link challenge.name
     click_link "Show Challenge"

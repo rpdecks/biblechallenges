@@ -1,7 +1,7 @@
 class GroupCompletion
 
-  def initialize(membership)
-    GroupStatisticAttacher.attach_statistics(membership)
+  def initialize(group)
+    GroupStatisticAttacher.attach_statistics(group)
   end
 
 
