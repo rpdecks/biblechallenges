@@ -36,9 +36,10 @@ describe Users::OmniauthCallbacksController do
     end
 
     it "should successfully associate user_statistics to user" do
-      post :google_oauth2, provider: :google_oauth2
-      stat_count = UserStatistic.descendants.size
-      expect(UserStatistic.count).to eq stat_count
+      number_of_stats = UserStatistic.descendants.size
+      expect {
+        post :google_oauth2, provider: :google_oauth2
+      }.to change{ UserStatistic.count }.by(number_of_stats)
     end
 
     it "should redirect first-time sign-ups to finish_signup url" do
