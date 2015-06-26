@@ -31,7 +31,7 @@ feature "Omniauth Sign In / Sign Up" do
     fill_in 'user[password]', with: password
     fill_in 'user[password_confirmation]', with: password
     click_button "Continue"
-    expect(page).to have_content("You have signed up succesfully")
+    expect(page).to have_content("You have signed up successfully")
 
     click_link "Logout"
 
