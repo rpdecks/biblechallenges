@@ -29,6 +29,7 @@ class Member::GroupsController < ApplicationController
     if @group.save
       membership.group = @group 
       membership.save
+      GroupCompletion.new(group)
       flash[:notice] = "Group created successfully"
       redirect_to @challenge
     else

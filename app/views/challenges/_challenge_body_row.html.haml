@@ -1,12 +1,12 @@
 .panel-body
-  = "Members: #{challenge.members.size}"
+  = "Members: #{challenge.memberships_count}"
   - challenge.members.each do |m|
     = render 'shared/avatar', user: m
-  = "Chapters: #{challenge.readings.size}"
+  = "Chapters: #{challenge.readings_count}"
   .pull-right
     = link_to "Show Challenge", challenge_path(challenge), :class => 'btn btn-info', display: 'inline'
 .col-md-3
-  = "Total Chapters To Read: #{challenge.readings.size}"
+  = "Total Chapters To Read: #{challenge.readings_count}"
 .col-md-3
   = "Total Chapters Read: #{challenge.membership_readings.size}"
 .col-md-3
