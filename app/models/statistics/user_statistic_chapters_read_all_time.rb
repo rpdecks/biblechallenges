@@ -1,7 +1,7 @@
 class UserStatisticChaptersReadAllTime < UserStatistic
 
   def name
-    "User total number of chapters read all-time"
+    "Chapters read all-time"
   end
 
   def description

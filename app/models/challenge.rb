@@ -9,6 +9,7 @@ class Challenge < ActiveRecord::Base
   has_many :membership_readings, through: :memberships  # needs default order #todo 
   has_many :groups
   has_many :chapters, through: :readings
+  has_many :challenge_statistics
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
@@ -21,6 +22,11 @@ class Challenge < ActiveRecord::Base
                         with: /\A\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/,
                         message: 'invalid format'
   validate  :validate_dates
+
+  Rails.application.eager_load!
+  ChallengeStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
 
   # Callbacks
   before_validation :calculate_enddate,
@@ -40,6 +46,21 @@ class Challenge < ActiveRecord::Base
 
   def membership_for(user)
     user && memberships.find_by_user_id(user.id)
+  end
+
+  def associate_statistics #for the sample data rake task
+    current_challenge_statistics = challenge_statistics.pluck(:type)
+    all_statistics = ChallengeStatistic.descendants.map(&:name)
+    missing_statistics = all_statistics - current_challenge_statistics
+    missing_statistics.each do |s|
+      challenge_statistics << s.constantize.create
+    end
+  end
+
+  def update_stats #for the sample data rake task
+    challenge_statistics.each do |cs|
+      cs.update
+    end
   end
 
   def has_member?(member)
