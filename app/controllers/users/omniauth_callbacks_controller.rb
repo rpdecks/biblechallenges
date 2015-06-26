@@ -17,6 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           set_flash_message(:notice, :success, kind: provider)
         end
       else
+        UserCompletion.new(@user)
         sign_in @user
         redirect_to finish_signup_path
       end

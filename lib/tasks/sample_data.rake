@@ -21,6 +21,7 @@ namespace :sample_fake do
     mark_chapters_as_read
 
     create_membership_stats
+    create_challenge_stats
     create_group_stats
     create_user_stats
 
@@ -74,6 +75,15 @@ namespace :sample_fake do
   def create_user_stats
     puts "creating user statistics:"
     User.all.each do |u|
+      u.associate_statistics
+      u.update_stats
+      print "."
+    end
+  end
+
+  def create_challenge_stats
+    puts "creating challenge statistics:"
+    Challenge.all.each do |u|
       u.associate_statistics
       u.update_stats
       print "."
@@ -155,6 +165,7 @@ namespace :sample_fake do
     MembershipStatistic.destroy_all
     GroupStatistic.destroy_all
     UserStatistic.destroy_all
+    ChallengeStatistic.destroy_all
     puts "Deleting Badges"
     Badge.destroy_all
 

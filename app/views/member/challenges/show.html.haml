@@ -35,7 +35,7 @@
         .tab-pane#groups{role: "tabpanel"}
           = render partial: 'shared/challenges/challenge_groups', locals: {groups: @groups, challenge: @challenge}
       .tab-pane#statistics{role: "tabpanel"}
-        = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge}
+        = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge, groups: @groups, user: @current_user}
       .tab-pane#details{role: "tabpanel"}
         = render partial:  'shared/challenges/challenge_details', locals: {challenge: @challenge}
         = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
