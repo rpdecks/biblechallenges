@@ -1,17 +1,12 @@
 %span
 %table.table.table-bordered.table-hover.table-condensed
   %tbody
-  - UserStatistic.descendants.each do |stat|
-    - case stat.name
-    - when 'UserStatisticDaysReadInARowCurrent'
-      %tr
-        %td= stat.name
-        %td= user.user_statistics.find_by_type("UserStatisticDaysReadInARowCurrent").value
-    - when 'UserStatisticChaptersReadAllTime'
-      %tr
-        %td= stat.name
-        %td= user.user_statistics.find_by_type("UserStatisticChaptersReadAllTime").value
-    - when 'UserStatisticDaysReadInARowAllTime'
-      %tr
-        %td= stat.name
-        %td= user.user_statistics.find_by_type("UserStatisticDaysReadInARowAllTime").value
+    %tr
+      %td= user.user_statistic_chapters_read_all_time.name
+      %td= user.user_statistic_chapters_read_all_time
+    %tr
+      %td= user.user_statistic_days_read_in_a_row_current.name
+      %td= user.user_statistic_days_read_in_a_row_current
+    %tr
+      %td= user.user_statistic_days_read_in_a_row_all_time.name
+      %td= user.user_statistic_days_read_in_a_row_all_time
