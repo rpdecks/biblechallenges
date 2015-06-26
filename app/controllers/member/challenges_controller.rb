@@ -12,7 +12,7 @@ class Member::ChallengesController < ApplicationController
   end
 
   def show
-    @challenge = Challenge.includes({members: :profile}).find_by_id(params[:id])
+    @challenge = Challenge.includes(:members).find_by_id(params[:id])
     @membership = @challenge.membership_for(current_user)
     @membership_readings = @membership.membership_readings if @membership
     @readings  = @challenge.readings.includes(:chapter).order(:read_on)

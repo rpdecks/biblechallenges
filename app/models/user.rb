@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
   has_many :groups, through: :memberships
   has_many :comments
   has_many :badges, dependent: :destroy
-  has_one  :profile, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
   #Callbacks
@@ -65,18 +64,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def first_name
-    profile && profile.first_name
-  end
-
-  def last_name
-    profile && profile.last_name
-  end
-
-  def username
-    profile && profile.first_name
-  end
-
   def existing_user?
     !last_sign_in_at.nil?
   end
@@ -87,16 +74,11 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,15]
       user.name = auth.info.name
       user.image = auth.info.image
-      user.save!
+      # user.username
+      # timezone
+      # preferred reading hour
 
-      if user.profile.nil?
-        name_array = user.name.split(" ")
-        profile = Profile.create(username: user.email,
-                                 first_name: name_array[0],
-                                 last_name: name_array[1])
-        user.profile = profile
-        user.save!
-      end
+      user.save!
     end
   end
 end

@@ -7,7 +7,7 @@
             %i= c.content
           %div
             %b
-              \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.profile.username}
+              \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.username}
             = time_ago_in_words(c.created_at)
             ago
             |
@@ -19,7 +19,7 @@
                     %li
                       = c.content
                       %b
-                        \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.profile.username}
+                        \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.username}
                       = time_ago_in_words(c.created_at)
                       ago
               = render "comments/comments/form", {commentable: c, location: member_challenge_path(group.challenge, anchor: "mygroup")}

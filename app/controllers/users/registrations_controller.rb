@@ -6,8 +6,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       @user = User.find(params[:user][:id])
       if @user.update(user_params)
         @user.skip_reconfirmation! if @user.respond_to?(:skip_confirmation)
-        flash[:notice] = "You have signed up succesfully"
+        flash[:notice] = "You have signed up successfully"
         sign_in_and_redirect(@user)
+      else
+        flash[:alert] = @user.errors.full_messages.to_sentence
       end
     end
   end

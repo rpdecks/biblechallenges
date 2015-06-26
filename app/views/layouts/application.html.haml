@@ -32,7 +32,7 @@
                 = link_to('My Challenges', member_challenges_path)
             %li.profile-link
               - if user_signed_in?
-                = link_to edit_profile_path, class: "btn btn-block" do
+                = link_to edit_user_registration_path, class: "btn btn-block" do
                   = image_tag current_user.image, class: "img-circle img-thumbnail profile-img"
             - if user_signed_in?
               %li

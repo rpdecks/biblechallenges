@@ -19,7 +19,7 @@ class Readings::CommentsController < ApplicationController
       # so we can return to the sending form?
       flash[:alert] = @comment.errors.full_messages.to_sentence
       redirect_to params[:location] || request.referer
-    end 
+    end
   end
 
 
@@ -39,9 +39,9 @@ class Readings::CommentsController < ApplicationController
   end
 
   def verify_username
-    if current_user.profile.username.blank?
-      flash[:notice] = "You must set a username in your profile before you can post comments"
-      redirect_to edit_profile_url
+    if current_user.username.blank?
+      flash[:notice] = "You must set a username before you can post comments"
+      redirect_to edit_user_registration_path
     end
   end
 
