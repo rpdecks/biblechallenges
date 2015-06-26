@@ -37,9 +37,12 @@ class Member::ChallengesController < ApplicationController
 
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
-    flash[:notice] = "Successfully created Challenge" if @challenge.save
-    @challenge.generate_readings
-    redirect_to @challenge
+    if challenge.save
+      flash[:notice] = "Successfully created Challenge"
+      @challenge.generate_readings
+      ChallengeCompletion.new(@challenge)
+      redirect_to @challenge
+    end
   end
 
   def destroy
