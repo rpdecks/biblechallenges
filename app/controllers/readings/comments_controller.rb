@@ -19,7 +19,7 @@ class Readings::CommentsController < ApplicationController
       # so we can return to the sending form?
       flash[:alert] = @comment.errors.full_messages.to_sentence
       redirect_to params[:location] || request.referer
-    end 
+    end
   end
 
 

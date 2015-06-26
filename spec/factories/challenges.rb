@@ -17,6 +17,5 @@ FactoryGirl.define do
     end
 
     factory :challenge_with_readings, traits: [:with_readings]
-
   end
 end
