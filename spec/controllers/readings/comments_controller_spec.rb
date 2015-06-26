@@ -10,9 +10,7 @@ describe Readings::CommentsController, "Actions" do
     end
   end
 
-
   describe "Delete #delete" do
-
     let(:current_user) { create(:user) }
 
     before do
@@ -46,11 +44,7 @@ describe Readings::CommentsController, "Actions" do
       delete :destroy, reading_id: reading.id, id: comment.id
       expect(response).to redirect_to new_user_session_url
     end
-
-
   end
-
-
 
   describe "POST #create" do
     let!(:current_user) {create(:user)}
@@ -59,7 +53,6 @@ describe Readings::CommentsController, "Actions" do
     let(:reading) { membership.readings.first}
     let(:newcomment_attr) {attributes_for(:reading_comment, user: current_user, commentable: membership.readings.first)}
     let!(:existing_comment) {create(:reading_comment, user: current_user, commentable: membership.readings.first)}
-
 
     before do
       sign_in :user, current_user
