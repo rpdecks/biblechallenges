@@ -6,10 +6,6 @@ class Member::ChallengesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_challenge, only: [:destroy]
 
-  def new
-    @challenge = Challenge.new
-  end
-
   def index
     # all challenges that user is a member of
     @challenges = current_user.challenges.uniq
@@ -32,22 +28,6 @@ class Member::ChallengesController < ApplicationController
         by_version(@membership.bible_version).
         by_range(start_verse: FIRST_VERSES_LIMIT + 1)
     end
-
-  end
-
-  def create
-    @challenge = current_user.created_challenges.build(challenge_params)
-    if challenge.save
-      flash[:notice] = "Successfully created Challenge"
-      @challenge.generate_readings
-      ChallengeCompletion.new(@challenge)
-      redirect_to @challenge
-    end
-  end
-
-  def destroy
-    @challenge.destroy
-    redirect_to member_challenges_path
   end
 
   private
