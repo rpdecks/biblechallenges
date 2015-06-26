@@ -28,6 +28,8 @@
                   %a{class: "btn btn-primary query", type: "submit", id: "challenge_search"}
                     %span.glyphicon.glyphicon-search
             %li
+              = link_to "FAQ", page_path("faq")
+            %li
               - if user_signed_in?
                 = link_to('My Challenges', member_challenges_path)
             %li.profile-link
