@@ -48,6 +48,21 @@ class Challenge < ActiveRecord::Base
     user && memberships.find_by_user_id(user.id)
   end
 
+  def associate_statistics #for the sample data rake task
+    current_challenge_statistics = challenge_statistics.pluck(:type)
+    all_statistics = ChallengeStatistic.descendants.map(&:name)
+    missing_statistics = all_statistics - current_challenge_statistics
+    missing_statistics.each do |s|
+      challenge_statistics << s.constantize.create
+    end
+  end
+
+  def update_stats #for the sample data rake task
+    challenge_statistics.each do |cs|
+      cs.update
+    end
+  end
+
   def has_member?(member)
     members.include?(member)
   end
