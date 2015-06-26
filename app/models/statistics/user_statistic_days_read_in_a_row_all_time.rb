@@ -1,7 +1,7 @@
 class UserStatisticDaysReadInARowAllTime < UserStatistic
 
   def name
-    "User total number of consecutive reading days all-time"
+    "All-time streak for days read in a row"
   end
 
   def description
