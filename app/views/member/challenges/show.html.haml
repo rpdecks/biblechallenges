@@ -40,7 +40,6 @@
         = render partial:  'shared/challenges/challenge_details', locals: {challenge: @challenge}
         = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
-
 :javascript
   // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
   // store the currently selected tab in the hash value
@@ -52,6 +51,3 @@
   // on load of the page: switch to the currently selected tab
   var hash = window.location.hash;
     $('#grouptabs a[href="' + hash + '"]').tab('show');
-
-
-

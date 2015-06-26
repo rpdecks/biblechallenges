@@ -10,9 +10,7 @@ describe Readings::CommentsController, "Actions" do
     end
   end
 
-
   describe "Delete #delete" do
-
     let(:current_user) { create(:user) }
 
     before do
@@ -46,11 +44,7 @@ describe Readings::CommentsController, "Actions" do
       delete :destroy, reading_id: reading.id, id: comment.id
       expect(response).to redirect_to new_user_session_url
     end
-
-
   end
-
-
 
   describe "POST #create" do
     let!(:current_user) {create(:user)}
@@ -60,44 +54,43 @@ describe Readings::CommentsController, "Actions" do
     let(:newcomment_attr) {attributes_for(:reading_comment, user: current_user, commentable: membership.readings.first)}
     let!(:existing_comment) {create(:reading_comment, user: current_user, commentable: membership.readings.first)}
 
-
     before do
       sign_in :user, current_user
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
     it "redirects to the user's profile if the user does not have a username" do
-      current_user.profile.username = nil
-      current_user.profile.save
+      current_user.username = nil
+      current_user.save
       post :create, reading_id: reading.id, comment: newcomment_attr
-      expect(response).to redirect_to edit_profile_url
+      expect(response).to redirect_to edit_user_registration_url
     end
 
     it "creates a new reading comment" do
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       expect{post :create, reading_id: reading.id, comment: newcomment_attr
       }.to change(Comment, :count).by(1)
 
     end
     it "should redirect to :back if not params[:location] is not  provided" do
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       post :create, reading_id: reading.id, comment: newcomment_attr
       expect(response).to redirect_to "where_i_came_from"
     end
 
     it "should redirect to params[:location] if it's provided" do
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       post :create, reading_id: reading.id, comment: newcomment_attr, location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
 
     it "should redirect to params[:location] if the comment is invalid", skip: true do
       pending
-      current_user.profile.username = "Phil"
-      current_user.profile.save
+      current_user.username = "Phil"
+      current_user.save
       post :create, reading_id: reading.id, comment: build(:reading_comment, content: nil), location: new_user_session_path
       should redirect_to(new_user_session_path)
     end

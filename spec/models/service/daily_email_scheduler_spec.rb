@@ -19,10 +19,10 @@ describe DailyEmailScheduler do
 
     it "schedules email's timing according to the user's preferences" do
       today = DateTime.now
-      user1 = create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)",
-                                           preferred_reading_hour: 7))
-      user2 = create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)",
-                                           preferred_reading_hour: 7))
+      user1 = create(:user, time_zone: "Eastern Time (US & Canada)",
+                     preferred_reading_hour: 7)
+      user2 = create(:user, time_zone: "Pacific Time (US & Canada)",
+                     preferred_reading_hour: 7)
       challenge = create(:challenge, :with_readings, begindate: today)
       create(:membership, user: user1, challenge: challenge)
       create(:membership, user: user2, challenge: challenge)
@@ -45,8 +45,8 @@ describe DailyEmailScheduler do
 
     it "schedules tomorrows reading according to the user's preferences" do
       today = DateTime.now
-      user1 = create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)",
-                                           preferred_reading_hour: 7))
+      user1 = create(:user, time_zone: "Eastern Time (US & Canada)",
+                     preferred_reading_hour: 7)
       create(:challenge, :with_readings, begindate: today, owner: user1)
 
       #traveling to next day 0-hours
@@ -89,28 +89,21 @@ describe DailyEmailScheduler do
       DailyEmailScheduler.set_daily_email_jobs2(todays_date)
       a = Time.at(DailyEmailWorker.jobs.second["at"])
       b = Time.at(DailyEmailWorker.jobs.last["at"])
-      
+
       expect(a).to eq b
     end
   end
 
-
-
-
-
   def user_4am_pacific_time
-    create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 4))
+    create(:user, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 4)
   end
 
   def user_7am_pacific_time
-    create(:user, profile: create(:profile, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 7))
+    create(:user, time_zone: "Pacific Time (US & Canada)", preferred_reading_hour: 7)
   end
 
   def user_7am_eastern_time
-    create(:user, profile: create(:profile, time_zone: "Eastern Time (US & Canada)", preferred_reading_hour: 7))
+    create(:user, time_zone: "Eastern Time (US & Canada)", preferred_reading_hour: 7)
   end
-
-
-
 end
 
