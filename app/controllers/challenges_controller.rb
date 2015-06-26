@@ -8,7 +8,8 @@ class ChallengesController < ApplicationController
   end
 
   def show
-    @challenge = Challenge.includes({members: :profile}).find(params[:id])
+    #@challenge = Challenge.includes({members: :profile}).find(params[:id])
+    @challenge = Challenge.find(params[:id])
     @readings = challenge.readings.includes(:chapter)
     redirect_to member_challenge_path(challenge) if challenge.membership_for(current_user)
   end

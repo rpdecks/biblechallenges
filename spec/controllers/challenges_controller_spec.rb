@@ -18,8 +18,8 @@ describe ChallengesController, "Actions" do
       challenge = create(:challenge)
       get :show, id: challenge
       expect(response).to render_template(:show)
-
     end
+
     it "redirects to member/challenges#show if the user is a member of this challenge" do
       user = create(:user)
       challenge = create(:challenge)
@@ -28,7 +28,6 @@ describe ChallengesController, "Actions" do
 
       get :show, id: challenge
       expect(response).to redirect_to member_challenge_path(challenge)
-
     end
   end
 end
