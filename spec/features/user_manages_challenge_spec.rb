@@ -35,6 +35,7 @@ feature 'User manages challenges' do
 
   scenario 'User joins a challenge successfully' do
     challenge = create(:challenge, :with_readings)
+    ChallengeCompletion.new(challenge)
     visit challenges_path
     click_link challenge.name
     click_link "Show Challenge"
