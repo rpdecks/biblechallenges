@@ -17,7 +17,10 @@ class Member::ChallengesController < ApplicationController
     @membership_readings = @membership.membership_readings if @membership
     @readings  = @challenge.readings.includes(:chapter).order(:read_on)
     @group = current_user.find_challenge_group(@challenge)
-    @groups = @challenge.groups.includes(:members)
+    @groups = @challenge.groups.includes(:members, 
+                                         :group_statistic_progress_percentage, 
+                                         :group_statistic_on_schedule_percentage,
+                                         :group_statistic_total_chapters_read)
     @user = current_user
     @todays_reading = @challenge.todays_reading
     if @todays_reading
