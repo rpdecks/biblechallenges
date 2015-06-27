@@ -22,16 +22,16 @@
         = f.label :chapters_to_read, "Chapters to Read", class: "control-label"
         .controls
           = f.text_field :chapters_to_read, required: true, class: "form-control"
-          %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28"
+          %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28" or "Matt 1-Rev 22"
 
       .control-group
         = f.label :dates_to_skip, "Dates to skip", class: "control-label"
         .controls
           = f.text_field :dates_to_skip, required: false, class: "form-control"
-          %p.help-block Enter the dates you want to skip (explain format later)
+          %p.help-block Enter any spans of dates you want to skip, in the format "YYYY-MM-DD..YYYY-MM-DD".  For example, to skip November 1-7, 2016, you would enter 2016-11-01..2016-11-07
 
-      %h5.strong Days to skip
-      Sunday
+      %h5.strong Days of the week to skip
+      Lord's Day
       = check_box_tag 'days_to_skip[]', '0', false
       &nbsp; Monday
       = check_box_tag 'days_to_skip[]', '1', false

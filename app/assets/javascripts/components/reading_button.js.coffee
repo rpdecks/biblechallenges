@@ -30,6 +30,7 @@
     if @state.membership_reading_id
       React.DOM.a
         className: 'glyphicon glyphicon-check btn btn-success delete'
+        "data-confirm": 'Are you sure you want to uncheck this reading?  This may affect your statistics; in particular, your "on_time" statistics.'
         onClick: @handleDelete
         " "
     else
