@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'sidekiq/testing'
 
 describe MembershipReadingsController, type: :controller do
 
@@ -54,6 +53,7 @@ describe MembershipReadingsController, type: :controller do
 
         membership.associate_statistics
 
+        #inline method will push all jobs through immediately, as opposed to default that will push jobs to an array
         Sidekiq::Testing.inline! do
           post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
           expect(membership.membership_statistic_progress_percentage.value.to_i).to eq 50
