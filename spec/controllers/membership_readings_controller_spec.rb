@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'sidekiq/testing'
 
 describe MembershipReadingsController, type: :controller do
 
@@ -53,20 +54,22 @@ describe MembershipReadingsController, type: :controller do
 
         membership.associate_statistics
 
-        post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
-
-        expect(membership.membership_statistic_progress_percentage.value.to_i).to eq 50
+        Sidekiq::Testing.inline! do
+          post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
+          expect(membership.membership_statistic_progress_percentage.value.to_i).to eq 50
+        end
 
       end
+
       it "should update the chapters_all_time_read statistics after posting a reading" do challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
-        user = create(:user)
-        membership = challenge.join_new_member(user)
+      user = create(:user)
+      membership = challenge.join_new_member(user)
 
-        user.associate_statistics
+      user.associate_statistics
 
-        post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
+      post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
 
-        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 1
+      expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 1
       end
       it "should update chapter_read_all_time value with multiple memberships" do 
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
@@ -105,7 +108,7 @@ describe MembershipReadingsController, type: :controller do
         membership.associate_statistics
         MembershipStatistic.descendants.each do |desc|
           desc.name.constantize.stub(:update)
-       end
+        end
 
         post :create, reading_id: reading.id, membership_id: membership.id
 
