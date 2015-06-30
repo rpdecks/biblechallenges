@@ -7,6 +7,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'email_spec'
+require 'sidekiq/testing'
 
 Time.zone = 'Eastern Time (US & Canada)'
 
@@ -16,6 +17,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
 
+  #clears jobs in in worker array before each
   config.before(:each) do
     Sidekiq::Worker.clear_all
   end
