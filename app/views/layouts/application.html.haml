@@ -11,7 +11,7 @@
 
     / Nav Header
     .navbar.navbar-default.navbar-fixed-top
-      .container
+      .container-fluid
         .navbar-header
           %a.navbar-brand{href: "/"} BibleChallenges.com
           %button.navbar-toggle{"data-target" => "#navbar-main", "data-toggle" => "collapse", type: "button"}
@@ -21,7 +21,7 @@
             %span.icon-bar
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
-            %li
+            %li#search
               .form-inline.search_challenge
                 = bootstrap_form_tag url: challenges_path, method: :get, class: "input-xxlarge form-query" do |f|
                   = f.text_field :query, class: "search-input", hide_label: true, placeholder: "Search for a challenge"
@@ -32,10 +32,9 @@
             %li
               - if user_signed_in?
                 = link_to('My Challenges', member_challenges_path)
-            %li.profile-link
+            %li
               - if user_signed_in?
-                = link_to edit_user_registration_path, class: "btn btn-block" do
-                  = image_tag current_user.image, class: "img-circle img-thumbnail profile-img"
+                = link_to("Edit Profile", edit_user_registration_path)
             - if user_signed_in?
               %li
                 = link_to('Logout', destroy_user_session_path, :method => :delete)
@@ -46,9 +45,9 @@
                 = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
               %li
                 = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
-    .container
-      .flash-messages
-        =render partial: "shared/flash_messages", flash: flash
-      = yield
+
+    .flash-messages
+      = render partial: "shared/flash_messages", flash: flash
+    = yield
 
     = yield :javascripts
