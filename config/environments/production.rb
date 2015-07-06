@@ -67,10 +67,10 @@ Biblechallenge::Application.configure do
   
   config.action_mailer.default_url_options = { host: 'biblechallenges.com' }
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.sendgrid.net",
+    :address              => "smtp.mandrillapp.com",
     :port                 => 587,
-    :user_name            => ENV['SENDGRID_USER'],
-    :password            => ENV['SENDGRID_PASSWORD'],
+    :user_name            => ENV['MANDRILL_USER'],
+    :password            => ENV['MANDRILL_PASSWORD'],
     :authentication       => 'plain',
     :domain               => "biblechallenges.com",
     :enable_starttls_auto => true  }
