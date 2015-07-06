@@ -72,7 +72,7 @@ Biblechallenge::Application.configure do
     :user_name            => ENV['MANDRILL_USER'],
     :password            => ENV['MANDRILL_PASSWORD'],
     :authentication       => 'plain',
-    :domain               => "biblechallenges.com",
+    :domain               => "heroku.com",
     :enable_starttls_auto => true  }
 
 
