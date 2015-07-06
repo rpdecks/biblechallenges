@@ -43,11 +43,11 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def destroy
-    @challenge.destroy
-    redirect_to creator_challenges_path
+    if @challenge.owner == current_user
+      @challenge.destroy
+      redirect_to member_challenges_path
+    end
   end
-
-  private
 
   def days_of_week_to_skip
     if params[:days_to_skip]
