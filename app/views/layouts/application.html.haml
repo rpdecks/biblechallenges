@@ -34,7 +34,7 @@
                 = link_to('My Challenges', member_challenges_path)
             %li
               - if user_signed_in?
-                = link_to("Edit Profile", edit_user_registration_path)
+                = link_to("Edit Profile", edit_user_path(current_user))
             - if user_signed_in?
               %li
                 = link_to('Logout', destroy_user_session_path, :method => :delete)

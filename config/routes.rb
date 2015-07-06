@@ -17,6 +17,8 @@ Biblechallenge::Application.routes.draw do
       :as => :finish_signup
   end
 
+  resources :users, only: [:edit, :update]
+
   namespace :creator do
     resources :challenges
   end
