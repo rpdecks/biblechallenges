@@ -1,5 +1,5 @@
 class Verse < ActiveRecord::Base
-
+  require 'htmlentities'
   Verse::DEFAULT_VERSION = "ASV"
 
   # Relations
@@ -22,5 +22,10 @@ class Verse < ActiveRecord::Base
     else 
       all
     end
+  end
+
+  def text
+    coder = HTMLEntities.new
+    coder.decode(self.versetext)
   end
 end
