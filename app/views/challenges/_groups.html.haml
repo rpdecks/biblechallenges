@@ -1,5 +1,7 @@
-- groups.each do |g|
-  %b= g.name
-  = "(#{g.memberships_count}"
-  = "#{"member".pluralize(g.memberships_count)})"
-  %br
+.row
+  - groups.each do |g|
+    .col-md-6
+      .list-group-item
+        %b= g.name
+        = "(#{g.memberships_count}"
+        = "#{"member".pluralize(g.memberships_count)})"
