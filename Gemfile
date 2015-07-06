@@ -36,6 +36,8 @@ gem 'react-rails'
 gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
 
+gem "autoprefixer-rails" #prefix styles for cross-browser
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -103,4 +105,3 @@ group :test do
   gem 'rspec-sidekiq'
   gem 'email_spec'
 end
-

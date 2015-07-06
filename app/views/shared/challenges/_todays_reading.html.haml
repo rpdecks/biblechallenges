@@ -3,25 +3,27 @@
     ="Today's Readings (#{DateTime.now.strftime("%m/%d/%Y")})"
   %br
 
-  #first_verses
-    - first_verses_in_todays_reading.each do |verse|
+
+  #verses
+    - todays_verses.each do |verse|
       = verse.decorate.to_div
-  #remaining_verses
-    - remaining_verses_in_todays_reading.each do |verse|
-      = verse.decorate.to_div
-  %a#toggle_todays_reading{href: '#'}More
+  -# .col-md-6
+  -#   #remaining_verses
+  -#     - remaining_verses_in_todays_reading.each do |verse|
+  -#       = verse.decorate.to_div
+  -# %a#toggle_todays_reading{href: '#'}More
 -else
-  No reading today :(
-
-:javascript
-
-  function toggle_todays_reading_link_text() {
-    current_text = $("#toggle_todays_reading").text()
-    $("#toggle_todays_reading").text(
-      current_text == "More" ? "Less" : "More")
-  }
-
-  $( "#toggle_todays_reading" ).on("click", function(){
-    $( "#remaining_verses" ).slideToggle()
-    toggle_todays_reading_link_text()
-  })
+  %h3 No reading today :(
+-#
+-# :javascript
+-#
+-#   function toggle_todays_reading_link_text() {
+-#     current_text = $("#toggle_todays_reading").text()
+-#     $("#toggle_todays_reading").text(
+-#       current_text == "More" ? "Less" : "More")
+-#   }
+-#
+-#   $( "#toggle_todays_reading" ).on("click", function(){
+-#     $( "#remaining_verses" ).slideToggle()
+-#     toggle_todays_reading_link_text()
+-#   })

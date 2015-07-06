@@ -1,22 +1,37 @@
-- breadcrumb :challenge, @challenge
-.container
-  = breadcrumbs
-  = render partial: 'shared/challenges/join_challenge', locals: { challenge: @challenge }
-  .row
-  %br
-  %br
-  = render partial:  'shared/challenges/challenge_details', locals: { challenge: @challenge }
-  %h4 Groups
-  = render partial: 'groups', locals: { groups: @challenge.groups }
+.section.primary
+  .container
+    .title
+      = @challenge.name
+    .subtitle
+      %b
+        = @challenge.chapters_to_read
+      = @challenge.begindate.strftime("%-m/%-d/%Y")
+      = "-"
+      = @challenge.enddate.strftime("%-m/%-d/%Y")
 
+    = image_tag @challenge.owner.image, title: @challenge.owner.username, class: "img-circle"
 
-  = render partial: 'shared/challenges/challenge_statistics', locals: {challenge: @challenge}
+    - @challenge.members.each do |m|
+      = image_tag m.image, title: m.username, class: "img-circle"
 
+    .subtitle
+      = render 'shared/challenges/challenge_instructions'
 
-  %h4 Readings
-  = render partial: 'readings', locals: {readings: @readings }
+    %br 
+    .centered
+      - if current_user
+        = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn block-center', display: 'inline'
+      - unless current_user
+        = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
 
-  %br
-  %br
+.section.grey
+  .container
+    %h4 Groups
+    = render partial: 'groups', locals: { groups: @challenge.groups }
+    = render partial: 'shared/challenges/challenge_statistics', locals: {challenge: @challenge}
 
-  = render partial: 'shared/challenges/challenge_unsubscribe', locals: {challenge: @challenge}
+.section.grey
+  .container
+    .panel.panel-primary
+      .panel-heading Readings
+      = render partial: 'readings', locals: {readings: @readings }
