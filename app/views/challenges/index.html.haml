@@ -1,31 +1,15 @@
-.container
-  .row
-    .col-md-12
-      .jumbotron
-        %h1 Bible Challenges
-        %p.lead Create a Bible Reading Challenge for a church, small group, or student organization.  Or just for yourself.
-        %a.btn.btn-lg.btn-success{href: new_creator_challenge_path} Create a Challenge
-  - unless @public_challenges.empty?
-    .col-md-10
-      %i
-        %h2 Check out the current challenges!
+.masthead.centered
+  .container
+    .title Bible Challenges
+    .subtitle Create a Bible Reading Challenge for a church, small group, <br />or student organization. Or just for yourself.
 
-      .row
-        - first_challenge = @public_challenges.first
-        #accordion.panel-group{"aria-multiselectable" => "true", :role => "tablist"}
-          .panel.panel-default
-            #headingOne.panel-heading{:role => "tab"}
-              %h4.panel-title
-                %a{"aria-controls" => "collapseOne", "aria-expanded" => "true", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne", :role => "button"}
-                  = first_challenge.name
-            #collapseOne.panel-collapse.collapse.in{"aria-labelledby" => "headingOne", :role => "tabpanel"}
-              = render 'challenge_body_row', challenge: first_challenge
-          - @public_challenges.each do |challenge|
-            - unless challenge == first_challenge
-              .panel.panel-default
-                %div.panel-heading{id: "heading_#{challenge.id}", :role => "tab"}
-                  %h4.panel-title
-                    %a.collapsed{"aria-controls" => "collapse_#{challenge.id}", "aria-expanded" => "false", "data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapse_#{challenge.id}", :role => "button"}
-                      = challenge.name
-                %div.panel-collapse.collapse{id: "collapse_#{challenge.id}", "aria-labelledby" => "collapse_#{challenge.id}", :role => "tabpanel"}
-                  = render 'challenge_body_row', challenge: challenge
+    %a.btn{href: new_creator_challenge_path} Create a challenge
+
+.container
+  - unless @public_challenges.empty?
+
+    %h3.component-title Current Challenges
+    .row
+      - @public_challenges.each do |challenge|
+        .col-md-6
+          = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}

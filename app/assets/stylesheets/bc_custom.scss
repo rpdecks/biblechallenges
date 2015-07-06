@@ -1,0 +1,309 @@
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
+$primary: rgba(0, 185, 245, 1);
+$primary-fade: rgba(0, 185, 245, 0.4);
+
+*:focus{
+  outline: none;
+}
+
+html, body{
+  min-height: 100%;
+}
+
+body{
+  background-color: #f1f1f1;
+  display:flex;
+  flex-direction: column;
+}
+
+a{
+  color: $primary;
+
+  &:hover{
+    color: #999;
+  }
+}
+
+.btn{
+  text-transform: none;
+}
+
+.btn-primary{
+  background-color: $primary;
+  border-color: $primary;
+
+  &:hover{
+    background: darken($primary, 10%);
+    border-color: darken($primary, 10%);
+  }
+}
+
+.btn-info{
+  background-color: #ddd;
+  border-color: #ddd;
+  &:hover{
+    background-color: darken(#ddd, 10%);
+    border-color: darken(#ddd, 10%);
+  }
+}
+
+.form-cluster{
+  input:first-child{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
+  }
+  input:last-child{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.navbar{
+  border-radius: 0;
+  height: 80px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.navbar-default{
+  background-color: white;
+  color: #ccc;
+
+  #search{
+    padding: 8px 0;
+  }
+
+  .navbar-brand{
+    color: $primary;
+    padding: 28px 15px;
+  }
+  .navbar-brand:hover{
+    color: #999;
+  }
+  .navbar-toggle .icon-bar, {
+    background-color: #ccc;
+  }
+}
+
+
+
+
+.masthead {
+  background: $primary;
+  padding: 50px 0;
+  position: relative;
+  z-index: 2;
+
+
+  .title {
+    font-family: "SourceSansProExtraLight", Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    line-height: 1.2;
+    color: white;
+  }
+  .subtitle {
+    color: white;
+    font-family: "SourceSansProBold", Helvetica, Arial, sans-serif;
+    display: block;
+    font-size: 12px;
+    padding-left: 4px;
+    margin-bottom: 24px;
+  }
+}
+
+.centered{
+  text-align: center;
+}
+
+.section.primary, .masthead{
+  .btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+  }
+}
+
+
+
+.section{
+  padding: 40px 0;
+
+  .title{
+    font-size: 40px;
+  }
+}
+
+.section.primary{
+  background-color: $primary;
+  color: white;
+}
+
+
+
+.content{
+  background-color: white;
+  padding-top: 24px;
+  flex: 1;
+}
+
+
+
+.nav.nav-tabs{
+  margin-bottom: 40px;
+}
+
+.panel-primary{
+  border-color: #f1f1f1;
+  margin-bottom: 40px;
+
+  .panel-heading{
+    background-color: $primary;
+
+    color: white;
+    font-size: 1.2em;
+  }
+}
+
+.table{
+  th{
+    font-size: 0.8em;
+  }
+}
+
+.breadcrumb{
+  margin-bottom: 0;
+  border-radius: 0;
+  background-color: #f1f1f1;
+  color: #666;
+
+  a{
+    color: $primary;
+
+  }
+}
+
+.component-title {
+  color: #b2c6cd;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.list-group-item, a.list-group-item{
+  margin-bottom: 12px !important;
+  padding: 24px;
+
+  &:last-child, &:first-child{
+    margin-bottom: inherit;
+  }
+
+  &:hover{
+    background-color: white;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.2)
+  }
+}
+
+.badge .primary{
+  background-color: $primary;
+}
+
+
+
+@media (min-width: 1000px) {
+  .masthead {
+    padding: 100px 0;
+  }
+  .masthead .title {
+    font-size: 65px;
+  }
+  .masthead .subtitle {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 1120px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    /* since 3.1.0 */
+    .navbar-collapse.collapse.in {
+        display: block!important;
+    }
+    .collapsing {
+        overflow: hidden!important;
+    }
+}
+
+
+
+#verses{
+  column-count: 2;
+  margin-bottom: 40px;
+
+  .verse{
+    margin-bottom: 16px;
+  }
+
+  .verse_number{
+    font-style: italic;
+    font-size: .8em;
+  }
+}
+
+@media (max-width: 768px) {
+  #verses{
+    column-count: 1;
+  }
+}
+
+.alert{
+  border-radius: 0;
+}
+
+.alert-info, .alert-warning{
+  background-color: $primary-fade;
+  color: white;
+
+  .close{
+    color: white;
+  }
+}
+
+
+.form-horizontal{
+  .control-label{
+    text-align: right;
+  }
+
+  .form-control[readonly]{
+    background-color: white;
+  }
+}

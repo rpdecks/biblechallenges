@@ -1,5 +1,5 @@
 crumb :root do
-   link "Challenges", root_path
+  link "Challenges", root_path
 end
 
 crumb :challenge do |challenge|
