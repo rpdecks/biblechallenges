@@ -31,7 +31,7 @@ class Member::GroupsController < ApplicationController
       membership.save
       GroupCompletion.new(group)
       flash[:notice] = "Group created successfully"
-      redirect_to @challenge
+      redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
     else
       flash[:notice] = "Group could not be created"
       render action: :new
