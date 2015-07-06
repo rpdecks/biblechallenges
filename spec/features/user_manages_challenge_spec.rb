@@ -9,7 +9,7 @@ feature 'User manages challenges' do
 
   scenario 'User creates a challenge' do
     visit root_path
-    click_link 'Create a Challenge'
+    click_link 'Create a challenge'
     expect{
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
@@ -22,7 +22,7 @@ feature 'User manages challenges' do
 
   scenario 'User creates a challenge and automatically joins the challenge' do
     visit root_path
-    click_link 'Create a Challenge'
+    click_link 'Create a challenge'
     expect{
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
@@ -36,9 +36,7 @@ feature 'User manages challenges' do
   scenario 'User joins a challenge successfully' do
     challenge = create(:challenge, :with_readings)
     ChallengeCompletion.new(challenge)
-    visit challenges_path
-    click_link challenge.name
-    click_link "Show Challenge"
+    visit challenge_path(challenge)
     click_link "Join Challenge"
     expect(challenge.members).to include user
   end
@@ -46,20 +44,16 @@ feature 'User manages challenges' do
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit challenges_path
-    click_link challenge.name
-    click_link "Show Challenge"
+    visit challenge_path(challenge)
 
-    expect(page).to have_content("Unsubscribe me from this challenge")
+    expect(page).to have_content("Unsubscribe")
   end
 
   scenario 'User leaves a challenge successfully' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit challenges_path
-    click_link challenge.name
-    click_link "Show Challenge"
-    click_link "Unsubscribe me from this challenge"
+    visit challenge_path(challenge)
+    click_link "Unsubscribe"
     expect(challenge.members).not_to include user
   end
 
@@ -67,10 +61,8 @@ feature 'User manages challenges' do
     challenge = create(:challenge)
     group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
     membership = create(:membership, challenge: challenge, user: user, group_id: group.id)
-    visit challenges_path
-    click_link challenge.name
-    click_link "Show Challenge"
-    click_link "Unsubscribe me from this challenge"
+    visit challenge_path(challenge)
+    click_link "Unsubscribe"
 
     expect(challenge.members).not_to include user
     expect{Membership.find(membership.id)}.to raise_error(ActiveRecord::RecordNotFound)
