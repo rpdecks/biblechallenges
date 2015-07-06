@@ -103,7 +103,7 @@ describe Groups::CommentsController, "Actions" do
 
     it "should set the flash" do
       post :create, group_id: group.id, comment: newcomment_attr
-      should set_the_flash
+      should set_flash
     end
 
     it "does not allow a user to create a comment for a group he is not part of " do

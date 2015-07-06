@@ -35,6 +35,9 @@ gem 'htmlentities'
 gem 'react-rails'
 gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
+gem 'skylight'
+
+gem "autoprefixer-rails" #prefix styles for cross-browser
 
 
 # Bundle edge Rails instead:
@@ -52,6 +55,8 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
   gem 'bullet'
 end
 
@@ -85,8 +90,6 @@ group :development, :test do
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
-  gem 'letter_opener'
-  gem 'letter_opener_web'
   gem 'pry-nav'
 end
 
@@ -103,4 +106,3 @@ group :test do
   gem 'rspec-sidekiq'
   gem 'email_spec'
 end
-

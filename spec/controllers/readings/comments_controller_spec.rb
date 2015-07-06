@@ -97,7 +97,7 @@ describe Readings::CommentsController, "Actions" do
 
     it "should set the flash" do
       post :create, reading_id: reading.id, comment: newcomment_attr
-      should set_the_flash
+      should set_flash
     end
 
     it "does not allow a user to create a comment for a reading he is not part of (through a challenge)" do
