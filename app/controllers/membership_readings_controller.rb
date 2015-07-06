@@ -10,9 +10,9 @@ class MembershipReadingsController < ApplicationController
     reading
     @membership_reading = MembershipReading.create(membership_reading_params)
 
-    current_user.update_stats  #needs to be backgrounded!
-    membership.update_stats  #needs to be backgrounded!
-    membership.group.update_stats if membership.group  #needs to be backgrounded!
+    current_user.delay.update_stats  #needs to be backgrounded!
+    membership.delay.update_stats  #needs to be backgrounded!
+    membership.group.delay.update_stats if membership.group  #needs to be backgrounded!
 
     membership.user.update_stats
 
@@ -35,9 +35,9 @@ class MembershipReadingsController < ApplicationController
 
     membership_reading.destroy  # this needs to only destroy membershipreadings the user owns!! write test todo
 
-    current_user.update_stats  #needs to be backgrounded!
-    @membership.update_stats  #needs to be backgrounded!
-    @membership.group.update_stats if @membership.group  #needs to be backgrounded!
+    current_user.delay.update_stats  #needs to be backgrounded!
+    @membership.delay.update_stats  #needs to be backgrounded!
+    @membership.group.delay.update_stats if @membership.group  #needs to be backgrounded!
 
     respond_to do |format|
       format.html { 

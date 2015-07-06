@@ -1,20 +1,22 @@
 .container
-  .row
-    .col-md-10
-      - if membership = challenge.membership_for(current_user)
-        - if membership.completed?
-          %h4 Congratulations!  You have completed this challenge.
-        - else
-          %h2 Group Statistics
-          -if challenge.groups.any?
-            = render partial: 'shared/statistics/group_stat', locals: {groups: groups}
-          -else
-            No groups created yet
-          %h2 Challenge Statistics
-          = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
-          %h2 Personal Statistics
-          -if user.membership_readings.any?
-            = render partial: 'shared/statistics/personal_stat', locals: {user: current_user}
-          -else
-            You have not logged a chapter yet
+  - if membership = challenge.membership_for(current_user)
+    - if membership.completed?
+      %h4 Congratulations!  You have completed this challenge.
+    - else
+      -if challenge.groups.any?
+        .panel.panel-primary
+          .panel-heading Group Statistics
+          = render partial: 'shared/statistics/group_stat', locals: {groups: groups}
+      -else
+        No groups created yet
 
+      .panel.panel-primary
+        .panel-heading Challenge Statistics
+        = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
+
+      -if user.membership_readings.any?
+        .panel.panel-primary
+          .panel-heading Personal Statistics
+          = render partial: 'shared/statistics/personal_stat', locals: {user: current_user}
+      -else
+        You have not logged a chapter yet
