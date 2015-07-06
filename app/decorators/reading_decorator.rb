@@ -3,7 +3,7 @@ class ReadingDecorator < Draper::Decorator
 
   def todays_chapter(membership)
     reading.chapter.verses.by_version(membership.bible_version).each do |v|
-      v.versetext
+      v.text
     end
   end
 
