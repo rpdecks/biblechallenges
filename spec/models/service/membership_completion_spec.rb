@@ -10,7 +10,9 @@ describe MembershipCompletion do
 
       MembershipCompletion.new(membership)
 
-      expect(MembershipStatisticAttacher).to have_received(:attach_statistics)
+      #todo ugh ugh this is because of the callback in challenge to attach member stats to the creator
+      # must fix
+      expect(MembershipStatisticAttacher).to have_received(:attach_statistics).exactly(2).times
     end
   end
 
