@@ -36,12 +36,13 @@ class Challenge < ActiveRecord::Base
   #after_save        :generate_readings
 
 
-  def joins_creator_to_challenge
+  def joins_creator_to_challenge   #todo this needs to be in the controller not a callback
     user = User.find(self.owner_id)
     membership = Membership.new
     membership.user = user
     membership.challenge = self
     membership.save
+    MembershipCompletion.new(membership)
   end
 
   def membership_for(user)
