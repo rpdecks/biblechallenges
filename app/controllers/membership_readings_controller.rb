@@ -8,25 +8,28 @@ class MembershipReadingsController < ApplicationController
   def create
     @challenge = membership.challenge
     reading
-    @membership_reading = MembershipReading.create(membership_reading_params)
+    if @challenge.has_member?(current_user)
+      @membership_reading = MembershipReading.create(membership_reading_params)
 
-    current_user.delay.update_stats  
-    membership.delay.update_stats  
-    membership.group.delay.update_stats if membership.group  
+      current_user.delay.update_stats  
+      membership.delay.update_stats  
+      membership.group.delay.update_stats if membership.group  
 
-    membership.user.update_stats
-
-    respond_to do |format|
-      format.html { 
-        # go back to referer unless alternate location passed in
-        redirect = params[:location] || request.referer
-        # might be an anchor tag
-        redirect += params[:anchor] if params[:anchor]
-        redirect_to redirect
-      }
-      format.json { 
-        render json: @membership_reading
-      }
+      membership.user.update_stats
+      respond_to do |format|
+        format.html { 
+          # go back to referer unless alternate location passed in
+          redirect = params[:location] || request.referer
+          # might be an anchor tag
+          redirect += params[:anchor] if params[:anchor]
+          redirect_to redirect
+        }
+        format.json { 
+          render json: @membership_reading
+        }
+      end
+    else
+      raise "Not allowed"
     end
   end
 
