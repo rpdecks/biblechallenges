@@ -22,7 +22,8 @@ describe ChallengeStatisticOnSchedulePercentage do
         Timecop.travel(1.day)
         # read 12 / 18 membership readings are on-schedule
       end
-      MembershipStatisticOnSchedulePercentage.new(membership: m1).update
+      # todo this is because of the callback on membership stats when you create a challenge yuck
+      m1.update_stats
       MembershipStatisticOnSchedulePercentage.new(membership: m2).update
       MembershipStatisticOnSchedulePercentage.new(membership: m3).update
       stat = ChallengeStatisticOnSchedulePercentage.new(challenge: challenge)

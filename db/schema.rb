@@ -140,12 +140,10 @@ ActiveRecord::Schema.define(version: 20150707221158) do
   end
 
   create_table "readings", force: :cascade do |t|
-    t.integer  "chapter_id"
-    t.integer  "challenge_id"
-    t.date     "read_on"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "discussion"
+    t.integer "chapter_id"
+    t.integer "challenge_id"
+    t.date    "read_on"
+    t.text    "discussion"
   end
 
   create_table "user_statistics", force: :cascade do |t|
