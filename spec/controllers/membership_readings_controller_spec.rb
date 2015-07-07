@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MembershipReadingsController, type: :controller do
 
-  let(:challenge){create(:challenge, chapters_to_read:'mi 1-4')} 
+  let(:challenge){create(:challenge_with_readings, chapters_to_read:'mi 1-4')} 
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
@@ -11,7 +11,7 @@ describe MembershipReadingsController, type: :controller do
     context 'with a valid token' do
       describe 'POST#create' do
         it "finds the membership_reading's reading" do
-          reading = create(:reading)
+          reading = challenge.readings.first
           expect {
             post :create, reading_id: reading.id, membership_id: membership.id, 
               location: confirmation_membership_reading_path(id: reading.id),
@@ -31,7 +31,7 @@ describe MembershipReadingsController, type: :controller do
 
     describe 'POST#create' do
       it "creates a new membership_reading" do
-        reading = create(:reading)
+        reading = challenge.readings.first
         expect {
           post :create, reading_id: reading.id, membership_id: membership.id
         }.to change(MembershipReading, :count).by(1)
@@ -40,18 +40,28 @@ describe MembershipReadingsController, type: :controller do
         user2 = create(:user)
         challenge2 = create(:challenge, chapters_to_read:'John 1-4')
         membership2 = challenge2.join_new_member(user2)
-        reading = create(:reading)
+        reading = challenge.readings.first
         expect {
           post :create, reading_id: reading.id, membership_id: membership2
         }.to raise_error('Not allowed')
       end
+      it "creates a new membership_reading allowed only for the owner of that membership reading" do
+        user1 = challenge.owner
+        user2 = user #logged in as user
+        membership1 = challenge.memberships.first
+        membership2 = challenge.join_new_member(user2) #user2 joins challenge
+        reading = challenge.readings.first
+        expect {
+          post :create, reading_id: reading.id, membership_id: membership1
+        }.to raise_error('Not allowed')
+      end
       it "should redirect to :back if params[:location] is not  provided" do
-        reading = create(:reading)
+        reading = challenge.readings.first
         post :create, reading_id: reading.id, membership_id: membership.id
         expect(response).to redirect_to "where_i_came_from"
       end
       it "should redirect to params[:location] if it's provided" do
-        reading = create(:reading)
+        reading = challenge.readings.first
         post :create, reading_id: reading.id, membership_id: membership.id, location: root_path
         should redirect_to(root_path)
       end
@@ -116,7 +126,7 @@ describe MembershipReadingsController, type: :controller do
       end
       it "should update the membership statistics" do #todo this should use mocks/spies
         pending
-        reading = create(:reading)
+        reading = challenge.readings.first
         membership.associate_statistics
         MembershipStatistic.descendants.each do |desc|
           desc.name.constantize.stub(:update)

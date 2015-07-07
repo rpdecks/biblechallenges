@@ -8,7 +8,7 @@ class MembershipReadingsController < ApplicationController
   def create
     @challenge = membership.challenge
     reading
-    if @challenge.has_member?(current_user)
+    if @challenge.has_member?(current_user) && membership.user == current_user
       @membership_reading = MembershipReading.create(membership_reading_params)
 
       current_user.delay.update_stats  
