@@ -38,11 +38,11 @@
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
-          = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
-          = render partial: 'shared/challenges/log_todays_reading', locals: {membership: @membership,
+          .col-lg-3.pull-right
+            = render partial: 'shared/challenges/log_todays_reading', locals: {membership: @membership,
               todays_reading: @todays_reading}
-
-          = render partial: 'shared/challenges/todays_reading', locals: { todays_reading: @todays_reading,
+          .col-lg-9
+            = render partial: 'shared/challenges/todays_reading', locals: { todays_reading: @todays_reading,
             todays_verses: @todays_verses}
 
 
@@ -50,6 +50,7 @@
             .panel-heading Challenge Statistics
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
+          = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
