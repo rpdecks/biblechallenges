@@ -9,7 +9,7 @@ class ChallengeStatisticProgressPercentage < ChallengeStatistic
   end
 
   def calculate
-    total = challenge.memberships.map{|m| m.membership_statistic_progress_percentage.value.to_i}.inject(:+)
+    total = challenge.memberships.map{|m| m.membership_statistic_progress_percentage.try(:value).to_i}.inject(:+)
     total / challenge.memberships.size
   end
 
