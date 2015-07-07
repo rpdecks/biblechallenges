@@ -19,7 +19,11 @@ class User < ActiveRecord::Base
   has_many :badges, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
-  has_attached_file :avatar
+  has_attached_file :avatar,
+    :styles => {
+    :medium => "300x300>",
+    :thumb => "75x75>" },
+    :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   #Callbacks
@@ -27,7 +31,7 @@ class User < ActiveRecord::Base
 
   # autogenerate has_one associations for all the badge types
   Rails.application.eager_load!
-  Badge.descendants.each do |badge| 
+  Badge.descendants.each do |badge|
     has_one badge.name.underscore.to_sym
   end
 
