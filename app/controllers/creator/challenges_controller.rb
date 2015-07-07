@@ -48,6 +48,7 @@ class Creator::ChallengesController < ApplicationController
   def destroy
     if @challenge.owner == current_user
       @challenge.destroy
+      flash[:notice] = "Successfully deleted Challenge" 
       redirect_to member_challenges_path
     end
   end
