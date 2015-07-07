@@ -17,7 +17,10 @@ describe ChallengeStatisticProgressPercentage do
       challenge.readings[0..5].each do |r| # read first two
         create(:membership_reading, membership: m2, reading: r)
       end
-      MembershipStatisticProgressPercentage.new(membership: m1).update
+
+      #todo this is so yucky because we are dealing with the auto generate stats on the 
+      #challenge creator as a member.  should NOT be a callback
+      m1.update_stats
       MembershipStatisticProgressPercentage.new(membership: m2).update
 
       stat = ChallengeStatisticProgressPercentage.new(challenge: challenge)
