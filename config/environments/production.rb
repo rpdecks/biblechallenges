@@ -63,7 +63,12 @@ Biblechallenge::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   
-  config.action_mailer.default_url_options = { host: 'biblechallenges.com' }
+  if ENV['STAGING']
+    config.action_mailer.default_url_options = { host: 'bc-staging.herokuapp.com' }
+  else
+    config.action_mailer.default_url_options = { host: 'biblechallenges.com' }
+  end
+
   ActionMailer::Base.smtp_settings = {
   :port =>           '587',
   :address =>        'smtp.mandrillapp.com',
