@@ -26,28 +26,30 @@ class Creator::ChallengesController < ApplicationController
     # this seems terrible; is there a better way?  #jim
     if @challenge.save
       flash[:notice] = "Successfully created Challenge" 
-      #@challenge.members << current_user @Phil - we wrote a call back in user model. Which should we keep?
       readings = ReadingsGenerator.new(@challenge.begindate, 
                                       @challenge.chapters_to_read,
                                       days_of_week_to_skip: days_of_week_to_skip,
                                       dates_to_skip: challenge_params[:dates_to_skip],
                                       ).generate
-      readings.each do |r|
-        r.challenge_id = @challenge.id
-        r.save
+
+      Reading.transaction do
+        readings.each do |r|
+          Reading.connection.execute "INSERT INTO readings (chapter_id, challenge_id, read_on) values (#{r.chapter_id}, #{@challenge.id}, '#{r.read_on}')"
+        end
       end
+
       ChallengeCompletion.new(@challenge)
     end
 
-    redirect_to [:member, @challenge]
+    redirect_to member_challenges_path
   end
 
   def destroy
-    @challenge.destroy
-    redirect_to creator_challenges_path
+    if @challenge.owner == current_user
+      @challenge.destroy
+      redirect_to member_challenges_path
+    end
   end
-
-  private
 
   def days_of_week_to_skip
     if params[:days_to_skip]
