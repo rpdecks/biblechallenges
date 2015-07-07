@@ -32,10 +32,11 @@
         #{ActiveSupport::TimeZone[f.object.time_zone]}
 
   .control-group
-    = f.label :image, "Avatar", class: "control-label"
+    = f.label :avatar, "Avatar", class: "control-label"
     .controls
-      = f.file_field :image
+      = f.file_field :avatar
       %p.help-block
+    = image_tag @user.avatar.url(:thumb)
 
   .control-group
     = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'

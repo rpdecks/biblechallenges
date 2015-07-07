@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   def user_params
     accessible = [ :name, :email, :username,
                    :time_zone, :preferred_reading_hour,
-                   :image ]
+                   :avatar ]
     unless params[:user][:password].blank?
       accessible << [ :password, :password_confirmation ]
     end
