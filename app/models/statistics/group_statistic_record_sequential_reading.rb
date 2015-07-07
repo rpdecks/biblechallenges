@@ -9,7 +9,7 @@ class GroupStatisticRecordSequentialReading < GroupStatistic
   end
 
   def calculate
-    total = group.memberships.map{|m| m.membership_statistic_record_reading_streak.value.to_i}.inject(:+)
+    total = group.memberships.map{|m| m.membership_statistic_record_reading_streak.try(:value).to_i}.inject(:+)
     total / group.memberships.size
   end
 
