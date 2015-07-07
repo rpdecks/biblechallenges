@@ -10,9 +10,9 @@ class MembershipReadingsController < ApplicationController
     reading
     @membership_reading = MembershipReading.create(membership_reading_params)
 
-    current_user.delay.update_stats  #needs to be backgrounded!
-    membership.delay.update_stats  #needs to be backgrounded!
-    membership.group.delay.update_stats if membership.group  #needs to be backgrounded!
+    current_user.delay.update_stats  
+    membership.delay.update_stats  
+    membership.group.delay.update_stats if membership.group  
 
     membership.user.update_stats
 
