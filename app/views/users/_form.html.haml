@@ -1,27 +1,41 @@
 = form_for @user do |f|
   - if @user.errors.any?
     - flash[:error] = @user.errors.full_messages.to_sentence
+
   .control-group
     = f.label :username, "Username", class: "control-label"
     .controls
       = f.text_field :username, class: "form-control"
       %p.help-block Your username will be displayed by any comments you post
+
   .control-group
     = f.label :name, "Name", class: "control-label"
     .controls
       = f.text_field :name, class: "form-control"
       %p.help-block
+
   .control-group
     = f.label :time_zone, "Your Time Zone", class: "control-label"
     .controls
-      = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, class: "form-control"
+      = f.collection_select :time_zone, ActiveSupport::TimeZone.all, 
+        :name, :to_s, class: "form-control"
       %p.help-block
+
   .control-group
     = f.label :preferred_reading_hour, "Your Preferred Reading Hour", class: "control-label"
     .controls
-      = f.collection_select :preferred_reading_hour, (0..23).map {|n| number_to_hour_of_day(n)}, :to_i, :to_s, class: "form-control"
+      = f.collection_select :preferred_reading_hour,
+        (0..23).map {|n| number_to_hour_of_day(n)}, :to_i, :to_s, class: "form-control"
       %p.help-block
-        Your daily reading e-mails will be sent out at #{number_to_hour_of_day(f.object.preferred_reading_hour)} #{ActiveSupport::TimeZone[f.object.time_zone]}
+        Your daily reading e-mails will be sent out at
+        #{number_to_hour_of_day(f.object.preferred_reading_hour)}
+        #{ActiveSupport::TimeZone[f.object.time_zone]}
+
+  .control-group
+    = f.label :image, "Avatar", class: "control-label"
+    .controls
+      = f.file_field :image
+      %p.help-block
 
   .control-group
     = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
