@@ -29,7 +29,7 @@
         %th Stats
         %th Last Read
     %tbody
-    - group.members.sort_by(&:email).each do |m|
+    - group.members.sort_by(&:username).each do |m|
       %tr
         %td
           = render 'shared/avatar', user: m
