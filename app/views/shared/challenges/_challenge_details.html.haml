@@ -27,3 +27,7 @@
       %td
         = membership.bible_version
         =link_to "Change", member_membership_path(membership), :method => :get
+  - if challenge.owner == current_user
+    %tr
+      %td 
+        = link_to "Delete this Challenge", creator_challenge_path(challenge), method: :delete, "data-confirm" => 'Are you sure you want to delete this challenge?',:class=>"btn btn-info"
