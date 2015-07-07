@@ -36,7 +36,7 @@ describe MembershipReadingsController, type: :controller do
           post :create, reading_id: reading.id, membership_id: membership.id
         }.to change(MembershipReading, :count).by(1)
       end
-      it "creates a new membership_reading only for members of the challenge" do
+      it "creates a new membership_reading allowed only for members of the challenge" do
         user2 = create(:user)
         challenge2 = create(:challenge, chapters_to_read:'John 1-4')
         membership2 = challenge2.join_new_member(user2)
@@ -139,6 +139,15 @@ describe MembershipReadingsController, type: :controller do
         expect {
           delete :destroy, id: mr.id
         }.to change(MembershipReading, :count).by(-1)
+      end
+      it "deletes a membership_reading allowed only by a member of a challenge" do
+        user2 = create(:user)
+        challenge2 = create(:challenge, chapters_to_read:'John 1-4')
+        membership2 = challenge2.join_new_member(user2)
+        mr = create(:membership_reading, membership:membership2, reading: create(:reading))
+        expect {
+          delete :destroy, id: mr.id
+        }.to raise_error
       end
       it "should redirect to :back if params[:location] is not  provided" do
         mr = create(:membership_reading, membership:membership, reading: create(:reading))
