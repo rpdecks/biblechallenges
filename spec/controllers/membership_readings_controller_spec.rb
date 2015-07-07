@@ -145,31 +145,47 @@ describe MembershipReadingsController, type: :controller do
 
     describe 'DELETE#destroy' do
       it "deletes a membership_reading" do
-        mr = create(:membership_reading, membership:membership, reading: create(:reading))
+        reading = challenge.readings.first
+        mr = create(:membership_reading, membership:membership, reading: reading)
         expect {
           delete :destroy, id: mr.id
         }.to change(MembershipReading, :count).by(-1)
       end
       it "deletes a membership_reading allowed only by a member of a challenge" do
+        reading = challenge.readings.first
         user2 = create(:user)
         challenge2 = create(:challenge, chapters_to_read:'John 1-4')
         membership2 = challenge2.join_new_member(user2)
-        mr = create(:membership_reading, membership:membership2, reading: create(:reading))
+        mr = create(:membership_reading, membership:membership2, reading: reading)
         expect {
           delete :destroy, id: mr.id
         }.to raise_error
       end
       it "should redirect to :back if params[:location] is not  provided" do
-        mr = create(:membership_reading, membership:membership, reading: create(:reading))
+        reading = challenge.readings.first
+        mr = create(:membership_reading, membership:membership, reading: reading)
         delete :destroy, id: mr.id
         expect(response).to redirect_to "where_i_came_from"
       end
       it "should redirect to params[:location] if it's provided" do
-        mr = create(:membership_reading, membership:membership, reading: create(:reading))
+        reading = challenge.readings.first
+        mr = create(:membership_reading, membership:membership, reading: reading)
         delete :destroy, id: mr.id, location: root_path
         should redirect_to(root_path)
       end
     end
+
+      it "allows deleting of a membership_reading only by the owner of that membership reading" do
+        user1 = challenge.owner
+        user2 = user #logged in as user
+        membership1 = challenge.memberships.first
+        membership2 = challenge.join_new_member(user2) #user2 joins challenge
+        reading = challenge.readings.first
+        mr = create(:membership_reading, membership:membership1, reading: reading)
+        expect {
+          delete :destroy, id: mr.id, membership_id: membership1
+        }.to raise_error('Not allowed')
+      end
   end
 end
 

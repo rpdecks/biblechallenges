@@ -36,7 +36,7 @@ class MembershipReadingsController < ApplicationController
   def destroy
     @membership = membership_reading.membership
     @challenge = @membership.challenge
-    if @challenge.has_member?(current_user)
+    if @challenge.has_member?(current_user) && @membership.user == current_user
 
       membership_reading.destroy
 
