@@ -36,6 +36,15 @@ describe MembershipReadingsController, type: :controller do
           post :create, reading_id: reading.id, membership_id: membership.id
         }.to change(MembershipReading, :count).by(1)
       end
+      it "creates a new membership_reading only for members of the challenge" do
+        user2 = create(:user)
+        challenge2 = create(:challenge, chapters_to_read:'John 1-4')
+        membership2 = challenge2.join_new_member(user2)
+        reading = create(:reading)
+        expect {
+          post :create, reading_id: reading.id, membership_id: membership2
+        }.to raise_error('Not allowed')
+      end
       it "should redirect to :back if params[:location] is not  provided" do
         reading = create(:reading)
         post :create, reading_id: reading.id, membership_id: membership.id
@@ -49,6 +58,7 @@ describe MembershipReadingsController, type: :controller do
       it "should update one of the membership statistics (lamo test)" do 
         challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         user = create(:user)
+        sign_in :user, user
         membership = challenge.join_new_member(user)
 
         membership.associate_statistics
@@ -63,6 +73,7 @@ describe MembershipReadingsController, type: :controller do
 
       it "should update the chapters_all_time_read statistics after posting a reading" do challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
       user = create(:user)
+      sign_in :user, user
       membership = challenge.join_new_member(user)
 
       user.associate_statistics
@@ -75,6 +86,7 @@ describe MembershipReadingsController, type: :controller do
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
         user = create(:user)
+        sign_in :user, user
         user.associate_statistics
         membership1 = challenge1.join_new_member(user)
         membership2 = challenge2.join_new_member(user)
