@@ -8,22 +8,25 @@ class MembershipReadingsController < ApplicationController
   def create
     @challenge = membership.challenge
     reading
-    @membership_reading = MembershipReading.create(membership_reading_params)
+    if @challenge.has_member?(current_user) && membership.user == current_user
+      @membership_reading = MembershipReading.create(membership_reading_params)
 
-    update_stats
+      update_stats
 
-
-    respond_to do |format|
-      format.html { 
-        # go back to referer unless alternate location passed in
-        redirect = params[:location] || request.referer
-        # might be an anchor tag
-        redirect += params[:anchor] if params[:anchor]
-        redirect_to redirect
-      }
-      format.json { 
-        render json: @membership_reading
-      }
+      respond_to do |format|
+        format.html { 
+          # go back to referer unless alternate location passed in
+          redirect = params[:location] || request.referer
+          # might be an anchor tag
+          redirect += params[:anchor] if params[:anchor]
+          redirect_to redirect
+        }
+        format.json { 
+          render json: @membership_reading
+        }
+      end
+    else
+      raise "Not allowed"
     end
   end
 
@@ -43,20 +46,25 @@ class MembershipReadingsController < ApplicationController
 
   def destroy
     @membership = membership_reading.membership
+    @challenge = @membership.challenge
+    if @challenge.has_member?(current_user) && @membership.user == current_user
 
-    membership_reading.destroy  # this needs to only destroy membershipreadings the user owns!! write test todo
+      membership_reading.destroy
 
-    update_stats
+      update_stats
 
-    respond_to do |format|
-      format.html { 
-        # go back to referer unless alternate location passed in
-        redirect = params[:location] || request.referer
-        # might be an anchor tag
-        redirect += params[:anchor] if params[:anchor]
-        redirect_to redirect
-      }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { 
+          # go back to referer unless alternate location passed in
+          redirect = params[:location] || request.referer
+          # might be an anchor tag
+          redirect += params[:anchor] if params[:anchor]
+          redirect_to redirect
+        }
+        format.json { head :no_content }
+      end
+    else
+      raise "Not allowed"
     end
   end
 
