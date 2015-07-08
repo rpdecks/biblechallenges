@@ -14,8 +14,8 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 5. also change nameservers for domain to [a-e].ns.zerigo.net
 6.  push to heroku
 7.  rake db:migrate
-8.  rake db:seed  (to get the verse data in there)
-  Note: always run `rrake db:seed RAILS_ENV=test` as well for tests to work properly
+8.  rake db:seed  (to get the verse data in there)  
+  - Note: always run `rake db:seed RAILS_ENV=test` as well for tests to work properly
 
 ## Environmental Variables
 
