@@ -56,7 +56,7 @@ class Membership < ActiveRecord::Base
   end
 
   def successful_creation_email
-    MembershipMailer.creation_email(self).deliver_now
+    MembershipMailer.delay.creation_email(self.id)
   end
 
   private
