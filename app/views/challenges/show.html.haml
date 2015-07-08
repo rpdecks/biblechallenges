@@ -9,8 +9,6 @@
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
 
-    = image_tag @challenge.owner.image, title: @challenge.owner.username, class: "img-circle"
-
     - @challenge.members.each do |m|
       = image_tag m.image, title: m.username, class: "img-circle"
 
