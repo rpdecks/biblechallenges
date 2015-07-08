@@ -19,12 +19,19 @@ class User < ActiveRecord::Base
   has_many :badges, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
+  has_attached_file :avatar,
+    :styles => {
+    :medium => "300x300>",
+    :thumb => "75x75>" },
+    :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   #Callbacks
   #after_create :associate_statistics
 
   # autogenerate has_one associations for all the badge types
   Rails.application.eager_load!
-  Badge.descendants.each do |badge| 
+  Badge.descendants.each do |badge|
     has_one badge.name.underscore.to_sym
   end
 
@@ -32,13 +39,12 @@ class User < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
-
   def associate_statistics
     self.user_statistics << UserStatisticChaptersReadAllTime.create
     self.user_statistics << UserStatisticDaysReadInARowCurrent.create
     self.user_statistics << UserStatisticDaysReadInARowAllTime.create
   end
-  
+
   def show_progress_percentage(member, group)
     user_membership = (member.memberships & group.memberships).first
     user_membership.progress_percentage
