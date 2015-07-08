@@ -80,7 +80,6 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,15]
       user.name = auth.info.name
       user.image = auth.info.image
-      # user.username
       # timezone
       # preferred reading hour
 
