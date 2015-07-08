@@ -1,8 +1,9 @@
 = link_to challenge_path(challenge), :class => 'list-group-item', display: 'inline' do
   %span.badge
-    = "#{challenge.membership_readings.size} / #{challenge.readings_count} read"
+    = challenge.memberships.size
+    = "member".pluralize(challenge.memberships.size)
   %h4.list-group-item-heading
-    = "#{challenge.name} - #{challenge.readings_count} chapters"
+    = "#{challenge.name}"
 
   %p.list-group-item-text
     = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"

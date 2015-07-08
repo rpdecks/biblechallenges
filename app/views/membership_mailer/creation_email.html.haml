@@ -35,7 +35,7 @@
           - @challenge.readings.each do |read|
             %tr
               %td
-                = read.date.strftime("%-m/%-d/%y")
+                = read.read_on.strftime("%-m/%-d/%y")
               %td
                 = read.chapter.book_name
                 = read.chapter.chapter_number
