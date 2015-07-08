@@ -17,6 +17,7 @@ class MembershipStatisticCurrentReadingStreak < MembershipStatistic
   # 
   #
   # Example 2:  read one chapter, next day read 3, then next day read 1.  streak should be 3
+  # Example 3:  read one chapter, next day read 3, then next day read 1, then next day have not read. Streak should be 3, because the day that breaks streak has not passed
 
   def calculate
     current_streak(self.membership.membership_readings)  # some helper method to find the streak; pure ruby
@@ -33,7 +34,11 @@ class MembershipStatisticCurrentReadingStreak < MembershipStatistic
     streak_count = 0
     days = 0
     new_readings = readings.map(&:updated_at).collect { |d| d.strftime("%F")}.uniq()
-  
+
+    if (new_readings[0] == 1.days.ago.strftime("%F"))
+      days +=1
+    end
+
     new_readings.each do |mr|
       if mr  == days.day.ago.strftime("%F")
         streak_count+= 1

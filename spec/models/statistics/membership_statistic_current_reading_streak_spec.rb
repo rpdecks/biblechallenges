@@ -47,6 +47,44 @@ describe MembershipStatisticCurrentReadingStreak do
       Timecop.return # is this necessary?
     end
 
+    it "will calculate active streak as long as the day that breaks streak has not passed" do
+      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
+      membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
+      # reading will skip the first day but then proceed daily, so on day four of the 
+      # challenge the user should have a 3 day streak
+
+      first_day = challenge.readings.order(:date).first.date
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day + 1)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 2)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 3)
+
+      Timecop.travel(first_day + 4.days)  # day 4
+      stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
+
+      expect(stat.calculate).to eq 3
+      Timecop.return
+    end
+
+    it "will reset active streak to zero if the day that breaks streak has passed" do
+      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
+      membership = create(:membership, challenge: challenge)
+      readings = challenge.readings
+      # reading will skip the first day but then proceed daily, so on day four of the 
+      # challenge the user should have a 3 day streak
+
+      first_day = challenge.readings.order(:date).first.date
+      create(:membership_reading, reading: readings[0], membership: membership, updated_at: first_day + 1)
+      create(:membership_reading, reading: readings[1], membership: membership, updated_at: first_day + 2)
+      create(:membership_reading, reading: readings[2], membership: membership, updated_at: first_day + 3)
+
+      Timecop.travel(first_day + 5.days)  # day 4
+      stat = MembershipStatisticCurrentReadingStreak.new(membership: membership)
+
+      expect(stat.calculate).to eq 0
+      Timecop.return
+    end
+
     it "should calculate the proper value even when user is ahead" do
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-5')
       membership = create(:membership, challenge: challenge)
