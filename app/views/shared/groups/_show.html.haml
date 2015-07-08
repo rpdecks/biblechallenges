@@ -7,7 +7,8 @@
           = group.members.count
           = "member".pluralize(group.members.count)
 
-        = instant_hangout
+        /instant hangout not working properly
+        /= instant_hangout
 
     .col-sm-6
       .pull-right
@@ -29,7 +30,7 @@
         %th Stats
         %th Last Read
     %tbody
-    - group.members.sort_by(&:username).each do |m|
+    - group.members.sort_by(&:email).each do |m|
       %tr
         %td
           = render 'shared/avatar', user: m
