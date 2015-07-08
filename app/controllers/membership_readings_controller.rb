@@ -14,14 +14,14 @@ class MembershipReadingsController < ApplicationController
       update_stats
 
       respond_to do |format|
-        format.html { 
+        format.html {
           # go back to referer unless alternate location passed in
           redirect = params[:location] || request.referer
           # might be an anchor tag
           redirect += params[:anchor] if params[:anchor]
           redirect_to redirect
         }
-        format.json { 
+        format.json {
           render json: @membership_reading
         }
       end
@@ -38,9 +38,9 @@ class MembershipReadingsController < ApplicationController
     # with an update_stats method that is delayed in its entirety via sidekiq
     # but executes these updates in sequence.  For now, I have removed the delay
     # so they will be accurate, but it will be a performance hit I think
-    current_user.update_stats  
-    membership.update_stats  
-    membership.group.update_stats if membership.group  
+    current_user.update_stats
+    membership.update_stats
+    membership.group.update_stats if membership.group
     membership.challenge.update_stats
   end
 
