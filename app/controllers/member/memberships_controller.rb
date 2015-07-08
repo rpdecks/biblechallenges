@@ -31,7 +31,6 @@ class Member::MembershipsController < ApplicationController
     @membership.user = current_user if current_user
     if @membership.save
       # associate stats here
-      @membership.successful_creation_email
       MembershipCompletion.new(@membership)
       flash[:notice] = "Thank you for joining!" 
     else
