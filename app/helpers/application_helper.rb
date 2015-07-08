@@ -15,8 +15,7 @@ module ApplicationHelper
     end
   end
 
-  def avatar_url(user, size)
-    #"http://placehold.it/#{size}x#{size}"
+  def avatar_url(user)
     user.image
   end
 
