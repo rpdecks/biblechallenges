@@ -45,6 +45,9 @@ GEM
       tzinfo (~> 1.1)
     acts_as_scriptural (0.0.3)
     addressable (2.3.8)
+    airbrake (4.2.1)
+      builder
+      multi_json
     annotate (2.6.10)
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
@@ -404,6 +407,7 @@ DEPENDENCIES
   activerecord-deprecated_finders
   activerecord-import
   acts_as_scriptural (= 0.0.3)
+  airbrake
   annotate
   autoprefixer-rails
   better_errors
