@@ -68,6 +68,14 @@ describe Member::MembershipsController do
         post :create, challenge_id: newchallenge
       }.to change(MembershipStatistic, :count).by(number_of_stats * 2) 
     end
+    it "sends the user an email" do
+      newchallenge
+      Sidekiq::Testing.inline! do
+        expect {
+          post :create, challenge_id: newchallenge
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
   end
 
   context 'when the user has already joined' do
