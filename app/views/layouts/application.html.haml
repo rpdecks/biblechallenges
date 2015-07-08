@@ -35,7 +35,7 @@
             %li.profile-link
               - if user_signed_in?
                 = link_to edit_user_path(current_user) do
-                  = image_tag current_user.image, class: "img-rounded"
+                  = image_tag current_user.image, class: "img-rounded", title: current_user.name
             - if user_signed_in?
               %li
                 = link_to('Logout', destroy_user_session_path, :method => :delete)
