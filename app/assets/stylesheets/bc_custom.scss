@@ -22,6 +22,7 @@ a{
 
   &:hover{
     color: #999;
+    text-decoration: none;
   }
 }
 
@@ -128,7 +129,6 @@ a{
 }
 
 
-
 .section{
   padding: 40px 0;
 
@@ -213,6 +213,45 @@ a{
   background-color: $primary;
 }
 
+.comment{
+  border-bottom: 1px solid #ddd;
+  line-height: 16px;
+  padding: 8px 0;
+
+  .avatar{
+    float: left;
+    margin-right: 12px;
+  }
+
+  .comment_block{
+    margin-left: 54px;
+
+    .title{
+      font-size: 14px;
+      color: $primary;
+    }
+
+    .comment_content{
+      margin-bottom: 6px;
+    }
+
+    .details{
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 8px;
+    }
+
+    .comment_replies{
+      border-top: 1px solid #ddd;
+
+      .comment:last-of-type{
+        border-bottom: none;
+      }
+    }
+  }
+
+}
+
 
 
 @media (min-width: 1000px) {
@@ -224,6 +263,20 @@ a{
   }
   .masthead .subtitle {
     font-size: 25px;
+  }
+}
+
+@media (max-width: 640px){
+  .section{
+    padding: 20px;
+
+    .title{
+      font-size: 24px;
+    }
+  }
+
+  .nav-justified li a{
+    padding: 5px;
   }
 }
 
@@ -284,6 +337,11 @@ a{
   #verses{
     column-count: 1;
   }
+
+  .nav-justified > li {
+    display: table-cell;
+    width: 1%
+  }
 }
 
 .alert{
@@ -308,4 +366,8 @@ a{
   .form-control[readonly]{
     background-color: white;
   }
+}
+
+.control-group{
+  margin-bottom: 12px;
 }

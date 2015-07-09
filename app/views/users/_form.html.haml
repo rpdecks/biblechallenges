@@ -24,7 +24,7 @@
         Your daily reading e-mails will be sent out at #{number_to_hour_of_day(f.object.preferred_reading_hour)} #{ActiveSupport::TimeZone[f.object.time_zone]}
 
   .control-group
-    = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
+    = f.submit class: 'btn btn-primary', disable_with: 'Please Wait...'
 
 %br
 %p
