@@ -2,14 +2,13 @@
   %tr
     %td Owner:
     %td
-      - owner = challenge.owner
-      = image_tag owner.image, title: owner.username, class: "img-circle"
+      = render 'shared/avatar', user: challenge.owner
 
   %tr
     %td Members:
     %td
       - challenge.members.each do |m|
-        = image_tag m.image, title: m.username, class: "img-circle"
+        = render 'shared/avatar', user: m
 
   %tr
     %td Dates:
