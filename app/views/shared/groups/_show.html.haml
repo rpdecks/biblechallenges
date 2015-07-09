@@ -14,14 +14,15 @@
       .pull-right
         - if current_user
           - if current_user.groups.include?(group)
-            = link_to "Leave Group", leave_member_group_path(id: group.id), :class=>"btn btn-info", method: :post, data: {confirm: "Are you sure you want to leave this group?"}
+            - if group.user_id == current_user.id
+              = link_to "Delete Group", member_group_path(id: group.id), :class=>"btn btn-danger", method: :delete, data: {confirm: "STOP! Deleting this group will remove all members from this group. This cannot be undone. Are you SURE you want to delete this group?"}
+            -else
+              = link_to "Leave Group", leave_member_group_path(id: group.id), :class=>"btn btn-info", method: :post, data: {confirm: "Are you sure you want to leave this group?"}
           -else
             = link_to "Join Group", join_member_group_path(id: group.id), :class=> "btn btn-primary", method: :post
         - else
           = link_to "Sign me up", new_user_registration_path, :class=> "btn btn-primary"
         %span
-        - if current_user && group.user_id == current_user.id
-          = link_to "Delete Group", member_group_path(id: group.id), :class=>"btn btn-danger", method: :delete, data: {confirm: "Are you sure you want to delete this group?"}
 
   %table.table.table-striped.table-bordered.table-hover
     %thead

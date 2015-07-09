@@ -78,6 +78,7 @@ feature 'User manages groups' do
       user2 = create(:user)
       challenge = create(:challenge)
       group = challenge.groups.create(user_id: user.id)
+      create(:membership, challenge: challenge, group: group, user: user)
       membership = create(:membership, challenge: challenge, group: group, user: user1)
       membership2 = create(:membership, challenge: challenge, group: group, user: user2)
       visit member_group_path(group)
@@ -87,6 +88,14 @@ feature 'User manages groups' do
       expect(Group.count).to eq 0
       expect(membership.reload.group).to eq nil
       expect(membership2.reload.group).to eq nil
+    end
+
+    scenario 'Owner of a group can only see delete the group option' do
+      challenge = create(:challenge)
+      group = challenge.groups.create(user_id: user.id, name: "Awesome")
+      create(:membership, challenge: challenge, group: group, user: user)
+      visit member_challenge_path(challenge)
+      expect(page).not_to have_content("Leave Group")
     end
 
     scenario 'User should not see the Create Group link' do
@@ -100,8 +109,9 @@ feature 'User manages groups' do
 
     scenario 'User should see the Leave Group link instead of the Join link' do
       #setup
+      non_owner = create(:user)
       challenge = create(:challenge)
-      group1 = challenge.groups.create(name: "UCLA", user_id: user.id)
+      group1 = challenge.groups.create(name: "UCLA", user_id: non_owner.id)
       create(:membership, challenge: challenge, user: user, group_id: group1.id)
       visit(challenge_path(challenge))
       expect(page).not_to have_content("Join Group")
@@ -109,8 +119,9 @@ feature 'User manages groups' do
     end
 
     scenario 'User should be able to leaves a group successfully' do
+      non_owner = create(:user)
       challenge = create(:challenge)
-      group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
+      group = challenge.groups.create(name: "UC Irvine", user_id: non_owner.id)
       create(:membership, challenge: challenge, user: user, group_id: group.id)
 
       visit(challenge_path(challenge))
