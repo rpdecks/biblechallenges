@@ -54,7 +54,64 @@ feature 'User manages groups' do
 
       expect(user.groups).to include group
     end
+    scenario 'User joins a group and group stats update automatically' do
+      user2 = create(:user)
+      start_date = Date.today
+      challenge = create(:challenge_with_readings, 
+                         chapters_to_read: "Matt 1-2", begindate: start_date)
+      m2 = create(:membership, challenge: challenge, user: user2)
+      group = challenge.groups.create(name: "UC Irvine", user_id: user2.id)
+      group.add_user_to_group(challenge, user2)
 
+      m2.associate_statistics
+      group.associate_statistics
+
+      r = challenge.readings.first
+      create(:membership_reading, membership: m2, reading: r)
+      m2.update_stats
+      group.update_stats
+
+      group_stat = group.group_statistic_progress_percentage
+
+      visit(challenge_path(challenge))
+      click_link "Join Group"
+      group_stat.reload
+
+      expect(group_stat.value.to_i).to eq 25
+    end
+    scenario 'User leaves a group and group stats update automatically' do
+      user2 = create(:user)
+      start_date = Date.today
+      challenge = create(:challenge_with_readings, 
+                         chapters_to_read: "Matt 1-2", begindate: start_date)
+      m2 = create(:membership, challenge: challenge, user: user2)
+      m1 = challenge.memberships[1]
+      group = challenge.groups.create(name: "UC Irvine", user_id: user2.id)
+
+      group.add_user_to_group(challenge, user2)
+      group.add_user_to_group(challenge, user)
+
+      m1.associate_statistics
+      m2.associate_statistics
+      group.associate_statistics
+
+      r = challenge.readings.first
+      create(:membership_reading, membership: m2, reading: r)
+      create(:membership_reading, membership: m1, reading: r)
+
+      m1.update_stats
+      m2.update_stats
+      group.update_stats
+      binding.pry
+
+      group_stat = group.group_statistic_progress_percentage
+
+      visit(challenge_path(challenge))
+      click_link "Leave Group"
+      group_stat.reload
+
+      expect(group_stat.value.to_i).to eq 25
+    end
     scenario 'User sees members of a group without being in the group' do
       challenge = create(:challenge)
       user2 = create(:user)
