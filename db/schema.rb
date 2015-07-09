@@ -197,11 +197,11 @@ ActiveRecord::Schema.define(version: 20150708132758) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.string   "image"
-    t.string   "authentication_token"
     t.string   "username"
     t.string   "time_zone",              default: "EST"
     t.integer  "preferred_reading_hour", default: 12
