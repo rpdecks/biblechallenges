@@ -1,6 +1,15 @@
 -if todays_reading
-  %h3
+  %h4
     ="Today's Readings (#{DateTime.now.strftime("%m/%d/%Y")})"
+
+  - if current_user && membership = @challenge.membership_for(current_user)
+    %tr
+      %td Bible Version:
+      %td
+        = membership.bible_version
+        =link_to "Change", member_membership_path(membership), :method => :get
+  %br
+  %br
   %br
 
 

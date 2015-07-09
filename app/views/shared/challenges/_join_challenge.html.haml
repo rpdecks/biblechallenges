@@ -7,7 +7,7 @@
     %i
       = render 'shared/challenges/challenge_instructions'
 - if current_user
-  = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: challenge.id), method: :post, :class => 'btn btn-success', display: 'inline'
+  = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: challenge.id), method: :post, :class => 'btn btn-primary', display: 'inline'
 - unless current_user
   = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
   %p
