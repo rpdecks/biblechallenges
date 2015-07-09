@@ -69,10 +69,10 @@ describe Member::MembershipsController do
       }.to change(MembershipStatistic, :count).by(number_of_stats * 2) 
     end
     it "sends the user a Thanks for joining email" do
-      newchallenge
+      challenge = create(:challenge_with_readings, begindate: Date.today+1)
       Sidekiq::Testing.inline! do
         expect {
-          post :create, challenge_id: newchallenge
+          post :create, challenge_id: challenge
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
         expect(ActionMailer::Base.deliveries.last.subject).to include "Thanks for joining"
       end
