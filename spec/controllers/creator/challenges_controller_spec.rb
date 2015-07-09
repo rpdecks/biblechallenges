@@ -69,7 +69,10 @@ describe Creator::ChallengesController do
     describe "POST #create" do
       describe "with valid attributes" do
         it "joins the creator to the challenge he created" do
-          challenge #owner is automatically added to the challenge
+          expect{
+            post :create, challenge: FactoryGirl.attributes_for(:challenge)
+          }.to change(Challenge, :count).by(1)
+
           expect(Challenge.first.members).to include challenge_creator
         end
       end

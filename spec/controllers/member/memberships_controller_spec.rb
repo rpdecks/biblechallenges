@@ -68,12 +68,22 @@ describe Member::MembershipsController do
         post :create, challenge_id: newchallenge
       }.to change(MembershipStatistic, :count).by(number_of_stats * 2) 
     end
-    it "sends the user an email" do
+    it "sends the user a Thanks for joining email" do
       newchallenge
       Sidekiq::Testing.inline! do
         expect {
           post :create, challenge_id: newchallenge
         }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect(ActionMailer::Base.deliveries.last.subject).to include "Thanks for joining"
+      end
+    end
+    it "sends the user an email with today's reading if there is reading for today" do
+      newchallenge
+      Sidekiq::Testing.inline! do
+        expect {
+          post :create, challenge_id: newchallenge
+        }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect(ActionMailer::Base.deliveries.last.subject).to include "Bible Challenge reading for"
       end
     end
   end
