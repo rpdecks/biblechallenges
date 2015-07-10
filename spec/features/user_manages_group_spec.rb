@@ -18,6 +18,7 @@ feature 'User manages groups' do
       expect(user.challenges).to include challenge
       expect(user.groups).to include group
     end
+
     scenario "Doesn't see 'create a group' option" do
       challenge = create(:challenge)
 

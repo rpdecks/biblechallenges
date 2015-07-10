@@ -4,10 +4,10 @@
 		You haven't read it yet?
 		%br
 		%center
-			= submit_tag "No", class: 'btn btn-success btn-xs', disable_with: 'Please wait...'
+			= submit_tag "No", class: 'btn btn-primary btn-xs', disable_with: 'Please wait...'
 	- else
 		= hidden_field_tag :state, 'read'
 		Have you already read this?
 		%br
 		%center
-			= submit_tag "Yes", class: 'btn btn-success btn-xs', disable_with: 'Please wait...'
+			= submit_tag "Yes", class: 'btn btn-primary btn-xs', disable_with: 'Please wait...'
