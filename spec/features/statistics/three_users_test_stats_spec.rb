@@ -6,7 +6,6 @@ feature 'One user reads various parts of a challenge' do
 
   context "One user reads various amounts of chapters in the challenge" do
     scenario "Creates a challenge and reads nothing" do
-      #page.driver.block_unknown_urls
 
       create_account_and_log_in(email: 'c@c.com', name: 'C')
       create_a_challenge(name: "One Day", chapters_to_read: "Mat 1-2")  #below
@@ -34,8 +33,7 @@ feature 'One user reads various parts of a challenge' do
       expect(u.user_statistic_days_read_in_a_row_current.value).to eq "1"
 
     end
-  end
-
+  end 
 
 
 
@@ -54,7 +52,7 @@ feature 'One user reads various parts of a challenge' do
     visit root_path
     click_link "Create a challenge"
     fill_in "Challenge Name", with: name
-    fill_in "challenge[begindate]", with: "2017-01-01"
+    fill_in "challenge[begindate]", with: Date.today
     fill_in "Chapters to Read", with: chapters_to_read
     click_button "Create Challenge"
   end
