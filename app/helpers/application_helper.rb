@@ -15,11 +15,8 @@ module ApplicationHelper
     end
   end
 
-  def avatar_url(user, size)
-    # MIKE
-    "http://placemi.com/#{size}x#{size}"
-    # "http://placehold.it/#{size}x#{size}"
-    # user.image
+  def avatar_url(user, size = 30)
+    user.image || "http://placemi.com/#{size}x#{size}"
   end
 
   def select_options_for_bible
