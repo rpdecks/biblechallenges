@@ -20,13 +20,16 @@
             %span.icon-bar
             %span.icon-bar
         #navbar-main.navbar-collapse.collapse
+
+
+
           %ul.nav.navbar-nav.navbar-right
             %li#search
-              .form-inline.search_challenge.col-sm-12
+              .form-inline.search_challenge
                 = form_tag challenges_path, method: :get, class: "input-group form-query" do
-                  = text_field_tag :query, nil, class: "search-input form-control", hide_label: true, placeholder: "Search for a challenge"
-                  .input-group-btn
-                    = submit_tag "Search", class: "btn btn-primary query"
+                  .form-group
+                    = text_field_tag :query, nil, class: "search-input form-control", hide_label: true, placeholder: "Search for a challenge"
+                  = submit_tag "Search", class: "btn btn-primary query"
 
             %li
               = link_to "FAQ", page_path("faq")
