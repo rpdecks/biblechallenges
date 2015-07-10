@@ -14,6 +14,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # POST /resource
+  def create
+     super
+  end
+
   private
 
   def complete_user
@@ -30,10 +35,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
 
   # GET /resource/edit
   # def edit
