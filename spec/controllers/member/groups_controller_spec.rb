@@ -23,8 +23,10 @@ describe Member::GroupsController, type: :controller do
 
   describe 'GET#show' do
     it "redirects to the group show page" do
+      pending
       challenge = create(:challenge)
       group = create(:group, challenge_id: challenge.id, user: user)
+      # route no longer exists
       get :show, challenge_id: challenge.id, id: group.id
       expect(response).to render_template :show
     end
