@@ -3,12 +3,6 @@
     - flash[:error] = @user.errors.full_messages.to_sentence
 
   .control-group
-    = f.label :username, "Username", class: "control-label"
-    .controls
-      = f.text_field :username, class: "form-control"
-      %p.help-block Your username will be displayed by any comments you post
-
-  .control-group
     = f.label :name, "Name", class: "control-label"
     .controls
       = f.text_field :name, class: "form-control"
@@ -39,7 +33,7 @@
     = image_tag @user.avatar.url(:thumb)
 
   .control-group
-    = f.submit class: 'btn btn-success', disable_with: 'Please Wait...'
+    = f.submit class: 'btn btn-primary', disable_with: 'Please Wait...'
 
 %br
 %p
