@@ -9,7 +9,6 @@ feature 'One user reads various parts of a challenge' do
 
       create_account_and_log_in(email: 'c@c.com', name: 'C')
       create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  #below
-      save_and_open_page
       click_link "Log my reading"
 
       c = Challenge.first
