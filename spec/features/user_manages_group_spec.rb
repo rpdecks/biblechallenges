@@ -74,7 +74,6 @@ feature 'User manages groups' do
 
       #update stats
       m2.update_stats
-      group.update_stats
 
       #group_stat should be 50 because user2 completed half of challenge
       group_stat = group.group_statistic_progress_percentage
