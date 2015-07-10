@@ -1,12 +1,9 @@
 require 'spec_helper'
 
 describe MembershipForm do
-
   describe "Validations" do
-
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:challenge) }
-    
   end
 
   describe '#subscribe' do
@@ -34,7 +31,7 @@ describe MembershipForm do
           expect {
             membership_form.subscribe
           }.to change(Membership,:count).by(0)
-        end        
+        end
 
         it "finds the current_user membership" do
           membership_form.subscribe

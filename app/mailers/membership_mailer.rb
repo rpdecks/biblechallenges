@@ -5,8 +5,8 @@ class MembershipMailer < ActionMailer::Base
   layout 'default_mailer'
 
   # Send an email to the user, when the membership creation is succesfull.
-  def creation_email(membership)
-    @membership = membership
+  def creation_email(membership_id)
+    @membership = Membership.find(membership_id)
     @challenge = @membership.challenge
     @user = @membership.user
     mail( to: @user.email,
