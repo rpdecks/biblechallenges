@@ -20,6 +20,7 @@ RSpec.configure do |config|
   #clears jobs in in worker array before each
   config.before(:each) do
     Sidekiq::Worker.clear_all
+    ActionMailer::Base.deliveries.clear
   end
 
   # suppress error backtrace if related to rvm or rbenv
