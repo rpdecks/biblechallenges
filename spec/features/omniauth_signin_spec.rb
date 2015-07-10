@@ -23,6 +23,7 @@ feature "Omniauth Sign In / Sign Up" do
   end
 
   scenario "New User SIGNS UP with google, logs out, logs back in" do
+    pending "removed google sign up temporarily"
     email = "peter.parker@spider.man"
     mock_auth_hash("google_oauth2", email)
     password = Faker::Internet.password
@@ -44,14 +45,13 @@ feature "Omniauth Sign In / Sign Up" do
   end
 
   scenario "Reject if password is different from password confirmation" do
-    mock_auth_hash("google_oauth2", "peter.parker@spider.man")
+    mock_auth_hash("facebook", "barry.allen@flash.com")
     password = Faker::Internet.password
     visit root_path
-    click_link "Sign in with Google"
+    click_link "Sign in with Facebook"
     fill_in 'user[password]', with: password
     fill_in 'user[password_confirmation]', with: password+"2"
     click_button "Continue"
     expect(page).to have_content("Password confirmation doesn't match Password")
   end
-
 end

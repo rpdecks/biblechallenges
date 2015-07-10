@@ -5,7 +5,6 @@ class MembershipForm
   attr_accessor :email, :bible_version, :user, :challenge
   validates_presence_of :email, :challenge
 
-
   def initialize(attributes = [])
     attributes.each do |name, value|
       send("#{name}=",value)
@@ -19,6 +18,8 @@ class MembershipForm
       generated_password = Devise.friendly_token.first(8)
       self.user.password = generated_password
       self.user.password_confirmation = generated_password
+      # todo: why is a new user created here?
+      self.user.name = "Anonymous"
       user.save!
       membership = Membership.new(user: user, bible_version: bible_version, challenge: challenge)
       membership.auto_created_user = true

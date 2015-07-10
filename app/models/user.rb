@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
+  # Validations
+  validates :name, presence: true
+
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
   has_many :user_statistics
@@ -80,7 +83,6 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,15]
       user.name = auth.info.name
       user.image = auth.info.image
-      # user.username
       # timezone
       # preferred reading hour
 

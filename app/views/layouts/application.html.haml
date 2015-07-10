@@ -22,11 +22,12 @@
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li#search
-              .form-inline.search_challenge
-                = bootstrap_form_tag url: challenges_path, method: :get, class: "input-xxlarge form-query" do |f|
-                  = f.text_field :query, class: "search-input", hide_label: true, placeholder: "Search for a challenge"
-                  %a{class: "btn btn-primary query", type: "submit", id: "challenge_search"}
-                    %span.glyphicon.glyphicon-search
+              .form-inline.search_challenge.col-sm-12
+                = form_tag challenges_path, method: :get, class: "input-group form-query" do
+                  = text_field_tag :query, nil, class: "search-input form-control", hide_label: true, placeholder: "Search for a challenge"
+                  .input-group-btn
+                    = submit_tag "Search", class: "btn btn-primary query"
+
             %li
               = link_to "FAQ", page_path("faq")
             %li
@@ -44,8 +45,8 @@
                 = link_to('Login', new_user_session_path)
               %li
                 = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-              %li
-                = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
+              //%li
+              //  = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
 
     .flash-messages
       = render partial: "shared/flash_messages", flash: flash
