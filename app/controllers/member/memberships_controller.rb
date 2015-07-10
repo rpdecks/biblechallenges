@@ -32,6 +32,7 @@ class Member::MembershipsController < ApplicationController
     if @membership.save
       # associate stats here
       MembershipCompletion.new(@membership)
+      challenge.update_stats
       flash[:notice] = "Thank you for joining!" 
     else
       flash[:error] = @membership.errors.full_messages.to_sentence
@@ -50,6 +51,7 @@ class Member::MembershipsController < ApplicationController
   def destroy
     challenge = membership.challenge
     membership.destroy
+    challenge.update_stats
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
     redirect_to challenge
   end
