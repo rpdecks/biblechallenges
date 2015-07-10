@@ -1,10 +1,15 @@
 require 'spec_helper'
 
 feature 'User manages user profile' do
+  let(:user) {create(:user)}
+
+  before(:each) do
+    login(user)
+  end
+
   scenario 'User edits own profile successfully' do
-    user = create(:user)
     new_user_params = build(:user)
-    visit edit_user_path user
+    visit edit_user_path(user)
 
     fill_in 'user[name]', with: new_user_params.name
     select '(GMT-09:00) Alaska', from: 'Your Time Zone'

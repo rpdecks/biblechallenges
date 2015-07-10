@@ -4,8 +4,9 @@ Bible Challenge.
 
 =button_to "Unsubscribe Me", member_membership_path(@membership,
                               user_email: @membership.user.email,
-                              user_token: @membership.user.authentication_token), method: :delete
-                                
+                              user_token: @membership.user.authentication_token), 
+                              method: :delete,
+                              data: { confirm: "Are you sure you would like to remove yourself from this Challenge?" }
 =button_to "Never Mind", challenge_path(@membership.challenge)
 
 
