@@ -9,8 +9,11 @@
       = devise_error_messages!
       %fieldset
         .form-group
+          = f.label :name
+          = f.text_field :name, autofocus: true, placeholder: 'Name', autocomplete: 'off', class: 'form-control'
+        .form-group
           = f.label :email
-          = f.email_field :email, autofocus: true, placeholder: 'Email', autocomplete: 'off', class: 'form-control'
+          = f.email_field :email, placeholder: 'Email', autocomplete: 'off', class: 'form-control'
         .form-group
           = f.label :password
           = f.password_field :password, placeholder: 'Password', autocomplete: 'off', class: 'form-control'
