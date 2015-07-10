@@ -12,10 +12,10 @@
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
 
-    = image_tag avatar_url(@challenge.owner, 20), title: "Owner: #{@challenge.owner.username}", class: "img-circle"
+    = image_tag avatar_url(@challenge.owner, 20), title: "Owner: #{@challenge.owner.name}", class: "img-circle"
 
-    - @challenge.members.where.not(username: @challenge.owner.username).each do |m|
-      = image_tag avatar_url(m, 20), title: m.username, class: "img-circle"
+    - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
+      = image_tag avatar_url(m, 20), title: m.name, class: "img-circle"
 
 .content
   .container
