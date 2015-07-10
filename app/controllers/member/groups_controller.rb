@@ -12,6 +12,7 @@ class Member::GroupsController < ApplicationController
 
   def leave
     group.remove_user_from_group(group.challenge, current_user)
+    group.update_stats
     flash[:notice] = "Left group successfully"
     redirect_to member_challenge_path(group.challenge, anchor: "groups")
   end
