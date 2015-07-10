@@ -17,15 +17,15 @@
       %th Stats
       %th Last Read
   %tbody
-  - group.memberships.each do |m|
+  - group.members.each do |m|
     %tr
       %td
-        = render 'shared/avatar', user: m.user
+        = render 'shared/avatar', user: m
         %span
-          = m.user.decorate.name
-      %td= m.memberships_readings.size
-      - if m.user.has_logged_a_reading?(m.user, group)
-        %td= m.user.decorate.show_last_recorded_reading(m.user, group)
+          = m.decorate.name
+      %td= m.membership_readings.size
+      - if m.has_logged_a_reading?(m, group)
+        %td= m.decorate.show_last_recorded_reading(m, group)
       - else
         %td
           No readings yet
