@@ -12,7 +12,7 @@ Biblechallenge::Application.routes.draw do
   }
 
   devise_scope :user do
-    match '/users/finish_signup' => 'users/registrations#finish_signup', 
+    match '/users/finish_signup' => 'users/registrations#finish_signup',
       via: [:get, :patch],
       :as => :finish_signup
   end
@@ -49,7 +49,7 @@ Biblechallenge::Application.routes.draw do
   resources :badges, only: [:index, :show]
 
   resources :readings, only: [:show, :edit, :update] do
-    resources :comments, only: [:create, :destroy], controller: 'readings/comments' 
+    resources :comments, only: [:create, :destroy], controller: 'readings/comments'
   end
 
   resources :comments, only: [] do

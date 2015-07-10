@@ -1,2 +1,2 @@
-- if @challenge.has_ungrouped_member?(current_user) 
-  = link_to "Create a group", new_member_challenge_group_path(challenge_id: @challenge.id), :class => 'btn btn-success btn-sm'
+- if @challenge.has_ungrouped_member?(current_user)
+  = link_to "Create a group", new_member_challenge_group_path(challenge_id: @challenge.id), :class => 'btn btn-primary btn-sm'
