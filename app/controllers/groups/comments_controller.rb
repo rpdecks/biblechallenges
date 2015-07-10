@@ -1,10 +1,7 @@
 class Groups::CommentsController < ApplicationController
-
   respond_to :html
-
   before_filter :authenticate_user!, only: [:create, :destroy]
   before_filter :find_group
-#  before_filter :verify_username
 
   def create
     if @group.has_member?(current_user)
@@ -16,12 +13,11 @@ class Groups::CommentsController < ApplicationController
       else
         flash[:alert] = @comment.errors.full_messages.to_sentence
         redirect_to params[:location] || request.referer
-      end 
+      end
     else
       redirect_to params[:location] || request.referer
     end
   end
-
 
   def destroy
     if (@comment = current_user.comments.find_by_id(params[:id]))
@@ -33,16 +29,8 @@ class Groups::CommentsController < ApplicationController
     end
   end
 
-
   def find_group
     @group = Group.find_by_id(params[:group_id])
-  end
-
-  def verify_username
-    if current_user.username.blank?
-      flash[:notice] = "You must set a username before you can post comments"
-      redirect_to edit_user_registration_path
-    end
   end
 
   private
@@ -50,5 +38,4 @@ class Groups::CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:content, :commentable_id, :commentable_type, :invisible, :flag_count)
   end
-
 end
