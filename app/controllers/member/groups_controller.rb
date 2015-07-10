@@ -5,12 +5,14 @@ class Member::GroupsController < ApplicationController
 
   def join
     group.add_user_to_group(group.challenge, current_user)
+    group.update_stats
     flash[:notice] = "Joined group successfully"
     redirect_to member_challenge_path(group.challenge, anchor: "mygroup")
   end
 
   def leave
     group.remove_user_from_group(group.challenge, current_user)
+    group.update_stats
     flash[:notice] = "Left group successfully"
     redirect_to member_challenge_path(group.challenge, anchor: "groups")
   end

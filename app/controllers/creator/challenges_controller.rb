@@ -38,6 +38,12 @@ class Creator::ChallengesController < ApplicationController
         end
       end
 
+      membership = Membership.new
+      membership.user = current_user
+      membership.challenge = @challenge
+      membership.save
+
+      MembershipCompletion.new(membership)
       ChallengeCompletion.new(@challenge)
     end
 
