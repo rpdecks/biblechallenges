@@ -5,7 +5,7 @@ feature 'One user reads various parts of a challenge' do
   # this is a pure test that only uses browser actions...
 
   context "One user reads various amounts of chapters in the challenge" do
-    scenario "Creates a challenge and reads nothing" do
+    scenario "Creates a challenge and reads through it, checking stats all the way " do
 
       create_account_and_log_in(email: 'c@c.com', name: 'C')
       create_a_challenge(name: "One Day", chapters_to_read: "Mat 1-2")  #below
@@ -14,9 +14,9 @@ feature 'One user reads various parts of a challenge' do
       c = Challenge.first
       u = User.first
       m = c.membership_for(u)
-#      expect(c.challenge_statistic_on_schedule_percentage.value).to eq '0'
-#      expect(c.challenge_statistic_chapters_read.value).to eq '0'
-#      expect(c.challenge_statistic_progress_percentage.value).to eq '0'
+      expect(c.challenge_statistic_on_schedule_percentage.value).to eq '0'
+      expect(c.challenge_statistic_chapters_read.value).to eq '0'
+      expect(c.challenge_statistic_progress_percentage.value).to eq '0'
 
       reading_one, reading_two = c.readings
       click_link "One Day"  # title of challenge
@@ -25,16 +25,76 @@ feature 'One user reads various parts of a challenge' do
       #  I think because they are react components.  So simulating the post action
       #  is as close as I can get to being a "real" user action
       #  This is clicking one box
-      page.driver.post('/membership_readings.json', { :reading_id => reading_one.id, :membership_id => m.id  }) 
-      page.driver.status_code.should eql 200
+      click_to_read_a_reading(reading: reading_one, membership: m)
 
+      #individual
       expect(u.user_statistic_chapters_read_all_time.value).to eq "1"
       expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq "1"
       expect(u.user_statistic_days_read_in_a_row_current.value).to eq "1"
 
+      #challenge
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq '1'
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '50'
+
+      #read the second chapter
+      click_to_read_a_reading(reading: reading_two, membership: m)
+
+      #individual
+      expect(u.user_statistic_chapters_read_all_time.reload.value).to eq "2"
+      expect(u.user_statistic_days_read_in_a_row_all_time.reload.value).to eq "1"
+      expect(u.user_statistic_days_read_in_a_row_current.reload.value).to eq "1"
+
+      #challenge
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq '2'
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '100'
+
     end
   end 
 
+  context "Two users in a one chapter challenge" do
+    scenario "Creates a challenge and reads through checking stats" do
+      create_account_and_log_in(email: 'b@b.com', name: 'B')
+      create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  
+      click_link "Logout"
+      create_account_and_log_in(email: 'c@c.com', name: 'C')
+      c = Challenge.first
+      reading = c.readings.first
+
+      click_link c.name
+      save_and_open_page
+      click_link "Join Challenge"
+
+      # two users are in the challenge now
+      user1, user2 = User.all
+      membership1, membership2 = c.membership_for(user1), c.membership_for(user2)
+
+      click_to_read_a_reading(reading: reading, membership: membership2)
+
+      #challenge
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq '1'
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '50'
+
+      click_to_delete_a_reading(membership_reading: MembershipReading.first)
+
+      #challenge
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq '0'
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '0'
+    end
+  end
+
+  def click_to_delete_a_reading(membership_reading: membership_reading)
+    page.driver.submit :delete, "/membership_readings/#{membership_reading.id}.json", {}
+    page.driver.status_code.should eql 204
+  end
+
+  def click_to_read_a_reading(reading: reading, membership: membership)
+    page.driver.post('/membership_readings.json', { :reading_id => reading.id, :membership_id => membership.id  }) 
+    page.driver.status_code.should eql 200
+  end
 
 
   def create_account_and_log_in(email: 'somebody@somebody.com', name: 'Somebody')
