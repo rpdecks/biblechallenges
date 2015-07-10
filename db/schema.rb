@@ -202,7 +202,6 @@ ActiveRecord::Schema.define(version: 20150708222833) do
     t.string   "uid"
     t.string   "name"
     t.string   "image"
-    t.string   "username"
     t.string   "time_zone",              default: "EST"
     t.integer  "preferred_reading_hour", default: 12
     t.string   "avatar_file_name"

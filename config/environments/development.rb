@@ -47,8 +47,10 @@ Biblechallenge::Application.configure do
   # add db logging
   config.active_record_logger = Logger.new("log/sql.log")
 
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.add_footer = true
-  end
+
+# MIKE
+  # config.after_initialize do
+  #   Bullet.enable = true
+  #   Bullet.add_footer = true
+  # end
 end
