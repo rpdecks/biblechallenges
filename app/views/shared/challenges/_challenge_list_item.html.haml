@@ -1,12 +1,12 @@
 = link_to challenge_path(challenge), :class => 'list-group-item', display: 'inline' do
-  %span.badge
-    = "#{challenge.membership_readings.size} / #{challenge.readings_count} read"
+  %span.badge.primary
+    = "#{challenge.readings_count} chapters"
   %h4.list-group-item-heading
-    = "#{challenge.name} - #{challenge.readings_count} chapters"
+    = "#{challenge.name}"
 
   %p.list-group-item-text
     = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
 
   %p.list-group-item-text
-    - challenge.members.each do |m|
-      = image_tag avatar_url(m), class: "img-rounded", title: m.name
+    - challenge.members.limit(20).each do |m|
+      = image_tag avatar_url(m, 30), title: m.name, class: 'img-circle'

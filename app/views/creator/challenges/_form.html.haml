@@ -39,28 +39,44 @@
       .form-group
         .col-md-9.col-md-offset-3
           %h5.strong Days of the week to skip
-          Lord's Day
-          = check_box_tag 'days_to_skip[]', '0', false
-          &nbsp; Monday
-          = check_box_tag 'days_to_skip[]', '1', false
-          &nbsp; Tuesday
-          = check_box_tag 'days_to_skip[]', '2', false
-          &nbsp; Wednesday
-          = check_box_tag 'days_to_skip[]', '3', false
-          &nbsp; Thursday
-          = check_box_tag 'days_to_skip[]', '4', false
-          &nbsp; Friday
-          = check_box_tag 'days_to_skip[]', '5', false
-          &nbsp; Saturday
-          = check_box_tag 'days_to_skip[]', '6', false
 
+          %br
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '0', false
+            &nbsp; Lord's Day
+
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '1', false
+            &nbsp; Monday
+
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '2', false
+            &nbsp; Tuesday
+
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '3', false
+            &nbsp; Wednesday
+
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '4', false
+            &nbsp; Thursday
+
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '5', false
+            &nbsp; Friday
+
+          .col-sm-3
+            = check_box_tag 'days_to_skip[]', '6', false
+            &nbsp; Saturday
+
+
+      %br
+      %br
 
       .form-group
-        = f.submit class: 'btn btn-primary btn-block', disable_with: 'Please Wait...'
-        %br
-        %br
-
-        = link_to "Delete this challenge", confirm_delete_creator_challenge_url(@challenge),class: "btn btn-danger" unless @challenge.new_record?
+        .col-md-9.col-md-offset-3
+          = f.submit class: 'btn btn-primary btn-block', disable_with: 'Please Wait...'
+          = link_to "Delete this challenge", confirm_delete_creator_challenge_url(@challenge),class: "btn btn-danger btn-block" unless @challenge.new_record?
 
 
 :javascript

@@ -4,7 +4,7 @@
       .row
         .col-md-6.col-md-offset-3
           %center
-            = f.submit 'Join this Challenge', class: 'btn btn-success', disable_with: 'Please Wait...'
+            = f.submit 'Join this Challenge', class: 'btn btn-primary', disable_with: 'Please Wait...'
 - else
   = form_for(MembershipForm.new,url: create_for_guest_challenge_memberships_path(@challenge)) do |f|
     .row
@@ -17,4 +17,4 @@
     %center
       .row
         .control-group
-          = f.submit 'Join this Challenge', class: 'btn btn-success', disable_with: 'Please Wait...'
+          = f.submit 'Join this Challenge', class: 'btn btn-primary', disable_with: 'Please Wait...'
