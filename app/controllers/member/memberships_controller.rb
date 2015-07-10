@@ -6,10 +6,6 @@ class Member::MembershipsController < ApplicationController
 
   respond_to :html, :json, :js
 
-  def index
-    @memberships = challenge.memberships
-  end
-
   def show
     respond_with(membership)
   end
