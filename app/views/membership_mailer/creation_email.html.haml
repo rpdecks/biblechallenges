@@ -7,7 +7,7 @@
         %em
           = link_to @challenge.name, "http://" + @challenge.url
       %br
-      Hello#{ " " + @user.username unless @user.username.blank?},
+      Hello#{ " " + @user.name unless @user.name.blank?},
 
       %br
       This challenge begins on #{@challenge.begindate.strftime("%b %-d, %Y")} and ends on #{@challenge.enddate.strftime("%b %-d, %Y")}.
