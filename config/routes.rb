@@ -29,7 +29,7 @@ Biblechallenge::Application.routes.draw do
       resources :groups, only: [:new, :create, :index]
       resources :memberships, only: [:create]
     end
-    resources :groups, except: [:new, :create, :index] do
+    resources :groups, except: [:new, :create, :index, :show] do
       member do
         post 'join'
         post 'leave'
