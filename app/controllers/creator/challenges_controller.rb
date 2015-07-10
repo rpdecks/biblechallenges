@@ -41,7 +41,7 @@ class Creator::ChallengesController < ApplicationController
       ChallengeCompletion.new(@challenge)
     end
 
-    redirect_to member_challenges_path
+    redirect_to member_challenge_path(@challenge)
   end
 
   def destroy
