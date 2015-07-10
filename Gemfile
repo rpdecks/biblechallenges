@@ -13,6 +13,7 @@ gem 'activerecord-import'
 #gem 'chosen-rails'
 gem 'thin'
 gem 'sidekiq'
+gem 'airbrake'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
 gem 'font-awesome-rails'
@@ -36,6 +37,7 @@ gem 'react-rails'
 gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
 gem 'skylight'
+gem 'paperclip'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 

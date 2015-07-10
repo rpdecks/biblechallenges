@@ -46,7 +46,7 @@ describe Member::MembershipsController do
   end
 
   describe  'POST#create' do
-    let(:newchallenge){create(:challenge, owner: owner)}
+    let(:newchallenge){create(:challenge_with_readings, owner: owner)}
 
     it "redirects to the challenge page after joining as a logged in user" do
       somechallenge = create(:challenge)  #uses factorygirl
@@ -60,13 +60,23 @@ describe Member::MembershipsController do
         post :create, challenge_id: newchallenge
       }.to change(Membership, :count).by(1)
     end
+
     it "associates statistics with membership" do
       number_of_stats = MembershipStatistic.descendants.size
       expect {
         # this slightly ridiculous expectation is because the stats are created
         # for the challenge creator as well as the new member.  #todo
         post :create, challenge_id: newchallenge
-      }.to change(MembershipStatistic, :count).by(number_of_stats * 2) 
+      }.to change(MembershipStatistic, :count).by(number_of_stats * 2)
+    end
+
+    it "sends the user an email" do
+      newchallenge
+      Sidekiq::Testing.inline! do
+        expect {
+          post :create, challenge_id: newchallenge
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
     end
   end
 

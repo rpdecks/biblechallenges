@@ -55,6 +55,10 @@ class Membership < ActiveRecord::Base
     self.membership_statistics << MembershipStatisticTotalChaptersRead.create
   end
 
+  def successful_creation_email
+    MembershipMailer.delay.creation_email(self.id)
+  end
+
   private
   # Callbacks
   def recalculate_group_stats
@@ -67,9 +71,6 @@ class Membership < ActiveRecord::Base
 
   # -- emails
 
-  def successful_creation_email
-    MembershipMailer.creation_email(self).deliver_now
-  end
 
   def successful_auto_creation_email
     MembershipMailer.auto_creation_email(self).deliver_now

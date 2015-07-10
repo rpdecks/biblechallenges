@@ -45,6 +45,9 @@ GEM
       tzinfo (~> 1.1)
     acts_as_scriptural (0.0.3)
     addressable (2.3.8)
+    airbrake (4.2.1)
+      builder
+      multi_json
     annotate (2.6.10)
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
@@ -79,6 +82,10 @@ GEM
       timers (~> 4.0.0)
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.7)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -187,6 +194,7 @@ GEM
       tilt
     method_source (0.8.2)
     mime-types (1.25.1)
+    mimemagic (0.3.0)
     mini_portile (0.6.2)
     minitest (5.7.0)
     multi_json (1.0.4)
@@ -212,6 +220,12 @@ GEM
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
     orm_adapter (0.5.0)
+    paperclip (4.3.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (= 0.3.0)
     pg (0.18.2)
     pg_search (1.0.4)
       activerecord (>= 3.1)
@@ -400,6 +414,7 @@ DEPENDENCIES
   activerecord-deprecated_finders
   activerecord-import
   acts_as_scriptural (= 0.0.3)
+  airbrake
   annotate
   autoprefixer-rails
   better_errors
@@ -436,6 +451,7 @@ DEPENDENCIES
   omniauth
   omniauth-facebook
   omniauth-google-oauth2
+  paperclip
   pg
   pg_search
   pickadate-rails
@@ -470,6 +486,3 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-worker-killer
-
-BUNDLED WITH
-   1.10.4

@@ -1,6 +1,6 @@
 %p
   %i
-    = @newcomment.user.username
+    = @newcomment.user.name
     responded to your comment:
     = # link_to @original_comment.commentable.chapter.book_and_chapter + ":", reading_path(@original_comment.commentable)
 %p
