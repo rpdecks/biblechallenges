@@ -60,13 +60,14 @@ describe Member::MembershipsController do
         post :create, challenge_id: newchallenge
       }.to change(Membership, :count).by(1)
     end
+
     it "associates statistics with membership" do
       number_of_stats = MembershipStatistic.descendants.size
       expect {
         # this slightly ridiculous expectation is because the stats are created
         # for the challenge creator as well as the new member.  #todo
         post :create, challenge_id: newchallenge
-      }.to change(MembershipStatistic, :count).by(number_of_stats * 2) 
+      }.to change(MembershipStatistic, :count).by(number_of_stats * 2)
     end
     it "sends the user a Thanks for joining email" do
       challenge = create(:challenge_with_readings, begindate: Date.today+1)
