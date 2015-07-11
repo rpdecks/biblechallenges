@@ -35,7 +35,7 @@ Biblechallenge::Application.configure do
   config.assets.debug = true
 
   #devise options
-  config.action_mailer.default_url_options = { host: 'lvh.me:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # delivering email
   config.action_mailer.delivery_method = :letter_opener_web
