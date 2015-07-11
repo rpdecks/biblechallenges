@@ -10,22 +10,6 @@ describe Member::MembershipsController do
     sign_in :user, user
   end
 
-  describe 'GET#index' do
-    it "collects memberships into @memberships" do
-      challenge.join_new_member(create(:user))
-
-      get :index, challenge_id: challenge
-
-      expect(assigns(:memberships)).to match_array(challenge.memberships)
-    end
-
-    it "renders the :index template" do
-      get :index, challenge_id: challenge
-
-      expect(response).to render_template :index
-    end
-  end
-
   describe 'DELETE#destroy' do
     it "finds the current_user membership" do
       delete :destroy, id: membership
@@ -69,13 +53,22 @@ describe Member::MembershipsController do
         post :create, challenge_id: newchallenge
       }.to change(MembershipStatistic, :count).by(number_of_stats * 2)
     end
-
-    it "sends the user an email" do
+    it "sends the user a Thanks for joining email" do
+      challenge = create(:challenge_with_readings, begindate: Date.today+1)
+      Sidekiq::Testing.inline! do
+        expect {
+          post :create, challenge_id: challenge
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect(ActionMailer::Base.deliveries.last.subject).to include "Thanks for joining"
+      end
+    end
+    it "sends the user an email with today's reading if there is reading for today" do
       newchallenge
       Sidekiq::Testing.inline! do
         expect {
           post :create, challenge_id: newchallenge
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        }.to change { ActionMailer::Base.deliveries.count }.by(2)
+        expect(ActionMailer::Base.deliveries.last.subject).to include "Bible Challenge reading for"
       end
     end
   end

@@ -17,6 +17,24 @@ describe DailyEmailScheduler do
       Timecop.return
     end
 
+    it "schedules an email job for a user, but ignores job when membeship no longer exists" do
+      user = create(:user)
+      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      membership = create(:membership, user: user, challenge: challenge)
+
+      Timecop.travel("2050-01-01")
+
+      DailyEmailScheduler.set_daily_email_jobs
+
+      membership.destroy
+      DailyEmailWorker.drain
+
+      #first email is for created challenge, second is the dailyreading
+      expect(ActionMailer::Base.deliveries.size).to eq 2
+
+      Timecop.return
+    end
+
     it "schedules email's timing according to the user's preferences" do
       today = DateTime.now
       user1 = create(:user, time_zone: "Eastern Time (US & Canada)",
