@@ -1,6 +1,7 @@
 = link_to challenge_path(challenge), :class => 'list-group-item', display: 'inline' do
-  %span.badge.primary
-    = "#{challenge.readings_count} chapters"
+  %span.badge
+    = challenge.memberships.size
+    = "member".pluralize(challenge.memberships.size)
   %h4.list-group-item-heading
     = "#{challenge.name}"
 

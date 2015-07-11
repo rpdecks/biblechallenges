@@ -1,0 +1,19 @@
+require 'spec_helper'
+
+feature 'User manages challenges' do
+  let(:user) {create(:user)}
+
+  before(:each) do
+    login(user)
+  end
+
+  scenario 'User posts a comment' do
+    challenge = create(:challenge, owner_id: user.id)
+    challenge.groups.create(name: "UCLA", user_id: user.id)
+    visit member_challenge_path(challenge)
+    click_link "Join Group"
+    fill_in 'comment_content', with: "Testing"
+    click_button "Post Comment"
+    expect(page).to have_content("Testing")
+  end
+end
