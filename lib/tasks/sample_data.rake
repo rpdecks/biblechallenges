@@ -19,6 +19,7 @@ namespace :sample_fake do
     add_members_to_groups
     mark_chapters_as_read
     generate_comments
+    generate_comment_responses
 
     create_membership_stats
     create_challenge_stats
@@ -34,12 +35,23 @@ namespace :sample_fake do
   end
 
   def generate_comments
+    puts  "Generating Comments"
     Group.all.each do |g|
       g.members.each do |m|
-        Comment.create(commentable_type: "Group", commentable_id: g.id, user: m, content: 'bleah')
+        print'.'
+        Comment.create(commentable_type: "Group", commentable_id: g.id, user: m, content: Faker::Lorem.paragraph)
       end
     end
+  end
 
+  def generate_comment_responses
+    puts  "Generating Responses"
+    Group.all.each do |g|
+      g.comments.each do |c|
+        print '.'
+        Comment.create(commentable_type: "Comment", commentable_id: c.id, user: g.members.sample, content: Faker::Lorem.paragraph)
+      end
+    end
 
   end
 
