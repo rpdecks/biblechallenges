@@ -69,7 +69,6 @@ class MembershipReadingsController < ApplicationController
   end
 
   def confirmation
-    @challenge = membership_reading.membership.challenge
   end
 
   def membership_reading_params
