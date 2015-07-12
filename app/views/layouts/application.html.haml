@@ -10,27 +10,16 @@
   %body
 
     / Nav Header
-    .navbar.navbar-default.navbar-fixed-top
+    %nav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
         .navbar-header
-          %a.navbar-brand{href: "/"} BibleChallenges.com
           %button.navbar-toggle{"data-target" => "#navbar-main", "data-toggle" => "collapse", type: "button"}
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-            %span.icon-bar
+          %a.navbar-brand{href: "/"} BibleChallenges.com
         #navbar-main.navbar-collapse.collapse
-
-
-
           %ul.nav.navbar-nav.navbar-right
-            %li#search
-              .form-inline.search_challenge
-                = form_tag challenges_path, method: :get, class: "input-group form-query" do
-                  .form-group
-                    = text_field_tag :query, nil, class: "search-input form-control", hide_label: true, placeholder: "Search for a challenge"
-                  = submit_tag "Search", class: "btn btn-primary query"
-
             %li
               = link_to "FAQ", page_path("faq")
             %li
@@ -50,6 +39,13 @@
                 = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
               //%li
               //  = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
+
+          .form-inline.navbar-form.navbar-right
+            = form_tag challenges_path, method: :get, class: "input-group" do
+              .input-group
+                = text_field_tag :query, nil, class: "form-control", hide_label: true, placeholder: "Search for a challenge"
+                %span.input-group-btn
+                  = submit_tag "Search", class: "btn btn-primary query"
 
     .flash-messages
       = render partial: "shared/flash_messages", flash: flash
