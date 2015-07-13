@@ -11,6 +11,12 @@ FactoryGirl.define do
     trait :with_readings do
       after(:create) { |object| object.generate_readings }
     end
+    
+    trait :with_membership do
+      after(:create) do |ch|
+        create(:membership, challenge: ch, user: ch.owner)
+      end
+    end
 
     factory :invalid_challenge do
       name nil

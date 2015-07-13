@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Member::MembershipsController do
   let(:owner){create(:user)}
-  let(:challenge){create(:challenge, owner: owner)}
+  let(:challenge){create(:challenge, :with_membership, owner: owner)}
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
 
@@ -30,7 +30,7 @@ describe Member::MembershipsController do
   end
 
   describe  'POST#create' do
-    let(:newchallenge){create(:challenge_with_readings, owner: owner)}
+    let(:newchallenge){create(:challenge_with_readings, :with_membership, owner: owner)}
 
     it "redirects to the challenge page after joining as a logged in user" do
       somechallenge = create(:challenge)  #uses factorygirl
@@ -46,12 +46,15 @@ describe Member::MembershipsController do
     end
 
     it "associates statistics with membership" do
+      ch = newchallenge
+      m = ch.memberships.first
+      MembershipCompletion.new(m)
       number_of_stats = MembershipStatistic.descendants.size
       expect {
         # this slightly ridiculous expectation is because the stats are created
         # for the challenge creator as well as the new member.  #todo
         post :create, challenge_id: newchallenge
-      }.to change(MembershipStatistic, :count).by(number_of_stats * 2)
+      }.to change(MembershipStatistic, :count).by(number_of_stats)
     end
     it "sends the user a Thanks for joining email" do
       challenge = create(:challenge_with_readings, begindate: Date.today+1)
