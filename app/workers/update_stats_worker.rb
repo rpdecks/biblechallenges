@@ -5,6 +5,8 @@ class UpdateStatsWorker
 
   def perform(member_id)
     membership = Membership.find(member_id)
+    user = membership.user
+    user.update_stats
     membership.update_stats
     membership.group.update_stats if membership.group
     membership.challenge.update_stats
