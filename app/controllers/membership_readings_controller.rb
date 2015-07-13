@@ -31,17 +31,8 @@ class MembershipReadingsController < ApplicationController
   end
 
   def update_stats
-    #todo there is an issue here with stats updating themselves too quickly.
-    # i.e, the challenge stats update before the membership stats finish
-    # and so they are wrong because they are derived from those stats
-    # probably the solution is to make a service object to update these stats
-    # with an update_stats method that is delayed in its entirety via sidekiq
-    # but executes these updates in sequence.  For now, I have removed the delay
-    # so they will be accurate, but it will be a performance hit I think
     current_user.update_stats
-    membership.update_stats
-    membership.group.update_stats if membership.group
-    membership.challenge.update_stats
+    UpdateStatsWorker.perform_async(membership.id)
   end
 
   def destroy
