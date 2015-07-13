@@ -103,6 +103,13 @@ a{
   }
 }
 
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 992px) {
   .navbar-default .navbar-collapse .input-group {
     width: 195px;
@@ -120,6 +127,7 @@ a{
   padding: 50px 0;
   position: relative;
   z-index: 2;
+  margin-top: -22px;
 
 
   .title {
