@@ -884,6 +884,10 @@ a.list-group-item-danger.active:focus {
   font-size: 16px;
 }
 
+// TODO
+// Delete this once you are absolutely sure that it's not used. So far this
+// appears to be only a copy of deafult bootstrap navbar classes and properties
+// with some slight modifications that don't belong here.
 
 // .navbar-default .navbar-nav > .active > a,
 // .navbar-default .navbar-nav > .active > a:hover,
