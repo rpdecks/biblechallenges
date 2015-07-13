@@ -31,7 +31,6 @@ class MembershipReadingsController < ApplicationController
   end
 
   def update_stats
-    current_user.update_stats
     UpdateStatsWorker.perform_async(membership.id)
   end
 
