@@ -28,6 +28,7 @@ describe DailyEmailScheduler do
 
       membership.destroy
       DailyEmailWorker.drain
+      Sidekiq::Extensions::DelayedMailer.drain
 
       #first email is for created challenge, second is the dailyreading
       expect(ActionMailer::Base.deliveries.size).to eq 2
