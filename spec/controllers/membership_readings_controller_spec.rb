@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MembershipReadingsController, type: :controller do
 
-  let(:challenge){create(:challenge_with_readings, chapters_to_read:'mi 1-4')}
+  let(:challenge){create(:challenge_with_readings, :with_membership, chapters_to_read:'mi 1-4')}
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
@@ -48,10 +48,9 @@ describe MembershipReadingsController, type: :controller do
       end
 
       it "creates a new membership_reading allowed only for the owner of that membership reading" do
-        user1 = challenge.owner
         user2 = user #logged in as user
-        membership1 = challenge.memberships.first
-        membership2 = challenge.join_new_member(user2) #user2 joins challenge
+        membership1 = challenge.memberships.first #belongs to user1
+        challenge.join_new_member(user2) #user2 joins challenge
         reading = challenge.readings.first
         expect {
           post :create, reading_id: reading.id, membership_id: membership1

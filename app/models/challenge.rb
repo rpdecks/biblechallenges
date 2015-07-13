@@ -32,7 +32,7 @@ class Challenge < ActiveRecord::Base
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
   after_create      :successful_creation_email
-  after_create      :joins_creator_to_challenge
+  #after_create      :joins_creator_to_challenge
   #after_save        :generate_readings
 
 

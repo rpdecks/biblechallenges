@@ -34,7 +34,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User joins a challenge successfully' do
-    challenge = create(:challenge, :with_readings)
+    challenge = create(:challenge, :with_membership, :with_readings)
     ChallengeCompletion.new(challenge)
     visit challenge_path(challenge)
     click_link "Join Challenge"
@@ -44,7 +44,9 @@ feature 'User manages challenges' do
   scenario 'User joins a challenge and the challenge stats get updated automatically' do
     start_date = Date.today
     challenge = create(:challenge_with_readings, 
+                       :with_membership,
                          chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+    MembershipCompletion.new(challenge.memberships.first)
     ChallengeCompletion.new(challenge)
     user2 = create(:user)
     login(user2)
@@ -81,8 +83,10 @@ feature 'User manages challenges' do
 
   scenario 'User leaves a challenge and the challenge stats get updated automatically' do
     start_date = Date.today
-    challenge = create(:challenge_with_readings, 
+    challenge = create(:challenge_with_readings,
+                       :with_membership,
                          chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+    MembershipCompletion.new(challenge.memberships.first)
     ChallengeCompletion.new(challenge)
     user2 = create(:user)
     login(user2)

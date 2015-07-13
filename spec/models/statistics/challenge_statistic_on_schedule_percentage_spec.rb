@@ -5,9 +5,13 @@ describe ChallengeStatisticOnSchedulePercentage do
   describe "#calculate" do
     it "should calculate the proper value" do
       start_date = Date.today
-      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-10', begindate: start_date)
+      challenge = create(:challenge_with_readings,
+                         :with_membership, 
+                         chapters_to_read: 'Matt 1-10',
+                         begindate: start_date)
       readings = challenge.readings
       m1 = challenge.owner.memberships.first  #creator/owner is also the first memeber of the challenge
+      MembershipCompletion.new(m1) #takes place in controller
       m2 = create(:membership, challenge: challenge)
       m3 = create(:membership, challenge: challenge)
 
