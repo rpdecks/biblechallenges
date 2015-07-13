@@ -85,6 +85,20 @@ a{
   }
 }
 
+.navbar-fb-icon {
+  border-left: 1px solid rgba(#93a4aa, .15);
+  span {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    margin-left: 4px;
+  }
+  .fa {
+    position: absolute;
+    top: -19px;
+  }
+}
+
 .navbar-default .navbar-nav > li > a {
   color: #93a4aa;
 }
