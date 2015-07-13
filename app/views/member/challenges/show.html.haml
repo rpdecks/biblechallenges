@@ -8,14 +8,15 @@
     .subtitle
       %b
         = @challenge.chapters_to_read
+      %br
       = @challenge.begindate.strftime("%-m/%-d/%Y")
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
 
-    = image_tag avatar_url(@challenge.owner, 20), title: "Owner: #{@challenge.owner.name}", class: "img-circle"
+    = image_tag avatar_url(@challenge.owner, 20), size: "25x25", title: "Owner: #{@challenge.owner.name}", class: "img-circle"
 
     - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
-      = image_tag avatar_url(m, 20), title: m.name, class: "img-circle"
+      = image_tag avatar_url(m, 20), size: "25x25",  title: m.name, class: "img-circle"
 
 .content
   .container

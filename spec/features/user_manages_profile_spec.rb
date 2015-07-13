@@ -9,7 +9,7 @@ feature 'User manages user profile' do
 
   scenario 'User edits own profile successfully' do
     new_user_params = build(:user)
-    visit edit_user_path(user)
+    visit edit_user_path
 
     fill_in 'user[name]', with: new_user_params.name
     select '(GMT-09:00) Alaska', from: 'Your Time Zone'

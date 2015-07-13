@@ -16,6 +16,7 @@ feature 'User logs reading via email' do
     visit_in_email("Confirm")
     }.to change(user.membership_readings, :count).by(1)
 
+    expect(page).to have_content ("Thank you")
   end
 end
 

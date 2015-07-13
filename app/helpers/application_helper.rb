@@ -15,7 +15,7 @@ module ApplicationHelper
     end
   end
 
-  def avatar_url(user, size = 30)
+  def avatar_url(user, size = 75)
     user.image || "http://placemi.com/#{size}x#{size}"
   end
 
