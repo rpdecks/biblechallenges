@@ -4,7 +4,7 @@ describe DailyEmailScheduler do
   describe "self.set_daily_email_jobs" do
     it "schedules an email job for a user" do
       user = create(:user)
-      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      challenge = create(:challenge, :with_membership, :with_readings, begindate: "2050-01-01")
       #membership is automatically created when challenge is created.
       create(:membership, user: user, challenge: challenge)
 
@@ -19,7 +19,7 @@ describe DailyEmailScheduler do
 
     it "schedules an email job for a user, but ignores job when membeship no longer exists" do
       user = create(:user)
-      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      challenge = create(:challenge, :with_membership, :with_readings, begindate: "2050-01-01")
       membership = create(:membership, user: user, challenge: challenge)
 
       Timecop.travel("2050-01-01")
@@ -65,7 +65,7 @@ describe DailyEmailScheduler do
       today = DateTime.now
       user1 = create(:user, time_zone: "Eastern Time (US & Canada)",
                      preferred_reading_hour: 7)
-      create(:challenge, :with_readings, begindate: today, owner: user1)
+      create(:challenge, :with_membership, :with_readings, begindate: today, owner: user1)
 
       #traveling to next day 0-hours
       Time.zone = "UTC"
@@ -87,7 +87,7 @@ describe DailyEmailScheduler do
 
   describe "set_daily_email_jobs2" do  # another approach
     it "schedules an email job for two users with the same hour preference in different timezones" do
-      challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
+      challenge = create(:challenge, :with_membership, :with_readings, begindate: "2050-01-01")
       create(:membership, user: user_7am_eastern_time, challenge: challenge)
       create(:membership, user: user_7am_pacific_time, challenge: challenge)
 
