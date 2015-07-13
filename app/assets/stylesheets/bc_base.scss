@@ -1,3 +1,6 @@
+// TODO
+// clean this up. There are A LOT of repeated and unecessary classes
+
 body {
   line-height: 1.5;
   color: #000000;
@@ -880,35 +883,8 @@ a.list-group-item-danger.active:focus {
   font-family: "SourceSansProSemiBold", Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
-// .navbar {
-//   min-height: 76px;
-//   border-radius: 4px;
-// }
-// .navbar-brand {
-//   padding: 27px 30px;
-//   height: auto;
-// }
-// .navbar-brand-img {
-//   padding-top: 24px;
-//   margin: 0 55px 0 40px;
-// }
-// .navbar-default {
-//   background-color: white;
-// }
-// .navbar-default .navbar-nav > li > a {
-//   color: #93a4aa;
-//   font-family: "SourceSansProSemiBold", Helvetica, Arial, sans-serif;
-// }
-// .navbar-default .navbar-nav > li > a:hover,
-// .navbar-default .navbar-nav > li > a:focus {
-//   color: #5e6969;
-//   background-color: white;
-// }
-// .navbar-default .navbar-nav .dropdown-menu > li.active a {
-//   border-width: 2px;
-//   margin-left: -2px;
-//   margin-right: -2px;
-// }
+
+
 // .navbar-default .navbar-nav > .active > a,
 // .navbar-default .navbar-nav > .active > a:hover,
 // .navbar-default .navbar-nav > .active > a:focus {
