@@ -11,6 +11,7 @@ feature 'One user reads various parts of a challenge' do
         click_link "One Day"  # title of challenge
         click_link "Log my reading"
 
+        #job created through updating of reading, now need to push the sidekiq UpdateStatsWorker through
         UpdateStatsWorker.drain
 
         c = Challenge.first
