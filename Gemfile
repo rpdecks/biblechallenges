@@ -59,7 +59,7 @@ group :development do
   gem 'better_errors'
   gem 'letter_opener'
   gem 'letter_opener_web'
-  gem 'bullet'
+#  gem 'bullet'
 end
 
 # Gems used only for assets and not required
