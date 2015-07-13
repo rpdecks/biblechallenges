@@ -61,23 +61,21 @@ a{
   }
 }
 
-.navbar{
-  border-radius: 0;
-  height: 80px;
-  border-bottom: 1px solid #f1f1f1;
+
+
+///////// Navbar
+.navbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0 2px 10px 0px rgba(0,0,0,.2);
 }
 
 .navbar-default{
   background-color: white;
   color: #ccc;
 
-  #search{
-    padding: 8px 0;
-  }
-
   .navbar-brand{
     color: $primary;
-    padding: 28px 15px;
   }
   .navbar-brand:hover{
     color: #999;
@@ -87,17 +85,49 @@ a{
   }
 }
 
-.navbar-collapse{
-  background-color: white;
-  box-shadow: 0 2px 10px 0px rgba(0,0,0,.2);
+.navbar-default .navbar-nav > li > a {
+  color: #93a4aa;
 }
 
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #5e6969;
+}
+
+.navbar-default .navbar-toggle {
+  border: none;
+  
+  &:focus,
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-nav > li > a {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .navbar-default .navbar-collapse .input-group {
+    width: 195px;
+  } 
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-collapse .input-group {
+    width: 100%;
+  } 
+}
 
 .masthead {
   background: $primary;
   padding: 50px 0;
   position: relative;
   z-index: 2;
+  margin-top: -22px;
 
 
   .title {
@@ -280,45 +310,6 @@ a{
   }
 }
 
-@media (max-width: 1120px) {
-    .navbar-header {
-        float: none;
-    }
-    .navbar-toggle {
-        display: block;
-    }
-    .navbar-collapse {
-        border-top: 1px solid transparent;
-    }
-    .navbar-collapse.collapse {
-        display: none!important;
-    }
-    .navbar-nav {
-        float: none!important;
-        margin: 7.5px -15px;
-    }
-    .navbar-nav>li {
-        float: none;
-    }
-    .navbar-nav>li>a {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    .navbar-text {
-        float: none;
-        margin: 15px 0;
-    }
-    /* since 3.1.0 */
-    .navbar-collapse.collapse.in {
-        display: block!important;
-    }
-    .collapsing {
-        overflow: hidden!important;
-    }
-}
-
-
-
 #verses{
   column-count: 2;
   margin-bottom: 40px;
@@ -370,4 +361,8 @@ a{
 
 .control-group{
   margin-bottom: 12px;
+}
+
+.search-input{
+  display: inline-block;
 }
