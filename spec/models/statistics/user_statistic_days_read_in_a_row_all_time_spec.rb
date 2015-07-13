@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UserStatisticDaysReadInARowAllTime do
   describe "#calculate" do
     it "should calculate the proper value for user reading on consecutive days" do
-      challenge = create(:challenge, chapters_to_read: 'Mark 1-7')
+      challenge = create(:challenge, :with_membership, chapters_to_read: 'Mark 1-7')
       user = challenge.members.first
       membership = challenge.memberships.first
       challenge.generate_readings
