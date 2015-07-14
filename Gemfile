@@ -13,6 +13,7 @@ gem 'activerecord-import'
 #gem 'chosen-rails'
 gem 'thin'
 gem 'sidekiq'
+gem 'sidekiq-failures'
 gem 'airbrake'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
