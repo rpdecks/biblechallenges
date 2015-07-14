@@ -335,11 +335,15 @@ a{
   }
 }
 
-.alert{
-  border-radius: 0;
+.flash-messages {
+  padding: 0 15px;
+  .alert {
+    margin: 10px 0;
+    border: transparent;
+  }
 }
 
-.alert-info, .alert-warning{
+.alert-info {
   background-color: $primary-fade;
   color: white;
 
