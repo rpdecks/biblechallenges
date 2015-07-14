@@ -133,7 +133,7 @@ class Challenge < ActiveRecord::Base
   # before save
   # - after_create
   def successful_creation_email
-    ChallengeMailer.delay.creation_email(self.id)
+    NewChallengeEmailWorker.perform_in(5.seconds, self.id)
   end
 
   # - before_validation
