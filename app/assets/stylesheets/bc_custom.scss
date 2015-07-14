@@ -147,7 +147,7 @@ fieldset {
 
   .title {
     font-family: "SourceSansProExtraLight", Helvetica, Arial, sans-serif;
-    font-size: 30px;
+    font-size: 65px;
     line-height: 1.2;
     color: white;
   }
@@ -185,6 +185,7 @@ fieldset {
 .section.primary{
   background-color: $primary;
   color: white;
+  margin-bottom: 30px;
 }
 
 
@@ -297,6 +298,16 @@ fieldset {
 
 }
 
+
+@media (max-width: 992px) {
+  .masthead {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    .title {
+      font-size: 30px;
+    }
+  }
+}
 
 
 @media (min-width: 1000px) {
