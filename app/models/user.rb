@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+         :omniauthable, :omniauth_providers => [:facebook]
 
   # Validations
   validates :name, presence: true
@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   #Callbacks
   #after_create :associate_statistics
+  before_save :set_default_values
 
   # autogenerate has_one associations for all the badge types
   Rails.application.eager_load!
@@ -88,5 +89,13 @@ class User < ActiveRecord::Base
 
       user.save!
     end
+  end
+
+  private
+
+  
+  def set_default_values
+    self.preferred_reading_hour ||= "3"
+    self.time_zone ||= "Central Time (US & Canada)"
   end
 end
