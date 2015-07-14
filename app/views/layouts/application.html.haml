@@ -35,8 +35,8 @@
             - else
               %li
                 = link_to('Log in', new_user_session_path)
-              %li.navbar-fb-icon
-                = link_to 'Log in with <span><i class="fa fa-facebook-official fa-2x"></i></span>'.html_safe, user_omniauth_authorize_path(:facebook)
+              %li
+                = link_to 'Sign in with Facebook'.html_safe, user_omniauth_authorize_path(:facebook)
               //%li
               //  = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
 
