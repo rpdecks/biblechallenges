@@ -10,10 +10,13 @@ describe MembershipCompletion do
       membership = ch.memberships.first
 
       MembershipCompletion.new(membership)
+      NewChallengeEmailWorker.drain
+      NewMembershipEmailWorker.drain
+      DailyEmailWorker.drain
 
         expect(MembershipStatisticAttacher).to have_received(:attach_statistics).exactly(1).times
         #expecting 3 emails: Challenge creation, Challenge joined, Challegne daily reading email
-        expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq 3
+        expect(ActionMailer::Base.deliveries.size).to eq 3
     end
   end
 
