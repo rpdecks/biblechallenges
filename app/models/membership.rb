@@ -57,8 +57,8 @@ class Membership < ActiveRecord::Base
 
   def successful_creation_email
     NewMembershipEmailWorker.perform_in(1.minute, self.id)
-    todays_reading = self.readings.todays_reading
 
+    todays_reading = self.readings.todays_reading
     if todays_reading.size > 0
       DailyEmailWorker.perform_in(1.minute, todays_reading.first.id, self.user_id)
     end
