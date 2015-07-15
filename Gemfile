@@ -12,6 +12,9 @@ gem 'activerecord-import'
 #gem 'chosen-rails'
 gem 'thin'
 gem 'sidekiq'
+gem 'sidekiq-failures'
+gem 'airbrake'
+gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
 gem 'font-awesome-rails'
 gem 'redcarpet'
@@ -19,7 +22,10 @@ gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
-gem 'acts_as_scriptural'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'acts_as_scriptural', '0.0.3'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'gretel'
 gem 'figaro'
@@ -27,12 +33,24 @@ gem 'draper'
 gem 'pg_search'
 gem 'bootstrap_form'
 gem 'htmlentities'
+gem 'react-rails'
+gem 'google-instant-hangouts'
+gem 'ruby_array_find_consecutive'
+gem 'skylight'
+gem 'paperclip'
+gem 'intercom-rails'
+
+gem "autoprefixer-rails" #prefix styles for cross-browser
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
 group :production do
+  gem 'unicorn'
+  gem 'unicorn-worker-killer'
+  gem 'rack-timeout'
   gem 'rails_12factor'
   gem 'hirb'
 end
@@ -40,6 +58,9 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
+  gem 'letter_opener'
+  gem 'letter_opener_web'
+#  gem 'bullet'
 end
 
 # Gems used only for assets and not required
@@ -72,14 +93,13 @@ group :development, :test do
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
-  gem 'letter_opener'
-  gem 'letter_opener_web'
   gem 'pry-nav'
 end
 
 group :test do
   # pretty print test output
   gem 'capybara'
+  gem 'capybara-webkit'
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
@@ -89,4 +109,3 @@ group :test do
   gem 'rspec-sidekiq'
   gem 'email_spec'
 end
-

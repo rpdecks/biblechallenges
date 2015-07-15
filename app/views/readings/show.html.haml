@@ -12,16 +12,15 @@
 
   %hr
   - unless @comments.empty?
-    %h4 Impressions from others
     %table.table.table-striped.table-bordered.table-hover
       - @comments.each do |c|
         %tr
           %td 
-            %div
+            %di
               %i= c.content
             %div
               %b
-                \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.profile.username}
+                \-- #{render 'shared/avatar_for_comment', user: c.user} #{c.user.name}
               = time_ago_in_words(c.created_at)
               ago
               |
@@ -33,7 +32,7 @@
                       %li
                         = c.content
                         %b
-                          \-- #{image_tag(avatar_url(c.user, 16))} #{c.user.profile.username}
+                          \-- #{render 'shared/avatar_for_comment', user: c.user} #{c.user.name}
                         = time_ago_in_words(c.created_at)
                         ago
                 = render "comments/comments/form", {commentable: c}

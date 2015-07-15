@@ -1,12 +1,12 @@
-%h4 Readings
 %table.table.table-striped.table-bordered.table-hover.table-centered-text
   %tbody
     %thead
       %tr
         %th Date
-        %th Chapter(comments)
+        %th Chapter
         %th 
           %span.glyphicon.glyphicon-ok
-    - @challenge.readings.each do |reading|
-      = render partial: 'shared/challenges/readings_table_row',
-        locals: {reading: reading, membership: @membership}
+            - readings.each do |reading|
+              = render partial: 'shared/challenges/readings_table_row',
+                locals: {reading: reading, membership: @membership,
+                membership_reading_id: @membership_readings.find{|mr| mr.reading_id == reading.id && mr.membership_id = @membership.id}.try(:id) }

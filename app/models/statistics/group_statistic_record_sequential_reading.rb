@@ -1,7 +1,7 @@
 class GroupStatisticRecordSequentialReading < GroupStatistic
 
   def name
-    "Group punctual percentage"
+    "Group on schedule percentage"
   end
 
   def description
@@ -9,8 +9,8 @@ class GroupStatisticRecordSequentialReading < GroupStatistic
   end
 
   def calculate
-    member_percentages = group.memberships.map {|m| m.membership_statistic_record_reading_streak.value.to_i}
-    member_percentages.inject{|sum, element| sum + element} / member_percentages.size
+    total = group.memberships.map{|m| m.membership_statistic_record_reading_streak.try(:value).to_i}.inject(:+)
+    total / group.memberships.size
   end
 
   def update

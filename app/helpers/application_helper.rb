@@ -15,8 +15,8 @@ module ApplicationHelper
     end
   end
 
-  def avatar_url(user, size)
-    "http://placehold.it/#{size}x#{size}"
+  def avatar_url(user, size = 75)
+    user.image || image_url('FFFFFF-1.png')
   end
 
   def select_options_for_bible

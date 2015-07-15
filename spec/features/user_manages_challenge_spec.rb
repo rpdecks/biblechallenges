@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'User manages challenges' do
-  let(:user) {create(:user, :with_profile)}
+  let(:user) {create(:user)}
 
   before(:each) do
     login(user)
@@ -9,58 +9,112 @@ feature 'User manages challenges' do
 
   scenario 'User creates a challenge' do
     visit root_path
-    click_link 'Create a Challenge'
+    click_link 'Create a challenge'
     expect{
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
       fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
       click_button "Create Challenge"
     }.to change(Challenge, :count).by(1)
+    number_of_stats = ChallengeStatistic.descendants.size
+    expect(ChallengeStatistic.count).to eq number_of_stats
+  end
+
+  scenario 'User creates a challenge and automatically joins the challenge' do
+    visit root_path
+    click_link 'Create a challenge'
+    expect{
+      fill_in 'challenge[name]', with: "challenge 1"
+      fill_in 'challenge[begindate]', with: Date.today
+      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+      click_button "Create Challenge"
+    }.to change(Challenge, :count).by(1)
+    expect(Membership.count).to be 1
+    expect(Membership.first.user).to eq user
   end
 
   scenario 'User joins a challenge successfully' do
-    challenge = create(:challenge, :with_readings)
-    visit challenges_path
-    click_link challenge.name
+    challenge = create(:challenge, :with_membership, :with_readings)
+    ChallengeCompletion.new(challenge)
+    visit challenge_path(challenge)
     click_link "Join Challenge"
     expect(challenge.members).to include user
   end
 
-  scenario 'User joins own challenge successfully' do
-    challenge = create(:challenge, owner_id: user.id)
-    visit challenges_path
-    click_link challenge.name
+  scenario 'User joins a challenge and the challenge stats get updated automatically' do
+    start_date = Date.today
+    challenge = create(:challenge_with_readings, 
+                       :with_membership,
+                         chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+    MembershipCompletion.new(challenge.memberships.first)
+    ChallengeCompletion.new(challenge)
+    user2 = create(:user)
+    login(user2)
+    m1 = challenge.memberships.first
+
+    r = challenge.readings.first
+    create(:membership_reading, membership: m1, reading: r)
+    m1.update_stats
+    challenge.update_stats
+    challenge_stat = challenge.challenge_statistic_progress_percentage
+
+    visit challenge_path(challenge)
     click_link "Join Challenge"
-    expect(challenge.members).to include user
+    challenge_stat.reload
+
+    expect(challenge_stat.value.to_i).to eq 25
   end
 
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit challenges_path
-    click_link challenge.name
+    visit challenge_path(challenge)
 
-    expect(page).to have_content("Unsubscribe me from this challenge")
+    expect(page).to have_content("Unsubscribe")
   end
 
   scenario 'User leaves a challenge successfully' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit challenges_path
-    click_link challenge.name
-    click_link "Unsubscribe me from this challenge"
+    visit challenge_path(challenge)
+    click_link "Unsubscribe"
     expect(challenge.members).not_to include user
+  end
+
+  scenario 'User leaves a challenge and the challenge stats get updated automatically' do
+    start_date = Date.today
+    challenge = create(:challenge_with_readings,
+                       :with_membership,
+                         chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+    MembershipCompletion.new(challenge.memberships.first)
+    ChallengeCompletion.new(challenge)
+    user2 = create(:user)
+    login(user2)
+    m1 = challenge.memberships.first
+    m2 = create(:membership, challenge: challenge, user: user2)
+
+    r = challenge.readings.first
+    create(:membership_reading, membership: m1, reading: r)
+    m1.update_stats
+    m2.update_stats
+    challenge.update_stats
+    challenge_stat = challenge.challenge_statistic_progress_percentage
+
+    visit challenge_path(challenge)
+    click_link "Unsubscribe"
+    challenge_stat.reload
+
+    expect(challenge_stat.value.to_i).to eq 50
   end
 
   scenario 'User should leave his or her group automatically once the user leaves the challenge' do
     challenge = create(:challenge)
     group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
-    create(:membership, challenge: challenge, user: user, group_id: group.id)
-    visit challenges_path
-    click_link challenge.name
-    click_link "Unsubscribe me from this challenge"
+    membership = create(:membership, challenge: challenge, user: user, group_id: group.id)
+    visit challenge_path(challenge)
+    click_link "Unsubscribe"
 
     expect(challenge.members).not_to include user
-    expect(Membership.count).to eq 0
+    expect{Membership.find(membership.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end

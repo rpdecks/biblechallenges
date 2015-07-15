@@ -6,6 +6,6 @@ class CommentMailer < ActionMailer::Base
     @original_comment = comment.commentable
     @newcomment = comment
 
-    mail to: @recipient.email, subject: "#{comment.user.profile.username} has responded to your comment"
+    mail to: @recipient.email, subject: "#{comment.user.name} has responded to your comment"
   end
 end

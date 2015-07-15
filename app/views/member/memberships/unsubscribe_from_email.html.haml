@@ -3,7 +3,7 @@
     .panel.panel-default
       .panel-body
         - if @membership
-          Hello#{ " " + @user.profile.first_name unless @user.profile.first_name.blank?},
+          Hello#{ " " + @user.name },
           %br
           %br
           %div

@@ -10,7 +10,7 @@ describe Membership do
 
     it { should validate_presence_of(:challenge_id) }
     it { should validate_presence_of(:bible_version) }
-    it { should ensure_inclusion_of(:bible_version).in_array(Membership::BIBLE_VERSIONS)}
+    it { should validate_inclusion_of(:bible_version).in_array(Membership::BIBLE_VERSIONS)}
     it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
       create(:membership)
       should validate_uniqueness_of(:user_id).scoped_to(:challenge_id)
@@ -67,6 +67,22 @@ describe Membership do
   end
 
   describe 'Instance methods' do
+    describe "#associate_statistics" do
+      it "creates named statistics and associates them with new membership" do
+        challenge = create(:challenge)
+        membership = create(:membership, challenge: challenge)
+
+        membership.associate_statistics
+
+        # somehow verify that all the statistics are present
+        MembershipStatistic.descendants.each do |mem_stat|
+          #mem_stat.name will hold the type of each possible membership statistic
+          result = membership.membership_statistics.find_by_type(mem_stat.name)
+          expect(result).to_not be_nil
+        end
+      end
+    end
+
     describe '#completed?' do
       it "returns true if all the chapters have been read" do
         challenge = create(:challenge, chapters_to_read: 'Mar 1 -2')

@@ -1,31 +1,32 @@
-%h3 Challenge Details
-
 %table.table.table-striped.table-condensed
   %tr
     %td Owner:
     %td
-      - owner = @challenge.owner
-      = image_tag avatar_url(owner, 35), title: owner.username 
+      = render 'shared/avatar', user: challenge.owner
 
   %tr
     %td Members:
     %td
-      - @challenge.members.each do |m|
-        = image_tag avatar_url(m, 35), title: m.username
+      - challenge.members.each do |m|
+        = render 'shared/avatar', user: m
 
   %tr
     %td Dates:
     %td
-      =@challenge.begindate.strftime("%-m/%-d/%Y") 
+      =challenge.begindate.strftime("%-m/%-d/%Y") 
       = "-" 
-      =@challenge.enddate.strftime("%-m/%-d/%Y") 
+      =challenge.enddate.strftime("%-m/%-d/%Y") 
   %tr
-    %td Bible Reading Overview:
-    %td= @challenge.chapters_to_read
+    %td Chapters:
+    %td= challenge.chapters_to_read
 
-  - if current_user && @membership = @challenge.membership_for(current_user)
+  - if current_user && membership = challenge.membership_for(current_user)
     %tr
       %td Bible Version:
       %td
-        = @membership.bible_version
-        =link_to "Change", member_membership_path(@membership), :method => :get
+        = membership.bible_version
+        =link_to "Change", member_membership_path(membership), :method => :get
+  - if challenge.owner == current_user
+    %tr
+      %td 
+        = link_to "Delete this Challenge", creator_challenge_path(challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone. Are you SURE you want to do this?',:class=>"btn btn-info"

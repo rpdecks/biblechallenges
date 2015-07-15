@@ -1,18 +1,18 @@
 class Member::GroupsController < ApplicationController
-
-
   def show
     group
   end
 
   def join
     group.add_user_to_group(group.challenge, current_user)
+    group.update_stats
     flash[:notice] = "Joined group successfully"
-    redirect_to [:member, group]
+    redirect_to member_challenge_path(group.challenge, anchor: "mygroup")
   end
 
   def leave
     group.remove_user_from_group(group.challenge, current_user)
+    group.update_stats
     flash[:notice] = "Left group successfully"
     redirect_to member_challenge_path(group.challenge, anchor: "groups")
   end
@@ -31,8 +31,9 @@ class Member::GroupsController < ApplicationController
     if @group.save
       membership.group = @group 
       membership.save
+      GroupCompletion.new(group)
       flash[:notice] = "Group created successfully"
-      redirect_to @challenge
+      redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
     else
       flash[:notice] = "Group could not be created"
       render action: :new

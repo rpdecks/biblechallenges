@@ -20,6 +20,8 @@ Biblechallenge::Application.configure do
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 
+  config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -33,7 +35,7 @@ Biblechallenge::Application.configure do
   config.assets.debug = true
 
   #devise options
-  config.action_mailer.default_url_options = { host: 'lvh.me:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # delivering email
   config.action_mailer.delivery_method = :letter_opener_web
@@ -44,4 +46,10 @@ Biblechallenge::Application.configure do
 
   # add db logging
   config.active_record_logger = Logger.new("log/sql.log")
+
+
+#  config.after_initialize do
+#    Bullet.enable = true
+#    Bullet.add_footer = true
+#  end
 end

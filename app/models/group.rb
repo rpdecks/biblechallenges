@@ -5,8 +5,14 @@ class Group < ActiveRecord::Base
   has_many :members, through: :memberships, source: :user
   has_many :memberships
   has_many :group_statistics
+  has_many :comments, as: :commentable
 
   validates :user, :challenge, presence: true
+
+  Rails.application.eager_load!
+  GroupStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
 
   def has_member?(member)
     members.include?(member)
@@ -15,6 +21,21 @@ class Group < ActiveRecord::Base
   def remove_all_members_from_group
     self.memberships.each do |m|
       m.update_attributes(group_id: nil)
+    end
+  end
+
+  def associate_statistics
+    current_group_statistics = group_statistics.pluck(:type)
+    all_statistics = GroupStatistic.descendants.map(&:name)
+    missing_statistics = all_statistics - current_group_statistics
+    missing_statistics.each do |s|
+      group_statistics << s.constantize.create
+    end
+  end
+
+  def update_stats
+    group_statistics.each do |gs|
+      gs.update
     end
   end
 
