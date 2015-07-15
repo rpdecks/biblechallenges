@@ -56,11 +56,11 @@ class Membership < ActiveRecord::Base
   end
 
   def successful_creation_email
-    NewMembershipEmailWorker.perform_async(self.id)
+    NewMembershipEmailWorker.perform_in(1.minute, self.id)
     todays_reading = self.readings.todays_reading
 
     if todays_reading.size > 0
-      DailyEmailWorker.perform_async(todays_reading.first.id, self.user_id)
+      DailyEmailWorker.perform_in(1.minute, todays_reading.first.id, self.user_id)
     end
   end
 
