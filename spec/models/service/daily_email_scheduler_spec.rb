@@ -27,6 +27,7 @@ describe DailyEmailScheduler do
       DailyEmailScheduler.set_daily_email_jobs
 
       membership.destroy
+      NewChallengeEmailWorker.drain
       DailyEmailWorker.drain
 
       #first email is for created challenge, second is the dailyreading
