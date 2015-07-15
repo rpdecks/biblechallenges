@@ -56,7 +56,7 @@ class Membership < ActiveRecord::Base
   end
 
   def successful_creation_email
-    NewMembershipEmailWorker.perform_in(20.seconds, self.id)
+    NewMembershipEmailWorker.perform_in(1.minute, self.id)
   end
 
   private
