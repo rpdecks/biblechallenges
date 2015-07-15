@@ -31,7 +31,7 @@ class MembershipReadingsController < ApplicationController
   end
 
   def update_stats
-    UpdateStatsWorker.perform_in(3.seconds, membership.id)
+    UpdateStatsWorker.perform_in(5.seconds, membership.id)
   end
 
   def destroy
