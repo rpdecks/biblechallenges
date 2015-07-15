@@ -1,12 +1,17 @@
 You are choosing to unsubscribe from the 
 =@membership.challenge.name
 Bible Challenge.
+%br
+%br
 
 =button_to "Unsubscribe Me", member_membership_path(@membership,
                               user_email: @membership.user.email,
-                              user_token: @membership.user.authentication_token), method: :delete
-                                
-=button_to "Never Mind", challenge_path(@membership.challenge)
+                              user_token: @membership.user.authentication_token), 
+                              method: :delete,
+                              data: { confirm: "Are you sure you would like to remove yourself from this Challenge?" }
+%br
+%br
+=button_to "Never Mind", challenge_path(@membership.challenge), method: :get
 
 
 

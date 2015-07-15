@@ -6,10 +6,6 @@ class Member::MembershipsController < ApplicationController
 
   respond_to :html, :json, :js
 
-  def index
-    @memberships = challenge.memberships
-  end
-
   def show
     respond_with(membership)
   end
@@ -30,6 +26,9 @@ class Member::MembershipsController < ApplicationController
     @membership = challenge.memberships.build(params[:membership])
     @membership.user = current_user if current_user
     if @membership.save
+      # associate stats here
+      MembershipCompletion.new(@membership)
+      challenge.update_stats
       flash[:notice] = "Thank you for joining!" 
     else
       flash[:error] = @membership.errors.full_messages.to_sentence
@@ -48,6 +47,7 @@ class Member::MembershipsController < ApplicationController
   def destroy
     challenge = membership.challenge
     membership.destroy
+    challenge.update_stats
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
     redirect_to challenge
   end

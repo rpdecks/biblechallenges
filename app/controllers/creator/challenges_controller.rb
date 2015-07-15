@@ -24,26 +24,39 @@ class Creator::ChallengesController < ApplicationController
     @challenge = current_user.created_challenges.build(challenge_params)
 
     # this seems terrible; is there a better way?  #jim
-    flash[:notice] = "Successfully created Challenge" if @challenge.save
-    readings = ReadingsGenerator.new(@challenge.begindate, 
-                                     @challenge.chapters_to_read,
-                                     days_of_week_to_skip: days_of_week_to_skip,
-                                     dates_to_skip: challenge_params[:dates_to_skip],
-                                    ).generate
-    readings.each do |r|
-      r.challenge_id = @challenge.id
-      r.save
+    if @challenge.save
+      flash[:notice] = "Successfully created Challenge" 
+      readings = ReadingsGenerator.new(@challenge.begindate, 
+                                      @challenge.chapters_to_read,
+                                      days_of_week_to_skip: days_of_week_to_skip,
+                                      dates_to_skip: challenge_params[:dates_to_skip],
+                                      ).generate
+
+      Reading.transaction do
+        readings.each do |r|
+          Reading.connection.execute "INSERT INTO readings (chapter_id, challenge_id, read_on) values (#{r.chapter_id}, #{@challenge.id}, '#{r.read_on}')"
+        end
+      end
+
+      membership = Membership.new
+      membership.user = current_user
+      membership.challenge = @challenge
+      membership.save
+
+      MembershipCompletion.new(membership)
+      ChallengeCompletion.new(@challenge)
     end
 
-    redirect_to [:creator, @challenge]
+    redirect_to member_challenges_path
   end
 
   def destroy
-    @challenge.destroy
-    redirect_to creator_challenges_path
+    if @challenge.owner == current_user
+      @challenge.destroy
+      flash[:notice] = "Successfully deleted Challenge" 
+      redirect_to member_challenges_path
+    end
   end
-
-  private
 
   def days_of_week_to_skip
     if params[:days_to_skip]

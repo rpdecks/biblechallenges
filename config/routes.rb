@@ -1,12 +1,23 @@
 Biblechallenge::Application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web, at: '/sidekiq'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
 
-  resource :profile, only: [:update, :edit]
+  devise_scope :user do
+    match '/users/finish_signup' => 'users/registrations#finish_signup',
+      via: [:get, :patch],
+      :as => :finish_signup
+  end
+
+  resource :user, only: [:edit, :update]
 
   namespace :creator do
     resources :challenges
@@ -16,7 +27,7 @@ Biblechallenge::Application.routes.draw do
   namespace :member do
     resources :challenges, only: [:index, :show] do
       resources :groups, only: [:new, :create, :index]
-      resources :memberships, only: [:create] 
+      resources :memberships, only: [:create]
     end
     resources :groups, except: [:new, :create, :index] do
       member do
@@ -24,17 +35,21 @@ Biblechallenge::Application.routes.draw do
         post 'leave'
       end
     end
-    resources :memberships, only: [:update, :index, :show, :destroy, :edit] do
+    resources :memberships, only: [:update, :show, :destroy, :edit] do
       member do
         get 'unsubscribe'
       end
     end
   end
 
+  resources :groups, only: [] do
+    resources :comments, only: [:create, :destroy], controller: 'groups/comments'
+  end
+
   resources :badges, only: [:index, :show]
 
   resources :readings, only: [:show, :edit, :update] do
-    resources :comments, only: [:create, :destroy], controller: 'readings/comments' 
+    resources :comments, only: [:create, :destroy], controller: 'readings/comments'
   end
 
   resources :comments, only: [] do

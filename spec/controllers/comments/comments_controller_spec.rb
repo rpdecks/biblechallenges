@@ -8,7 +8,7 @@ end
 
 describe Comments::CommentsController, "Actions" do
   context "with an existing comment" do
-    let(:user) { create(:user, :with_profile) }
+    let(:user) { create(:user) }
     let(:reading) { create(:reading) }
 
     before do
@@ -20,7 +20,6 @@ describe Comments::CommentsController, "Actions" do
     end
 
     describe "on POST to #create" do
-
       it "creates a new comment" do
         expect {
           post :create, comment_id: @comment.to_param, comment: {content: "Hello"}
@@ -32,7 +31,6 @@ describe Comments::CommentsController, "Actions" do
 
         should redirect_to(reading_path(reading))
       end
-
     end
   end
 end

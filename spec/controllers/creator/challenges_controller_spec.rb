@@ -31,7 +31,7 @@ describe Creator::ChallengesController do
     describe "DELETE#destroy" do
       it "redirects to the challenges page" do
         delete :destroy, id: challenge
-        expect(response).to redirect_to creator_challenges_url
+        expect(response).to redirect_to member_challenges_url
       end
 
       it "removes challenge from database" do
@@ -68,10 +68,12 @@ describe Creator::ChallengesController do
 
     describe "POST #create" do
       describe "with valid attributes" do
-        it "creates a new challenge" do
-          expect {
-            post :create, challenge: attributes_for(:challenge)
+        it "joins the creator to the challenge he created" do
+          expect{
+            post :create, challenge: FactoryGirl.attributes_for(:challenge)
           }.to change(Challenge, :count).by(1)
+
+          expect(Challenge.first.members).to include challenge_creator
         end
       end
     end

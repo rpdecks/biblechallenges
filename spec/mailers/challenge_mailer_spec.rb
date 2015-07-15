@@ -14,6 +14,7 @@ describe ChallengeMailer do
     before {challenge.save}
 
     it "sends the email to the owner's email" do
+      NewChallengeEmailWorker.drain
       successful_creation_email = ActionMailer::Base.deliveries.last
       expect(successful_creation_email.to).to match_array [owner.email] 
     end

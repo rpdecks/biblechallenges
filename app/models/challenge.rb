@@ -6,8 +6,10 @@ class Challenge < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
-  has_many :membership_readings, through: :members  # needs default order #todo 
+  has_many :membership_readings, through: :memberships  # needs default order #todo 
   has_many :groups
+  has_many :chapters, through: :readings
+  has_many :challenge_statistics
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
@@ -21,16 +23,45 @@ class Challenge < ActiveRecord::Base
                         message: 'invalid format'
   validate  :validate_dates
 
+  Rails.application.eager_load!
+  ChallengeStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
+
   # Callbacks
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
   after_create      :successful_creation_email
+  #after_create      :joins_creator_to_challenge
   #after_save        :generate_readings
 
 
+  def joins_creator_to_challenge   #todo this needs to be in the controller not a callback
+    user = User.find(self.owner_id)
+    membership = Membership.new
+    membership.user = user
+    membership.challenge = self
+    membership.save
+    MembershipCompletion.new(membership)
+  end
 
   def membership_for(user)
     user && memberships.find_by_user_id(user.id)
+  end
+
+  def associate_statistics #for the sample data rake task
+    current_challenge_statistics = challenge_statistics.pluck(:type)
+    all_statistics = ChallengeStatistic.descendants.map(&:name)
+    missing_statistics = all_statistics - current_challenge_statistics
+    missing_statistics.each do |s|
+      challenge_statistics << s.constantize.create
+    end
+  end
+
+  def update_stats #for the sample data rake task
+    challenge_statistics.each do |cs|
+      cs.update
+    end
   end
 
   def has_member?(member)
@@ -81,7 +112,6 @@ class Challenge < ActiveRecord::Base
     readings.find_by_read_on(Date.today)
   end
 
-
   private
 
   # Validations
@@ -103,7 +133,7 @@ class Challenge < ActiveRecord::Base
   # before save
   # - after_create
   def successful_creation_email
-    ChallengeMailer.creation_email(self).deliver_now
+    NewChallengeEmailWorker.perform_in(5.seconds, self.id)
   end
 
   # - before_validation

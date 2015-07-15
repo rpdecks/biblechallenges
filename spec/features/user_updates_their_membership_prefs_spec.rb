@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'User updates membership preferences' do
-  let(:user) {create(:user, :with_profile)}
+  let(:user) {create(:user)}
 
   before(:each) do
     login(user)
@@ -10,19 +10,15 @@ feature 'User updates membership preferences' do
   scenario 'User should see the Change (Bible Version) Link if he is a member of challenge' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit member_challenges_path
-    click_link challenge.name
-    click_link "Details"
+    visit member_challenge_path(challenge)
 
-    expect(page).to have_content("Change")
+    expect(page).to have_link("Change")
   end
 
   scenario 'Member of challenge can visit profile update page for bible_version directly from challenge page' do
     challenge = create(:challenge)
     create(:membership, challenge: challenge, user: user)
-    visit member_challenges_path
-    click_link challenge.name
-    click_link "Details"
+    visit member_challenge_path(challenge)
     click_link "Change"
 
     expect(page).to have_button("Update my Challenge Settings")
@@ -31,9 +27,7 @@ feature 'User updates membership preferences' do
   scenario 'Member of challenge should be able to edit their Bible version pref' do
     challenge = create(:challenge)
     create(:membership, bible_version: "KJV", challenge: challenge, user: user)
-    visit member_challenges_path
-    click_link challenge.name
-    click_link "Details"
+    visit member_challenge_path(challenge)
     click_link "Change"
 
     select 'ESV', from: "Preferred Bible Version"

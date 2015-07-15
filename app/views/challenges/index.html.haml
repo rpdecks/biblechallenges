@@ -1,38 +1,15 @@
+.masthead.centered
+  .container
+    .title Bible Challenges
+    .subtitle Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below.
+
+    %a.btn{href: new_creator_challenge_path} Create a challenge
+
 .container
-  .row
-    .col-md-12
-      %h1 Bible Challenges
-      %br
-      %p.lead Create a Bible Reading Challenge for a church, small group, or student organization.  Or just for yourself.
-      %br
-      %a.btn.btn-lg.btn-success{href: new_creator_challenge_path} Create a Challenge
-      %br
-      %br
-      %br
-      = form_tag challenges_path, { method: :get, class: "input-xxlarge form-query" } do
-        = text_field_tag :query, params[:query], class: "search-input"
-        = submit_tag "Search for a Challenge", class: "btn btn-primary query"
-
-      
   - unless @public_challenges.empty?
-    %h2 Or take a look at some of the current challenges
 
+    %h3.component-title Current Challenges
     .row
-    - @public_challenges.each do |challenge|
-      .col-md-12
-        = link_to challenge.name, challenge_path(challenge)
-        %br
-        = "Members: #{challenge.members.size}"
-        - challenge.members.each do |m|
-          = image_tag avatar_url(m, 30), title: m.username
-        %br
-        = "Chapters: #{challenge.readings.size}"
-      .col-md-3
-        = "Total Chapters To Read: #{challenge.readings.size}"
-      .col-md-3
-        = "Total Chapters Read: #{challenge.membership_readings.size}"
-      .col-md-3
-        = "Start Date: #{challenge.begindate.strftime("%b %d, %Y")}"
-      .col-md-3
-        = "End Date: #{challenge.enddate.strftime("%b %d, %Y")}"
-
+      - @public_challenges.each do |challenge|
+        .col-md-6
+          = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}

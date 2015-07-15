@@ -1,20 +1,37 @@
-- breadcrumb :challenge, @challenge
-.container
-  = breadcrumbs
-  = render 'shared/challenges/join_challenge'
+.section.primary
   .container
-    .row
-      = render 'shared/challenges/challenge_groups'
-
-    .row
-    = render 'shared/challenges/challenge_details'
-
-    = render 'shared/challenges/challenge_statistics'
-
-
-    = render 'shared/challenges/readings_table'
-
+    .title
+      = @challenge.name
+    .subtitle
+      %b
+        = @challenge.chapters_to_read
+      %br
+      = @challenge.begindate.strftime("%-m/%-d/%Y")
+      = "-"
+      = @challenge.enddate.strftime("%-m/%-d/%Y")
+    - @challenge.members.each do |m|
+      = render 'shared/avatar', user: m
     %br
     %br
 
-    = render 'shared/challenges/challenge_unsubscribe'
+    .subtitle
+      = render 'shared/challenges/challenge_instructions'
+
+    %br 
+    .centered
+      - if current_user
+        = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn block-center', display: 'inline'
+      - unless current_user
+        = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
+
+.section.grey
+  .container
+    %h4 Groups
+    = render partial: 'groups', locals: { groups: @challenge.groups }
+    = render partial: 'shared/challenges/challenge_statistics', locals: {challenge: @challenge}
+
+.section.grey
+  .container
+    .panel.panel-primary
+      .panel-heading Readings
+      = render partial: 'readings', locals: {readings: @readings }

@@ -4,31 +4,33 @@
     })
 
 
-%h3 
-  Challenge Groups
-  %a.btn.btn-default{tabindex: "0", role: "button", :data => {:trigger => 'focus', :placement => 'right', :toggle => 'popover', :content => 'You can take on this challenge with companions by being in a group. Share your enjoyment of the Word. View group reading statistics' }, :title => 'Why join a group?'}
-    %span.glyphicon.glyphicon-info-sign
-%ol.list-group
-  - @challenge.groups.each do |g|
-    - @group_member_count = @challenge.memberships.where(group_id: g).size
-    - if @challenge.has_member?(current_user) && g.has_member?(current_user)
-      %li.list-group-item
-        %strong
-          = link_to g.name, member_group_path(challenge_id: @challenge.id, id: g.id) 
-          (My current group)
-        %span.badge
-          = @group_member_count
-          = "member".pluralize(@group_member_count)
-    - else 
-      %li.list-group-item.list-group-item-info
-        = link_to g.name, member_group_path(id: g.id)
-        %span.badge
-          = @group_member_count
-          = "member".pluralize(@group_member_count)
-.right
-  = render 'shared/challenges/create_a_group'
+.container
+  .row
+    .col-md-8
+      %h3 
+        Groups
+      %p
+        When you join a group, the other members of that group can see more info related to your reading history.  That usually translates into encouragement.  It also allows the site to keep track of statistics across the entire group, so you can compete with other groups.
+      %br
+      %table.table.table-bordered.table-hover
+        %tbody
+        - groups.each do |g|
+          - group_member_count = challenge.memberships.where(group_id: g).size
+          %tr
+            %td
+              %strong
+                = g.name
+              .pull-right
+                - g.members.each do |m|
+                  = render 'shared/avatar', user: m
+                %span.badge
+                  = group_member_count
+                  = "member".pluralize(group_member_count)
+            - if current_user
+              %td.text-center
+                - unless current_user.groups.include?(g)
+                  = link_to "Join Group", join_member_group_path(id: g.id), :class=> "btn btn-primary btn-sm", method: :post
 
-.left-bold
-  Total Groups:
-  = @challenge.groups.count
+      %span
+        = render 'shared/challenges/create_a_group'
 

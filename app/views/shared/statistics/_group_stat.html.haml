@@ -1,0 +1,15 @@
+%span
+%table.table.table-bordered.table-hover.table-condensed
+  %thead
+    %tr
+      %th Group Name
+      %th Progress Percentage
+      %th On-schedule Percentage
+      %th Total Chapters Read
+  - groups.each do |g|
+    %tbody
+      %tr
+        %td= g.name
+        %td= g.group_statistic_progress_percentage
+        %td= g.group_statistic_on_schedule_percentage
+        %td= g.group_statistic_total_chapters_read

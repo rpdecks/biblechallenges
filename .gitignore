@@ -4,7 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-#Ignore application yml
+# Ignore application yml
 /config/application.yml
 
 # Ignore bundler config
@@ -31,3 +31,9 @@ quickfix.out
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore tags folder from ctags
+tags
+
+# ignore dump file from redis
+dump.rdb

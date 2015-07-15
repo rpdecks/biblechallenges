@@ -1,0 +1,48 @@
+- unless comments.empty?
+  - comments.recent_first.each do |comment|
+    .comment
+      .avatar= image_tag avatar_url(comment.user, 48), size: '40x40' 
+
+      .comment_block
+        .title= comment.user.name
+        .comment_content= comment.content
+        .details
+          = time_ago_in_words(comment.created_at)
+          ago
+
+          - if comment.user == current_user
+            = link_to "Delete", [group, comment], method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}
+
+          = link_to "Respond", "#", class: "respond-comment"
+
+        .comments
+          - if comment.comments.any?
+            .comment_replies
+              - comment.comments.recent_last.each do |comment|
+                .row.comment
+                  .col-sm-1
+                    .avatar
+                      = image_tag avatar_url(comment.user, 48), size: '40x40'
+                  .col-sm-11
+                    .title= comment.user.name
+                    .comment_content= comment.content
+                    .details
+                      = time_ago_in_words(comment.created_at)
+                      ago
+
+                      - if comment.user == current_user
+                        = link_to "Delete", [group, comment], method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}
+          .row
+            .col-sm-12
+              = render "comments/comments/form", {commentable: comment, location: member_challenge_path(group.challenge, anchor: "mygroup")}
+
+
+
+
+- content_for :javascripts do
+  :javascript
+    $(".respond-comment").click(function (evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      $(this).parent().parent().find('.comment-form').removeClass('hide');
+    });

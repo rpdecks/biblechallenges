@@ -11,7 +11,14 @@ class Comment < ActiveRecord::Base
 
   validate :commentable_belongs_to_user
 
-  default_scope { order('created_at DESC') }
+
+  def self.recent_first
+    order('created_at desc')
+  end
+
+  def self.recent_last
+    order(:created_at)
+  end
 
   def commentable_belongs_to_user
     if commentable_type == "Reading"

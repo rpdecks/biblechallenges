@@ -14,9 +14,31 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 5. also change nameservers for domain to [a-e].ns.zerigo.net
 6.  push to heroku
 7.  rake db:migrate
-8.  rake db:seed  (to get the verse data in there)
+8.  rake db:seed  (to get the verse data in there)  
+  - Note: always run `rake db:seed RAILS_ENV=test` as well for tests to work properly
 
+## Environmental Variables
 
+In order to setup omniauth login, you will need
+two environment variables for each provider.
+The instruction are different for each provider.
+
+#### Facebook
+You will need two environment variables:
+ - `FACEBOOK_APP_ID`
+ - `FACEBOOK_SECRET`
+
+They will hold the id and secret keys for each omniauth app.
+You can obtain these keys by setting up the app at `facebook.com/developer`
+Note: on facebook.com, go to `Settings` and then `Add Platform` for website.
+
+#### Google
+You will need two environment variables:
+ - `GOOGLE_CLIENT_ID`
+ - `GOOGLE_CLIENT_SECRET`
+
+You can obtain from registering app at to `console.developers.google.com`
+Note: Under `APIs` remember to enable (Contacts API) and (Google+ API). Under `Credentials`, click `Create new client id`.
 
 ##Tests
 
@@ -36,7 +58,7 @@ go to `localhost:3000/mail_view`
 ## Development emails
 
 mailcatcher gem is installed
-run % mailcatcher 
+run % mailcatcher
 go to localhost:1080 to see dev emails
 
 
@@ -48,8 +70,4 @@ Each Challenge has many Readings, which are the chapters covered by that Challen
 For every Reading in a Challenge, for every User, there is a MembershipReading that represents the "read" state of that reading for that user
 
 The Challenge, Membership, Reading, and MembershipReading models are the main classes modified moment by moment.
-
-
-
-
 
