@@ -57,6 +57,11 @@ class Membership < ActiveRecord::Base
 
   def successful_creation_email
     NewMembershipEmailWorker.perform_async(self.id)
+    todays_reading = self.readings.todays_reading
+
+    if todays_reading.size > 0
+      DailyEmailWorker.perform_async(todays_reading.first.id, self.user_id)
+    end
   end
 
   private
