@@ -2,7 +2,7 @@ class MembershipCompletion
 
   def initialize(membership)
     MembershipStatisticAttacher.attach_statistics(membership)
-    membership.successful_creation_email
+#    membership.successful_creation_email
 
     todays_reading = membership.readings.todays_reading
 
