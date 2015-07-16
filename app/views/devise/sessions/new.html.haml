@@ -1,19 +1,18 @@
-.section
-  .col-md-4.col-md-offset-5
-    %h2.centered Sign in
-    %br
+.container
+  .col-md-4.col-md-offset-4
+    %h2.text-center Log in
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: 'form'}) do |f|
-      .form-group.form-cluster
+      .form-group
+        = f.label :email
         = f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control'
+      .form-group
+        = f.label :password
         = f.password_field :password, placeholder: 'Password', class: 'form-control'
 
       .form-group
         = f.check_box :remember_me
         Remember me:
 
-
-      %br
-
       = f.submit 'Sign in', disable_with: 'Please Wait...', class: 'btn btn-primary btn-block'
-      %br
+      
       = render 'devise/shared/links'
