@@ -114,14 +114,15 @@ describe Membership do
           expect(membership.readings).to match_array(membership.challenge.readings)
         end
         it 'sends out a thanks for joining email' do
-            membership.save
-            membership.run_callbacks(:commit)
+            membership2 = create(:membership)
+            membership2.run_callbacks(:commit)
             NewMembershipEmailWorker.drain
             expect(ActionMailer::Base.deliveries.last.subject).to include "Thanks for joining"
         end
         it 'sends out a verses email if challenge started that day' do
-            membership.save
-            membership.run_callbacks(:commit)
+            newchallenge
+            membership2 = create(:membership, challenge: newchallenge)
+            membership2.run_callbacks(:commit)
             DailyEmailWorker.drain
             expect(ActionMailer::Base.deliveries.first.subject).to include "Bible Challenge reading for"
         end
