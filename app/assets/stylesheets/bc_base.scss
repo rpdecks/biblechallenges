@@ -5,7 +5,8 @@ body {
   line-height: 1.5;
   color: #000000;
   background-color: #ffffff;
-  padding-top: 100px;
+  padding-top: 78px;
+  -webkit-font-smoothing: antialiased;
 }
 a {
   color: #02baf2;
@@ -353,12 +354,12 @@ a.list-group-item.active > .badge,
     right: 13px;
   }
 }
-label {
-  font-family: "SourceSansProSemiBold", Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  line-height: 2.4;
-  color: #364347;
-}
+// label {
+//   font-family: "SourceSansProSemiBold", Helvetica, Arial, sans-serif;
+//   font-weight: normal;
+//   line-height: 2.4;
+//   color: #364347;
+// }
 .form-control {
   border: 1px solid #d6e1e5;
   color: #364347;
@@ -366,7 +367,6 @@ label {
   line-height: 1.467;
   padding: 7px 12px;
   height: 40px;
-  -webkit-appearance: none;
   border-radius: 4px;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -1908,12 +1908,12 @@ h6 small,
   color: #93a4aa;
   font-size: 82%;
 }
-h1,
-h2,
-h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
+// h1,
+// h2,
+// h3 {
+//   margin-top: 0;
+//   margin-bottom: 0;
+// }
 h4,
 h5,
 h6 {
