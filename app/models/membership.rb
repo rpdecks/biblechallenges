@@ -60,7 +60,7 @@ class Membership < ActiveRecord::Base
 
     todays_reading = self.readings.todays_reading
     if todays_reading.size > 0
-      DailyEmailWorker.perform_in(1.minute, todays_reading.first.id, self.user_id)
+      DailyEmailWorker.perform_in(30.seconds, todays_reading.first.id, self.user_id)
     end
   end
 
