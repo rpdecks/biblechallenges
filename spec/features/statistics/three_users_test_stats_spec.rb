@@ -8,7 +8,6 @@ feature 'One user reads various parts of a challenge' do
     scenario "When joins a group, also joins the challenge" do
         create_account_and_log_in(email: 'c@c.com', name: 'C')
         create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  #below
-        click_link "One Day"  # title of challenge
         click_link "Log my reading"
 
         #job created through updating of reading, now need to push the sidekiq UpdateStatsWorker through
