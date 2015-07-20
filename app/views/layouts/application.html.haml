@@ -37,14 +37,14 @@
               %li
                 = link_to I18n.t('layouts.application.login'), new_user_session_path
               %li
-                = link_to I18n.t('layouts.application.sigin'), user_omniauth_authorize_path(:facebook)
+                = link_to I18n.t('layouts.application.signin'), user_omniauth_authorize_path(:facebook)
               //%li
               //  = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
 
           .form-inline.navbar-form.navbar-right
             = form_tag challenges_path, method: :get, class: "input-group" do
               .input-group
-                = text_field_tag :query, nil, class: "form-control", hide_label: true, placeholder: "Search for a challenge"
+                = text_field_tag :query, nil, class: "form-control", hide_label: true, placeholder: I18n.t("layouts.application.search_holder")
                 %span.input-group-btn
                   = submit_tag "Search", class: "btn btn-primary query"
 
