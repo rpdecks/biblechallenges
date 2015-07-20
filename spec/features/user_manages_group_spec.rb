@@ -12,7 +12,7 @@ feature 'User manages groups' do
       challenge = create(:challenge)
       group = challenge.groups.create(name: "UCLA", user_id: user.id)
 
-      visit member_group_path(group)
+      visit member_challenge_path(challenge)
       click_link "Join Group"
 
       expect(user.challenges).to include challenge
@@ -155,7 +155,7 @@ feature 'User manages groups' do
       create(:membership, challenge: challenge, group: group, user: user)
       membership = create(:membership, challenge: challenge, group: group, user: user1)
       membership2 = create(:membership, challenge: challenge, group: group, user: user2)
-      visit member_group_path(group)
+      visit member_challenge_path(challenge)
 
       click_link 'Delete Group'
 
