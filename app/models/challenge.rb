@@ -18,10 +18,8 @@ class Challenge < ActiveRecord::Base
   validates :name, presence: true, length: {minimum: 3}
   validates :owner_id, presence: true
   validates :chapters_to_read, presence: true
-  validates_format_of :chapters_to_read,
-                        with: /\A\s*([0-9]?\s*[a-zA-Z]+)\.?\s*([0-9]+)(?:\s*(?:-|..)[^0-9]*([0-9]+))?/,
-                        message: 'invalid format'
   validate  :validate_dates
+  validates :book_chapters, presence: true
 
   Rails.application.eager_load!
   ChallengeStatistic.descendants.each do |stat| 
@@ -31,9 +29,8 @@ class Challenge < ActiveRecord::Base
   # Callbacks
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
+  before_validation :generate_book_chapters
   after_create      :successful_creation_email
-  #after_create      :joins_creator_to_challenge
-  #after_save        :generate_readings
 
 
   def joins_creator_to_challenge   #todo this needs to be in the controller not a callback
@@ -100,8 +97,11 @@ class Challenge < ActiveRecord::Base
       "biblechallenges.com"
   end
 
-  def generate_readings
+  def generate_book_chapters  # an array of [book,chapter] pairs, integers
+    self.book_chapters = ActsAsScriptural.new.parse(chapters_to_read).chapters
+  end
 
+  def generate_readings
     ActsAsScriptural.new.parse(chapters_to_read).chapters.each_with_index do |chapter, i|
       chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
       readings.create(chapter: chapter, read_on: (begindate + i.days))
