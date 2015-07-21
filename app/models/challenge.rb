@@ -31,7 +31,8 @@ class Challenge < ActiveRecord::Base
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
   before_validation :generate_book_chapters, :generate_date_ranges_to_skip
-  after_create      :successful_creation_email
+  after_commit :successful_creation_email, :on => :create
+
 
   def membership_for(user)
     user && memberships.find_by_user_id(user.id)
@@ -122,7 +123,7 @@ class Challenge < ActiveRecord::Base
   # before save
   # - after_create
   def successful_creation_email
-    NewChallengeEmailWorker.perform_in(5.seconds, self.id)
+    NewChallengeEmailWorker.perform_in(30.seconds, self.id)
   end
 
   # - before_validation

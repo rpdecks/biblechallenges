@@ -43,11 +43,10 @@ class Creator::ChallengesController < ApplicationController
 
       MembershipCompletion.new(membership)
       ChallengeCompletion.new(@challenge)
-      redirect_to member_challenges_path
+      redirect_to member_challenge_path(@challenge)
     else
       render :new
     end
-
   end
 
   def destroy
@@ -58,11 +57,6 @@ class Creator::ChallengesController < ApplicationController
     end
   end
 
-#  def days_of_week_to_skip
-#    if params[:days_to_skip]
-#      params[:days_to_skip].map{|i| i.to_i} 
-#    end
-#  end
 
   def challenge_params
     params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
