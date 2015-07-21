@@ -62,6 +62,7 @@ class ReadingsGenerator
   end
 
   def parse_string_range(string_range)
+#    "2020-01-01..2020-01-05"
     beginning = string_range.split('..').first
     ending = string_range.split('..').last
     begin_date = Date.parse(beginning)
