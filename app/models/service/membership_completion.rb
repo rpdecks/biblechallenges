@@ -7,5 +7,4 @@ class MembershipCompletion
     membership.successful_creation_email #todo can this be delayed by membership.delay.successful_creation_email
   end
 
-
 end

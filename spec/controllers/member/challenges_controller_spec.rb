@@ -28,7 +28,8 @@ describe Member::ChallengesController do
 
     describe 'GET#index' do
       it "collects challenges into @challenges" do
-        current_challenge = create(:challenge, owner: current_user)
+        current_challenge = create(:challenge, :with_membership, owner: current_user)
+        #create(:membership, user: current_user, challenge: current_challenge)
         get :index
         expect(assigns(:challenges)).to match_array [current_challenge]
       end

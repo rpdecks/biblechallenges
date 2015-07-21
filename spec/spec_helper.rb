@@ -15,11 +15,17 @@ Time.zone = 'Eastern Time (US & Canada)'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
+# Disable Sidekiq will NOT process message
+RSpec::Sidekiq.configure do |config|
+  config.warn_when_jobs_not_processed_by_sidekiq = false
+end
+
 RSpec.configure do |config|
 
   #clears jobs in in worker array before each
   config.before(:each) do
     Sidekiq::Worker.clear_all
+    ActionMailer::Base.deliveries.clear
   end
 
   # suppress error backtrace if related to rvm or rbenv

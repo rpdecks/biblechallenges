@@ -1,6 +1,6 @@
 %p
   %i
-    = @newcomment.user.username
+    = @newcomment.user.name
     responded to your comment:
     = # link_to @original_comment.commentable.chapter.book_and_chapter + ":", reading_path(@original_comment.commentable)
 %p
@@ -15,4 +15,4 @@
 
 %small
   If you would prefer not to receive these notifications, please adjust your notification preferences 
-  #{link_to 'here', edit_user_registration_path}
+  #{link_to 'here', edit_user_url}

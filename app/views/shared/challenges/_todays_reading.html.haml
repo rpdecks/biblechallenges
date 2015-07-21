@@ -1,6 +1,15 @@
+- if current_user && membership = @challenge.membership_for(current_user)
+  %tr
+    %td Bible Version:
+    %td
+      = membership.bible_version
+      =link_to "Change", member_membership_path(membership), :method => :get
+%br
 -if todays_reading
-  %h3
-    ="Today's Readings (#{DateTime.now.strftime("%m/%d/%Y")})"
+  %h4
+    ="Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})"
+
+  %br
   %br
 
 
@@ -13,7 +22,11 @@
   -#       = verse.decorate.to_div
   -# %a#toggle_todays_reading{href: '#'}More
 -else
-  %h3 No reading today :(
+  %br
+  %br
+  %h3 No reading today
+  %br
+  %br
 -#
 -# :javascript
 -#
