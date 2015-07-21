@@ -82,10 +82,15 @@ describe Creator::ChallengesController do
           expect(Challenge.first.members).to include challenge_creator
         end
 
+        it "creates a book_chapters array of parsed book chapter values" do
+          post :create, challenge: FactoryGirl.attributes_for(:challenge, chapters_to_read: "Matt 1")
+ 
+          expect(Challenge.first.book_chapters).to match_array  [[40,1]]
+        end
         it "creates a serialized challenge attribute array days_of_week_to_skip" do
           post :create, challenge: FactoryGirl.attributes_for(:challenge, days_of_week_to_skip: ['0','1'])
 
-          expect(Challenge.first.days_of_week_to_skip).to match_array  ['0','1']
+          expect(Challenge.first.days_of_week_to_skip).to match_array  [0,1]
         end
         it "saves dates to skip" do
           post :create, challenge: FactoryGirl.attributes_for(:challenge, dates_to_skip: "2017-01-01")
