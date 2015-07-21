@@ -28,11 +28,7 @@ class Creator::ChallengesController < ApplicationController
     # this seems terrible; is there a better way?  #jim
     if @challenge.save
       flash[:notice] = "Successfully created Challenge" 
-      readings = ReadingsGenerator.new(@challenge.begindate, 
-                                      @challenge.chapters_to_read,
-                                      days_of_week_to_skip: @challenge.days_of_week_to_skip,
-                                      dates_to_skip: challenge_params[:dates_to_skip],
-                                      ).generate
+      readings = ReadingsGenerator.new(@challenge).generate 
 
       Reading.transaction do
         readings.each do |r|
