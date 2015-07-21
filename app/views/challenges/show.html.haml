@@ -20,9 +20,9 @@
     %br 
     .centered
       - if current_user
-        = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn block-center', display: 'inline'
+        = link_to I18n.t('challenges.show.join'), member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn block-center', display: 'inline'
       - unless current_user
-        = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
+        = link_to I18n.t('challenges.show.signup'), new_user_registration_path, :class => 'btn btn-primary'
 
 .section.grey
   .container
@@ -33,5 +33,6 @@
 .section.grey
   .container
     .panel.panel-primary
-      .panel-heading Readings
+      .panel-heading
+        = t "challenges.show.panel_heading"
       = render partial: 'readings', locals: {readings: @readings }

@@ -19,12 +19,16 @@ en:
       date: Date
       chapter: Chapter
     index:
+      title: Bible Challenges
+      subtitle: Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below.
+      create: Create a challenge
+      current_challenges: Current Challenges
     show:
+      join: Join Challenge
+      signup: Sign me up
+      panel_heading: Readings
   comment_mailer:
     new_comment_notification:
-  comments:
-    comments:
-      _form:
   creator:
     challenges:
       _form:
@@ -54,6 +58,8 @@ en:
       new:
   groups:
     _comment_form:
+      post_comment: Post Comment
+      wait: Please Wait...
     _comments:
   member:
     challenges:

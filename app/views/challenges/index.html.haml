@@ -4,15 +4,19 @@
       .col-md-8.col-md-offset-2
         / TODO
         / This should be <h1> instead of a div with a class which is semantically incorrect
-        .title Bible Challenges
-        .subtitle Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below.
+        .title
+          = t "challenges.index.title"
+        .subtitle
+          = t "challenges.index.subtitle"
 
-        %a.btn{href: new_creator_challenge_path} Create a challenge
+        %a.btn{href: new_creator_challenge_path}
+          = t "challenges.index.create"
 
 .container
   - unless @public_challenges.empty?
 
-    %h3.component-title Current Challenges
+    %h3.component-title 
+      = t "challenges.index.current_challenges"
     .row
       - @public_challenges.each do |challenge|
         .col-md-6
