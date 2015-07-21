@@ -2,28 +2,12 @@ require 'spec_helper'
 
 describe Member::MembershipsController do
   let(:owner){create(:user)}
-  let(:challenge){create(:challenge, owner: owner)}
+  let(:challenge){create(:challenge, :with_membership, owner: owner)}
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
 
   before(:each) do
     sign_in :user, user
-  end
-
-  describe 'GET#index' do
-    it "collects memberships into @memberships" do
-      challenge.join_new_member(create(:user))
-
-      get :index, challenge_id: challenge
-
-      expect(assigns(:memberships)).to match_array(challenge.memberships)
-    end
-
-    it "renders the :index template" do
-      get :index, challenge_id: challenge
-
-      expect(response).to render_template :index
-    end
   end
 
   describe 'DELETE#destroy' do
@@ -46,7 +30,7 @@ describe Member::MembershipsController do
   end
 
   describe  'POST#create' do
-    let(:newchallenge){create(:challenge_with_readings, owner: owner)}
+    let(:newchallenge){create(:challenge_with_readings, :with_membership, owner: owner)}
 
     it "redirects to the challenge page after joining as a logged in user" do
       somechallenge = create(:challenge)  #uses factorygirl
@@ -62,30 +46,15 @@ describe Member::MembershipsController do
     end
 
     it "associates statistics with membership" do
+      ch = newchallenge
+      m = ch.memberships.first
+      MembershipCompletion.new(m)
       number_of_stats = MembershipStatistic.descendants.size
       expect {
         # this slightly ridiculous expectation is because the stats are created
         # for the challenge creator as well as the new member.  #todo
         post :create, challenge_id: newchallenge
-      }.to change(MembershipStatistic, :count).by(number_of_stats * 2)
-    end
-    it "sends the user a Thanks for joining email" do
-      challenge = create(:challenge_with_readings, begindate: Date.today+1)
-      Sidekiq::Testing.inline! do
-        expect {
-          post :create, challenge_id: challenge
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        expect(ActionMailer::Base.deliveries.last.subject).to include "Thanks for joining"
-      end
-    end
-    it "sends the user an email with today's reading if there is reading for today" do
-      newchallenge
-      Sidekiq::Testing.inline! do
-        expect {
-          post :create, challenge_id: newchallenge
-        }.to change { ActionMailer::Base.deliveries.count }.by(2)
-        expect(ActionMailer::Base.deliveries.last.subject).to include "Bible Challenge reading for"
-      end
+      }.to change(MembershipStatistic, :count).by(number_of_stats)
     end
   end
 

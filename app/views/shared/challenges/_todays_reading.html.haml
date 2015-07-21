@@ -7,7 +7,7 @@
 %br
 -if todays_reading
   %h4
-    ="Today's Readings (#{DateTime.now.strftime("%m/%d/%Y")})"
+    ="Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})"
 
   %br
   %br
@@ -22,7 +22,11 @@
   -#       = verse.decorate.to_div
   -# %a#toggle_todays_reading{href: '#'}More
 -else
-  %h3 No reading today :(
+  %br
+  %br
+  %h3 No reading today
+  %br
+  %br
 -#
 -# :javascript
 -#

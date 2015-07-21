@@ -12,7 +12,7 @@ feature 'User manages groups' do
       challenge = create(:challenge)
       group = challenge.groups.create(name: "UCLA", user_id: user.id)
 
-      visit member_group_path(group)
+      visit member_challenge_path(challenge)
       click_link "Join Group"
 
       expect(user.challenges).to include challenge
@@ -59,7 +59,10 @@ feature 'User manages groups' do
       user2 = create(:user)
       start_date = Date.today
       challenge = create(:challenge_with_readings, 
-                         chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+                         :with_membership,
+                         chapters_to_read: "Matt 1-2",
+                         begindate: start_date,
+                         owner_id: user.id)
       m2 = create(:membership, challenge: challenge, user: user2)
       group = challenge.groups.create(name: "UC Irvine", user_id: user2.id)
       group.add_user_to_group(challenge, user2)
@@ -88,8 +91,11 @@ feature 'User manages groups' do
     scenario 'User leaves a group and group stats update automatically' do
       user2 = create(:user)
       start_date = Date.today
-      challenge = create(:challenge_with_readings, 
-                         chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+      challenge = create(:challenge_with_readings,
+                         :with_membership,
+                         chapters_to_read: "Matt 1-2",
+                         begindate: start_date,
+                         owner_id: user.id)
       m1 = challenge.memberships[0]
       m2 = create(:membership, challenge: challenge, user: user2)
       group = challenge.groups.create(name: "UC Irvine", user_id: user2.id)
@@ -149,7 +155,7 @@ feature 'User manages groups' do
       create(:membership, challenge: challenge, group: group, user: user)
       membership = create(:membership, challenge: challenge, group: group, user: user1)
       membership2 = create(:membership, challenge: challenge, group: group, user: user2)
-      visit member_group_path(group)
+      visit member_challenge_path(challenge)
 
       click_link 'Delete Group'
 

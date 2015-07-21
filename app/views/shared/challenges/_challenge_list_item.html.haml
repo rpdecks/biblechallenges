@@ -9,5 +9,5 @@
     = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
 
   %p.list-group-item-text
-    - challenge.members.limit(20).each do |m|
-      = image_tag avatar_url(m, 30), title: m.name, class: 'img-circle'
+    - challenge.members.limit(24).each do |m|
+      = image_tag avatar_url(m, 30), size: '25x25', title: m.name, class: 'img-circle'

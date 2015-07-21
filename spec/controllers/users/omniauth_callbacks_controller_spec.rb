@@ -30,12 +30,14 @@ describe Users::OmniauthCallbacksController do
     end
 
     it "should successfully create a user" do
+    pending
       expect {
         post :google_oauth2, provider: :google_oauth2
       }.to change{ User.count }.by(1)
     end
 
     it "should successfully associate user_statistics to user" do
+    pending
       number_of_stats = UserStatistic.descendants.size
       expect {
         post :google_oauth2, provider: :google_oauth2
@@ -43,6 +45,7 @@ describe Users::OmniauthCallbacksController do
     end
 
     it "should redirect first-time sign-ups to finish_signup url" do
+    pending
       post :google_oauth2, provider: :google_oauth2
       expect(response).to redirect_to finish_signup_path
     end

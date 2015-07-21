@@ -5,11 +5,14 @@
     .subtitle
       %b
         = @challenge.chapters_to_read
+      %br
       = @challenge.begindate.strftime("%-m/%-d/%Y")
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
     - @challenge.members.each do |m|
       = render 'shared/avatar', user: m
+    %br
+    %br
 
     .subtitle
       = render 'shared/challenges/challenge_instructions'

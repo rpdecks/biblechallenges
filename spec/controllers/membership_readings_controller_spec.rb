@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MembershipReadingsController, type: :controller do
 
-  let(:challenge){create(:challenge_with_readings, chapters_to_read:'mi 1-4')}
+  let(:challenge){create(:challenge_with_readings, :with_membership, chapters_to_read:'mi 1-4')}
   let(:user){create(:user)}
   let(:membership){challenge.join_new_member(user)}
   let(:membership_reading){ create(:membership_reading, membership: membership)}
@@ -48,10 +48,9 @@ describe MembershipReadingsController, type: :controller do
       end
 
       it "creates a new membership_reading allowed only for the owner of that membership reading" do
-        user1 = challenge.owner
         user2 = user #logged in as user
-        membership1 = challenge.memberships.first
-        membership2 = challenge.join_new_member(user2) #user2 joins challenge
+        membership1 = challenge.memberships.first #belongs to user1
+        challenge.join_new_member(user2) #user2 joins challenge
         reading = challenge.readings.first
         expect {
           post :create, reading_id: reading.id, membership_id: membership1
@@ -93,9 +92,9 @@ describe MembershipReadingsController, type: :controller do
         membership = challenge.join_new_member(user)
 
         user.associate_statistics
-
-        post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
-
+        Sidekiq::Testing.inline! do
+          post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
+        end
         expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 1
       end
       it "should update chapter_read_all_time value with multiple memberships" do 
@@ -106,10 +105,10 @@ describe MembershipReadingsController, type: :controller do
         user.associate_statistics
         membership1 = challenge1.join_new_member(user)
         membership2 = challenge2.join_new_member(user)
-
-        post :create, reading_id: challenge1.readings.first.id, membership_id: membership1.id
-        post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
-
+        Sidekiq::Testing.inline! do
+          post :create, reading_id: challenge1.readings.first.id, membership_id: membership1.id
+          post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
+        end
 
         expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 2
       end
@@ -181,17 +180,17 @@ describe MembershipReadingsController, type: :controller do
       end
     end
 
-      it "allows deleting of a membership_reading only by the owner of that membership reading" do
-        user1 = challenge.owner
-        user2 = user #logged in as user
-        membership1 = challenge.memberships.first
-        membership2 = challenge.join_new_member(user2) #user2 joins challenge
-        reading = challenge.readings.first
-        mr = create(:membership_reading, membership:membership1, reading: reading)
-        expect {
-          delete :destroy, id: mr.id, membership_id: membership1
-        }.to raise_error('Not allowed')
-      end
+    it "allows deleting of a membership_reading only by the owner of that membership reading" do
+      user1 = challenge.owner
+      user2 = user #logged in as user
+      membership1 = challenge.memberships.first
+      membership2 = challenge.join_new_member(user2) #user2 joins challenge
+      reading = challenge.readings.first
+      mr = create(:membership_reading, membership:membership1, reading: reading)
+      expect {
+        delete :destroy, id: mr.id, membership_id: membership1
+      }.to raise_error('Not allowed')
+    end
   end
 end
 

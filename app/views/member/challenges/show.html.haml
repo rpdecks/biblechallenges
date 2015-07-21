@@ -8,14 +8,15 @@
     .subtitle
       %b
         = @challenge.chapters_to_read
+      %br
       = @challenge.begindate.strftime("%-m/%-d/%Y")
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
 
-    = image_tag avatar_url(@challenge.owner, 20), title: "Owner: #{@challenge.owner.name}", class: "img-circle"
+    = image_tag avatar_url(@challenge.owner, 20), size: "25x25", title: "Owner: #{@challenge.owner.name}", class: "img-circle"
 
     - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
-      = image_tag avatar_url(m, 20), title: m.name, class: "img-circle"
+      = image_tag avatar_url(m, 20), size: "25x25",  title: m.name, class: "img-circle"
 
 .content
   .container
@@ -42,14 +43,12 @@
 
 
           .panel.panel-primary
-            .panel-heading Challenge Statistics
+            .panel-heading Challenge Readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
           - if @challenge.owner == current_user
-            = link_to "Delete this Challenge", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'Are you sure you want to delete this challenge?',:class=>"btn btn-danger pull-right"
+            = link_to "Delete this Challenge", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger pull-right"
           = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
-
-
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}

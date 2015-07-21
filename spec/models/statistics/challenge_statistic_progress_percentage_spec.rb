@@ -4,8 +4,11 @@ describe ChallengeStatisticProgressPercentage do
 
   describe "#calculate" do
     it "should calculate the proper value" do
-      challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-10')
+      challenge = create(:challenge_with_readings,
+                         :with_membership,
+                         chapters_to_read: 'Matt 1-10')
       m1 = challenge.owner.memberships.first  #creator/owner is also the first memeber of the challenge
+      MembershipCompletion.new(m1) #takes place in controller
       m2 = create(:membership, challenge: challenge)
 
       # read 4 / 10 chapters for first member

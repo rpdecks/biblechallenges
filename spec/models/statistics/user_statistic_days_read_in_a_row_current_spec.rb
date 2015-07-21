@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UserStatisticDaysReadInARowCurrent do
   describe "#update" do
     it "should calculate the proper value for user reading on consecutive days" do
-      challenge = create(:challenge, chapters_to_read: 'Mark 1-7')
+      challenge = create(:challenge, :with_membership, chapters_to_read: 'Mark 1-7')
       user = challenge.members.first
       membership = challenge.memberships.first
       challenge.generate_readings
@@ -19,8 +19,8 @@ describe UserStatisticDaysReadInARowCurrent do
     end
 
     it "should calculate the proper value for user reading on consecutive days in separate challenges" do
-      challenge1 = create(:challenge, chapters_to_read: 'Mark 1-7')
-      challenge2 = create(:challenge, chapters_to_read: 'Lu 1-7')
+      challenge1 = create(:challenge, :with_membership, chapters_to_read: 'Mark 1-7')
+      challenge2 = create(:challenge, :with_membership, chapters_to_read: 'Lu 1-7')
       user = create(:user)
       membership1 = challenge1.join_new_member(user)
       membership2 = challenge2.join_new_member(user)
@@ -46,7 +46,7 @@ describe UserStatisticDaysReadInARowCurrent do
 
 
     it "calculates the right streak with a skipped day in between" do
-      challenge = create(:challenge, chapters_to_read: 'Mark 1-5')
+      challenge = create(:challenge, :with_membership, chapters_to_read: 'Mark 1-5')
       user = challenge.members.first
       membership = challenge.memberships.first
       challenge.generate_readings
