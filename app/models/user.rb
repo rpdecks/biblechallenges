@@ -7,7 +7,10 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+         :omniauthable, :omniauth_providers => [:facebook]
+
+  # Validations
+  validates :name, presence: true
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
@@ -19,12 +22,20 @@ class User < ActiveRecord::Base
   has_many :badges, dependent: :destroy
   has_many :membership_readings, through: :memberships
 
+  has_attached_file :avatar,
+    :styles => {
+    :medium => "300x300>",
+    :thumb => "75x75>" },
+    :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   #Callbacks
   #after_create :associate_statistics
+  before_save :set_default_values
 
   # autogenerate has_one associations for all the badge types
   Rails.application.eager_load!
-  Badge.descendants.each do |badge| 
+  Badge.descendants.each do |badge|
     has_one badge.name.underscore.to_sym
   end
 
@@ -32,13 +43,12 @@ class User < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
-
   def associate_statistics
     self.user_statistics << UserStatisticChaptersReadAllTime.create
     self.user_statistics << UserStatisticDaysReadInARowCurrent.create
     self.user_statistics << UserStatisticDaysReadInARowAllTime.create
   end
-  
+
   def show_progress_percentage(member, group)
     user_membership = (member.memberships & group.memberships).first
     user_membership.progress_percentage
@@ -74,11 +84,18 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,15]
       user.name = auth.info.name
       user.image = auth.info.image
-      # user.username
       # timezone
       # preferred reading hour
 
       user.save!
     end
+  end
+
+  private
+
+  
+  def set_default_values
+    self.preferred_reading_hour ||= "3"
+    self.time_zone ||= "Central Time (US & Canada)"
   end
 end

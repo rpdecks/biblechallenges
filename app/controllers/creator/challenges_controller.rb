@@ -23,14 +23,12 @@ class Creator::ChallengesController < ApplicationController
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
 
+#    @challenge.book_chapters = ActsAsScriptural.new.parse(@challenge.chapters_to_read).chapters
+
     # this seems terrible; is there a better way?  #jim
     if @challenge.save
       flash[:notice] = "Successfully created Challenge" 
-      readings = ReadingsGenerator.new(@challenge.begindate, 
-                                      @challenge.chapters_to_read,
-                                      days_of_week_to_skip: days_of_week_to_skip,
-                                      dates_to_skip: challenge_params[:dates_to_skip],
-                                      ).generate
+      readings = ReadingsGenerator.new(@challenge).generate 
 
       Reading.transaction do
         readings.each do |r|
@@ -38,10 +36,17 @@ class Creator::ChallengesController < ApplicationController
         end
       end
 
-      ChallengeCompletion.new(@challenge)
-    end
+      membership = Membership.new
+      membership.user = current_user
+      membership.challenge = @challenge
+      membership.save
 
-    redirect_to member_challenges_path
+      MembershipCompletion.new(membership)
+      ChallengeCompletion.new(@challenge)
+      redirect_to member_challenge_path(@challenge)
+    else
+      render :new
+    end
   end
 
   def destroy
@@ -52,13 +57,8 @@ class Creator::ChallengesController < ApplicationController
     end
   end
 
-  def days_of_week_to_skip
-    if params[:days_to_skip]
-      params[:days_to_skip].map{|i| i.to_i} 
-    end
-  end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read)
+    params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
   end
 end

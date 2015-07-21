@@ -3,5 +3,6 @@
     .col-md-6
       .list-group-item
         %b= g.name
-        = "(#{g.memberships_count}"
-        = "#{"member".pluralize(g.memberships_count)})"
+        %br
+        = "(#{g.memberships.count}"
+        = "#{"member".pluralize(g.memberships.count)})"

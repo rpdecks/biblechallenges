@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     @user.update_attributes(user_params)
 
     if @user.save
@@ -18,7 +18,9 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    accessible = [ :name, :email, :username, :time_zone, :preferred_reading_hour ]
+    accessible = [ :name, :email, :username,
+                   :time_zone, :preferred_reading_hour,
+                   :avatar ]
     unless params[:user][:password].blank?
       accessible << [ :password, :password_confirmation ]
     end

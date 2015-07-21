@@ -1,7 +1,6 @@
 -# - breadcrumb :challenge, @challenge
 -# = breadcrumbs style: :ol, class: "breadcrumb breadcrumbs-minimal"
 
-
 .section.primary
   .container
     .title
@@ -9,13 +8,15 @@
     .subtitle
       %b
         = @challenge.chapters_to_read
+      %br
       = @challenge.begindate.strftime("%-m/%-d/%Y")
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
 
+    = image_tag avatar_url(@challenge.owner, 20), size: "25x25", title: "Owner: #{@challenge.owner.name}", class: "img-circle"
 
-    - @challenge.members.each do |m|
-      = image_tag m.image, title: m.username, class: "img-circle"
+    - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
+      = image_tag avatar_url(m, 20), size: "25x25",  title: m.name, class: "img-circle"
 
 .content
   .container
@@ -31,24 +32,23 @@
             %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
         %li{role: "presentation"}
           %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
-        %li{role: "presentation"}
-          %a{href: "#details", role: "tab", aria: {controls: "details"}, data: {toggle: "tab"}} Details
-
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
-          = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
           = render partial: 'shared/challenges/log_todays_reading', locals: {membership: @membership,
-              todays_reading: @todays_reading}
+            todays_reading: @todays_reading}
 
           = render partial: 'shared/challenges/todays_reading', locals: { todays_reading: @todays_reading,
-            todays_verses: @todays_verses}
+          todays_verses: @todays_verses}
 
 
           .panel.panel-primary
-            .panel-heading Challenge Statistics
+            .panel-heading Challenge Readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
+          - if @challenge.owner == current_user
+            = link_to "Delete this Challenge", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger pull-right"
+          = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
@@ -58,8 +58,8 @@
             = render partial: 'shared/challenges/challenge_groups', locals: {groups: @groups, challenge: @challenge}
         .tab-pane#statistics{role: "tabpanel"}
           = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge, groups: @groups, user: @current_user}
-        .tab-pane#details{role: "tabpanel"}
-          = render partial:  'shared/challenges/challenge_details', locals: {challenge: @challenge} 
+
+
 :javascript
   // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
   // store the currently selected tab in the hash value

@@ -1,22 +1,26 @@
-.panel.panel-default
-  .panel-body
-    %h3 Create a Bible Challenges Account
-    %p Creating an account allows you to maintain and edit the challenges that you create and easily keep track of the challenges that you have joined.
+.container
+  .row
+    .col-md-6.col-md-offset-3.text-center
+      %h3 Create a Bible Challenges Account
+      %p Creating an account allows you to maintain and edit the challenges that you create and easily keep track of the challenges that you have joined.
 
-.row
-  .col-md-6.col-md-offset-3
-    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {role: 'form'}) do |f|
-      = devise_error_messages!
-      %fieldset
-        .form-group
-          = f.label :email
-          = f.email_field :email, autofocus: true, placeholder: 'Email', autocomplete: 'off', class: 'form-control'
-        .form-group
-          = f.label :password
-          = f.password_field :password, placeholder: 'Password', autocomplete: 'off', class: 'form-control'
-        .form-group
-          = f.label :password_confirmation
-          = f.password_field :password_confirmation, placeholder: 'Password Confirmation', autocomplete: 'off', class: 'form-control'
-        = f.submit 'Sign up', disable_with: 'Please Wait...', class: 'btn btn-success btn-block'
-        %br
-        = render 'devise/shared/links'
+  .row
+    .col-md-4.col-md-offset-4
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {role: 'form'}) do |f|
+        = devise_error_messages!
+        %fieldset
+          .form-group
+            = f.label :name
+            = f.text_field :name, autofocus: true, placeholder: 'Name', autocomplete: 'off', class: 'form-control'
+          .form-group
+            = f.label :email
+            = f.email_field :email, placeholder: 'Email', autocomplete: 'off', class: 'form-control'
+          .form-group
+            = f.label :password
+            = f.password_field :password, placeholder: 'Password', autocomplete: 'off', class: 'form-control'
+          .form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, placeholder: 'Password Confirmation', autocomplete: 'off', class: 'form-control'
+          = f.submit 'Sign up', disable_with: 'Please Wait...', class: 'btn btn-primary btn-block'
+          
+          = render 'devise/shared/links'

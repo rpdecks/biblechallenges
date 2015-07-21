@@ -1,9 +1,13 @@
 .masthead.centered
   .container
-    .title Bible Challenges
-    .subtitle Create a Bible Reading Challenge for a church, small group, <br />or student organization. Or just for yourself.
+    .row
+      .col-md-8.col-md-offset-2
+        / TODO
+        / This should be <h1> instead of a div with a class which is semantically incorrect
+        .title Bible Challenges
+        .subtitle Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below.
 
-    %a.btn{href: new_creator_challenge_path} Create a challenge
+        %a.btn{href: new_creator_challenge_path} Create a challenge
 
 .container
   - unless @public_challenges.empty?

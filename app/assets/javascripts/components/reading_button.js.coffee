@@ -29,12 +29,14 @@
   render: ->
     if @state.membership_reading_id
       React.DOM.a
-        className: 'glyphicon glyphicon-check btn btn-success delete'
+        className: 'btn btn-primary delete'
         "data-confirm": 'Are you sure you want to uncheck this reading?  This may affect your statistics; in particular, your "on_time" statistics.'
         onClick: @handleDelete
-        " "
+        React.DOM.img
+          src: '/assets/box_checked.png'
     else
       React.DOM.a
-        className: 'glyphicon glyphicon-unchecked btn btn-primary'
+        className: 'btn btn-info'
         onClick: @handleCreate
-        " "
+        React.DOM.img
+          src: '/assets/box_unchecked.png'

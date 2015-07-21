@@ -7,7 +7,7 @@
         %em
           = link_to @challenge.name, "http://" + @challenge.url
       %br
-      Hello#{ " " + @user.username unless @user.username.blank?},
+      Hello#{ " " + @user.name unless @user.name.blank?},
 
       %br
       This challenge begins on #{@challenge.begindate.strftime("%b %-d, %Y")} and ends on #{@challenge.enddate.strftime("%b %-d, %Y")}.
@@ -20,7 +20,6 @@
           On the first day of the challenge, you will receive your first email containing your reading for that day.
         %li
           After you read your chapter, click on the link at the bottom of that email to log your reading
-          and to add a comment to the chapter discussion.
         %li
           That's it!
 
@@ -35,7 +34,7 @@
           - @challenge.readings.each do |read|
             %tr
               %td
-                = read.date.strftime("%-m/%-d/%y")
+                = read.read_on.strftime("%-m/%-d/%y")
               %td
                 = read.chapter.book_name
                 = read.chapter.chapter_number
