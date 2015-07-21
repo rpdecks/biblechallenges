@@ -86,6 +86,13 @@ describe Challenge do
         expect(challenge.todays_reading).to eq challenge.readings.last
       end
     end
+    describe '#generate_book_chapters' do
+      it "generates book chapter pairs in book_chapters" do
+        challenge = create(:challenge, chapters_to_read: 'Matt 1-2')
+        expect(challenge.book_chapters).to match_array [[40,1],[40,2]]
+      end
+    end
+
     describe '#generate_readings' do
       let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
       let(:expected_readings) { 6 } # avoiding magic numbers
