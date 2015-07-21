@@ -1,10 +1,10 @@
-class DailyEmailWorker
+class NewMembershipEmailWorker
   include Sidekiq::Worker
   #if there is a problem with the email we don't want the worker retrying the job
   sidekiq_options retry: 3
 
-  def perform(reading, member)
-    ReadingMailer.daily_reading_email(reading, member).deliver_now
+  def perform(membership_id)
+    MembershipMailer.creation_email(membership_id).deliver_now
   end
 
 end
