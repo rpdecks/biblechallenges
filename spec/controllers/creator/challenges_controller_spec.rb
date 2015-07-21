@@ -75,6 +75,11 @@ describe Creator::ChallengesController do
 
           expect(Challenge.first.members).to include challenge_creator
         end
+        it "creates a serialized challenge attribute array days_of_week_to_skip" do
+          post :create, challenge: FactoryGirl.attributes_for(:challenge)
+
+          expect(Challenge.first.days_of_week_to_skip).to eq [0,1]
+        end
       end
     end
   end
