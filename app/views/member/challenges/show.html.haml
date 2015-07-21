@@ -5,6 +5,13 @@
   .container
     .title
       = @challenge.name
+    .pull-right
+      .form-inline
+        = form_tag sign_up_via_email_member_membership_path, method: :get, class: "input-group" do
+          = text_field_tag 'invite_email', nil, name: 'invite_email', class: "form-control", hide_label:true, placeholder: "Add email here"
+
+          %span.input-group-btn
+            = submit_tag "Add", class: "btn btn-primary"
     .subtitle
       %b
         = @challenge.chapters_to_read
