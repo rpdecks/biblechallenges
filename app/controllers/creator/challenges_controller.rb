@@ -28,7 +28,7 @@ class Creator::ChallengesController < ApplicationController
       flash[:notice] = "Successfully created Challenge" 
       readings = ReadingsGenerator.new(@challenge.begindate, 
                                       @challenge.chapters_to_read,
-                                      days_of_week_to_skip: days_of_week_to_skip,
+                                      days_of_week_to_skip: @challenge.days_of_week_to_skip,
                                       dates_to_skip: challenge_params[:dates_to_skip],
                                       ).generate
 
@@ -58,13 +58,13 @@ class Creator::ChallengesController < ApplicationController
     end
   end
 
-  def days_of_week_to_skip
-    if params[:days_to_skip]
-      params[:days_to_skip].map{|i| i.to_i} 
-    end
-  end
+#  def days_of_week_to_skip
+#    if params[:days_to_skip]
+#      params[:days_to_skip].map{|i| i.to_i} 
+#    end
+#  end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read)
+    params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
   end
 end

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713180844) do
+ActiveRecord::Schema.define(version: 20150721030032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "badges", force: :cascade do |t|
     t.integer  "user_id"
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(version: 20150713180844) do
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
     t.integer  "readings_count"
+    t.text     "days_of_week_to_skip", default: [], array: true
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
