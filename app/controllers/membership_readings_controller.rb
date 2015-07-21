@@ -11,7 +11,9 @@ class MembershipReadingsController < ApplicationController
     if @challenge.has_member?(current_user) && membership.user == current_user
       @membership_reading = MembershipReading.create(membership_reading_params)
 
-      update_stats
+      if @membership_reading.save
+        update_stats
+      end
 
       respond_to do |format|
         format.html {
@@ -31,7 +33,7 @@ class MembershipReadingsController < ApplicationController
   end
 
   def update_stats
-    UpdateStatsWorker.perform_async(membership.id)
+    UpdateStatsWorker.perform_in(5.seconds, membership.id)
   end
 
   def destroy
