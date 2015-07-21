@@ -20,10 +20,12 @@
 
 .profile-link a {
   border: none;
-  height: 20px;
-  margin-top:-10px;
-  margin-bottom:0px;
-  //overflow: hidden;
+  height: auto;
+}
+
+.profile-link a img {
+  margin-top: -2px;
+  margin-bottom: -1px; 
 }
 
 .profile-img {
