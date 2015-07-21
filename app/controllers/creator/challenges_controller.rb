@@ -45,9 +45,11 @@ class Creator::ChallengesController < ApplicationController
 
       MembershipCompletion.new(membership)
       ChallengeCompletion.new(@challenge)
+      redirect_to member_challenges_path
+    else
+      render :new
     end
 
-    redirect_to member_challenges_path
   end
 
   def destroy
