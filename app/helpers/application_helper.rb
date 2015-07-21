@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def avatar_url(user, size = 75)
-    user.image || image_url('FFFFFF-1.png')
+    user.image || image_url('default_avatar.png')
   end
 
   def select_options_for_bible

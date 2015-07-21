@@ -24,7 +24,9 @@
     = f.label :avatar, "Avatar"
     = f.file_field :avatar, {class: "form-control"}
     %p.help-block
-    = image_tag @user.avatar.url(:thumb)
+
+    = f.label :avatar, "Current avatar: "
+    = render 'shared/avatar', user: current_user
 
   .form-group
     = f.submit class: 'btn btn-primary', disable_with: 'Please Wait...'
