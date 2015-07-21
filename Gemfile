@@ -13,6 +13,7 @@ gem 'activerecord-import'
 #gem 'chosen-rails'
 gem 'thin'
 gem 'sidekiq'
+gem 'sidekiq-failures'
 gem 'airbrake'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
@@ -25,7 +26,7 @@ gem 'activerecord-deprecated_finders'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
-gem 'acts_as_scriptural', '0.0.3'
+gem 'acts_as_scriptural', '0.0.5'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'gretel'
 gem 'figaro'
@@ -38,6 +39,7 @@ gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
 gem 'skylight'
 gem 'paperclip'
+gem 'intercom-rails'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 
@@ -59,7 +61,7 @@ group :development do
   gem 'better_errors'
   gem 'letter_opener'
   gem 'letter_opener_web'
-  # gem 'bullet' #MIKE
+#  gem 'bullet'
 end
 
 # Gems used only for assets and not required

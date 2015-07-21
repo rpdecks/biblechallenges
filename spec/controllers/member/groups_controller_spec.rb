@@ -20,13 +20,4 @@ describe Member::GroupsController, type: :controller do
       }.to change(GroupStatistic, :count).by(number_of_stats) 
     end
   end
-
-  describe 'GET#show' do
-    it "redirects to the group show page" do
-      challenge = create(:challenge)
-      group = create(:group, challenge_id: challenge.id, user: user)
-      get :show, challenge_id: challenge.id, id: group.id
-      expect(response).to render_template :show
-    end
-  end
 end

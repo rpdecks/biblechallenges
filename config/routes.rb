@@ -17,7 +17,7 @@ Biblechallenge::Application.routes.draw do
       :as => :finish_signup
   end
 
-  resources :users, only: [:edit, :update]
+  resource :user, only: [:edit, :update]
 
   namespace :creator do
     resources :challenges
@@ -29,13 +29,13 @@ Biblechallenge::Application.routes.draw do
       resources :groups, only: [:new, :create, :index]
       resources :memberships, only: [:create]
     end
-    resources :groups, except: [:new, :create, :index] do
+    resources :groups, except: [:new, :create, :index, :show] do
       member do
         post 'join'
         post 'leave'
       end
     end
-    resources :memberships, only: [:update, :index, :show, :destroy, :edit] do
+    resources :memberships, only: [:update, :show, :destroy, :edit] do
       member do
         get 'unsubscribe'
       end
