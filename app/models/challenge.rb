@@ -32,16 +32,6 @@ class Challenge < ActiveRecord::Base
   before_validation :generate_book_chapters
   after_create      :successful_creation_email
 
-
-  def joins_creator_to_challenge   #todo this needs to be in the controller not a callback
-    user = User.find(self.owner_id)
-    membership = Membership.new
-    membership.user = user
-    membership.challenge = self
-    membership.save
-    MembershipCompletion.new(membership)
-  end
-
   def membership_for(user)
     user && memberships.find_by_user_id(user.id)
   end
@@ -119,12 +109,6 @@ class Challenge < ActiveRecord::Base
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
       errors[:begin_date] << "cannot be earlier than today" if begindate < Date.today
-    end
-  end
-
-  def changes_allowed_when_activated
-    if begindate_changed? || chapters_to_read_changed? || enddate_changed?
-      errors[:change_not_allowed] << "because this challenge is active"
     end
   end
 
