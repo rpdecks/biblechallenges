@@ -3,9 +3,9 @@
     %thead
       %tr
         %th
-          = t '.date'
+          = t 'date'
         %th
-          = t '.chapter'
+          = t 'chap'
       - readings.order(read_on: :asc).each do |reading|
         %tr
           %td= reading.read_on.strftime("%-m/%-d")

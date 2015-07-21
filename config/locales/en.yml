@@ -2,7 +2,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  chall: Challenge
+  chall: "Challenge"
   date: Date
   chap: Chapter
   layouts:
@@ -20,7 +20,7 @@ en:
   challenges:
     index:
       title: Bible Challenges
-      subtitle: Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below.
+      subtitle: "Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below."
       create: Create a challenge
       current_challenges: Current Challenges
     show:
@@ -35,7 +35,6 @@ en:
       confirm_destroy:
       edit:
       index:
-      new:
       show:
   devise:
     confirmations:
@@ -59,10 +58,10 @@ en:
   groups:
     _comment_form:
       post_comment: Post Comment
-      wait: Please Wait...
+      wait: "Please Wait..."
     _comments:
       delete: Delete
-      confirm: Are you sure you want to delete this comment?
+      confirm: "Are you sure you want to delete this comment?"
       respond: Respond
   member:
     challenges:
