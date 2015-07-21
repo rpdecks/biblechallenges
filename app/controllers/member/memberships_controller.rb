@@ -52,6 +52,9 @@ class Member::MembershipsController < ApplicationController
     redirect_to challenge
   end
 
+  def sign_up_via_email
+  end
+
   private
   def membership_update_params
     params.require(:membership).permit(:bible_version)
