@@ -30,7 +30,7 @@ class Challenge < ActiveRecord::Base
   # Callbacks
   before_validation :calculate_enddate,
     if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
-  before_validation :generate_book_chapters
+  before_validation :generate_book_chapters, :generate_date_ranges_to_skip
   after_create      :successful_creation_email
 
   def membership_for(user)
@@ -89,7 +89,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def generate_date_ranges_to_skip  # an array of date ranges
-    self.date_ranges_to_skip = [[1]]
+    self.date_ranges_to_skip = DateRangeParser.new(self.dates_to_skip).ranges
   end
 
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
