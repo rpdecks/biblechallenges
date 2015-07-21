@@ -18,20 +18,20 @@ describe DailyEmailScheduler do
     end
 
     it "schedules an email job for a user, but ignores job when membeship no longer exists" do
-      user = create(:user)
+#      user = create(:user)
       challenge = create(:challenge, :with_membership, :with_readings, begindate: "2050-01-01")
-      membership = create(:membership, user: user, challenge: challenge)
+#      membership = create(:membership, user: user, challenge: challenge)
+      membership = challenge.memberships.first
 
       Timecop.travel("2050-01-01")
 
       DailyEmailScheduler.set_daily_email_jobs
 
       membership.destroy
-      NewChallengeEmailWorker.drain
       DailyEmailWorker.drain
 
       #first email is for created challenge, second is the dailyreading
-      expect(ActionMailer::Base.deliveries.size).to eq 2
+      expect(ActionMailer::Base.deliveries.size).to eq 0
 
       Timecop.return
     end
