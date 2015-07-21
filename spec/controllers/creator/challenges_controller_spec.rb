@@ -67,6 +67,12 @@ describe Creator::ChallengesController do
     end
 
     describe "POST #create" do
+      describe "with invalid attributes" do
+        it "renders new template again" do
+          post :create, challenge: FactoryGirl.attributes_for(:challenge, name: nil)
+          expect(response).to render_template(:new)
+        end
+      end
       describe "with valid attributes" do
         it "joins the creator to the challenge he created" do
           expect{
