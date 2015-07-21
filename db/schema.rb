@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721143712) do
+ActiveRecord::Schema.define(version: 20150721160633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150721143712) do
     t.integer  "readings_count"
     t.integer  "days_of_week_to_skip", default: [], array: true
     t.integer  "book_chapters",        default: [], array: true
+    t.text     "date_ranges_to_skip"
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree

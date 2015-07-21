@@ -1,4 +1,5 @@
 class Challenge < ActiveRecord::Base
+  serialize :date_ranges_to_skip  # array of ranges
   include PgSearch
   pg_search_scope :search_by_name, against: :name
 
@@ -85,6 +86,10 @@ class Challenge < ActiveRecord::Base
 
   def url
       "biblechallenges.com"
+  end
+
+  def generate_date_ranges_to_skip  # an array of date ranges
+    self.date_ranges_to_skip = [[1]]
   end
 
   def generate_book_chapters  # an array of [book,chapter] pairs, integers

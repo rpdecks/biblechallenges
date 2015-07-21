@@ -93,6 +93,14 @@ describe Challenge do
       end
     end
 
+    describe '#generate_date_ranges_to_skip' do
+      it "generates date_ranges_to_skip based on the dates_to_skip text field" do
+        challenge = create(:challenge, dates_to_skip: "2020-01-01..2020-01-02")
+        challenge.generate_date_ranges_to_skip
+        expect(challenge.date_ranges_to_skip).to match_array []
+      end
+    end
+
     describe '#generate_readings' do
       let(:challenge){create(:challenge, chapters_to_read: 'Matt 20-22, Psalm 8-10')}
       let(:expected_readings) { 6 } # avoiding magic numbers
