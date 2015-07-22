@@ -5,5 +5,5 @@
     = f.label :email
     %br/
     = f.email_field :email, :autofocus => true
-  %div= f.submit "Resend confirmation instructions"
+  %div= f.submit I18n.t('devise.confirmations.new.resend')
 = render "devise/shared/links"

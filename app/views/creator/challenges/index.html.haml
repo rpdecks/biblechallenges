@@ -1,15 +1,21 @@
 .pull-right
-  %a.btn.btn-xs.btn-primary{href: new_challenge_path} Create A New Challenge
+  %a.btn.btn-xs.btn-primary{href: new_challenge_path} I18n.t('creator.challenges.index.create')
 
-%h4 Challenges
+%h4 
+  t = 'creator.challenges.index.challenges'
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th Owner?
-      %th Name
-      %th Begin Date
-      %th.hidden-xs End Date
-      %th Delete
+      %th
+        t = 'creator.challenges.index.owner'
+      %th
+        t = 'creator.challenges.index.name'
+      %th
+        t = 'creator.challenges.index.begin_date'
+      %th.hidden-xs
+        t = 'creator.challenges.index.end_date'
+      %th
+        t = 'creator.challenges.index.delete'
   - @challenges.each do |challenge|
     %tr
       %td= "X" if challenge.owner == current_user

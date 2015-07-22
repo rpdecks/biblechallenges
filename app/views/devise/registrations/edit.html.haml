@@ -1,31 +1,32 @@
 .section
   .col-md-4.col-md-offset-4
-    %h3.text-center Change Password
+    %h3.text-center
+      = t 'devise.registrations.edit.change'
 
     = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put, role: 'form'}) do |f|
       - if devise_mapping.confirmable? && resource.pending_reconfirmation?
         %div
-          Currently waiting confirmation for: #{resource.unconfirmed_email}
+          = t 'devise.registrations.edit.waiting'
+          #{resource.unconfirmed_email}
 
       .subtitle.text-center
-        If you would like to change your password, enter the new password in the two fields below
-        and your current password in the bottom field, and click "Update"
+        = t 'devise.registrations.edit.change_pass_instructions'
 
       %br
 
       .form-group
         = f.label :password
-        = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: "New Password"
+        = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: I18n.t('devise.registrations.edit.new_pass')
 
       .form-group
         = f.label :password_confirmation
-        = f.password_field :password_confirmation, class: 'form-control', placeholder: "New Password Again"
+        = f.password_field :password_confirmation, class: 'form-control', placeholder: I18n.t('devise.registrations.edit.new_pass_again')
 
       %hr
 
       .form-group
         = f.label :current_password
-        = f.password_field :current_password, class: 'form-control', placeholder: "Current Password"
+        = f.password_field :current_password, class: 'form-control', placeholder: I18n.t('devise.registrations.edit.current_pass')
         %p.help-block
 
       = devise_error_messages!

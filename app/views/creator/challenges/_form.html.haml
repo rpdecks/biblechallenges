@@ -5,7 +5,7 @@
   .container
     .title
       = controller.action_name.capitalize
-      = t "chall"
+      = t 'chall'
 
 %section.container
   .row
@@ -13,74 +13,73 @@
 
       = form_for [:creator, @challenge], html: {class: 'form-horizontal'} do |f|
         .form-group
-          = f.label :name, I18n.t('creator.challenge._form.challenge_name')
+          = f.label :name, I18n.t('creator.challenges._form.challenge_name')
           = f.text_field :name, required: true, class: "form-control"
           %p.help-block
-            = t 'challenge_name_help'
-
+            = t 'creator.challenges._form.challenge_name_help' 
         .form-group
-          = f.label :begindate, I18n.t('creator.challenge._form.begin_date')
+          = f.label :begindate, I18n.t('creator.challenges._form.begin_date')
           = f.text_field :begindate, value: f.object.begindate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_begindate_input'
           %p.help-block
-            = t 'creator.challenge._form.begin_date_help'
+            = t 'creator.challenges._form.begin_date_help'
 
         .form-group
-          = f.label :chapters_to_read, I18n.t('creator.challenge._form.chapters_to_read')
+          = f.label :chapters_to_read, I18n.t('creator.challenges._form.chapters_to_read')
           = f.text_field :chapters_to_read, required: true, class: "form-control"
           %p.help-block 
-            = t 'creator.challenge._form.chapters_help'
+            = t 'creator.challenges._form.chapters_help'
 
         .form-group
-          = f.label :dates_to_skip, I18n.t('creator.challenge._form.dates_to_skip')
+          = f.label :dates_to_skip, I18n.t('creator.challenges._form.dates_to_skip')
           = f.text_field :dates_to_skip, required: false, class: "form-control"
           %p.help-block
-            = t 'creator.challenge._form.skip_dates_help'
+            = t 'creator.challenges._form.skip_dates_help'
 
         .form-group
           %h5.strong 
-            = t "creator.challenge._form.skip_days_text"
+            = t "creator.challenges._form.skip_days_text"
 
           %br
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '0', false
             &nbsp;
-            = t 'creator.challenge._form.lordsday'
+            = t 'creator.challenges._form.lordsday'
 
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '1', false
             &nbsp;
-            = t 'creator.challenge._form.monday'
+            = t 'creator.challenges._form.monday'
 
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '2', false
             &nbsp;
-            = t 'creator.challenge._form.tuesday'
+            = t 'creator.challenges._form.tuesday'
 
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '3', false
             &nbsp;
-            = t 'creator.challenge._form.wednesday'
+            = t 'creator.challenges._form.wednesday'
 
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '4', false
             &nbsp;
-            = t 'creator.challenge._form.thursday'
+            = t 'creator.challenges._form.thursday'
 
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '5', false
             &nbsp;
-            = t 'creator.challenge._form.friday'
+            = t 'creator.challenges._form.friday'
 
           .col-sm-3
             = f.check_box :days_of_week_to_skip, {multiple: true}, '6', false
             &nbsp;
-            = t 'creator.challenge._form.saturday'
+            = t 'creator.challenges._form.saturday'
 
         %br
         %br
 
         .form-group
-          = f.submit class: 'btn btn-primary btn-block', disable_with: 'Please Wait...'
+          = f.submit class: 'btn btn-primary btn-block', disable_with: I18n.t('creator.challenges._form.wait')
           = link_to "Delete this challenge", confirm_delete_creator_challenge_url(@challenge),class: "btn btn-danger btn-block" unless @challenge.new_record?
 
 

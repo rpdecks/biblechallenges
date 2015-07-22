@@ -1,18 +1,19 @@
 .container
   .col-md-4.col-md-offset-4
-    %h2.text-center Log in
+    %h2.text-center
+      = t 'devise.sessions.new.login'
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: 'form'}) do |f|
       .form-group
         = f.label :email
-        = f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control'
+        = f.email_field :email, autofocus: true, placeholder: I18n.t('devise.sessions.new.email'), class: 'form-control'
       .form-group
         = f.label :password
-        = f.password_field :password, placeholder: 'Password', class: 'form-control'
+        = f.password_field :password, placeholder: I18n.t('devise.sessions.new.password'), class: 'form-control'
 
       .form-group
         = f.check_box :remember_me
-        Remember me:
+        = t 'devise.sessions.new.remember_me'
 
-      = f.submit 'Sign in', disable_with: 'Please Wait...', class: 'btn btn-primary btn-block'
+      = f.submit I18n.t('devise.sessions.new.signin'), disable_with: I18n.t('devise.sessions.new.wait'), class: 'btn btn-primary btn-block'
       
       = render 'devise/shared/links'
