@@ -18,6 +18,20 @@ feature 'User invites friends via email' do
     expect(page).to have_content("Please enter a valid email address")
   end
 
+  scenario 'sends a successfully email to new user to Bible Challenge' do
+    challenge = create(:challenge, :with_readings, owner_id: user.id)
+    create(:membership, challenge: challenge, user: user)
+    visit member_challenge_path(challenge)
+    fill_in 'invite_email', with: 'fakedude@example.com'
+    click_button "Add"
+    membership2 = Membership.last
+    user2 = User.last
+    password = "12345678"
+    expect{ MembershipMailer.auto_creation_email(membership2, password).deliver_now }.to_not raise_error
+    successful_creation_email = ActionMailer::Base.deliveries.last
+    expect(successful_creation_email.to).to match_array [user2.email]
+  end
+
   scenario 'User adds a friend who is not signed up with Bible Challenge' do
     challenge = create(:challenge, :with_readings, owner_id: user.id)
     create(:membership, challenge: challenge, user: user)

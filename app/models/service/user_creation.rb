@@ -6,6 +6,9 @@ class UserCreation
   def create_user
     @password = SecureRandom.hex(4)
     name = @email.split("@").first.gsub(/[^0-9a-z ]/i, '')
-    User.create(email: @email, name: name, password: @password, password_confirmation: @password)
+    user = User.create(email: @email, name: name, password: @password, password_confirmation: @password)
+    user.password = @password
+    user.save
+    return user
   end
 end
