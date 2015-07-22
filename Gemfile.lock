@@ -56,6 +56,11 @@ GEM
     autoprefixer-rails (5.2.1)
       execjs
       json
+    aws-sdk (1.64.0)
+      aws-sdk-v1 (= 1.64.0)
+    aws-sdk-v1 (1.64.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
     bcrypt (3.1.10)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -421,6 +426,7 @@ DEPENDENCIES
   airbrake
   annotate
   autoprefixer-rails
+  aws-sdk (~> 1.6)
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
   bootstrap-sass (~> 3.0.2.0)
