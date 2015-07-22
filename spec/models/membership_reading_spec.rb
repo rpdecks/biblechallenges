@@ -10,6 +10,7 @@ describe MembershipReading do
 
     it { should validate_presence_of(:reading_id) }
     it { should validate_presence_of(:membership_id) }
+
   end
 
   describe "Relations" do

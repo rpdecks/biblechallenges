@@ -36,7 +36,7 @@ describe UserStatisticDaysReadInARowCurrent do
         create(:membership_reading, membership: membership2, reading: mr)
         Timecop.travel(1.day)
       end
-      challenge1.readings[0..2].each do |mr| # 3 chapters in challenge 1
+      challenge1.readings[3..5].each do |mr| # 3 chapters in challenge 1
         create(:membership_reading, membership: membership1, reading: mr)
         Timecop.travel(1.day)
       end
