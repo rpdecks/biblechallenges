@@ -26,7 +26,8 @@ class User < ActiveRecord::Base
     :styles => {
     :medium => "300x300>",
     :thumb => "75x75>" },
-    :default_url => "/images/:style/missing.png"
+    :s3_host_name => ENV["AWS_HOST_NAME"],
+    :default_url => "default_avatar.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   #Callbacks
@@ -93,7 +94,6 @@ class User < ActiveRecord::Base
 
   private
 
-  
   def set_default_values
     self.preferred_reading_hour ||= "3"
     self.time_zone ||= "Central Time (US & Canada)"

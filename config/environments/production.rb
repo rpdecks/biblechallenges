@@ -79,4 +79,11 @@ Biblechallenge::Application.configure do
   }
   ActionMailer::Base.delivery_method = :smtp
 
+  # paperclip with s3 storage
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV["AWS_BUCKET_NAME"],
+    }
+  }
 end
