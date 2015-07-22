@@ -47,6 +47,13 @@ Biblechallenge::Application.configure do
   # add db logging
   config.active_record_logger = Logger.new("log/sql.log")
 
+  # paperclip with s3 storage
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV["AWS_BUCKET_NAME"],
+    }
+  }
 
 #  config.after_initialize do
 #    Bullet.enable = true
