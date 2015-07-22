@@ -94,11 +94,16 @@
   // This enables the date picker to pop up even when editable is set to
   // true.
   var picker = $input.pickadate('picker');
-  $input.on('focus', function(event) {
+  $input.on({
+    'focus': datepickerHandler,
+    'click': datepickerHandler
+  });
+
+  function datepickerHandler () {
     if (picker.get('open')) {
       picker.close();
     } else {
       picker.open();
     }                        
     event.stopPropagation();
-  });
+  };
