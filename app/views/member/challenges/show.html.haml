@@ -5,13 +5,6 @@
   .container
     .title
       = @challenge.name
-    .pull-right
-      .form-inline
-        = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post, class: "input-group" do
-          = text_field_tag 'invite_email', nil, class: "form-control", hide_label:true, placeholder: "Add email here"
-
-          %span.input-group-btn
-            = submit_tag "Add", class: "btn btn-primary"
     .subtitle
       %b
         = @challenge.chapters_to_read
@@ -24,6 +17,16 @@
 
     - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
       = image_tag avatar_url(m, 20), size: "25x25",  title: m.name, class: "img-circle"
+
+    %br
+    %br
+    You can add your friends to this challenge by entering his or her email below.
+    .form-inline
+      = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post, class: "input-group" do
+        = text_field_tag 'invite_email', nil, class: "form-control", hide_label:true, placeholder: "Add email here"
+
+        %span.input-group-btn
+          = submit_tag "Add", class: "btn btn-primary"
 
 .content
   .container
