@@ -42,37 +42,38 @@
 
           %br
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '0', false
-            &nbsp; 
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '0', false
+            &nbsp;
             = t 'creator.challenge._form.lordsday'
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '2', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '1', false
             &nbsp;
             = t 'creator.challenge._form.monday'
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '3', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '2', false
             &nbsp;
             = t 'creator.challenge._form.tuesday'
 
-          .col-sm-3 = check_box_tag 'days_to_skip[]', '4', false
+          .col-sm-3
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '3', false
             &nbsp;
             = t 'creator.challenge._form.wednesday'
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '5', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '4', false
             &nbsp;
             = t 'creator.challenge._form.thursday'
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '6', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '5', false
             &nbsp;
             = t 'creator.challenge._form.friday'
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '1', false
-            &nbsp; 
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '6', false
+            &nbsp;
             = t 'creator.challenge._form.saturday'
 
         %br
@@ -93,4 +94,5 @@
     clear: '',
     hiddenPrefix: 'date_format_',
     hiddenSuffix: 'data'
+    //editable: true
   });
