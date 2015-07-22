@@ -32,6 +32,22 @@ en:
   creator:
     challenges:
       _form:
+        challenge_name: Challenge Name
+        challenge_name_help: "The name of your challenge, for example 'The Book of Acts in July'"
+        begin_date: Begin Date
+        begin_date_help: "The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out."
+        chapters_to_read: Chapters to Read
+        chapters_help: "Enter here, in reference form, the span of chapters you would like to read.  For example, 'Matt 1-28' or 'Matt 1-Rev 22'"
+        dates_to_skip: Dates to Skip
+        skip_dates_help: "Enter any spans of dates you want to skip, in the format 'YYYY-MM-DD..YYYY-MM-DD'.  For example, to skip November 1-7, 2016, you would enter 2016-11-01..2016-11-07"
+        skip_days_text: Days of the Week to Skip
+        lordsday: "Lord's Day"
+        monday: Monday
+        tuesday: Tuesday
+        wednesday: Wednesday
+        thursday: Thursday
+        friday: Friday
+        saturday: Saturday
       confirm_destroy:
       edit:
       index:
