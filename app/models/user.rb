@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
     :styles => {
     :medium => "300x300>",
     :thumb => "75x75>" },
+    :s3_host_name => ENV["AWS_HOST_NAME"],
     :default_url => "default_avatar.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
