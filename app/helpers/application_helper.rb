@@ -16,7 +16,13 @@ module ApplicationHelper
   end
 
   def avatar_url(user)
-    user.avatar || user.image || image_url('default_avatar.png')
+    # avatar = user upload
+    # image = from facebook
+    if user.avatar_file_name
+      user.avatar.url(:thumb)
+    else
+      user.image || image_url('default_avatar.png')
+    end
   end
 
   def select_options_for_bible
