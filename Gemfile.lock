@@ -43,7 +43,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_scriptural (0.0.3)
+    acts_as_scriptural (0.0.5)
     addressable (2.3.8)
     airbrake (4.2.1)
       builder
@@ -417,7 +417,7 @@ DEPENDENCIES
   actionpack-page_caching
   activerecord-deprecated_finders
   activerecord-import
-  acts_as_scriptural (= 0.0.3)
+  acts_as_scriptural (= 0.0.5)
   airbrake
   annotate
   autoprefixer-rails
