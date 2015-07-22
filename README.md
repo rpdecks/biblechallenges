@@ -19,6 +19,8 @@ Addons needed:  postgres hobby basic ($9), heroku scheduler, pg backups, redis t
 
 ## Environmental Variables
 
+### Omniauth
+
 In order to setup omniauth login, you will need
 two environment variables for each provider.
 The instruction are different for each provider.
@@ -39,6 +41,15 @@ You will need two environment variables:
 
 You can obtain from registering app at to `console.developers.google.com`
 Note: Under `APIs` remember to enable (Contacts API) and (Google+ API). Under `Credentials`, click `Create new client id`.
+
+### AWS
+You will need four environment variables: 
+- `AWS_BUCKET_NAME`
+- `AWS_HOST_NAME`
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+
+Please put them in your application.yml if you want aws to work properly.
 
 ##Tests
 
