@@ -60,13 +60,16 @@ class Member::MembershipsController < ApplicationController
           redirect_to challenge
         else
           challenge.join_new_member(@user)
+          challenge.update_stats
           flash[:notice] = "You have successfully added #{@user.name} to this challenge"
           redirect_to challenge
         end
       else
         email = params[:invite_email]
         @user = UserCreation.new(email).create_user
+        @user.associate_statistics
         new_membership = challenge.join_new_member(@user)
+        challenge.update_stats
         NewAutoMembershipEmailWorker.perform_in(30.seconds, new_membership.id, @user.password)
         flash[:notice] = "You have successfully added a new user to this challenge"
         redirect_to challenge
