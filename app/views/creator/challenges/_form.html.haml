@@ -37,31 +37,31 @@
 
           %br
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '0', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '0', false
             &nbsp; Lord's Day
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '1', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '1', false
             &nbsp; Monday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '2', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '2', false
             &nbsp; Tuesday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '3', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '3', false
             &nbsp; Wednesday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '4', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '4', false
             &nbsp; Thursday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '5', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '5', false
             &nbsp; Friday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '6', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '6', false
             &nbsp; Saturday
 
 
@@ -82,5 +82,6 @@
     min: true,
     clear: '',
     hiddenPrefix: 'date_format_',
-    hiddenSuffix: 'data'
+    hiddenSuffix: 'data',
+    editable: true
   });
