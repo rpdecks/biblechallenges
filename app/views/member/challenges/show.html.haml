@@ -31,7 +31,7 @@
       .row
         .col-md-6
           %p
-            You can add your friends to this challenge by entering his or her email below.
+            You can add your friends to this challenge by entering their email below.
           = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post do
             .input-group
               = text_field_tag 'invite_email', nil, class: "form-control", id: "addFriendsInput", hide_label:true, placeholder: "Add email here", required: true, type: "email"
