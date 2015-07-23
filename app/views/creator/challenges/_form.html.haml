@@ -75,7 +75,7 @@
 
 :javascript
 
-  $('#challenge_begindate_input').pickadate({
+  var $input = $('#challenge_begindate_input').pickadate({
     // Escape any “rule” characters with an exclamation mark (!).
     format: 'dddd, dd mmm, yyyy',
     formatSubmit: 'yyyy-mm-dd',
@@ -85,3 +85,25 @@
     hiddenSuffix: 'data'
     //editable: true
   });
+  
+  // From pickadate.js docs:
+  // An important thing to note here is that this [editable: true] disables
+  // keyboard bindings on the input element, such as arrow keys opening the
+  // picker. You will have to add your own bindings as you see fit.
+  // 
+  // This enables the date picker to pop up even when editable is set to
+  // true.
+  var picker = $input.pickadate('picker');
+  $input.on({
+    'focus': datepickerHandler,
+    'click': datepickerHandler
+  });
+
+  function datepickerHandler () {
+    if (picker.get('open')) {
+      picker.close();
+    } else {
+      picker.open();
+    }                        
+    event.stopPropagation();
+  };
