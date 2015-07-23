@@ -23,15 +23,19 @@
     %div{role: "tabpanel"}
       %ul#grouptabs.nav.nav-tabs.nav-justified{role: "tablist"}
         %li.active{role: "presentation"}
-          %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
+          %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}}
+            = t 'member.challenges.show.readings'
         - if current_user.find_challenge_group(@challenge) != nil
           %li{role: "presentation"}
-            %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
+            %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}}
+              = t 'member.challenges.show.my_group'
         - else
           %li{role: "presentation"}
-            %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
+            %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}}
+              = t 'member.challenges.show.groups'
         %li{role: "presentation"}
-          %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
+          %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}}
+            = t 'member.challenges.show.statistics'
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
@@ -47,7 +51,7 @@
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
           - if @challenge.owner == current_user
-            = link_to "Delete this Challenge", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger pull-right"
+            = link_to I18n.t("member.challenges.show.delete"), creator_challenge_path(@challenge), method: :delete, "data-confirm" => I18n.t("member.challenges.show.stop"),:class=>"btn btn-danger pull-right"
           = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
         - if current_user.find_challenge_group(@challenge) != nil

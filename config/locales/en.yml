@@ -145,10 +145,22 @@ en:
   member:
     challenges:
       index:
-      new:
+        mychallenges: My Challenges
+        subtitle: "Challenges you join will disply on this page."
+        create_new: Create a New Challenge
       show:
+        readings: Readings
+        my_group: My Group
+        groups: Groups
+        statistics: Statistics
+        delete: Delete this Challenge
+        stop: "STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?"
     groups:
       _form:
+        group: Group
+        group_name: Group Name
+        help_block: "The name of your group, for example 'Age Turners'"
+        wait: "Please Wait..."
       new:
       show:
     memberships:
@@ -177,7 +189,7 @@ en:
   shared:
     challenges:
       _action_popover:
-      _challenge_details:
+      _challenge_details: not used pretty sure
       _challenge_groups:
       _challenge_instructions:
       _challenge_list_item:
