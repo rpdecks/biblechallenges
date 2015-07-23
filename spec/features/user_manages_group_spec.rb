@@ -164,6 +164,20 @@ feature 'User manages groups' do
       expect(membership2.reload.group).to eq nil
     end
 
+    scenario 'Owner of a group can edit the name of the group' do
+      challenge = create(:challenge, owner_id: user.id)
+      group = challenge.groups.create(user_id: user.id, name: "Butter")
+      create(:membership, challenge: challenge, group: group, user: user)
+      visit member_challenge_path(challenge)
+
+      click_link 'Edit Group'
+      fill_in 'Name', with: "Pecan"
+      click_button 'Update Group'
+
+      expect(Group.first.name).to eq "Pecan"
+      expect(page).to have_content("Pecan")
+    end
+
     scenario 'Owner of a group can only see delete the group option' do
       challenge = create(:challenge)
       group = challenge.groups.create(user_id: user.id, name: "Awesome")

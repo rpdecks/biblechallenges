@@ -40,6 +40,16 @@ class Member::GroupsController < ApplicationController
     end
   end
 
+  def edit
+    @group = Group.find(params[:id])
+  end
+
+  def update
+    @group = Group.find(params[:id])
+    flash[:notice] = "Group successfully updated" if @group.update_attributes(group_params)
+    redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
+  end
+
   def destroy
     challenge = group.challenge
     group.remove_all_members_from_group
