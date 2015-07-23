@@ -18,12 +18,12 @@ class Member::GroupsController < ApplicationController
   end
 
   def new
-    @challenge = Challenge.find(params[:challenge_id])
+    @challenge = Challenge.friendly.find(params[:challenge_id])
     @group = Group.new
   end
 
   def create
-    @challenge = Challenge.find(params[:challenge_id])
+    @challenge = Challenge.friendly.find(params[:challenge_id])
     membership = @challenge.membership_for(current_user)
     @group = @challenge.groups.build(group_params)
     @group.user_id = current_user.id

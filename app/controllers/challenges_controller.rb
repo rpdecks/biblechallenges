@@ -7,7 +7,7 @@ class ChallengesController < ApplicationController
   end
 
   def show
-    @challenge = Challenge.includes(:members).find(params[:id])
+    @challenge = Challenge.includes(:members).friendly.find(params[:id])
     @readings = challenge.readings.includes(:chapter)
     redirect_to member_challenge_path(challenge) if challenge.membership_for(current_user)
   end
@@ -15,6 +15,6 @@ class ChallengesController < ApplicationController
   private
 
   def challenge
-    @challenge ||= Challenge.find(params[:id])
+    @challenge ||= Challenge.friendly.find(params[:id])
   end
 end
