@@ -1,5 +1,4 @@
 class Creator::ChallengesController < ApplicationController
-
   before_filter :authenticate_user!, except: [:show]
   before_filter :find_challenge, only: [:show, :destroy]
 
@@ -16,8 +15,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def find_challenge
-    @challenge = Challenge.find_by_id(params[:id])
-    redirect_to challenges_url if @challenge.nil?
+    @challenge = Challenge.friendly.find(params[:id])
   end
 
   def create

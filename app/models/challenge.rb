@@ -1,7 +1,13 @@
 class Challenge < ActiveRecord::Base
   serialize :date_ranges_to_skip  # array of ranges
+
   include PgSearch
   pg_search_scope :search_by_name, against: :name
+
+  include FriendlyId
+  # :history option: keeps track of previous slugs
+  friendly_id :name, :use => [:slugged, :history]
+
 
   # Relations
   has_many :memberships, dependent: :destroy
@@ -132,5 +138,8 @@ class Challenge < ActiveRecord::Base
     self.enddate = begindate + (chapters_count - 1).days if chapters_to_read
   end
 
-
+  def should_generate_new_friendly_id?
+    # generate new slug whenever name changes
+    name_changed?
+  end
 end
