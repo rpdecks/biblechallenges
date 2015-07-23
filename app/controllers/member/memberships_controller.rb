@@ -58,7 +58,7 @@ class Member::MembershipsController < ApplicationController
   end
 
   def challenge
-    @challenge ||= Challenge.find_by_id(params[:challenge_id])
+    @challenge ||= Challenge.friendly.find(params[:challenge_id])
   end
 
   def membership

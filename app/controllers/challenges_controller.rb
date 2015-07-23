@@ -15,6 +15,6 @@ class ChallengesController < ApplicationController
   private
 
   def challenge
-    @challenge ||= Challenge.find(params[:id])
+    @challenge ||= Challenge.friendly.find(params[:id])
   end
 end
