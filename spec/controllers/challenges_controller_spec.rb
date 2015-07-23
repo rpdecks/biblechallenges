@@ -44,6 +44,13 @@ describe ChallengesController, "Actions" do
         get :show, id: challenge.name
         expect(response).to render_template(:show)
       end
+
+      it "uses lowercase slugs of challenge name" do
+        challenge = create(:challenge, name: "CAPITALIZED")
+        expect {
+          get :show, id: challenge.name
+        }.to raise_exception(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end
