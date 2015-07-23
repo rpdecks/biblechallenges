@@ -243,11 +243,16 @@ en:
         progress: Progress Percentage
         osp: "'On Schedule' Percentage"
         total: Total Chapters Read
-      _personal_stat:
-    _avatar:
-    _avatar_for_comment:
-    _flash_messages:
   users:
     _form:
+      name: Name
+      tz: Your Time Zone
+      hour: Your Preferred Reading Hour
+      sent_at: Your daily reading e-mails will be sent out at
+      avatar: Avatar
+      current_avatar: "Current avatar   "
+      wait: "Please Wait..."
+      change: Change your account password
     edit:
+      update: Update User Profile
 
