@@ -3,18 +3,21 @@
     - if membership.completed?
       %h4 
         %p
-          Congratulations! You have completed this Bible Challenge!
+          = t "shared.challenges._challenge_statistics.congrats"
     -if challenge.groups.any?
       .panel.panel-primary
-        .panel-heading Group Statistics
+        .panel-heading
+          = t "shared.challenges._challenge_statistics.group_stats"
         = render partial: 'shared/statistics/group_stat', locals: {groups: groups}
     .panel.panel-primary
-      .panel-heading Challenge Statistics
+      .panel-heading
+        = t "shared.challenges._challenge_statistics.challenge_stats"
       = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
 
     -if user.membership_readings.any?
       .panel.panel-primary
-        .panel-heading Personal Statistics
+        .panel-heading
+          = t "shared.challenges._challenge_statistics.personal_stats"
         = render partial: 'shared/statistics/personal_stat', locals: {user: current_user}
     -else
-      You have not logged a chapter yet
+      = t "shared.challenges._challenge_statistics.unlogged"

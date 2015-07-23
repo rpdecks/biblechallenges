@@ -161,48 +161,65 @@ en:
         group_name: Group Name
         help_block: "The name of your group, for example 'Age Turners'"
         wait: "Please Wait..."
-      new:
-      show:
-    memberships:
-      _reading_progress:
-      new:
-      show:
-      unsubscribe:
-      unsubscribe_from_email:
   membership_mailer:
     auto_creation_email:
     creation_email:
   membership_readings:
     confirmation:
+      thanks: "Thank you for entering your reading!"
   pages:
     faq:
-    privacy:
+      faq: FAQ
+      heading1: "What is a Bible Challenge"
+      text1: "A Bible Challenge is a daily Bible reading schedule that allows you to read chapters in the Bible with others.  Each day a chapter of the Bible is sent to your email address.  After reading the chapter you can click a link to confirm that you have read the chapter and optionally participate in a discussion with others in your group."
+      heading2: "Can I leave a Bible Challenge if I don't like it?"
+      text2: "Yes.  Just click on the Unsubscribe link in any of the emails that you receive from biblechallenges.com.  Clicking the unsubscribe link will remove you from the Bible Challenge and you will no longer receive any emails."
+      heading3: "How do I change my Bible version preference?"
+      text3: "Navigate to the main challenge page by clicking 'My Challenges' and then the name of your challenge.  Under the 'Readings' tab you will see your current Bible version.  Click the link 'Change' to choose a new Bible version."
+      heading4: "I missed today's reading email.  How can I catch up?"
+      text4: "The challenge page for your specific Bible reading challenge lists all of the Bible chapters in your challenge.  Simply click on the box next to any bible Chapter to indicate that you have finished reading that chapter.  If you get behind, you can read several chapters in a day and then check off all of these chapters at one time."
+      heading5: "How can i change the time that my chapter is emailed to me?"
+      text5: "Click 'Edit Profile' and then select your preferred reading hour in the drop-down menu labeled 'Your Preferred Reading Hour.'  Once you have selected your new reading hour, click 'Update Profile.'"
   readings_mailer:
     daily_reading_email:
-  readings:
-    _challengestatable:
-    _comment_form:
-    _form:
-    _showhidechapter:
-    edit:
-    show:
   shared:
     challenges:
       _action_popover:
       _challenge_details: not used pretty sure
       _challenge_groups:
+        groups: Groups
+        why_groups: "When you join a group, the other members of that group can see more info related to your reading history.  That usually translates into encouragement.  It also allows the site to keep track of statistics across the entire group, so you can compete with other groups."
+        join: Join Group
       _challenge_instructions:
-      _challenge_list_item:
+        instructions: "Each day a scheduled reading of Scripture for this challenge will be sent to your inbox.  Once you've read that day's reading, you can click on a link in the email you received to update your progress and comment on that day's reading."
       _challenge_statistics:
+        congrats: "Congratulations!  You have completed this Bible Challenge!"
+        group_stats: Group Statistics
+        challenge_stats: Challenge Statistics
+        personal_stats: Personal Statistics
+        unlogged: You have not logged a chapter yet
       _challenge_unsubscribe:
+        unsubscribe: Unsubscribe
+        confirm: "Are you sure you want to unsubscribe from this challenge?"
       _create_a_group:
+        create: Create a group
       _join_challenge:
+        instructions: "Challenge Instructions:"
+        join: Join Challenge
+        signup: Sign me up
       _join_form:
-      _log_todays_readings:
-      _readings:
+        join: Join this Challenge
+        wait: "Please Wait..."
+      _log_todays_reading:
+        log: Log my reading
       _readings_table:
-      _readings_table_row:
+        date: Date
+        chapter: Chapter
       _todays_reading:
+        bible_version: "Bible Version:"
+        change: Change
+        todays_reading: "Today's Reading "
+        none_today: "No reading today"
     groups:
       _show:
     statistics:

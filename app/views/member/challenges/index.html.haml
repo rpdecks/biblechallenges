@@ -1,11 +1,12 @@
 .section.primary.centered
   .container
     .title
-      = t 'member/challenges/index/mychallenges'
+      = t 'member.challenges.index.mychallenges'
     .subtitle
-      = t 'member/challenges/index/subtitle'
+      = t 'member.challenges.index.subtitle'
     %br
-    %a.btn{href: new_creator_challenge_path} I18n.t('create_new')
+    %a.btn{href: new_creator_challenge_path} 
+      = I18n.t('member.challenges.index.create_new')
 
 .section.container
 
