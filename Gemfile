@@ -41,6 +41,7 @@ gem 'skylight'
 gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
 gem 'intercom-rails'
+gem 'friendly_id'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 
