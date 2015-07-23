@@ -11,7 +11,7 @@
       %br
       We have created an account on BibleChallenges.com for you. You can use the credentials below to login.
       %br
-      You might want to log in to set up a new password and a user name.  Having a username allows you to comment on your readings and interact with other participants in the challenge. 
+      You might want to log in to set up a new password and update your name.
       %br
       %br
       %div{style: "margin-left:5px;"}
@@ -24,7 +24,7 @@
             %tr
               %td
                 Password:
-              %td= @user.password
+              %td= @password
       %br
       You can log into your account #{link_to "here", root_url} to update your profile and set other preferences.
       %br
@@ -52,14 +52,14 @@
           - @challenge.readings.each do |read|
             %tr
               %td
-                = read.date.strftime("%-m/%-d/%y")
+                = read.read_on.strftime("%-m/%-d/%y")
               %td
                 = read.chapter.book_name
                 = read.chapter.chapter_number
 
       %br
       %small
-        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', membership_unsubscribe_url(@membership.id)} here to be unsubscribed.
+        If you didn't mean to sign up for this Bible challenge or if someone else signed you up without your permission, click #{link_to 'here', unsubscribe_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
       %br
       %br
       %small
