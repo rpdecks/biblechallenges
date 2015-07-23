@@ -2,10 +2,14 @@
 %table.table.table-bordered.table-hover.table-condensed
   %thead
     %tr
-      %th Group Name
-      %th Progress Percentage
-      %th On-schedule Percentage
-      %th Total Chapters Read
+      %th
+        = t "shared.statistics._group_stat.name"
+      %th
+        = t "shared.statistics._group_stat.progress"
+      %th
+        = t "shared.statistics._group_stat.osp"
+      %th
+        = t "shared.statistics._group_stat.total"
   - groups.each do |g|
     %tbody
       %tr

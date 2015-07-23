@@ -4,7 +4,7 @@
       =group.name
       .badge
         = group.members.count
-        = "member".pluralize(group.members.count)
+        = I18n.t("shared.groups._show.member").pluralize(group.members.count)
     %br
     /instant hangout not working properly
     /= instant_hangout
@@ -13,9 +13,12 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th Members
-      %th Chapters Read
-      %th Last Read
+      %th
+        = t "shared.groups._show.members"
+      %th
+        = t "shared.groups._show.chapters"
+      %th
+        = t "shared.groups._show.last"
   %tbody
   - group.members.each do |m|
     %tr
@@ -28,7 +31,7 @@
         %td= m.decorate.show_last_recorded_reading(m, group)
       - else
         %td
-          No readings yet
+          = t "shared.groups._show.none_yet"
 
 .row
   .col-sm-12
@@ -36,22 +39,21 @@
       - if current_user
         - if current_user.groups.include?(group)
           - if group.user_id == current_user.id
-            = link_to "Delete Group", member_group_path(id: group.id), :class=>"btn btn-danger", method: :delete, data: {confirm: "STOP! Deleting this group will remove all members from this group. This cannot be undone. Are you SURE you want to delete this group?"}
+            = link_to I18n.t("shared.groups._show.delete"), member_group_path(id: group.id), :class=>"btn btn-danger", method: :delete, data: {confirm: I18n.t("shared.groups._show.confirm1")}
           -else
-            = link_to "Leave Group", leave_member_group_path(id: group.id), :class=>"btn btn-info", method: :post, data: {confirm: "Are you sure you want to leave this group?"}
+            = link_to I18n.t("shared.groups._show.leave"), leave_member_group_path(id: group.id), :class=>"btn btn-info", method: :post, data: {confirm: I18n.t("shared.groups._show.confirm2")}
         -else
-          = link_to "Join Group", join_member_group_path(id: group.id), :class=> "btn btn-primary", method: :post
+          = link_to I18n.t("shared.groups._show.join"), join_member_group_path(id: group.id), :class=> "btn btn-primary", method: :post
       - else
-        = link_to "Sign me up", new_user_registration_path, :class=> "btn btn-primary"
+        = link_to I18n.t("shared.groups._show.signup"), new_user_registration_path, :class=> "btn btn-primary"
       %span
 %br
 
-
 .row
   .col-sm-12
-    %h4 Group Comments
+    %h4
+      = t "shared.groups._show.comment"
     = render partial: 'groups/comment_form', locals: {comment: Comment.new, group: group}
-
 
 .row
   .col-sm-12

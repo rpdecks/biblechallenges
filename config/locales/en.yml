@@ -222,9 +222,27 @@ en:
         none_today: "No reading today"
     groups:
       _show:
+        member: Member
+        members: Members
+        chapters: Chapters Read
+        last: Last Read
+        none_yet: "No readings yet"
+        delete: Delete Group
+        confirm1: "STOP! Deleting this group will remove all members from this group. This cannot be undone. Are you SURE you want to delete this group?"
+        leave: Leave Group
+        confirm2: "Are you sure you want to leave this group?"
+        join: Join Group
+        signup: Sign me up
+        comment: Group Comments
     statistics:
       _challenge_stat:
+        me: By Me
+        all: By All Members
       _group_stat:
+        name: Group Name
+        progress: Progress Percentage
+        osp: "'On Schedule' Percentage"
+        total: Total Chapters Read
       _personal_stat:
     _avatar:
     _avatar_for_comment:
