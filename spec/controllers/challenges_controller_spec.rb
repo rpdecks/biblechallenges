@@ -31,12 +31,19 @@ describe ChallengesController, "Actions" do
     end
 
     context "Vanity URLs" do
-      it "renders show template based on challenge slug" do
-        challenge = create(:challenge, name: "Incredible")
+      it "renders template based on challenge slug" do
+        challenge = create(:challenge, name: "incredible")
         get :show, id: challenge.slug
         expect(response).to render_template(:show)
       end
-    end
 
+      it "renders template slug after challenge name change" do
+        challenge = create(:challenge, name: "Incredible")
+        challenge.name = "edible"
+        challenge.save
+        get :show, id: challenge.name
+        expect(response).to render_template(:show)
+      end
+    end
   end
 end
