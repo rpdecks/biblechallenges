@@ -14,7 +14,8 @@ class MembershipMailer < ActionMailer::Base
       from: "#{@challenge.name.capitalize} <no-reply@biblechallenges.com>")
   end
 
-  def auto_creation_email(membership)
+  def auto_creation_email(membership, password)
+      @password = password
       @membership = membership
       @challenge = @membership.challenge
       @user = @membership.user

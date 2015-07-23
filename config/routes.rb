@@ -38,6 +38,7 @@ Biblechallenge::Application.routes.draw do
     resources :memberships, only: [:update, :show, :destroy, :edit] do
       member do
         get 'unsubscribe'
+        post 'sign_up_via_email'
       end
     end
   end
