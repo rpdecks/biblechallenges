@@ -29,5 +29,14 @@ describe ChallengesController, "Actions" do
       get :show, id: challenge
       expect(response).to redirect_to member_challenge_path(challenge)
     end
+
+    context "Vanity URLs" do
+      it "renders show template based on challenge slug" do
+        challenge = create(:challenge, name: "Incredible")
+        get :show, id: challenge.slug
+        expect(response).to render_template(:show)
+      end
+    end
+
   end
 end
