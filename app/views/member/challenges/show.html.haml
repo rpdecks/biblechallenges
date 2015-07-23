@@ -12,7 +12,6 @@
       = @challenge.begindate.strftime("%-m/%-d/%Y")
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
-
     = image_tag avatar_url(@challenge.owner), size: "25x25", title: "Owner: #{@challenge.owner.name}", class: "img-circle"
 
     - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
