@@ -16,7 +16,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def find_challenge
-    @challenge = Challenge.find_by_id(params[:id])
+    @challenge = Challenge.friendly.find_by_id(params[:id])
     redirect_to challenges_url if @challenge.nil?
   end
 
