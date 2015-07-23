@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
          :omniauthable, :omniauth_providers => [:facebook]
 
   # Validations
-  validates :name, presence: true
+  validates :name, :email, presence: true
+  validates :email, uniqueness: true
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
