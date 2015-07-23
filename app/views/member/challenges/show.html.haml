@@ -20,16 +20,29 @@
 
     %br
     %br
-    You can add your friends to this challenge by entering his or her email below.
-    .form-inline
-      = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post, class: "input-group" do
-        = text_field_tag 'invite_email', nil, class: "form-control", hide_label:true, placeholder: "Add email here"
 
-        %span.input-group-btn
-          = submit_tag "Add", class: "btn btn-primary"
+    %button.btn.btn-primary{type: "button", id: "addFriendsToChallenge", data: { toggle: "collapse", target: "#addFriends"}}
+      %i.fa.fa-user-plus
+      Add friends
+    
+    %br
+    %br
+    .collapse#addFriends
+      .row
+        .col-md-6
+          %p
+            You can add your friends to this challenge by entering his or her email below.
+          = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post do
+            .input-group
+              = text_field_tag 'invite_email', nil, class: "form-control", id: "addFriendsInput", hide_label:true, placeholder: "Add email here", required: true, type: "email"
+
+              %span.input-group-btn
+                = submit_tag "Add", class: "btn btn-primary"
 
 .content
   .container
+    %br
+    %br
     %div{role: "tabpanel"}
       %ul#grouptabs.nav.nav-tabs.nav-justified{role: "tablist"}
         %li.active{role: "presentation"}
@@ -81,3 +94,9 @@
   // on load of the page: switch to the currently selected tab
   var hash = window.location.hash;
     $('#grouptabs a[href="' + hash + '"]').tab('show');
+  
+  $("#addFriendsToChallenge").on("click", function() {
+    setTimeout(function (){
+      $( "#addFriendsInput" ).focus();
+    }, 0);
+  });

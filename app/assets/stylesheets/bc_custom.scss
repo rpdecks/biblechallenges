@@ -165,10 +165,14 @@ fieldset {
   text-align: center;
 }
 
-.section.primary, .masthead{
+.section.primary,
+.masthead {
   .btn {
     background: none;
     border: 1px solid white;
+    color: white;
+  }
+  p {
     color: white;
   }
 }
@@ -403,4 +407,8 @@ fieldset {
 
 .search-input{
   display: inline-block;
+}
+
+.input-group .form-control {
+  border-top-left-radius: 4px;
 }
