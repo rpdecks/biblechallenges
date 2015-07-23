@@ -86,7 +86,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
-  gem 'heroku'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails'
   gem 'quiet_assets'
