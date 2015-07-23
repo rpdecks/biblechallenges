@@ -39,6 +39,7 @@ gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
 gem 'skylight'
 gem 'paperclip'
+gem 'aws-sdk', '~> 1.6'
 gem 'intercom-rails'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
