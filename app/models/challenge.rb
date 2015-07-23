@@ -1,7 +1,11 @@
 class Challenge < ActiveRecord::Base
   serialize :date_ranges_to_skip  # array of ranges
+
   include PgSearch
   pg_search_scope :search_by_name, against: :name
+
+  include FriendlyId
+  friendly_id :name, :use => [:slugged, :simple_i18n]
 
   # Relations
   has_many :memberships, dependent: :destroy
