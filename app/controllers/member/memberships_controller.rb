@@ -75,7 +75,7 @@ class Member::MembershipsController < ApplicationController
         redirect_to challenge
       end
     else
-      flash[:notic] = "Please enter a valid email address"
+      flash[:notice] = "Please enter a valid email address"
       redirect_to challenge
     end
   end
