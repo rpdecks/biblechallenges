@@ -59,7 +59,8 @@ class Member::MembershipsController < ApplicationController
           flash[:notice] = "#{@user.name} is already in this challenge"
           redirect_to challenge
         else
-          challenge.join_new_member(@user)
+          @membership = challenge.join_new_member(@user)
+          MembershipCompletion.new(@membership)
           challenge.update_stats
           flash[:notice] = "You have successfully added #{@user.name} to this challenge"
           redirect_to challenge
@@ -67,15 +68,15 @@ class Member::MembershipsController < ApplicationController
       else
         email = params[:invite_email]
         @user = UserCreation.new(email).create_user
-        @user.associate_statistics
-        new_membership = challenge.join_new_member(@user)
+        UserCompletion.new(@user)
+        @membership = challenge.join_new_member(@user)
+        MembershipCompletion.new(@membership, password: @user.password)
         challenge.update_stats
-        NewAutoMembershipEmailWorker.perform_in(30.seconds, new_membership.id, @user.password)
         flash[:notice] = "You have successfully added a new user to this challenge"
         redirect_to challenge
       end
     else
-      flash[:notice] = "Please enter a valid email address"
+      flash[:notice] = "Please enter a valid email"
       redirect_to challenge
     end
   end
