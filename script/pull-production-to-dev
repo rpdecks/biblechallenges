@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#dropdb ops_development
+#heroku pg:pull rose ops_development -a bfa-ops
+
+# trying something faster perhaps
+
+curl -o db.dump `heroku pg:backups public-url -a biblechallenges`
+pg_restore --verbose --clean --no-acl --no-owner -d bc_development db.dump
+rm db.dump
