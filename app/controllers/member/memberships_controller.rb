@@ -27,8 +27,8 @@ class Member::MembershipsController < ApplicationController
     @membership.user = current_user if current_user
     if @membership.save
       # associate stats here
-      MembershipCompletion.new(@membership)
-      challenge.update_stats
+      MembershipCompletion.new(@membership, from_email: false)
+      ChallengeCompletion.new(challenge)
       flash[:notice] = "Thank you for joining!" 
     else
       flash[:error] = @membership.errors.full_messages.to_sentence
@@ -47,7 +47,7 @@ class Member::MembershipsController < ApplicationController
   def destroy
     challenge = membership.challenge
     membership.destroy
-    challenge.update_stats
+    ChallengeCompletion.new(challenge)
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
     redirect_to challenge
   end
@@ -59,23 +59,24 @@ class Member::MembershipsController < ApplicationController
           flash[:notice] = "#{@user.name} is already in this challenge"
           redirect_to challenge
         else
-          challenge.join_new_member(@user)
-          challenge.update_stats
+          @membership = challenge.join_new_member(@user)
+          MembershipCompletion.new(@membership)
+          ChallengeCompletion.new(challenge)
           flash[:notice] = "You have successfully added #{@user.name} to this challenge"
           redirect_to challenge
         end
       else
         email = params[:invite_email]
         @user = UserCreation.new(email).create_user
-        @user.associate_statistics
-        new_membership = challenge.join_new_member(@user)
-        challenge.update_stats
-        NewAutoMembershipEmailWorker.perform_in(30.seconds, new_membership.id, @user.password)
+        UserCompletion.new(@user)
+        @membership = challenge.join_new_member(@user)
+        MembershipCompletion.new(@membership, password: @user.password)
+        ChallengeCompletion.new(challenge)
         flash[:notice] = "You have successfully added a new user to this challenge"
         redirect_to challenge
       end
     else
-      flash[:notice] = "Please enter a valid email address"
+      flash[:notice] = "Please enter a valid email"
       redirect_to challenge
     end
   end
