@@ -135,6 +135,7 @@ en:
   layouts:
     application:
       title: BibleChallenges
+      search: Search
       faq: FAQ
       login: Login
       logout: Logout
@@ -253,7 +254,9 @@ en:
       current_avatar: "Current avatar   "
       wait: "Please Wait..."
       change: Change your account password
-      select_language: "Seeeeeelect your preferred language:"
+      select_language: "Select preferred language:"
+      eng: English
+      spa: Spanish
     edit:
       update: Update User Profile
 

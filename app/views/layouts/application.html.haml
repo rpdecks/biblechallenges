@@ -46,7 +46,7 @@
               .input-group
                 = text_field_tag :query, nil, class: "form-control", hide_label: true, placeholder: I18n.t("layouts.application.search_holder")
                 %span.input-group-btn
-                  = submit_tag "Search", class: "btn btn-primary query"
+                  = submit_tag I18n.t("layouts.application.search"), class: "btn btn-primary query"
         .flash-messages
           = render partial: "shared/flash_messages", flash: flash
     = yield
