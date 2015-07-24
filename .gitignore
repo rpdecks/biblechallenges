@@ -37,3 +37,6 @@ tags
 
 # ignore dump file from redis
 dump.rdb
+
+# ignore clear database rake task
+/lib/tasks/clear_database.rake
