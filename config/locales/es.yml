@@ -2,7 +2,7 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 es:
-  chall: SPANISH- Challenge
+  chall: "SPANISH- Challenge"
   date: SPANISH- Date
   chap: SPANISH- Chapter
   challenge_mailer:
@@ -252,7 +252,7 @@ es:
       current_avatar: SPANISH- "Current avatar   "
       wait: SPANISH- "Please Wait..."
       change: SPANISH- Change your account password
-      select_language: SPANISH- "Select your preferred language:"
+      select_language: SPANISH- "Seeeeeelect your preferred language:"
     edit:
       update: SPANISH- Update User Profile
 
