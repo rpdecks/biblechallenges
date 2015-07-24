@@ -2,8 +2,10 @@
   %tbody
     %thead
       %tr
-        %th Date
-        %th Chapter
+        %th
+          = t "shared.challenges._readings_table.date"
+        %th
+          = t "shared.challenges._readings_table.chapter"
         %th 
           %span.glyphicon.glyphicon-ok
             - readings.each do |reading|

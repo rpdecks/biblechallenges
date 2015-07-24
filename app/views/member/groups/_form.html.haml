@@ -4,18 +4,19 @@
 = form_for [:member, @challenge, @group] do |f|
   %legend
     = controller.action_name.capitalize
-    Group
+    = t 'member.groups._form.group'
   - if @group.errors.any?
     - flash[:error] = @group.errors.full_messages.to_sentence
   .row
     .col-md-6
       .control-group
-        = f.label :name, "Group Name", class: "control-label"
+        = f.label :name, I18n.t("member.groups._form.group_name"), class: "control-label"
         .controls
           = f.text_field :name, required: true, class: "form-control"
-          %p.help-block The name of your group, for example "Age Turners"
+          %p.help-block
+            = t "member.groups._form.help_block"
       .control-group
-        = f.submit class: 'btn btn-primary', disable_with: 'Please Wait...'
+        = f.submit class: 'btn btn-primary', disable_with: I18n.t('wait')
         %br
         %br
         %br

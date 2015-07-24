@@ -1,11 +1,12 @@
 .container
   .row
     .col-md-4.col-md-offset-4
-      %h3.text-center Forgot your password?
+      %h3.text-center
+        = t 'devise.passwords.new.forgot'
       = form_for(resource, as: resource_name, url: password_path(resource_name), html: {method: :post,role: 'form'}) do |f|
         = devise_error_messages!
         .form-group
           = f.label :email
           = f.email_field :email, autofocus: true, placeholder: 'Email', class: 'form-control'
-        = f.submit 'Send me reset password instructions', disable_with: 'Please Wait...', class: 'btn btn-primary btn-block'
+        = f.submit I18n.t('devise.passwords.new.send_instructions'), disable_with: I18n.t('devise.passwords.new.wait'), class: 'btn btn-primary btn-block'
         = render 'devise/shared/links'

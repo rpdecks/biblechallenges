@@ -2,4 +2,261 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  chall: Challenge
+  date: Date
+  chap: Chapter
+  challenge_mailer:
+    creation_email:
+  challenges:
+    index:
+      title: Bible Challenges
+      subtitle: "Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below."
+      create: Create a challenge
+      current_challenges: Current Challenges
+    show:
+      join: Join Challenge
+      signup: Sign me up
+      panel_heading: Readings
+  comment_mailer:
+    new_comment_notification:
+  comments:
+    comments:
+      _form:
+        post_comment: Post Comment
+  creator:
+    challenges:
+      _form:
+        challenge_name: Challenge Name
+        challenge_name_help: "The name of your challenge, for example 'The Book of Acts in July'"
+        begin_date: Begin Date
+        begin_date_help: "The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out."
+        chapters_to_read: Chapters to Read
+        chapters_help: "Enter here, in reference form, the span of chapters you would like to read.  For example, 'Matt 1-28' or 'Matt 1-Rev 22'"
+        dates_to_skip: Dates to Skip
+        skip_dates_help: "Enter any spans of dates you want to skip, in the format 'YYYY-MM-DD..YYYY-MM-DD'.  For example, to skip November 1-7, 2016, you would enter 2016-11-01..2016-11-07"
+        skip_days_text: Days of the Week to Skip
+        lordsday: "Lord's Day"
+        monday: Monday
+        tuesday: Tuesday
+        wednesday: Wednesday
+        thursday: Thursday
+        friday: Friday
+        saturday: Saturday
+      confirm_destroy:
+        body: "When you delete this challenge you will remove all record of its existence including all the readings that users may have logged for this challenge since its creation. You cannot undo this action so please be careful before you proceed."
+        really: Do you really want to delete
+        really_cont: "challenge?"
+        confirm: "Are you sure?"
+      edit:
+      index:
+        create: Create a New Challenge
+        challenges: Challenges
+        owner: "Owner?"
+        name: Name
+        begin_date: Begin Date
+        end_date: End Date
+        delete: Delete
+  devise:
+    confirmations:
+      new:
+        resend: Resend confirmation instructions
+    mailer:
+      confirmation_instructions:
+        welcome: Welcome
+        link: "You can confirm your account email through the link below:"
+      reset_password_instructions:
+        hello: Hello
+        requested: "Someone has requested a link to change your password. You can do this throgh the link below."
+        change_password: Change my password
+        ignore: "If you didn't request this, please ignore this email."
+        access: "Your password won't change until you access the link above and create a new one."
+      unlock_instructions:
+        hello: Hello
+        locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+        unlock: "Click the link below to unlock your account:"
+        unlock_account: Unlock my account
+    passwords:
+      edit:
+        change_your_password: Change your password
+        new: New password
+        confirm: Confirm new password
+        change_my_password: Change my password
+      new:
+        forgot: "Forgot your password?"
+        send_instructions: "Send me reset password instructions"
+        wait: "Please Wait..."
+    registrations:
+      edit:
+        change: Change Password
+        waiting: "Currently waiting confirmation for:"
+        change_pass_instructions: "If you would like to change your password, enter the new password in the two fields below and your current password in the bottom field, and click 'Update'"
+        new_pass: New Password
+        new_pass_again: New Password Again
+        current_pass: Current Password
+      finish_signup:
+        welcome: "Welcome to Bible Challenges!"
+        choose_password: "Please choose password for your BC account"
+      new:
+        create: Create a Bible Challenges Account
+        why: "Creating an account allows you to maintain and edit the challenges that you create and easily keep track of the challenges that you have joined."
+        name: Name
+        email: Email
+        password: Password
+        pass_confirm: Password Confirmation
+        sign_up: Sign up
+        wait: "Please Wait..."
+    sessions:
+      new:
+        login: Log in
+        email: Email
+        password: Password
+        remember_me: "Remember me:"
+        signin: Sign in
+        wait: "Please Wait..."
+    shared:
+      _links:
+        login: Login
+        sign_in_with: Sign in with
+        no_account: "Don't have an account? Sign up"
+        forgot: "Forgot your password?"
+        no_receive: "Didn't receive confirmation instructions?"
+        no_unlock: "Didn't receive unlock instructions?"
+    unlocks:
+      new:
+        resend: Resend unlock instructions
+  groups:
+    _comment_form:
+      post_comment: Post Comment
+      wait: "Please Wait..."
+    _comments:
+      delete: Delete
+      confirm: "Are you sure you want to delete this comment?"
+      respond: Respond
+  layouts:
+    application:
+      title: BibleChallenges
+      search: Search
+      faq: FAQ
+      login: Login
+      logout: Logout
+      mychallenges: My Challenges
+      signin: Sign in with Facebook
+      search_holder: Search for a challenge
+      search: Search
+  member:
+    challenges:
+      index:
+        mychallenges: My Challenges
+        subtitle: "Challenges you join will disply on this page."
+        create_new: Create a New Challenge
+      show:
+        readings: Readings
+        my_group: My Group
+        groups: Groups
+        statistics: Statistics
+        delete: Delete this Challenge
+        stop: "STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?"
+    groups:
+      _form:
+        group: Group
+        group_name: Group Name
+        help_block: "The name of your group, for example 'Age Turners'"
+        wait: "Please Wait..."
+  membership_mailer:
+    auto_creation_email:
+    creation_email:
+  membership_readings:
+    confirmation:
+      thanks: "Thank you for entering your reading!"
+  pages:
+    faq:
+      faq: FAQ
+      heading1: "What is a Bible Challenge"
+      text1: "A Bible Challenge is a daily Bible reading schedule that allows you to read chapters in the Bible with others.  Each day a chapter of the Bible is sent to your email address.  After reading the chapter you can click a link to confirm that you have read the chapter and optionally participate in a discussion with others in your group."
+      heading2: "Can I leave a Bible Challenge if I don't like it?"
+      text2: "Yes.  Just click on the Unsubscribe link in any of the emails that you receive from biblechallenges.com.  Clicking the unsubscribe link will remove you from the Bible Challenge and you will no longer receive any emails."
+      heading3: "How do I change my Bible version preference?"
+      text3: "Navigate to the main challenge page by clicking 'My Challenges' and then the name of your challenge.  Under the 'Readings' tab you will see your current Bible version.  Click the link 'Change' to choose a new Bible version."
+      heading4: "I missed today's reading email.  How can I catch up?"
+      text4: "The challenge page for your specific Bible reading challenge lists all of the Bible chapters in your challenge.  Simply click on the box next to any bible Chapter to indicate that you have finished reading that chapter.  If you get behind, you can read several chapters in a day and then check off all of these chapters at one time."
+      heading5: "How can i change the time that my chapter is emailed to me?"
+      text5: "Click 'Edit Profile' and then select your preferred reading hour in the drop-down menu labeled 'Your Preferred Reading Hour.'  Once you have selected your new reading hour, click 'Update Profile.'"
+  readings_mailer:
+    daily_reading_email:
+  shared:
+    challenges:
+      _action_popover:
+      _challenge_details: not used pretty sure
+      _challenge_groups:
+        groups: Groups
+        why_groups: "When you join a group, the other members of that group can see more info related to your reading history.  That usually translates into encouragement.  It also allows the site to keep track of statistics across the entire group, so you can compete with other groups."
+        join: Join Group
+      _challenge_instructions:
+        instructions: "Each day a scheduled reading of Scripture for this challenge will be sent to your inbox.  Once you've read that day's reading, you can click on a link in the email you received to update your progress and comment on that day's reading."
+      _challenge_statistics:
+        congrats: "Congratulations!  You have completed this Bible Challenge!"
+        group_stats: Group Statistics
+        challenge_stats: Challenge Statistics
+        personal_stats: Personal Statistics
+        unlogged: You have not logged a chapter yet
+      _challenge_unsubscribe:
+        unsubscribe: Unsubscribe
+        confirm: "Are you sure you want to unsubscribe from this challenge?"
+      _create_a_group:
+        create: Create a group
+      _join_challenge:
+        instructions: "Challenge Instructions:"
+        join: Join Challenge
+        signup: Sign me up
+      _join_form:
+        join: Join this Challenge
+        wait: "Please Wait..."
+      _log_todays_reading:
+        log: Log my reading
+      _readings_table:
+        date: Date
+        chapter: Chapter
+      _todays_reading:
+        bible_version: "Bible Version:"
+        change: Change
+        todays_reading: "Today's Reading "
+        none_today: "No reading today"
+    groups:
+      _show:
+        member: Member
+        members: Members
+        chapters: Chapters Read
+        last: Last Read
+        none_yet: "No readings yet"
+        delete: Delete Group
+        confirm1: "STOP! Deleting this group will remove all members from this group. This cannot be undone. Are you SURE you want to delete this group?"
+        leave: Leave Group
+        confirm2: "Are you sure you want to leave this group?"
+        join: Join Group
+        signup: Sign me up
+        comment: Group Comments
+    statistics:
+      _challenge_stat:
+        me: By Me
+        all: By All Members
+      _group_stat:
+        name: Group Name
+        progress: Progress Percentage
+        osp: "'On Schedule' Percentage"
+        total: Total Chapters Read
+  users:
+    _form:
+      name: Name
+      tz: Your Time Zone
+      hour: Your Preferred Reading Hour
+      sent_at: Your daily reading e-mails will be sent out at
+      avatar: Avatar
+      current_avatar: "Current avatar   "
+      wait: "Please Wait..."
+      change: Change your account password
+      select_language: "Select preferred language:"
+      eng: English
+      spa: Spanish
+    edit:
+      update: Update User Profile
+

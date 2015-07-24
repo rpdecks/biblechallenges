@@ -3,8 +3,10 @@
   %thead
     %tr
       %th= challenge.name
-      %th By Me
-      %th By All Members
+      %th
+        = t "shared.statistics._challenge_stat.me"
+      %th
+        = t "shared.statistics._challenge_stat.all"
     %tbody
       %tr
         %td= challenge.challenge_statistic_chapters_read.try(:name)

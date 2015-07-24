@@ -1,17 +1,18 @@
 - if current_user && membership = @challenge.membership_for(current_user)
   %tr
-    %td Bible Version:
+    %td
+      = t "shared.challenges._todays_reading.bible_version"
     %td
       = membership.bible_version
-      =link_to "Change", member_membership_path(membership), :method => :get
+      =link_to I18n.t("shared.challenges._todays_reading.change"), member_membership_path(membership), :method => :get
 %br
 -if todays_reading
   %h4
-    ="Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})"
+    = t "shared.challenges._todays_reading.todays_reading"
+    #{DateTime.now.strftime("%m/%d/%Y")}
 
   %br
   %br
-
 
   #verses
     - todays_verses.each do |verse|
@@ -24,7 +25,8 @@
 -else
   %br
   %br
-  %h3 No reading today
+  %h3
+    = t "shared.challenges._todays_reading.none_today"
   %br
   %br
 -#

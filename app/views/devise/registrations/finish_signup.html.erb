@@ -1,6 +1,6 @@
 <div id="add-email" class="container">
-  <h3>Welcome to Bible Challenges!</h3>
-  <h4>Please choose password for your BC account</h4>
+  <h3><%= t 'devise.registrations.finish_signup.welcome'%></h3>
+  <h4><%= t 'devise.registrations.finish_signup.choose_password'%></h4>
   <br/>
   <%= form_for(current_user, :as => 'user',
                url: finish_signup_path(current_user),

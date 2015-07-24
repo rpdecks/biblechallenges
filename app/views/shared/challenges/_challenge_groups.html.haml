@@ -3,14 +3,13 @@
     $('[data-toggle="popover"]').popover()
     })
 
-
 .container
   .row
     .col-md-8
-      %h3 
-        Groups
+      %h3
+        = t 'shared.challenges._challenge_groups.groups'
       %p
-        When you join a group, the other members of that group can see more info related to your reading history.  That usually translates into encouragement.  It also allows the site to keep track of statistics across the entire group, so you can compete with other groups.
+        = t 'shared.challenges._challenge_groups.why_groups'
       %br
       %table.table.table-bordered.table-hover
         %tbody
@@ -29,8 +28,7 @@
             - if current_user
               %td.text-center
                 - unless current_user.groups.include?(g)
-                  = link_to "Join Group", join_member_group_path(id: g.id), :class=> "btn btn-primary btn-sm", method: :post
+                  = link_to I18n.t("shared.challenges._challenge_groups.join"), join_member_group_path(id: g.id), :class=> "btn btn-primary btn-sm", method: :post
 
       %span
         = render 'shared/challenges/create_a_group'
-
