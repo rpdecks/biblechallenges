@@ -10,7 +10,7 @@
       = "-"
       = @challenge.enddate.strftime("%-m/%-d/%Y")
     - @challenge.members.each do |m|
-      = render 'shared/avatar', user: m
+      = render 'shared/member_avatar', user: m
     %br
     %br
 
