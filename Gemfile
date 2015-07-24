@@ -41,6 +41,7 @@ gem 'skylight'
 gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
 gem 'intercom-rails'
+gem 'friendly_id'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 
@@ -87,7 +88,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
-  gem 'heroku'
   gem 'factory_girl_rails', '4.1.0'
   gem 'rspec-rails'
   gem 'quiet_assets'

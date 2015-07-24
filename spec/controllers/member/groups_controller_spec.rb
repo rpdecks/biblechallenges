@@ -1,14 +1,11 @@
 require 'spec_helper'
 
 describe Member::GroupsController, type: :controller do
-
   let(:user){create(:user)}
 
   before do
     sign_in :user, user
   end
-
-
 
   describe  'POST#create' do
     it "associates statistics with group" do
