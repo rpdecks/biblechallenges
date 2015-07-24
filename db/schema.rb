@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723160531) do
+ActiveRecord::Schema.define(version: 20150723220318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,10 +58,12 @@ ActiveRecord::Schema.define(version: 20150723160531) do
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
     t.integer  "readings_count"
-    t.integer  "book_chapters",        default: [], array: true
+    t.integer  "book_chapters",        default: [],              array: true
     t.text     "date_ranges_to_skip"
-    t.integer  "days_of_week_to_skip", default: [], array: true
+    t.integer  "days_of_week_to_skip", default: [],              array: true
     t.string   "slug"
+    t.integer  "num_chapters_per_day", default: 1
+    t.hstore   "chapters_per_date",    default: {}, null: false
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
@@ -215,11 +217,11 @@ ActiveRecord::Schema.define(version: 20150723160531) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.string   "image"
-    t.string   "authentication_token"
     t.string   "time_zone"
     t.integer  "preferred_reading_hour"
     t.string   "avatar_file_name"
