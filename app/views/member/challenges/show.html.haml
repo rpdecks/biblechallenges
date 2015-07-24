@@ -3,27 +3,12 @@
 
 .section.primary
   .container
-    .title
-      = @challenge.name
-    .subtitle
-      %b
-        = @challenge.chapters_to_read
-      %br
-      = @challenge.begindate.strftime("%-m/%-d/%Y")
-      = "-"
-      = @challenge.enddate.strftime("%-m/%-d/%Y")
-    = image_tag avatar_url(@challenge.owner), size: "25x25", title: "Owner: #{@challenge.owner.name}", class: "img-circle"
-
-    - @challenge.members.where.not(id: @challenge.owner.id).each do |m|
-      = image_tag avatar_url(m), size: "25x25",  title: m.name, class: "img-circle"
-
-    %br
-    %br
+    = render 'shared/challenges/challenge_overview'
 
     %button.btn.btn-primary{type: "button", id: "addFriendsToChallenge", data: { toggle: "collapse", target: "#addFriends"}}
       %i.fa.fa-user-plus
       Add friends
-    
+
     %br
     %br
     .collapse#addFriends

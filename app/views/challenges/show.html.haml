@@ -1,23 +1,11 @@
 .section.primary
   .container
-    .title
-      = @challenge.name
-    .subtitle
-      %b
-        = @challenge.chapters_to_read
-      %br
-      = @challenge.begindate.strftime("%-m/%-d/%Y")
-      = "-"
-      = @challenge.enddate.strftime("%-m/%-d/%Y")
-    - @challenge.members.each do |m|
-      = render 'shared/avatar_medium', user: m
-    %br
-    %br
+    = render 'shared/challenges/challenge_overview'
 
     .subtitle
       = render 'shared/challenges/challenge_instructions'
 
-    %br 
+    %br
     .centered
       - if current_user
         = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn block-center', display: 'inline'
