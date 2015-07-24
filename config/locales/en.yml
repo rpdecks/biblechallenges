@@ -253,6 +253,7 @@ en:
       current_avatar: "Current avatar   "
       wait: "Please Wait..."
       change: Change your account password
+      select_language: "Select your preferred language:"
     edit:
       update: Update User Profile
 
