@@ -88,14 +88,16 @@ describe Challenge do
     end
     describe '#generate_book_chapters' do
       it "generates book chapter pairs in book_chapters" do
-        challenge = create(:challenge, chapters_to_read: 'Matt 1-2')
+        challenge = build(:challenge, chapters_to_read: 'Matt 1-2')
+        challenge.generate_book_chapters
         expect(challenge.book_chapters).to match_array [[40,1],[40,2]]
       end
     end
 
     describe '#generate_date_ranges_to_skip' do
       it "generates date_ranges_to_skip based on the dates_to_skip text field" do
-        challenge = create(:challenge, dates_to_skip: "2020-01-01..2020-01-02")
+        challenge = build(:challenge, dates_to_skip: "2020-01-01..2020-01-02")
+        challenge.generate_date_ranges_to_skip
         expect(challenge.date_ranges_to_skip).to match_array [Date.parse('2020-01-01')..Date.parse('2020-01-02')]
       end
     end
