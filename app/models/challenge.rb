@@ -119,7 +119,7 @@ class Challenge < ActiveRecord::Base
   def validate_dates
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
-      errors[:begin_date] << "cannot be earlier than today" if begindate < Date.today
+      #errors[:begin_date] << "cannot be earlier than today" if begindate < Date.today
     end
   end
 
