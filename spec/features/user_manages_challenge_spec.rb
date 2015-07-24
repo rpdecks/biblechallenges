@@ -33,12 +33,17 @@ feature 'User manages challenges' do
     expect(Membership.first.user).to eq user
   end
 
-  scenario 'User joins a challenge successfully' do
-    challenge = create(:challenge, :with_membership, :with_readings)
-    ChallengeCompletion.new(challenge)
-    visit challenge_path(challenge)
-    click_link "Join Challenge"
-    expect(challenge.members).to include user
+  scenario 'User joins a challenge successfully and receives welcome email' do
+    Sidekiq::Testing.inline! do
+      challenge = create(:challenge, :with_membership, :with_readings)
+      ChallengeCompletion.new(challenge)
+      visit challenge_path(challenge)
+      click_link "Join Challenge"
+      expect(challenge.members).to include user
+      expect(ActionMailer::Base.deliveries.size).to eq 2 #Thanks for joining and today's reading.
+      successful_creation_email = ActionMailer::Base.deliveries.first
+      expect(successful_creation_email.subject).to have_content("Thanks for joining")
+    end
   end
 
   scenario 'User joins a challenge and the challenge stats get updated automatically' do
