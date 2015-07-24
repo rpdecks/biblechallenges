@@ -28,7 +28,7 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
-  after_commit :successful_creation_email, :on => :create
+  #after_commit :successful_creation_email, :on => :create
   after_update :recalculate_group_stats
 
   def to_date_progress_percentage(adate)
