@@ -22,7 +22,7 @@
                 = g.name
               .pull-right
                 - g.members.each do |m|
-                  = render 'shared/avatar', user: m
+                  = render 'shared/avatar_medium', user: m
                 %span.badge
                   = group_member_count
                   = "member".pluralize(group_member_count)
