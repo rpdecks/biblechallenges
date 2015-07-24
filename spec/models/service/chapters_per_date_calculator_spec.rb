@@ -9,7 +9,11 @@ describe ChaptersPerDateCalculator do
 
   describe "With one chapter a day" do
     it "calculates successfully with no special options" do
-      result = ChaptersPerDateCalculator.new(begindate: 
+      begindate = Date.parse("2050-01-01")
+      result = ChaptersPerDateCalculator.new(num_chapters: 5, begindate: begindate)
+      binding.pry
+
+      expect(result.schedule.size).to eq 5
 
 
     
