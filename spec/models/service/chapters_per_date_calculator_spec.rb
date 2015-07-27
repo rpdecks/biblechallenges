@@ -99,6 +99,22 @@ describe ChaptersPerDateCalculator do
         end
       end
 
+      context "with an enddate passed in" do
+        it "stops finding available days once it reaches the enddate" do
+          begindate = Date.parse("2050-01-01")
+          result = ChaptersPerDateCalculator.new(num_chapters: 5, begindate: begindate, 
+                                                 enddate: begindate + 2.days).available_days
+
+          expect(result.size).to eq 3
+
+          # should be a hash entry for three days in a row
+          (begindate..(begindate + 2.days)).to_a.each do |a_date|
+            expect(result).to include a_date
+          end
+        end
+
+      end
+
     end
   end
 
