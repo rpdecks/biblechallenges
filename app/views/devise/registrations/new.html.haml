@@ -21,6 +21,8 @@
           .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, placeholder: 'Password Confirmation', autocomplete: 'off', class: 'form-control'
+          -if params[:challenge_id]
+            = hidden_field_tag :challenge_id, params[:challenge_id]
           = f.submit 'Sign up', disable_with: 'Please Wait...', class: 'btn btn-primary btn-block'
           
           = render 'devise/shared/links'
