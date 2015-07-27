@@ -40,9 +40,9 @@ feature 'Nonuser visits BibleChallenges' do
       fill_in 'Password', with: "helloworld"
       fill_in 'Password confirmation', with: "helloworld"
       click_button "Sign up"
-      binding.pry
       expect(Membership.count).to eq 1
       expect(challenge.members.first.name).to eq "Eric"
+      expect(page).to have_content("Awesome Challenge")
     end
   end
 end
