@@ -7,7 +7,6 @@ describe ReadingsController do
   let(:user){create(:user)}
   let!(:membership){create(:membership, challenge: challenge, user: user)}
   let(:membership_reading){membership.membership_readings.first}
-  let(:hash){membership_reading.hash_for_url}
 
 
   describe "for a guest" do

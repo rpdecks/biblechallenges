@@ -14,6 +14,7 @@ class MembershipReading < ActiveRecord::Base
   # Validations
   validates :membership_id, presence: true
   validates :reading_id, presence: true
+  validates_uniqueness_of :membership_id, scope: :reading_id
 
   #Callbacks
   before_create :mark_on_schedule

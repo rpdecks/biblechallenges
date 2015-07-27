@@ -12,6 +12,11 @@ crumb :group do |group|
   parent :challenge, group.challenge
 end
 
+crumb :reading do |reading|
+  link reading.chapter.book_and_chapter, reading_path(reading)
+  parent :challenge, reading.challenge
+end
+
 # crumb :project_issues do |project|
 #   link "Issues", project_issues_path(project)
 #   parent :project, project

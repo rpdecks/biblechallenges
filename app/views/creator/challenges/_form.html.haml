@@ -37,31 +37,31 @@
 
           %br
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '0', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '0', false
             &nbsp; Lord's Day
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '1', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '1', false
             &nbsp; Monday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '2', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '2', false
             &nbsp; Tuesday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '3', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '3', false
             &nbsp; Wednesday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '4', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '4', false
             &nbsp; Thursday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '5', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '5', false
             &nbsp; Friday
 
           .col-sm-3
-            = check_box_tag 'days_to_skip[]', '6', false
+            = f.check_box :days_of_week_to_skip, {multiple: true}, '6', false
             &nbsp; Saturday
 
 
@@ -75,12 +75,34 @@
 
 :javascript
 
-  $('#challenge_begindate_input').pickadate({
+  var $input = $('#challenge_begindate_input').pickadate({
     // Escape any “rule” characters with an exclamation mark (!).
     format: 'dddd, dd mmm, yyyy',
     formatSubmit: 'yyyy-mm-dd',
-    min: true,
     clear: '',
     hiddenPrefix: 'date_format_',
-    hiddenSuffix: 'data'
+    hiddenSuffix: 'data',
+    editable: true
   });
+  
+  // From pickadate.js docs:
+  // An important thing to note here is that this [editable: true] disables
+  // keyboard bindings on the input element, such as arrow keys opening the
+  // picker. You will have to add your own bindings as you see fit.
+  // 
+  // This enables the date picker to pop up even when editable is set to
+  // true.
+  var picker = $input.pickadate('picker');
+  $input.on({
+    'focus': datepickerHandler,
+    'click': datepickerHandler
+  });
+
+  function datepickerHandler () {
+    if (picker.get('open')) {
+      picker.close();
+    } else {
+      picker.open();
+    }                        
+    event.stopPropagation();
+  };

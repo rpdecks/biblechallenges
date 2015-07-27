@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    accessible = [ :name, :email, :username,
+    accessible = [ :name, :email,
                    :time_zone, :preferred_reading_hour,
                    :avatar ]
     unless params[:user][:password].blank?
