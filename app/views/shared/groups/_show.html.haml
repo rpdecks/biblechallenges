@@ -20,7 +20,7 @@
   - group.members.each do |m|
     %tr
       %td
-        = render 'shared/avatar', user: m
+        = render 'shared/avatar_medium', user: m
         %span
           = m.decorate.name
       %td= m.membership_readings.size
@@ -37,6 +37,7 @@
         - if current_user.groups.include?(group)
           - if group.user_id == current_user.id
             = link_to "Delete Group", member_group_path(id: group.id), :class=>"btn btn-danger", method: :delete, data: {confirm: "STOP! Deleting this group will remove all members from this group. This cannot be undone. Are you SURE you want to delete this group?"}
+            = link_to "Edit Group", edit_member_group_path(id: group.id), :class=>"btn btn-warning"
           -else
             = link_to "Leave Group", leave_member_group_path(id: group.id), :class=>"btn btn-info", method: :post, data: {confirm: "Are you sure you want to leave this group?"}
         -else

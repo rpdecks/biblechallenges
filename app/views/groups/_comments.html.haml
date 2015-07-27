@@ -1,7 +1,7 @@
 - unless comments.empty?
   - comments.recent_first.each do |comment|
     .comment
-      .avatar= image_tag avatar_url(comment.user, 48), size: '40x40' 
+      .avatar= render 'shared/avatar_small', user: comment.user
 
       .comment_block
         .title= comment.user.name
@@ -21,8 +21,7 @@
               - comment.comments.recent_last.each do |comment|
                 .row.comment
                   .col-sm-1
-                    .avatar
-                      = image_tag avatar_url(comment.user, 48), size: '40x40'
+                    .avatar= render 'shared/avatar_small', user: comment.user
                   .col-sm-11
                     .title= comment.user.name
                     .comment_content= comment.content

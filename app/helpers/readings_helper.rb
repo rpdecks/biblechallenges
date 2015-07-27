@@ -4,7 +4,7 @@ module ReadingsHelper
     users = reading.last_readers
     avatarlist = ''
     users.each do |u|
-      avatarlist += image_tag avatar_url(u), title: u.name, class: "img-rounded"
+      avatarlist += image_tag avatar_url(u), title: u.name, class: "img-circle"
     end
     raw avatarlist
   end

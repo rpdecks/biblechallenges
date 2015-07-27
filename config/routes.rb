@@ -26,10 +26,10 @@ Biblechallenge::Application.routes.draw do
   # member is a namespace for users in a challenge
   namespace :member do
     resources :challenges, only: [:index, :show] do
-      resources :groups, only: [:new, :create, :index]
+      resources :groups, only: [:new, :create, :edit, :index]
       resources :memberships, only: [:create]
     end
-    resources :groups, except: [:new, :create, :index] do
+    resources :groups, except: [:new, :create, :index, :show] do
       member do
         post 'join'
         post 'leave'
@@ -38,6 +38,7 @@ Biblechallenge::Application.routes.draw do
     resources :memberships, only: [:update, :show, :destroy, :edit] do
       member do
         get 'unsubscribe'
+        post 'sign_up_via_email'
       end
     end
   end
