@@ -8,6 +8,16 @@ describe ChaptersPerDateCalculator do
   # optional are enddate, num_chapters_per_day, date_ranges_to_skip, and days_of_week_to_skip
 
   describe "helper methods" do
+    describe "chapter_distribution" do
+      it "correctly distributions one chapter per day" do
+        result = ChaptersPerDateCalculator.new.chapter_distribution(num_chapters: 5, num_days: 5)
+
+        # five elements, each 1
+        expect(result.size).to eq 5
+        result.each {|i| expect(i).to eq 1}
+
+      end
+    end
     describe "available_days" do
 
       context "with num_chapters_per_day = 1" do
