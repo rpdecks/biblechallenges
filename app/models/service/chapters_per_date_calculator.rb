@@ -9,9 +9,11 @@ class ChaptersPerDateCalculator
 
   def initialize(begindate:, num_chapters:, num_chapters_per_day: 1,
                 days_of_week_to_skip: [],
-                date_ranges_to_skip: [])
+                date_ranges_to_skip: [],
+                enddate: nil)
 
     @begindate = begindate
+    @enddate = enddate
     @num_chapters= num_chapters
     @num_chapters_per_day = num_chapters_per_day
     @days_of_week_to_skip = days_of_week_to_skip
@@ -23,7 +25,7 @@ class ChaptersPerDateCalculator
     read_on_date = @begindate
     chapters_left = @num_chapters
 
-    while (chapters_left > 0)
+    while (chapters_left > 0) && before_end_date(read_on_date)
 
       while not_allowed_date?(read_on_date)
         read_on_date += 1.day
@@ -38,6 +40,14 @@ class ChaptersPerDateCalculator
   end
 
   private
+
+  def before_end_date(a_date)
+    if @enddate && (a_date > @enddate)
+      return false
+    else
+      return true
+    end
+  end
 
   def not_allowed_date?(a_date)
     not_allowed_weekday?(a_date) || within_forbidden_date_range?(a_date)
