@@ -20,6 +20,9 @@ class ChaptersPerDateCalculator
     @date_ranges_to_skip = date_ranges_to_skip
   end
 
+  def chapter_distribution(num_chapters: 0, num_days: 0)
+
+  end
   def available_days
     result = []
     read_on_date = @begindate
