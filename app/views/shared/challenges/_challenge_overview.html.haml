@@ -1,0 +1,16 @@
+.title
+  = @challenge.name
+
+.subtitle
+  %b
+    = @challenge.chapters_to_read
+  %br
+  = @challenge.begindate.strftime("%-m/%-d/%Y")
+  = "-"
+  = @challenge.enddate.strftime("%-m/%-d/%Y")
+
+- @challenge.members.each do |m|
+  = render 'shared/avatar_medium', user: m
+
+%br
+%br

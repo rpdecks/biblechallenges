@@ -8,7 +8,6 @@ class Challenge < ActiveRecord::Base
   # :history option: keeps track of previous slugs
   friendly_id :name, :use => [:slugged, :history]
 
-
   # Relations
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
