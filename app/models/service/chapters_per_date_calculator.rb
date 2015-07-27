@@ -1,5 +1,10 @@
 class ChaptersPerDateCalculator
 
+  # should produce a hash with dates as keys and numbers of chapters for those dates as values
+
+  # required options passed in are begindate, num_chapters
+  # optional are enddate, num_chapters_per_day, date_ranges_to_skip, and days_of_week_to_skip
+
   attr_reader :schedule
 
   def initialize(begindate:, num_chapters:, num_chapters_per_day: 1,
@@ -13,10 +18,8 @@ class ChaptersPerDateCalculator
     @date_ranges_to_skip = date_ranges_to_skip
   end
 
-
-
-  def find_available_days
-    result = {}
+  def available_days
+    result = []
     read_on_date = @begindate
     chapters_left = @num_chapters
 
@@ -26,8 +29,8 @@ class ChaptersPerDateCalculator
         read_on_date += 1.day
       end
 
-      result[read_on_date] = 0
-      chapters_left -= 1
+      result << read_on_date
+      chapters_left -= @num_chapters_per_day
       read_on_date += 1.day
     end
 
