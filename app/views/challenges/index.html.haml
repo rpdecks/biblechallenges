@@ -6,8 +6,10 @@
         / This should be <h1> instead of a div with a class which is semantically incorrect
         .title Bible Challenges
         .subtitle Create a Bible Reading Challenge for a church, small group, or student organization. Or join one below.
-
-        %a.btn{href: new_creator_challenge_path} Create a challenge
+        -if current_user
+          %a.btn{href: new_creator_challenge_path} Create a challenge
+        -else
+          %a.btn{href: new_user_registration_path} Sign me up!
 
 .container
   - unless @public_challenges.empty?
