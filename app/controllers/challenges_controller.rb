@@ -1,6 +1,6 @@
 class ChallengesController < ApplicationController
   def index
-    @public_challenges = Challenge.includes(:members)
+    @public_challenges = Challenge.includes(:members).current_challenges
     if params[:query]
       @public_challenges = @public_challenges.search_by_name(params[:query])
     end
