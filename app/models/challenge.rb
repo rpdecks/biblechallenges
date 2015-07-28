@@ -1,8 +1,15 @@
 class Challenge < ActiveRecord::Base
   serialize :date_ranges_to_skip  # array of ranges
 
+  Rails.application.eager_load!
+  ChallengeStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
+
   include PgSearch
   pg_search_scope :search_by_name, against: :name
+  scope :current_challenges, -> {where("enddate >= ?", Date.today)}
+  scope :top_5_challenges, -> { joins(:challenge_statistics).where("challenge_statistics.type" => "ChallengeStatisticProgressPercentage").order("challenge_statistics.value").limit(5) }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
@@ -26,11 +33,6 @@ class Challenge < ActiveRecord::Base
   validates :chapters_to_read, presence: true
   validate  :validate_dates
   validates :book_chapters, presence: true
-
-  Rails.application.eager_load!
-  ChallengeStatistic.descendants.each do |stat| 
-    has_one stat.name.underscore.to_sym
-  end
 
   # Callbacks
   before_validation :calculate_enddate,
