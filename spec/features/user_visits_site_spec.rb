@@ -15,7 +15,6 @@ feature 'User visits challenges' do
     ch2_start_date = Date.today
       challenge2 = create(:challenge_with_readings, chapters_to_read: "Matt 1-2", begindate: ch2_start_date)
     visit root_path
-    binding.pry
     expect(page).to_not have_content(challenge.name)
     expect(page).to have_content(challenge2.name)
   end
