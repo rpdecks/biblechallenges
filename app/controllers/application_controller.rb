@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if @user.challenges.present?
       member_challenges_path
-    else @user.blank?
+    else
       root_path
     end
   end
