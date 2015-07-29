@@ -139,6 +139,6 @@ class Challenge < ActiveRecord::Base
 
   def should_generate_new_friendly_id?
     # generate new slug whenever name changes
-    name_changed?
+    name_changed? || slug.blank?
   end
 end
