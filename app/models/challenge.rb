@@ -8,8 +8,11 @@ class Challenge < ActiveRecord::Base
 
   include PgSearch
   pg_search_scope :search_by_name, against: :name
-  scope :current_challenges, -> {where("enddate >= ?", Date.today)}
-  scope :top_5_challenges, -> { joins(:challenge_statistics).where("challenge_statistics.type" => "ChallengeStatisticProgressPercentage").order("challenge_statistics.value").limit(5) }
+  scope :current, -> {where("enddate >= ?", Date.today)}
+  scope :on_schedule_percentage, -> { joins(:challenge_statistics).where("challenge_statistics.type" => "ChallengeStatisticOnSchedulePercentage")}
+  scope :no_nil_value, -> { joins(:challenge_statistics).where("challenge_statistics.value IS NOT NULL")}
+  scope :top_8, -> { joins(:challenge_statistics).order("challenge_statistics.value desc").limit(8) }
+  scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
