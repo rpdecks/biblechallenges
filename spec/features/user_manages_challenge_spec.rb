@@ -36,7 +36,6 @@ feature 'User manages challenges' do
   scenario 'User joins a challenge successfully and receives welcome email' do
     Sidekiq::Testing.inline! do
       challenge = create(:challenge, :with_membership, :with_readings)
-      ChallengeCompletion.new(challenge)
       visit challenge_path(challenge)
       click_link "Join Challenge"
       expect(challenge.members).to include user
@@ -67,7 +66,7 @@ feature 'User manages challenges' do
     click_link "Join Challenge"
     challenge_stat.reload
 
-    expect(challenge_stat.value.to_i).to eq 25
+    expect(challenge_stat.value).to eq 25
   end
 
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
@@ -109,7 +108,7 @@ feature 'User manages challenges' do
     click_link "Unsubscribe"
     challenge_stat.reload
 
-    expect(challenge_stat.value.to_i).to eq 50
+    expect(challenge_stat.value).to eq 50
   end
 
   scenario 'User should leave his or her group automatically once the user leaves the challenge' do

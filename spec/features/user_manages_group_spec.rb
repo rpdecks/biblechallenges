@@ -63,11 +63,13 @@ feature 'User manages groups' do
                          chapters_to_read: "Matt 1-2",
                          begindate: start_date,
                          owner_id: user.id)
+      m1 = Membership.first
       m2 = create(:membership, challenge: challenge, user: user2)
       group = challenge.groups.create(name: "UC Irvine", user_id: user2.id)
       group.add_user_to_group(challenge, user2)
 
       #associate statistic
+      m1.membership_statistics << MembershipStatisticProgressPercentage.create
       m2.membership_statistics << MembershipStatisticProgressPercentage.create
       group.group_statistics << GroupStatisticProgressPercentage.create
 
@@ -86,7 +88,7 @@ feature 'User manages groups' do
       click_link "Join Group"
       group_stat.reload
 
-      expect(group_stat.value.to_i).to eq 25
+      expect(group_stat.value).to eq 25
     end
     scenario 'User leaves a group and group stats update automatically' do
       user2 = create(:user)
@@ -127,7 +129,7 @@ feature 'User manages groups' do
       group_stat.reload
 
       #Group_stat should be 50 because 1 user left group
-      expect(group_stat.value.to_i).to eq 50
+      expect(group_stat.value).to eq 50
     end
     scenario 'User sees members of a group without being in the group' do
       challenge = create(:challenge)
