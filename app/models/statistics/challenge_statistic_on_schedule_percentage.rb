@@ -22,6 +22,6 @@ class ChallengeStatisticOnSchedulePercentage < ChallengeStatistic
   end
 
   def sum_of_percentages
-    challenge.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value).to_i}.inject(0,:+)
+    challenge.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value)}.inject(0,:+)
   end
 end
