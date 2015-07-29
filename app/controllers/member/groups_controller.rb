@@ -29,9 +29,10 @@ class Member::GroupsController < ApplicationController
     @group.user_id = current_user.id
 
     if @group.save
-      membership.group = @group 
+      membership.group = @group
       membership.save
-      GroupCompletion.new(group)
+      MembershipCompletion.new(membership)
+      GroupCompletion.new(@group)
       flash[:notice] = "Group created successfully"
       redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
     else
