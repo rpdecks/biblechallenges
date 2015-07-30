@@ -35,6 +35,9 @@
           placeholder: 'Password Confirmation',
           autocomplete: 'off' %>
       </div>
+      <% if params[:challenge_id].present? %>
+        <%= hidden_field_tag :challenge_id, params[:challenge_id] %>
+      <% end %>
     </div>
 
     <div class="actions">
