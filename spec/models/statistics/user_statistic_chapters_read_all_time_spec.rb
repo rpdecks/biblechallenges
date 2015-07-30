@@ -13,7 +13,7 @@ describe UserStatisticChaptersReadAllTime do
         user_stat.update
       end
 
-      expect(user_stat.value.to_i).to eq 4
+      expect(user_stat.value).to eq 4
     end
 
     it "should calculate the proper value for user with multiple memberships_readings" do
@@ -35,7 +35,7 @@ describe UserStatisticChaptersReadAllTime do
         user_stat.update
       end
 
-      expect(user_stat.value.to_i).to eq 8
+      expect(user_stat.value).to eq 8
     end
   end
 end

@@ -27,8 +27,8 @@ describe UserStatisticDaysReadInARowAllTime do
       current_stat.update
       all_time_stat.update
 
-      expect(current_stat.value.to_i).to eq 2
-      expect(all_time_stat.value.to_i).to eq 5
+      expect(current_stat.value).to eq 2
+      expect(all_time_stat.value).to eq 5
       Timecop.return
     end
   end

@@ -15,7 +15,7 @@ describe UserStatisticDaysReadInARowCurrent do
       end
 
         Timecop.return
-      expect(user_stat.value.to_i).to eq 5
+      expect(user_stat.value).to eq 5
     end
 
     it "should calculate the proper value for user reading on consecutive days in separate challenges" do

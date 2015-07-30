@@ -1,6 +1,6 @@
 class ChallengesController < ApplicationController
   def index
-    @public_challenges = Challenge.includes(:members).current_challenges#.top_5_challenges. Need to convert value to integer on statistics
+    @public_challenges = Challenge.includes(:members).current#on_schedule_percentage.no_nil_value.top_8.at_least_2_members
     if params[:query]
       @public_challenges = @public_challenges.search_by_name(params[:query])
     end
