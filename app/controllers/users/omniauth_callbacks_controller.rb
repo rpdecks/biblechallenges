@@ -19,7 +19,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       else
         UserCompletion.new(@user)
         sign_in @user
-        redirect_to finish_signup_path
+        if request.env["omniauth.params"].present? #If challenge id is set, we need to pass it finish_signup
+          ch_id = request.env["omniauth.params"]["challenge_id"]
+          redirect_to finish_signup_path(challenge_id: ch_id)
+        else
+          redirect_to finish_signup_path
+        end
       end
     else
       # store omniauth data into session
