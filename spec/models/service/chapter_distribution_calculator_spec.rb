@@ -37,5 +37,10 @@ describe ChapterDistributionCalculator do
     result.each {|r| expect(r).to be_between(2,3)}
     expect(result.reduce(:+)).to eq num_chapters
   end
+  it "correctly distributes with one chapter per day and a remainder" do
+    result = ChapterDistributionCalculator.new(num_days: 30, num_chapters: 550).distribution
+    expect(result.size).to eq 30
+    expect(result.reduce(:+)).to eq 550
+  end
 end
 
