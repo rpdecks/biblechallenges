@@ -38,9 +38,8 @@ class Challenge < ActiveRecord::Base
   validates :book_chapters, presence: true
 
   # Callbacks
-  before_validation :calculate_enddate,
-    if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
-  before_validation :generate_book_chapters, :generate_date_ranges_to_skip
+
+  before_validation :generate_book_chapters, :generate_date_ranges_to_skip, :generate_schedule
   after_commit :successful_creation_email, :on => :create
 
 
@@ -103,6 +102,10 @@ class Challenge < ActiveRecord::Base
     self.date_ranges_to_skip = DateRangeParser.new(self.dates_to_skip).ranges
   end
 
+  def generate_schedule
+    schedule = ChaptersPerDateCalculator.new(self).schedule
+  end
+
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
     self.book_chapters = ActsAsScriptural.new.parse(chapters_to_read).chapters
   end
@@ -134,12 +137,6 @@ class Challenge < ActiveRecord::Base
   # - after_create
   def successful_creation_email
     NewChallengeEmailWorker.perform_in(30.seconds, self.id)
-  end
-
-  # - before_validation
-  def calculate_enddate
-    chapters_count = ActsAsScriptural.new.parse(chapters_to_read).chapters.size
-    self.enddate = begindate + (chapters_count - 1).days if chapters_to_read
   end
 
   def should_generate_new_friendly_id?
