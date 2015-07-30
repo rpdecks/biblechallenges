@@ -6,25 +6,21 @@ class ReadingsGenerator
   end
 
   def generate
+    schedule = ChaptersPerDateCalculator.new(@challenge).schedule
+
     readings = []
-    read_on_date = @challenge.begindate
+    chapters_to_read = @challenge.book_chapters
+    # go thru the hash in chrono order
+    schedule.keys.sort.each do |date|
+      num_chapters = schedule[date]
+      chapters_for_this_day = chapters_to_read.shift(num_chapters)
 
-    @challenge.book_chapters.each do |chapter|
-      # if the present day is not included in skippables, create a reading for it
-      # Date.wday gives a number betw 0..6 for the day of week (0 is Sunday)
-
-      while (not_allowed_weekday?(read_on_date) || not_allowed_date?(read_on_date))
-        read_on_date += 1.day
-      end
-
-      unless @challenge.days_of_week_to_skip.include?(read_on_date.wday)
+      chapters_for_this_day.each do |chapter|
         chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
-        readings << Reading.new(chapter: chapter, read_on: read_on_date)
+        readings << Reading.new(chapter: chapter, read_on: date)
       end
-
-      read_on_date += 1.day
-
     end
+
     readings
   end
 
