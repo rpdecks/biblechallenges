@@ -21,9 +21,6 @@ class Creator::ChallengesController < ApplicationController
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
 
-#    @challenge.book_chapters = ActsAsScriptural.new.parse(@challenge.chapters_to_read).chapters
-
-    # this seems terrible; is there a better way?  #jim
     if @challenge.save
       flash[:notice] = "Successfully created Challenge" 
       readings = ReadingsGenerator.new(@challenge).generate 
