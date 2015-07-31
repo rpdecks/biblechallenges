@@ -22,7 +22,7 @@ feature 'User manages member/challenge' do
     ChallengeCompletion.new(challenge)
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
-    click_link 'Log my reading'
+    click_link "Log #{challenge.readings.first.book_and_chapter}"
     expect(MembershipReading.count).to eq 1
   end
 end

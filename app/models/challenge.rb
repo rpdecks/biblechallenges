@@ -124,6 +124,10 @@ class Challenge < ActiveRecord::Base
     readings.find_by_read_on(Date.today)
   end
 
+  def todays_readings
+    readings.where(read_on: Date.today)
+  end
+
   private
 
   # Validations
