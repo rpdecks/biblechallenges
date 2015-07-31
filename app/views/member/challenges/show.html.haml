@@ -55,7 +55,9 @@
 
           - if @challenge.owner == current_user
             = link_to "Delete this Challenge", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger pull-right"
-          = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
+            = link_to "Edit Challenge", edit_creator_challenge_path(@challenge), :class=>"btn btn-success pull-right"
+          - else
+            = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
