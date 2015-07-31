@@ -13,6 +13,7 @@ class Challenge < ActiveRecord::Base
   scope :no_nil_value, -> { joins(:challenge_statistics).where("challenge_statistics.value IS NOT NULL")}
   scope :top_8, -> { joins(:challenge_statistics).order("challenge_statistics.value desc").limit(8) }
   scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
+  scope :newest_first, -> { order(begindate: :desc) }
 
   include FriendlyId
   # :history option: keeps track of previous slugs

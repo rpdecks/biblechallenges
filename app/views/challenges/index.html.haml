@@ -12,9 +12,16 @@
           %a.btn{href: new_user_registration_path} Sign me up!
 
 .container
-  - unless @public_challenges.empty?
 
-    %h3.component-title Current Challenges
+  - unless @my_challenges.blank?
+    %h3.component-title My Current Challenges
+    .row
+      - @my_challenges.each do |challenge|
+        .col-md-6
+          = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+
+  - unless @public_challenges.empty?
+    %h3.component-title All Current Challenges
     .row
       - @public_challenges.each do |challenge|
         .col-md-6

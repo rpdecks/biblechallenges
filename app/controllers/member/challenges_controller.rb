@@ -8,7 +8,7 @@ class Member::ChallengesController < ApplicationController
 
   def index
     # all challenges that user is a member of
-    @challenges = current_user.challenges.uniq
+    @challenges = current_user.challenges.newest_first
   end
 
   def show
