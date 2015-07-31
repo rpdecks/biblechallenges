@@ -7,9 +7,13 @@ class MembershipReadingsController < ApplicationController
 
   def create
     @challenge = membership.challenge
-    reading
+
     if @challenge.has_member?(current_user) && membership.user == current_user
-      @membership_reading = MembershipReading.create(membership_reading_params)
+
+      readings.each do |reading|
+      # we want to create a membership reading for each reading so I'm merging the reading params in
+        @membership_reading = MembershipReading.create(membership_reading_params.merge(reading_id: reading.id))
+      end
 
       if @membership_reading.save
         update_stats
@@ -75,7 +79,9 @@ class MembershipReadingsController < ApplicationController
     @membership ||= Membership.find(params[:membership_id])
   end
 
-  def reading
-    @reading ||= Reading.find(params[:reading_id])
+  def readings
+    @readings ||= Reading.find(params[:reading_id])
+    @readings = [@readings] unless @readings.is_a? Array
+    @readings
   end
 end
