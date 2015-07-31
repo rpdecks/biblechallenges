@@ -70,6 +70,7 @@ feature 'One user reads various parts of a challenge' do
       user1, user2 = User.all
       membership1, membership2 = c.membership_for(user1), c.membership_for(user2)
 
+      login(user2)  # this is a shortcut that I'm not happy with todo
       click_to_read_a_reading(reading: reading, membership: membership2)
       UpdateStatsWorker.drain
 
