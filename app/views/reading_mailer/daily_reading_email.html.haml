@@ -22,21 +22,15 @@
           - verses.each do |v|
             %li=raw v.text
 
-        %br
-        %center
-        %div{style: "font-family: Helvetica, Arial, sans-serif; border: 1px solid transparent;font-size: 16px;line-height: 1.6;border-radius: 4px;padding: 7px 15px 7px 15px;background-color: #0078b4;text-align:center;"}
-          = link_to 'Confirm you read this chapter.',
-            log_reading_url(membership_id: @membership.id,
-              reading_id: reading.id,
-              user_email: @user.email,
-              user_token: @user.authentication_token,
-              location: confirmation_membership_reading_path(id: reading.id)),
-              style: "color: white; text-decoration: none; font-size: 12px;"
-        %br
-        %small
-          If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
-        %br
-        %br
-        %small
-          If for ANY reason you would like to opt-out of this bible reading challenge, simply click
-          #{link_to 'here', unsubscribe_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
+      %br
+      %center
+      %div{style: "font-family: Helvetica, Arial, sans-serif; border: 1px solid transparent;font-size: 16px;line-height: 1.6;border-radius: 4px;padding: 7px 15px 7px 15px;background-color: #0078b4;text-align:center;"}
+        = link_to 'Confirm you read these chapters.', log_reading_url(membership_id: @membership.id, reading_id: @reading_ids, user_email: @user.email, user_token: @user.authentication_token, location: confirmation_membership_reading_path(id: @reading_ids)), style: "color: white; text-decoration: none; font-size: 12px;"
+      %br
+      %small
+        If you have any questions, check out our #{link_to "FAQ page", page_url("faq")}.  If your question isn't answered there you can ask us directly through our feedback form.
+      %br
+      %br
+      %small
+        If for ANY reason you would like to opt-out of this bible reading challenge, simply click
+        #{link_to 'here', unsubscribe_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
