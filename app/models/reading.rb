@@ -11,6 +11,9 @@ class Reading < ActiveRecord::Base
   #delegations
   delegate :members, to: :challenge
   delegate :owner, to: :challenge
+
+  delegate :book_and_chapter, to: :chapter
+
   # Validations
   validates :chapter_id, presence: true
   validates :challenge_id, presence: true
