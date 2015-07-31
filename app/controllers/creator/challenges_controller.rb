@@ -35,14 +35,8 @@ class Creator::ChallengesController < ApplicationController
     @challenge = current_user.created_challenges.build(challenge_params)
 
     if @challenge.save
-      flash[:notice] = "Successfully created Challenge" 
-      readings = ReadingsGenerator.new(@challenge).generate 
-
-      Reading.transaction do
-        readings.each do |r|
-          Reading.connection.execute "INSERT INTO readings (chapter_id, challenge_id, read_on) values (#{r.chapter_id}, #{@challenge.id}, '#{r.read_on}')"
-        end
-      end
+      flash[:notice] = "Successfully created Challenge"
+      ReadingsGenerator.new(@challenge).generate
 
       membership = Membership.new
       membership.user = current_user

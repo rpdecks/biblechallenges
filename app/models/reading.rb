@@ -17,8 +17,8 @@ class Reading < ActiveRecord::Base
   validates :read_on, presence: true
 
   #Scopes
-  scope :todays_reading, -> { where("read_on" => Date.today) }
-  scope :tomorrows_reading, -> { where("read_on" => Date.today+1) }
+  scope :todays_readings, -> { where("read_on" => Date.today) }
+  scope :tomorrows_readings, -> { where("read_on" => Date.today+1) }
   scope :to_date, lambda { | a_date | where("read_on <= ?", a_date) }
   scope :on_date, lambda { | a_date | where("read_on = ?", a_date) }
 

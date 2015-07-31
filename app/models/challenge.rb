@@ -15,6 +15,8 @@ class Challenge < ActiveRecord::Base
   scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
   scope :newest_first, -> { order(begindate: :desc) }
 
+  scope :with_readings_tomorrow, -> { joins(:readings).where(readings: { read_on: Date.today+1 }) }
+
   include FriendlyId
   # :history option: keeps track of previous slugs
   friendly_id :name, :use => [:slugged, :history]
@@ -104,7 +106,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def generate_schedule
-    schedule = ChaptersPerDateCalculator.new(self).schedule
+    self.schedule = ChaptersPerDateCalculator.new(self).schedule
   end
 
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
