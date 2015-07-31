@@ -1,6 +1,14 @@
 class ChallengesController < ApplicationController
   def index
-    @public_challenges = Challenge.includes(:members).current#on_schedule_percentage.no_nil_value.top_8.at_least_2_members
+    @public_challenges = Challenge.includes(:members).current
+
+    if current_user
+      @my_challenges = current_user.challenges.current
+      @public_challenges -= @my_challenges
+    end
+
+
+
     if params[:query]
       @public_challenges = @public_challenges.search_by_name(params[:query])
     end

@@ -58,9 +58,9 @@ ActiveRecord::Schema.define(version: 20150730140013) do
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
     t.integer  "readings_count"
-    t.integer  "book_chapters",        default: [], array: true
+    t.integer  "book_chapters",        default: [],              array: true
     t.text     "date_ranges_to_skip"
-    t.integer  "days_of_week_to_skip", default: [], array: true
+    t.integer  "days_of_week_to_skip", default: [],              array: true
     t.string   "slug"
     t.integer  "num_chapters_per_day", default: 1
     t.hstore   "chapters_per_date",    default: {}, null: false
@@ -136,7 +136,6 @@ ActiveRecord::Schema.define(version: 20150730140013) do
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
     t.integer  "memberships_count"
-    t.string   "passcode"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
