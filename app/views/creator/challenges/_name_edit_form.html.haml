@@ -1,0 +1,24 @@
+- if @challenge.errors.any?
+  - flash[:error] = @challenge.errors.full_messages.to_sentence
+
+.section.primary.centered
+  .container
+    .title
+      = controller.action_name.capitalize
+      Challenge
+
+%section.container
+  .row
+    .col-md-6.col-md-offset-3
+
+      = form_for [:creator, @challenge], html: {class: 'form-horizontal'} do |f|
+        .form-group
+          = f.label :name, "Challenge Name"
+          = f.text_field :name, required: true, class: "form-control"
+          %p.help-block The name of your challenge, for example "The Book of Acts in July"
+
+        %br
+        %br
+
+        .form-group
+          = f.submit class: 'btn btn-primary btn-block', disable_with: 'Please Wait...'
