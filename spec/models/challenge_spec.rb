@@ -11,6 +11,20 @@ describe Challenge do
     it { should validate_presence_of(:owner_id) }
 
 
+    describe "scopes" do
+      describe "with_readings_tomorrow" do
+        it "returns challenges with readings set for tomorrow (by checking reading.read_on)" do
+          challenge = create(:challenge)
+          challenge2 = create(:challenge)
+          create_list(:reading, 2, challenge: challenge, read_on: Date.today + 1.day)
+          create_list(:reading, 2, challenge: challenge2, read_on: Date.today)
+
+          result = Challenge.with_readings_tomorrow
+          expect(result).to include challenge
+          expect(result).not_to include challenge2
+        end
+      end
+    end
     describe 'End date and begin date validation' do
 
       context 'when begin date is greater than end date' do

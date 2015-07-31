@@ -75,9 +75,9 @@ class Membership < ActiveRecord::Base
   end
 
   def send_reading_email
-    todays_reading = self.readings.todays_reading
-    if todays_reading.size > 0
-      DailyEmailWorker.perform_in(30.seconds, todays_reading.first.id, self.user_id)
+    todays_readings = self.readings.todays_readings.pluck(:id)
+    if todays_readings.size > 0
+      DailyEmailWorker.perform_in(30.seconds, todays_readings, self.user_id)
     end
   end
 end

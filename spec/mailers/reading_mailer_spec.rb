@@ -9,7 +9,7 @@ describe ReadingMailer do
       challenge = create(:challenge, :with_readings)
       create(:membership, user: user, challenge: challenge)
 
-      expect{ ReadingMailer.daily_reading_email(challenge.readings.first.id, user.id).deliver_now }.to_not raise_error
+      expect{ ReadingMailer.daily_reading_email([challenge.readings.first.id], user.id).deliver_now }.to_not raise_error
     end
 
     it "sends the email to the user's email", skip: true do
