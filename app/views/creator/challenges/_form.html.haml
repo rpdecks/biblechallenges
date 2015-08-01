@@ -25,7 +25,7 @@
         .form-group
           = f.label :enddate, "End Date"
           = f.text_field :enddate, value: f.object.enddate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_enddate_input'
-          %p.help-block The end date is the last day of your bible challenge.
+          %p.help-block The end date is the last day of your bible challenge.  The number of chapters will be arranged evenly on each day.  If you leave this blank, the challenge will have one chapter per day and the end date will be calculated automatically.
 
         .form-group
           = f.label :chapters_to_read, "Chapters to Read"
