@@ -42,16 +42,29 @@
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
-          = render partial: 'shared/challenges/log_todays_reading', locals: {membership: @membership,
-            todays_reading: @todays_reading}
+          %h4
+            Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})
+          - @todays_readings.each do |todays_reading|
+            - todays_verses = todays_reading.chapter.verses.by_version(@membership.bible_version)
 
-          = render partial: 'shared/challenges/todays_reading', locals: { todays_reading: @todays_reading,
-          todays_verses: @todays_verses}
+            = render partial: 'shared/challenges/todays_reading', locals: { todays_reading: todays_reading,
+            todays_verses: todays_verses}
 
+            = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
+
+            %br
+            %br
 
           .panel.panel-primary
             .panel-heading Challenge Readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
+
+            - if current_user && membership = @challenge.membership_for(current_user)
+              %tr
+                %td Bible Version:
+                %td
+                  = membership.bible_version
+                  =link_to "Change", member_membership_path(membership), :method => :get
 
           - if @challenge.owner == current_user
             = link_to "Delete this Challenge", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger pull-right"

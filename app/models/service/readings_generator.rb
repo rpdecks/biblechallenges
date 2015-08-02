@@ -21,7 +21,11 @@ class ReadingsGenerator
       end
     end
 
-    readings
+    Reading.transaction do
+      readings.each do |r|
+        Reading.connection.execute "INSERT INTO readings (chapter_id, challenge_id, read_on) values (#{r.chapter_id}, #{@challenge.id}, '#{r.read_on}')"
+      end
+    end
   end
 
   private

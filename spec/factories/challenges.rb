@@ -10,7 +10,9 @@ FactoryGirl.define do
     days_of_week_to_skip []
 
     trait :with_readings do
-      after(:create) { |object| object.generate_readings }
+      after(:create) do |challenge|
+        ReadingsGenerator.new(challenge).generate 
+      end
     end
     
     trait :with_membership do
