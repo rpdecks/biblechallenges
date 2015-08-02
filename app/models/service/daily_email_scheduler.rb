@@ -1,10 +1,16 @@
 class DailyEmailScheduler
 
   def self.set_daily_email_jobs
-    tomorrows_readings = Reading.tomorrows_reading
+    # what we need is a collection of readings per user per challenge to pass 
+    # to the daily email worker
 
-    tomorrows_readings.each do |reading|
-      reading.members.each do |m|
+
+    #tomorrows_readings = Reading.tomorrows_readings
+    tomorrows_challenges = Challenge.with_readings_tomorrow
+
+    tomorrows_challenges.each do |challenge|
+      tomorrows_reading_ids = challenge.readings.tomorrows_readings.pluck(:id)
+      challenge.members.each do |m|
 
         #set time_zone to the user's time_zone
         Time.zone = m.time_zone
@@ -16,7 +22,7 @@ class DailyEmailScheduler
         user_reading_hour_string = DateTime.tomorrow.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"
         user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
 
-        DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, reading.id, m.id)
+        DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, tomorrows_reading_ids, m.id)
       end
     end
   end
