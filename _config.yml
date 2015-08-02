@@ -1,13 +1,11 @@
 # Site settings
-title: Bible Challenges
+title: BibleChallenges
 email: pdbradley@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Biblechallenges.com is a Bible reading scheduler that emails 
   your reading to you daily.  You can read alone or in groups.
-baseurl: "/biblechallenges/" # the subpath of your site, e.g. /blog/
-url: "http://biblesforamerica.github.io" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+baseurl: "/" # the subpath of your site, e.g. /blog/
+url: "http://biblechallenges.com"
 
 # Build settings
 markdown: kramdown
