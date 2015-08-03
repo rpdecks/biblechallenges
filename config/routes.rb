@@ -20,7 +20,9 @@ Biblechallenge::Application.routes.draw do
   resource :user, only: [:edit, :update]
 
   namespace :creator do
-    resources :challenges
+    resources :challenges do
+      resources :mass_emails, only: [:new, :create, :show]
+    end
   end
 
   # member is a namespace for users in a challenge

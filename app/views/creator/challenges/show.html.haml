@@ -3,7 +3,10 @@
     ="Challenge: #{@challenge.name}"
 
   .panel.panel-primary
-    .panel-heading All Members
+    .panel-heading
+      All Members&nbsp;&nbsp;
+      = link_to new_creator_challenge_mass_email_path(@challenge.id), class: 'btn btn-success btn-xs', id: "Email All Members", :title => 'Email All Members', :rel => 'tooltip' do
+        %span.glyphicon.glyphicon-envelope
     %table.table.table-striped.table-bordered.table-hover
       %thead
         %tr
