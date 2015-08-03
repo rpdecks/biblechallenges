@@ -24,8 +24,8 @@
         %span
           = m.decorate.name
       %td= m.membership_readings.size
-      - if m.has_logged_a_reading?(m, group)
-        %td= m.decorate.show_last_recorded_reading(m, group)
+      - if m.has_logged_a_reading?(@membership)
+        %td= m.decorate.show_last_recorded_reading(@membership)
       - else
         %td
           No readings yet
