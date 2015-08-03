@@ -1,21 +1,40 @@
-- breadcrumb :challenge, @challenge
 .container
-  = breadcrumbs
-  %center
-    = render 'shared/challenges/join_challenge'
-%br
+  %h3 
+    ="Challenge: #{@challenge.name}"
+
+  .panel.panel-primary
+    .panel-heading All Members
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Name
+          %th Email
+          %th Last Read
+      %tbody
+      - @challenge.members.each do |m|
+        %tr
+          %td
+            = render 'shared/avatar_medium', user: m
+            %span
+              = m.decorate.name
+          %td= m.email
+          - if m.has_logged_a_reading?(@membership)
+            %td= m.decorate.show_last_recorded_reading(@membership)
+          - else
+            %td
+              No readings yet
+  %br
+  .panel.panel-primary
+    .panel-heading All Groups
+    = render partial: 'shared/statistics/group_stat', locals: {groups: @groups}
   %legend
   .row.col-md-6
-    = render 'shared/challenges/challenge_groups'
 
   .row
-  = render 'shared/challenges/challenge_details'
 
-  = render 'shared/challenges/challenge_statistics'
 
 
 
   %br
   %br
 
-  = render partial:  'shared/challenges/challenge_unsubscribe', locals: {challenge: @challenge}

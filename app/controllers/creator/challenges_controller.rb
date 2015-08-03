@@ -11,6 +11,12 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def show
+    @challenge = Challenge.includes(:members).friendly.find(params[:id])
+    @membership = @challenge.membership_for(current_user)
+    @groups = @challenge.groups.includes(:members,
+                                         :group_statistic_progress_percentage,
+                                         :group_statistic_on_schedule_percentage,
+                                         :group_statistic_total_chapters_read)
     @readings  = @challenge.readings.order(:date)
   end
 
