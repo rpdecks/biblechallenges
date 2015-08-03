@@ -56,14 +56,12 @@ class User < ActiveRecord::Base
     user_membership.progress_percentage
   end
 
-  def show_last_recorded_reading(member, group)
-    user_membership = (member.memberships & group.memberships).first
-    user_membership.membership_readings.last.created_at.to_pretty
+  def show_last_recorded_reading(membership)
+    membership.membership_readings.last.created_at.to_pretty
   end
 
-  def has_logged_a_reading?(member, group)
-    user_membership = (member.memberships & group.memberships).first
-    MembershipReading.where(membership_id: user_membership).present?
+  def has_logged_a_reading?(membership)
+    MembershipReading.where(membership_id: membership).present?
   end
 
   def find_challenge_group(challenge)
