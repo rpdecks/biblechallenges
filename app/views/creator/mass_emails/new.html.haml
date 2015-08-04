@@ -1,0 +1,6 @@
+= form_tag creator_challenge_mass_emails_path(challenge_id: @challenge.id), method: :post do
+  .input-group
+    = text_area_tag 'Message', nil, class: "form-control", id: "mass-email", placeholder: "Your message here", require: true
+
+    %span.input-group-btn
+      = submit_tag "Send message", class: "btn btn-primary"

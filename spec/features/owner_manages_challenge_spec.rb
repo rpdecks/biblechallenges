@@ -25,6 +25,6 @@ feature 'User manages challenges' do
     visit creator_challenge_path(challenge)
     click_link ('Email All Members')
     fill_in 'Message', with: "Hello everyone"
-    click_link 'Send'
+    click_button 'Send message'
   end
 end
