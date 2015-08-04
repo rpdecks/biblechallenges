@@ -25,6 +25,8 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
+  resources :contact_forms
+
   # member is a namespace for users in a challenge
   namespace :member do
     resources :challenges, only: [:index, :show] do
