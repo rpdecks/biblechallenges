@@ -21,7 +21,7 @@ Biblechallenge::Application.routes.draw do
 
   namespace :creator do
     resources :challenges do
-      resources :mass_emails, only: [:new, :create, :show]
+      resources :mass_emails, only: [:new, :create]
     end
   end
 
