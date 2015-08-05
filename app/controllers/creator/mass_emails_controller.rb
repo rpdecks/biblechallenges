@@ -1,13 +1,18 @@
 class Creator::MassEmailsController < ApplicationController
   before_filter :find_challenge
 
-  def new
-    @mass_email_form = MassEmail.new
-  end
-
   def create
-    all_members_in_challenge = @challenge.members
-    all_members_in_challenge.pluck(:email)
+    email_array = @challenge.all_users_emails_except_challenge_owner
+    if params[:message].present?
+      flash[:notice] = "You have successfully sent your message"
+      message = params[:message]
+      @challenge.send_challenge_msg_via_email(email_array, message, @challenge.id)
+      flash[:notice] = "You have successfully sent your message"
+      redirect_to creator_challenge_path(@challenge)
+    else
+      flash[:notice] = "You need to include a message"
+      redirect_to new_creator_challenge_mass_email_path(@challenge.id)
+    end
   end
 
   private
