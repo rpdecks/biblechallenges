@@ -20,11 +20,35 @@ feature 'User manages challenges' do
   end
 
   scenario 'Owner of challenge sends an email message to all members belonging to the challenge' do
+    Sidekiq::Testing.inline! do
+      challenge = create(:challenge, owner_id: user.id, name: "Awesome")
+      create(:membership, challenge: challenge, user: user)
+      user2 = create(:user, email: "guy@example.com")
+      user3 = create(:user, email: "phil@example.com")
+      challenge.join_new_member([user2, user3])
+      visit creator_challenge_path(challenge)
+      click_link ('Email All Members')
+      fill_in 'message', with: "Hello everyone"
+      click_button 'Send message'
+      message_emails = ActionMailer::Base.deliveries
+      expect(page).to have_content("You have successfully sent your message")
+      expect(message_emails.first.to).to eq [user2.email]
+      expect(message_emails.last.to).to eq [user3.email]
+      expect(message_emails.count).to eq 2
+      expect(message_emails.first.body).to have_content("Hello everyone")
+    end
+  end
+
+  scenario 'Owner of challenge forgets to add a message' do
     challenge = create(:challenge, owner_id: user.id, name: "Awesome")
     create(:membership, challenge: challenge, user: user)
+    user2 = create(:user, email: "guy@example.com")
+    challenge.join_new_member(user2)
     visit creator_challenge_path(challenge)
     click_link ('Email All Members')
-    fill_in 'Message', with: "Hello everyone"
     click_button 'Send message'
+    expect(page).to have_content("You need to include a message")
+    message_emails = ActionMailer::Base.deliveries
+    expect(message_emails.count).to eq 0
   end
 end
