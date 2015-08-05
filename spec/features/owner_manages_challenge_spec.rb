@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-feature 'User manages challenges' do
+feature 'Owner manages challenges' do
   let(:user) {create(:user)}
 
   before(:each) do
     login(user)
   end
 
-  scenario 'Owner of challenge changes the name of the challenge after the challenge has been created' do
+  scenario 'Changes the name of the challenge after the challenge has been created' do
     challenge = create(:challenge, owner_id: user.id, name: "Awesome")
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
@@ -19,7 +19,7 @@ feature 'User manages challenges' do
     expect(challenge.name).to eq "Wonderful"
   end
 
-  scenario 'Owner of challenge sends an email message to all members belonging to the challenge' do
+  scenario 'Sends an email message to all members belonging to the challenge' do
     Sidekiq::Testing.inline! do
       challenge = create(:challenge, owner_id: user.id, name: "Awesome")
       create(:membership, challenge: challenge, user: user)
@@ -39,7 +39,7 @@ feature 'User manages challenges' do
     end
   end
 
-  scenario 'Owner of challenge forgets to add a message' do
+  scenario 'Forgets to add a message' do
     challenge = create(:challenge, owner_id: user.id, name: "Awesome")
     create(:membership, challenge: challenge, user: user)
     user2 = create(:user, email: "guy@example.com")
@@ -50,5 +50,16 @@ feature 'User manages challenges' do
     expect(page).to have_content("You need to include a message")
     message_emails = ActionMailer::Base.deliveries
     expect(message_emails.count).to eq 0
+  end
+
+  scenario 'Deletes a user from challenge' do
+    challenge = create(:challenge, owner_id: user.id, name: "Awesome")
+    create(:membership, challenge: challenge, user: user)
+    user2 = create(:user, email: "guy@example.com")
+    challenge.join_new_member(user2)
+    visit creator_challenge_path(challenge)
+    click_link ("remove_#{user2.id}")
+    expect(challenge.members.count).to eq 1
+    expect(challenge.members.first.email).to eq user.email
   end
 end

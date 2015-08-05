@@ -15,19 +15,30 @@
           %th Name
           %th Email
           %th Last Read
+          %th Action
       %tbody
       - @challenge.members.each do |m|
         %tr
           %td
             = render 'shared/avatar_medium', user: m
-            %span
-              = m.decorate.name
+            - if @challenge.owner == m
+              %span
+                = "#{m.decorate.name} (Owner)"
+            - else 
+              %span
+                = m.decorate.name
           %td= m.email
           - if m.has_logged_a_reading?(@membership)
             %td= m.decorate.show_last_recorded_reading(@membership)
           - else
             %td
               No readings yet
+          - if @challenge.owner == m
+            %td= "N/A"
+          - else
+            %td= link_to "Remove member", member_membership_path(@membership), method: :delete, "data-confirm" => 'Are you sure you want to unsubscribe from this challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{m.id}"
+            
+
   %br
   .panel.panel-primary
     .panel-heading All Groups
