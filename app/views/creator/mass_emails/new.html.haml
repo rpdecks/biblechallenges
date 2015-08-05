@@ -7,4 +7,4 @@
     .input-group
       = text_area_tag 'message', nil, class: "form-control", id: "mass-email", placeholder: "Your message here", require: true
       %span.input-group-btn
-        = submit_tag "Send message", class: "btn btn-primary"
+        = submit_tag "Send message", class: "btn btn-primary", data: {confirm: "Are you sure? Emails will go out to all members of this challenge."}
