@@ -21,6 +21,11 @@
       #{ActiveSupport::TimeZone[f.object.time_zone]}
 
   .form-group
+    %span.input-group-addon
+      %input{"aria-label" => "...", :type => "checkbox"}
+    %input.form-control{"aria-label" => "...", :type => "text"}
+
+  .form-group
     = f.label :avatar, "Avatar"
     = f.file_field :avatar, {class: "form-control"}
     %p.help-block
