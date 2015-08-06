@@ -25,11 +25,16 @@ class ApplicationController < ActionController::Base
     render json: {}, status: status
   end
 
+  #todo: should this be in sessions_controller?
   def after_sign_in_path_for(resource)
-    if session[:previous_url]
-      session[:previous_url]
+    if session[:previous_url] == root_path
+      if @user.challenges.present?
+        member_challenges_path
+      else
+        root_path
+      end
     else
-      root_path
+      session[:previous_url] || root_path
     end
   end
 

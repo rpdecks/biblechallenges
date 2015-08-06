@@ -28,8 +28,7 @@ feature "User Signs In" do
     fill_in 'user[password]', with: "password"
     click_button "Sign in"
 
-    expect(page).to have_content(challenge.name)
-    expect(page).to have_content(challenge2.name)
+    expect(current_path).to eq root_path
   end
 
   context "On challenge page that User not part of" do
