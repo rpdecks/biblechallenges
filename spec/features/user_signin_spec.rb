@@ -34,20 +34,16 @@ feature "User Signs In" do
 
   context "On challenge page that User not part of" do
     scenario "Clicks 'Sign me up' and logs in" do
-      skip
       challenge = create(:challenge, name: "Awesome")
+
       visit challenges_path challenge
-      # todo: is there a click_link_or_button
-      # should default be sign me up?
-      click_link "Sign me up"
-      click_link "Login"
-      save_and_open_page
-      within ("#signin-form") do
-        fill_in 'user[email]', with: user.email
-        fill_in 'user[password]', with: "password"
-        click_button "Sign in"
-        expect(current_path).eq challenge_path(challenge)
-      end
+      click_link_or_button "Sign me up"
+      click_link "Login", :match => :first
+      fill_in 'user[email]', with: user.email
+      fill_in 'user[password]', with: "password"
+      click_button "Sign in"
+
+      expect(current_path).to eq challenge_path(challenge)
     end
   end
 end
