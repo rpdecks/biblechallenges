@@ -52,7 +52,7 @@ feature 'Owner manages challenges' do
     expect(message_emails.count).to eq 0
   end
 
-  scenario 'Deletes a user from challenge' do
+  scenario 'Removes a user from challenge' do
     challenge = create(:challenge, owner_id: user.id, name: "Awesome")
     create(:membership, challenge: challenge, user: user)
     user2 = create(:user, email: "guy@example.com")
@@ -62,5 +62,18 @@ feature 'Owner manages challenges' do
     click_link ("remove_#{membership2.id}")
     expect(challenge.members.count).to eq 1
     expect(challenge.members.first.email).to eq user.email
+  end
+
+  scenario 'Removes a group from challenge' do
+    challenge = create(:challenge, owner_id: user.id, name: "Awesome")
+    create(:membership, challenge: challenge, user: user)
+    user2 = create(:user, email: "guy@example.com")
+    group = create(:group, name: "Yo", challenge_id: challenge.id, user_id: user2.id)
+    challenge.join_new_member(user2)
+    group.add_user_to_group(challenge, user2)
+    visit creator_challenge_path(challenge)
+    click_link ("remove_#{group.id}")
+    expect(challenge.groups.count).to eq 0
+    expect(user2.groups.count).to eq 0
   end
 end

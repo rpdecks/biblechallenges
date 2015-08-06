@@ -38,19 +38,27 @@
             %td= "N/A"
           - else
             %td= link_to "Remove member", creator_remove_member_from_challenge_path(id: membership.id), method: :post, "data-confirm" => 'Are you sure you want to remove this member from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{membership.id}"
-            
 
   %br
   .panel.panel-primary
-    .panel-heading All Groups
-    = render partial: 'shared/statistics/group_stat', locals: {groups: @groups}
-  %legend
-  .row.col-md-6
-
-  .row
-
-
-
+    .panel-heading
+      = "Total Groups: #{@challenge.groups.size} "
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Name
+          %th Progress Percentage
+          %th On-schedule Percentage
+          %th Total Chapters Read
+          %th Aciton
+      %tbody
+      - @challenge.groups.each do |g|
+        %tr
+          %td= g.name
+          %td= g.group_statistic_progress_percentage
+          %td= g.group_statistic_on_schedule_percentage
+          %td= g.group_statistic_total_chapters_read
+          %td= link_to "Remove group", creator_remove_group_from_challenge_path(id: g.id), method: :post, "data-confirm" => 'Are you sure you want to remove this group from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{g.id}"
 
   %br
   %br

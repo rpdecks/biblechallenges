@@ -38,6 +38,15 @@ class Creator::ChallengesController < ApplicationController
     redirect_to creator_challenge_path(challenge)
   end
 
+  def remove_group_from_challenge
+    group = Group.find(params[:id])
+    challenge = group.challenge
+    group.remove_all_members_from_group
+    group.destroy
+    flash[:notice] = "You have successfully removed this group from the challenge"
+    redirect_to creator_challenge_path(challenge)
+  end
+
   def edit
   end
 
