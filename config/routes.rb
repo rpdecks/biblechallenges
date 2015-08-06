@@ -23,6 +23,7 @@ Biblechallenge::Application.routes.draw do
     resources :challenges do
       resources :mass_emails, only: [:new, :create]
     end
+    post 'remove_member_from_challenge', controller: 'challenges'
   end
 
   resources :contact_forms
