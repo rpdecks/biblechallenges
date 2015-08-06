@@ -109,7 +109,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def user_params
-    accessible = [ :name, :email ]
+    accessible = [ :name, :email, :reading_notify, :creator_notify, :comment_notify ]
     unless params[:user][:password].blank?
       accessible << [ :password, :password_confirmation ]
     end
