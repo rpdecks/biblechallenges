@@ -60,10 +60,6 @@ class User < ActiveRecord::Base
     membership.membership_readings.last.created_at.to_pretty
   end
 
-  def has_logged_a_reading?(membership)
-    MembershipReading.where(membership_id: membership).present?
-  end
-
   def find_challenge_group(challenge)
     groups.where(challenge: challenge).first
   end
