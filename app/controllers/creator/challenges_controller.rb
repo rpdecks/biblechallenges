@@ -12,16 +12,11 @@ class Creator::ChallengesController < ApplicationController
 
   def show
     @challenge = Challenge.includes(:members).friendly.find(params[:id])
-    @membership = @challenge.membership_for(current_user)
     @groups = @challenge.groups.includes(:members,
                                          :group_statistic_progress_percentage,
                                          :group_statistic_on_schedule_percentage,
                                          :group_statistic_total_chapters_read)
     @readings  = @challenge.readings.order(:date)
-  end
-
-  def find_challenge
-    @challenge = Challenge.friendly.find(params[:id])
   end
 
   def update
@@ -32,6 +27,15 @@ class Creator::ChallengesController < ApplicationController
     else
       flash[:error] = "Challenge cannot be updated. Please try again."
     end
+  end
+
+  def remove_member_from_challenge
+    membership = Membership.find(params[:id])
+    challenge = membership.challenge
+    membership.destroy
+    challenge.update_stats
+    flash[:notice] = "You have successfully removed this member from the challenge"
+    redirect_to creator_challenge_path(challenge)
   end
 
   def edit
@@ -66,6 +70,10 @@ class Creator::ChallengesController < ApplicationController
   end
 
   private
+
+  def find_challenge
+    @challenge = Challenge.friendly.find(params[:id])
+  end
 
   def challenge_name
     params.require(:challenge).permit(:name)
