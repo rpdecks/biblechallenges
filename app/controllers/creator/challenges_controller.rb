@@ -1,5 +1,6 @@
 class Creator::ChallengesController < ApplicationController
   before_filter :authenticate_user!, except: [:show]
+  before_action :validate_ownership
   before_filter :find_challenge, only: [:show, :destroy, :edit, :update]
 
   def new
@@ -90,5 +91,13 @@ class Creator::ChallengesController < ApplicationController
 
   def challenge_params
     params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
+  end
+
+  def validate_ownership
+    @challenge = Challenge.friendly.find(params[:id])
+    unless current_user == @challenge.owner
+      flash[:notice] = "Access denied"
+      redirect_to member_challenges_path
+    end
   end
 end

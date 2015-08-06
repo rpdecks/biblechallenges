@@ -76,4 +76,12 @@ feature 'Owner manages challenges' do
     expect(challenge.groups.count).to eq 0
     expect(user2.groups.count).to eq 0
   end
+
+  scenario 'Non-challenge owner tries to access owner dashboard' do
+    user2 = create(:user, email: "guy@example.com")
+    challenge = create(:challenge, owner_id: user2.id, name: "Awesome")
+    challenge.join_new_member(user2)
+    visit creator_challenge_path(challenge)
+    expect(page).to have_content("Access denied")
+  end
 end
