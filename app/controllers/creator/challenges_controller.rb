@@ -1,7 +1,7 @@
 class Creator::ChallengesController < ApplicationController
   before_filter :authenticate_user!, except: [:show]
-  before_action :validate_ownership
   before_filter :find_challenge, only: [:show, :destroy, :edit, :update]
+  before_action :validate_ownership, only: [:show, :edit, :destroy, :update]
 
   def new
     @challenge = Challenge.new

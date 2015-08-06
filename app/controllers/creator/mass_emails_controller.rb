@@ -1,5 +1,6 @@
 class Creator::MassEmailsController < ApplicationController
   before_filter :find_challenge
+  before_action :validate_ownership, only: [:new, :create]
 
   def create
     email_array = @challenge.all_users_emails_except_challenge_owner
@@ -19,5 +20,13 @@ class Creator::MassEmailsController < ApplicationController
 
   def find_challenge
     @challenge = Challenge.find(params[:challenge_id])
+  end
+
+  def validate_ownership
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+    unless current_user == @challenge.owner
+      flash[:notice] = "Access denied"
+      redirect_to member_challenges_path
+    end
   end
 end
