@@ -36,7 +36,7 @@ feature "User Signs In" do
     scenario "Clicks 'Sign me up' and logs in" do
       challenge = create(:challenge, name: "Awesome")
 
-      visit challenges_path challenge
+      visit "/challenges/#{challenge.slug}"
       click_link_or_button "Sign me up"
       click_link "Login", :match => :first
       fill_in 'user[email]', with: user.email
