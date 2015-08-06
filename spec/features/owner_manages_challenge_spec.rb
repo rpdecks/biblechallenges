@@ -57,8 +57,9 @@ feature 'Owner manages challenges' do
     create(:membership, challenge: challenge, user: user)
     user2 = create(:user, email: "guy@example.com")
     challenge.join_new_member(user2)
+    membership2 = Membership.last
     visit creator_challenge_path(challenge)
-    click_link ("remove_#{user2.id}")
+    click_link ("remove_#{membership2.id}")
     expect(challenge.members.count).to eq 1
     expect(challenge.members.first.email).to eq user.email
   end
