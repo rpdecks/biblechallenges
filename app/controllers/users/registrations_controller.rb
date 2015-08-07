@@ -10,7 +10,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if params[:challenge_id].present? #Joining new user to the challenge and redirect to the challenge
           ch_id = params[:challenge_id]
           @challenge = Challenge.find(ch_id)
-          @challenge.join_new_member(@user)
+          membership = @challenge.join_new_member(@user)
+          MembershipCompletion.new(membership)
           @challenge.update_stats
           sign_in @user
           redirect_to (member_challenges_path)
@@ -31,7 +32,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
        challenge = Challenge.find(ch_id)
        email = self.params[:user][:email]
        @user = User.where(email: email).first
-       challenge.join_new_member(@user)
+       membership = challenge.join_new_member(@user)
+       MembershipCompletion.new(membership)
        challenge.update_stats
      end
   end
