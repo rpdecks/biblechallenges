@@ -18,10 +18,17 @@ class ChallengeStatisticOnSchedulePercentage < ChallengeStatistic
   end
 
   def members_in_challenge
-    challenge.memberships.size
+    challenge.reload.memberships.size
   end
 
   def sum_of_percentages
-    challenge.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value)}.inject(0,:+)
+    on_schedule_percentages_for_all_members.inject(0,:+)
   end
+
+  def on_schedule_percentages_for_all_members
+    # the to_i at the end converts any nils to 0.  Shouldn't have nil values for this stat
+    # but it crops up
+    challenge.reload.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value).to_i}
+  end
+
 end

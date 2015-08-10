@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
   has_many :members, through: :memberships, source: :user
   has_many :memberships
   has_many :group_statistics, dependent: :destroy
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :user, :challenge, presence: true
 

@@ -22,8 +22,14 @@ Biblechallenge::Application.routes.draw do
   resource :user, only: [:edit, :update]
 
   namespace :creator do
-    resources :challenges
+    resources :challenges do
+      resources :mass_emails, only: [:new, :create]
+    end
+    post 'remove_member_from_challenge', controller: 'challenges'
+    post 'remove_group_from_challenge', controller: 'challenges'
   end
+
+  resources :contact_forms
 
   # member is a namespace for users in a challenge
   namespace :member do
