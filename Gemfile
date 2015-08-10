@@ -42,6 +42,8 @@ gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
 gem 'intercom-rails'
 gem 'friendly_id'
+gem 'exception_notification'
+gem 'slack-notifier'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 
