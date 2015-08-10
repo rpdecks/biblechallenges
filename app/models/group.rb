@@ -34,7 +34,7 @@ class Group < ActiveRecord::Base
   end
 
   def update_stats
-    group_statistics.each do |gs|
+    self.group_statistics.each do |gs|
       gs.update
     end
   end

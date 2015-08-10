@@ -42,7 +42,7 @@ class Membership < ActiveRecord::Base
   end
 
   def update_stats
-    membership_statistics.each do |ms|
+    self.membership_statistics.each do |ms|
       ms.update
     end
   end
