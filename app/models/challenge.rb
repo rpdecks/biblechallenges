@@ -28,7 +28,7 @@ class Challenge < ActiveRecord::Base
   has_many :membership_readings, through: :memberships  # needs default order #todo 
   has_many :groups
   has_many :chapters, through: :readings
-  has_many :challenge_statistics
+  has_many :challenge_statistics, dependent: :destroy
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
@@ -60,7 +60,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def update_stats #for the sample data rake task
-    challenge_statistics.each do |cs|
+    self.challenge_statistics.each do |cs|
       cs.update
     end
   end
@@ -126,6 +126,17 @@ class Challenge < ActiveRecord::Base
 
   def todays_readings
     readings.where(read_on: Date.today)
+  end
+
+  def all_users_emails_except_challenge_owner
+    all_members_in_challenge = self.members
+    all_emails = all_members_in_challenge.pluck(:email)
+    all_users = all_emails - [self.owner.email] #remove challenge owner's email
+    return all_users
+  end
+
+  def send_challenge_msg_via_email(email_array, message, challenge)
+      MessageUsersEmailWorker.perform_in(30.seconds, email_array, message, challenge)
   end
 
   private

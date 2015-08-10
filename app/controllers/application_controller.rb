@@ -33,9 +33,15 @@ class ApplicationController < ActionController::Base
       else
         root_path
       end
+    #if resource.is_a?(User) && resource.challenges.present?
+    #  member_challenges_path
     else
       session[:previous_url] || root_path
     end
+  end
+
+  def test_exception_notifier
+    raise "This is only a test :) "
   end
 
   protected
