@@ -2,6 +2,8 @@ Biblechallenge::Application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web, at: '/sidekiq'
 
+  get '/test_exception_notifier', to: 'application#test_exception_notifier'
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
