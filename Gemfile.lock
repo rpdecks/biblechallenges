@@ -193,6 +193,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mail_form (1.5.1)
+      actionmailer (>= 3.2, < 5)
+      activemodel (>= 3.2, < 5)
     mail_view (2.0.4)
       tilt
     method_source (0.8.2)
@@ -453,6 +456,7 @@ DEPENDENCIES
   launchy
   letter_opener
   letter_opener_web
+  mail_form
   mail_view
   omniauth
   omniauth-facebook
