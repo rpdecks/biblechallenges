@@ -28,7 +28,7 @@ class Challenge < ActiveRecord::Base
   has_many :membership_readings, through: :memberships  # needs default order #todo 
   has_many :groups
   has_many :chapters, through: :readings
-  has_many :challenge_statistics
+  has_many :challenge_statistics, dependent: :destroy
 
   belongs_to :owner, class_name: "User", foreign_key: :owner_id
 
@@ -60,7 +60,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def update_stats #for the sample data rake task
-    challenge_statistics.each do |cs|
+    self.challenge_statistics.each do |cs|
       cs.update
     end
   end
