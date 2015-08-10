@@ -16,5 +16,3 @@ script:
 - bundle exec rspec -fp -t ~skip spec/
 notifications:
   slack:
-    secure: Nsa5gZkIqSGQDTFO9eFmFQm1yKa1rd62UOpNMiHdDYG3Ux2JIJrwj21yY4wQnwjPr1xzkAcH1zSzb83zysBSpaApBiUvv2K5Kuo2+5yrzQg7o/1Quh01Zvhf/tCphrD0xZXZnKoSKHsZhtXguf2Bvq6dr9ONjSYe+WEBZJI5Itk=
-    secure: GqoMfyPpGws3kPi87pTbmdlRWy/qttgXebo03iFEnXfZUXdCUCDlf5fPMP2uU8nMVQ59sCp+Zc+Ar4v7W9JW26Y3Xf3NFAzco1vvFAUPHAXh5Rrw0WiRhkdiVb8zcdCc+cjX7NTsUNO1F/4yqtdGbfrQI3JLFVKkWev57TYrM6Y=
