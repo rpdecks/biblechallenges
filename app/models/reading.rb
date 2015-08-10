@@ -11,14 +11,17 @@ class Reading < ActiveRecord::Base
   #delegations
   delegate :members, to: :challenge
   delegate :owner, to: :challenge
+
+  delegate :book_and_chapter, to: :chapter
+
   # Validations
   validates :chapter_id, presence: true
   validates :challenge_id, presence: true
   validates :read_on, presence: true
 
   #Scopes
-  scope :todays_reading, -> { where("read_on" => Date.today) }
-  scope :tomorrows_reading, -> { where("read_on" => Date.today+1) }
+  scope :todays_readings, -> { where("read_on" => Date.today) }
+  scope :tomorrows_readings, -> { where("read_on" => Date.today+1) }
   scope :to_date, lambda { | a_date | where("read_on <= ?", a_date) }
   scope :on_date, lambda { | a_date | where("read_on = ?", a_date) }
 

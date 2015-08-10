@@ -75,7 +75,7 @@ describe DailyEmailScheduler do
 
       DailyEmailScheduler.set_daily_email_jobs
 
-      reading_id_a = Time.at(DailyEmailWorker.jobs.first["args"][0])
+      reading_id_a = Time.at(DailyEmailWorker.jobs.first["args"][0].first) # first arg is now a collection of ids
       reading_date_a = Reading.find(reading_id_a).read_on.strftime("%D")
 
       tomorrow = DateTime.now+1

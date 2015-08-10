@@ -23,6 +23,11 @@
           %p.help-block The begin date is the first day of your bible challenge.  On that day, the first emails containing the daily reading will go out.
 
         .form-group
+          = f.label :enddate, "End Date"
+          = f.text_field :enddate, value: f.object.enddate.try(:strftime,"%A, %-d %b, %Y"), required: true, class: "form-control", data: {behaviour: 'datepicker'}, id: 'challenge_enddate_input'
+          %p.help-block The end date is the last day of your bible challenge.  The number of chapters will be arranged evenly on each day.  If you leave this blank, the challenge will have one chapter per day and the end date will be calculated automatically.
+
+        .form-group
           = f.label :chapters_to_read, "Chapters to Read"
           = f.text_field :chapters_to_read, required: true, class: "form-control"
           %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28" or "Matt 1-Rev 22"
@@ -74,6 +79,40 @@
 
 
 :javascript
+
+  var $enddateinput = $('#challenge_enddate_input').pickadate({
+    // Escape any “rule” characters with an exclamation mark (!).
+    format: 'dddd, dd mmm, yyyy',
+    formatSubmit: 'yyyy-mm-dd',
+    clear: '',
+    hiddenPrefix: 'date_format_',
+    hiddenSuffix: 'data',
+    editable: true
+  });
+  
+  // From pickadate.js docs:
+  // An important thing to note here is that this [editable: true] disables
+  // keyboard bindings on the input element, such as arrow keys opening the
+  // picker. You will have to add your own bindings as you see fit.
+  // 
+  // This enables the date picker to pop up even when editable is set to
+  // true.
+  var enddatepicker = $enddateinput.pickadate('picker');
+  $enddateinput.on({
+    'focus': enddatedatepickerHandler,
+    'click': enddatedatepickerHandler
+  });
+
+  function enddatedatepickerHandler () {
+    if (enddatepicker.get('open')) {
+      enddatepicker.close();
+    } else {
+      enddatepicker.open();
+    }                        
+    event.stopPropagation();
+  };
+
+  //--------original below don't touch  
 
   var $input = $('#challenge_begindate_input').pickadate({
     // Escape any “rule” characters with an exclamation mark (!).

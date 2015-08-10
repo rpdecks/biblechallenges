@@ -1,42 +1,17 @@
-- if current_user && membership = @challenge.membership_for(current_user)
-  %tr
-    %td Bible Version:
-    %td
-      = membership.bible_version
-      =link_to "Change", member_membership_path(membership), :method => :get
 %br
 -if todays_reading
   %h4
-    ="Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})"
+    = todays_reading.book_and_chapter
 
-  %br
   %br
 
 
   #verses
     - todays_verses.each do |verse|
       = verse.decorate.to_div
-  -# .col-md-6
-  -#   #remaining_verses
-  -#     - remaining_verses_in_todays_reading.each do |verse|
-  -#       = verse.decorate.to_div
-  -# %a#toggle_todays_reading{href: '#'}More
 -else
   %br
   %br
   %h3 No reading today
   %br
   %br
--#
--# :javascript
--#
--#   function toggle_todays_reading_link_text() {
--#     current_text = $("#toggle_todays_reading").text()
--#     $("#toggle_todays_reading").text(
--#       current_text == "More" ? "Less" : "More")
--#   }
--#
--#   $( "#toggle_todays_reading" ).on("click", function(){
--#     $( "#remaining_verses" ).slideToggle()
--#     toggle_todays_reading_link_text()
--#   })

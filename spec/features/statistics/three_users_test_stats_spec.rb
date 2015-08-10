@@ -14,9 +14,9 @@ feature 'One user reads various parts of a challenge' do
       c = Challenge.first
       u = User.first
       m = c.membership_for(u)
-      expect(c.challenge_statistic_on_schedule_percentage.value).to eq '0'
-      expect(c.challenge_statistic_chapters_read.value).to eq '0'
-      expect(c.challenge_statistic_progress_percentage.value).to eq '0'
+      expect(c.challenge_statistic_on_schedule_percentage.value).to eq 0
+      expect(c.challenge_statistic_chapters_read.value).to eq 0
+      expect(c.challenge_statistic_progress_percentage.value).to eq 0
 
       reading_one, reading_two = c.readings
 
@@ -28,28 +28,28 @@ feature 'One user reads various parts of a challenge' do
       UpdateStatsWorker.drain
 
       #individual
-      expect(u.user_statistic_chapters_read_all_time.value).to eq "1"
-      expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq "1"
-      expect(u.user_statistic_days_read_in_a_row_current.value).to eq "1"
+      expect(u.user_statistic_chapters_read_all_time.value).to eq 1
+      expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq 1
+      expect(u.user_statistic_days_read_in_a_row_current.value).to eq 1
 
       #challenge
-      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
-      expect(c.challenge_statistic_chapters_read.reload.value).to eq '1'
-      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '50'
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq 0
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq 1
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq 50
 
       #read the second chapter
       click_to_read_a_reading(reading: reading_two, membership: m)
       UpdateStatsWorker.drain
 
       #individual
-      expect(u.user_statistic_chapters_read_all_time.reload.value).to eq "2"
-      expect(u.user_statistic_days_read_in_a_row_all_time.reload.value).to eq "1"
-      expect(u.user_statistic_days_read_in_a_row_current.reload.value).to eq "1"
+      expect(u.user_statistic_chapters_read_all_time.reload.value).to eq 2
+      expect(u.user_statistic_days_read_in_a_row_all_time.reload.value).to eq 1
+      expect(u.user_statistic_days_read_in_a_row_current.reload.value).to eq 1
 
       #challenge
-      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
-      expect(c.challenge_statistic_chapters_read.reload.value).to eq '2'
-      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '100'
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq 0
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq 2
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq 100
 
     end
   end 
@@ -63,20 +63,21 @@ feature 'One user reads various parts of a challenge' do
       c = Challenge.first
       reading = c.readings.first
 
-      click_link c.name
+      visit challenge_path(c)
       click_link "Join Challenge"
 
       # two users are in the challenge now
       user1, user2 = User.all
       membership1, membership2 = c.membership_for(user1), c.membership_for(user2)
 
+      login(user2)  # this is a shortcut that I'm not happy with todo
       click_to_read_a_reading(reading: reading, membership: membership2)
       UpdateStatsWorker.drain
 
       #challenge
-      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
-      expect(c.challenge_statistic_chapters_read.reload.value).to eq '1'
-      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '50'
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq 0
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq 1
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq 50
     end
   end
 
@@ -84,28 +85,28 @@ feature 'One user reads various parts of a challenge' do
     scenario "When joins a group, also joins the challenge" do
         create_account_and_log_in(email: 'c@c.com', name: 'C')
         create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  #below
-        click_link "Log my reading"
+        click_link "Log Matthew 1"
 
         #job created through updating of reading, now need to push the sidekiq UpdateStatsWorker through
         UpdateStatsWorker.drain
 
         c = Challenge.first
-        expect(c.challenge_statistic_on_schedule_percentage.value).to eq '0'
-        expect(c.challenge_statistic_chapters_read.value).to eq '1'
-        expect(c.challenge_statistic_progress_percentage.value).to eq '100'
+        expect(c.challenge_statistic_on_schedule_percentage.value).to eq 0
+        expect(c.challenge_statistic_chapters_read.value).to eq 1
+        expect(c.challenge_statistic_progress_percentage.value).to eq 100
 
         u = User.first
-        expect(u.user_statistic_chapters_read_all_time.value).to eq "1"
-        expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq "1"
-        expect(u.user_statistic_days_read_in_a_row_current.value).to eq "1"
+        expect(u.user_statistic_chapters_read_all_time.value).to eq 1
+        expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq 1
+        expect(u.user_statistic_days_read_in_a_row_current.value).to eq 1
 
       click_to_delete_a_reading(membership_reading: MembershipReading.first)
       UpdateStatsWorker.drain
 
       #challenge
-      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq '0'
-      expect(c.challenge_statistic_chapters_read.reload.value).to eq '0'
-      expect(c.challenge_statistic_progress_percentage.reload.value).to eq '0'
+      expect(c.challenge_statistic_on_schedule_percentage.reload.value).to eq 0
+      expect(c.challenge_statistic_chapters_read.reload.value).to eq 0
+      expect(c.challenge_statistic_progress_percentage.reload.value).to eq 0
     end
   end
 

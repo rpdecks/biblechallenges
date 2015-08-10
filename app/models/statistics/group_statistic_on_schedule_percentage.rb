@@ -9,7 +9,7 @@ class GroupStatisticOnSchedulePercentage < GroupStatistic
   end
 
   def calculate
-    total = group.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value).to_i}.inject(:+)
+    total = group.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value)}.inject(:+)
     total / group.memberships.size
   end
 

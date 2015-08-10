@@ -1,8 +1,21 @@
 class Challenge < ActiveRecord::Base
   serialize :date_ranges_to_skip  # array of ranges
 
+  Rails.application.eager_load!
+  ChallengeStatistic.descendants.each do |stat| 
+    has_one stat.name.underscore.to_sym
+  end
+
   include PgSearch
   pg_search_scope :search_by_name, against: :name
+  scope :current, -> {where("enddate >= ?", Date.today)}
+  scope :on_schedule_percentage, -> { joins(:challenge_statistics).where("challenge_statistics.type" => "ChallengeStatisticOnSchedulePercentage")}
+  scope :no_nil_value, -> { joins(:challenge_statistics).where("challenge_statistics.value IS NOT NULL")}
+  scope :top_8, -> { joins(:challenge_statistics).order("challenge_statistics.value desc").limit(8) }
+  scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
+  scope :newest_first, -> { order(begindate: :desc) }
+
+  scope :with_readings_tomorrow, -> { joins(:readings).where(readings: { read_on: Date.today+1 }) }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
@@ -27,15 +40,9 @@ class Challenge < ActiveRecord::Base
   validate  :validate_dates
   validates :book_chapters, presence: true
 
-  Rails.application.eager_load!
-  ChallengeStatistic.descendants.each do |stat| 
-    has_one stat.name.underscore.to_sym
-  end
-
   # Callbacks
-  before_validation :calculate_enddate,
-    if: "(enddate.nil? && !chapters_to_read.blank?) || (!new_record? && (begindate_changed? || chapters_to_read_changed?))"
-  before_validation :generate_book_chapters, :generate_date_ranges_to_skip
+
+  before_validation :generate_book_chapters, :generate_date_ranges_to_skip, :generate_schedule
   after_commit :successful_creation_email, :on => :create
 
 
@@ -98,6 +105,10 @@ class Challenge < ActiveRecord::Base
     self.date_ranges_to_skip = DateRangeParser.new(self.dates_to_skip).ranges
   end
 
+  def generate_schedule
+    self.schedule = ChaptersPerDateCalculator.new(self).schedule
+  end
+
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
     self.book_chapters = ActsAsScriptural.new.parse(chapters_to_read).chapters
   end
@@ -111,6 +122,10 @@ class Challenge < ActiveRecord::Base
 
   def todays_reading
     readings.find_by_read_on(Date.today)
+  end
+
+  def todays_readings
+    readings.where(read_on: Date.today)
   end
 
   private
@@ -131,14 +146,8 @@ class Challenge < ActiveRecord::Base
     NewChallengeEmailWorker.perform_in(30.seconds, self.id)
   end
 
-  # - before_validation
-  def calculate_enddate
-    chapters_count = ActsAsScriptural.new.parse(chapters_to_read).chapters.size
-    self.enddate = begindate + (chapters_count - 1).days if chapters_to_read
-  end
-
   def should_generate_new_friendly_id?
     # generate new slug whenever name changes
-    name_changed?
+    name_changed? || slug.blank?
   end
 end

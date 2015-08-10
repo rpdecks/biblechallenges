@@ -11,6 +11,20 @@ describe Challenge do
     it { should validate_presence_of(:owner_id) }
 
 
+    describe "scopes" do
+      describe "with_readings_tomorrow" do
+        it "returns challenges with readings set for tomorrow (by checking reading.read_on)" do
+          challenge = create(:challenge)
+          challenge2 = create(:challenge)
+          create_list(:reading, 2, challenge: challenge, read_on: Date.today + 1.day)
+          create_list(:reading, 2, challenge: challenge2, read_on: Date.today)
+
+          result = Challenge.with_readings_tomorrow
+          expect(result).to include challenge
+          expect(result).not_to include challenge2
+        end
+      end
+    end
     describe 'End date and begin date validation' do
 
       context 'when begin date is greater than end date' do
@@ -80,14 +94,16 @@ describe Challenge do
     end
     describe '#generate_book_chapters' do
       it "generates book chapter pairs in book_chapters" do
-        challenge = create(:challenge, chapters_to_read: 'Matt 1-2')
+        challenge = build(:challenge, chapters_to_read: 'Matt 1-2')
+        challenge.generate_book_chapters
         expect(challenge.book_chapters).to match_array [[40,1],[40,2]]
       end
     end
 
     describe '#generate_date_ranges_to_skip' do
       it "generates date_ranges_to_skip based on the dates_to_skip text field" do
-        challenge = create(:challenge, dates_to_skip: "2020-01-01..2020-01-02")
+        challenge = build(:challenge, dates_to_skip: "2020-01-01..2020-01-02")
+        challenge.generate_date_ranges_to_skip
         expect(challenge.date_ranges_to_skip).to match_array [Date.parse('2020-01-01')..Date.parse('2020-01-02')]
       end
     end

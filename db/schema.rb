@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724180712) do
+ActiveRecord::Schema.define(version: 20150730140013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20150724180712) do
 
   create_table "challenge_statistics", force: :cascade do |t|
     t.string   "type"
-    t.string   "value"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "value",        default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "challenge_id"
   end
 
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150724180712) do
     t.string   "slug"
     t.integer  "num_chapters_per_day", default: 1
     t.hstore   "chapters_per_date",    default: {}, null: false
+    t.json     "schedule",             default: {}, null: false
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
@@ -116,10 +117,10 @@ ActiveRecord::Schema.define(version: 20150724180712) do
 
   create_table "group_statistics", force: :cascade do |t|
     t.integer  "group_id"
-    t.string   "value"
+    t.integer  "value",      default: 0
     t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "group_statistics", ["group_id"], name: "index_group_statistics_on_group_id", using: :btree
@@ -154,10 +155,10 @@ ActiveRecord::Schema.define(version: 20150724180712) do
 
   create_table "membership_statistics", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "type"
-    t.string   "value"
+    t.integer  "value",         default: 0
     t.integer  "membership_id"
   end
 
@@ -195,10 +196,10 @@ ActiveRecord::Schema.define(version: 20150724180712) do
 
   create_table "user_statistics", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "type"
-    t.string   "value"
+    t.integer  "value",      default: 0
   end
 
   add_index "user_statistics", ["id", "type"], name: "index_user_statistics_on_id_and_type", using: :btree
