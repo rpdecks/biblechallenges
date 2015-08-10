@@ -4,8 +4,8 @@ class Group < ActiveRecord::Base
   belongs_to :challenge
   has_many :members, through: :memberships, source: :user
   has_many :memberships
-  has_many :group_statistics
-  has_many :comments, as: :commentable
+  has_many :group_statistics, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :user, :challenge, presence: true
 
