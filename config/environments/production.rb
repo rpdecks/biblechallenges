@@ -86,4 +86,12 @@ Biblechallenge::Application.configure do
       :bucket => ENV["AWS_BUCKET_NAME"],
     }
   }
+
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[PREFIX] ",
+      :sender_address => %{"Bible Challenges Exception Notifier" <notifier@biblechallenges.com>},
+      :exception_recipients => %w{pdbradley@gmail.com}
+    }
 end
