@@ -2,6 +2,8 @@ Biblechallenge::Application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web, at: '/sidekiq'
 
+  get '/test_exception_notifier', to: 'application#test_exception_notifier'
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
@@ -20,8 +22,14 @@ Biblechallenge::Application.routes.draw do
   resource :user, only: [:edit, :update]
 
   namespace :creator do
-    resources :challenges
+    resources :challenges do
+      resources :mass_emails, only: [:new, :create]
+    end
+    post 'remove_member_from_challenge', controller: 'challenges'
+    post 'remove_group_from_challenge', controller: 'challenges'
   end
+
+  resources :contact_forms
 
   # member is a namespace for users in a challenge
   namespace :member do
