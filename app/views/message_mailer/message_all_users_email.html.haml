@@ -1,0 +1,9 @@
+%p
+  %strong
+    = "#{@challenge.owner.name}:"
+%p
+  = @message
+
+%small
+  If you would prefer not to receive these notifications, please adjust your notification preferences 
+  #{link_to 'here', edit_user_url}

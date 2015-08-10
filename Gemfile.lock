@@ -123,6 +123,9 @@ GEM
       mail (~> 2.2)
     erubis (2.7.0)
     eventmachine (1.0.7)
+    exception_notification (4.1.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.5.2)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
@@ -190,6 +193,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mail_form (1.5.1)
+      actionmailer (>= 3.2, < 5)
+      activemodel (>= 3.2, < 5)
     mail_view (2.0.4)
       tilt
     method_source (0.8.2)
@@ -363,6 +369,7 @@ GEM
       tilt (>= 1.3, < 3)
     skylight (0.6.1)
       activesupport (>= 3.0.0)
+    slack-notifier (1.2.1)
     slop (3.6.0)
     spring (1.3.6)
     spring-commands-rspec (1.0.4)
@@ -430,6 +437,7 @@ DEPENDENCIES
   dotenv-rails
   draper
   email_spec
+  exception_notification
   factory_girl_rails (= 4.1.0)
   faker (~> 1.4.3)
   figaro
@@ -448,6 +456,7 @@ DEPENDENCIES
   launchy
   letter_opener
   letter_opener_web
+  mail_form
   mail_view
   omniauth
   omniauth-facebook
@@ -480,6 +489,7 @@ DEPENDENCIES
   simplecov (= 0.5.4)
   sinatra
   skylight
+  slack-notifier
   spring-commands-rspec
   sqlite3
   thin
