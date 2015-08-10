@@ -60,7 +60,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def update_stats #for the sample data rake task
-    challenge_statistics.each do |cs|
+    self.challenge_statistics.each do |cs|
       cs.update
     end
   end
