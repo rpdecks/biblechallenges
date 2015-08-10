@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
-  has_many :user_statistics
+  has_many :user_statistics, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
   has_many :groups, through: :memberships
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   end
 
   def update_stats
-    user_statistics.each do |us|
+    self.user_statistics.each do |us|
       us.update
     end
   end
