@@ -1,6 +1,6 @@
 class Creator::ChallengesController < ApplicationController
   before_filter :authenticate_user!, except: [:show]
-  before_filter :find_challenge, only: [:show, :destroy]
+  before_filter :find_challenge, only: [:show, :destroy, :edit, :update]
 
   def new
     @challenge = Challenge.new
@@ -18,21 +18,25 @@ class Creator::ChallengesController < ApplicationController
     @challenge = Challenge.friendly.find(params[:id])
   end
 
+  def update
+    @challenge.update_attributes(challenge_name)
+
+    if @challenge.save
+      redirect_to member_challenge_path(@challenge), notice: "Successfully updated challenge"
+    else
+      flash[:error] = "Challenge cannot be updated. Please try again."
+    end
+  end
+
+  def edit
+  end
+
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
 
-#    @challenge.book_chapters = ActsAsScriptural.new.parse(@challenge.chapters_to_read).chapters
-
-    # this seems terrible; is there a better way?  #jim
     if @challenge.save
-      flash[:notice] = "Successfully created Challenge" 
-      readings = ReadingsGenerator.new(@challenge).generate 
-
-      Reading.transaction do
-        readings.each do |r|
-          Reading.connection.execute "INSERT INTO readings (chapter_id, challenge_id, read_on) values (#{r.chapter_id}, #{@challenge.id}, '#{r.read_on}')"
-        end
-      end
+      flash[:notice] = "Successfully created Challenge"
+      ReadingsGenerator.new(@challenge).generate
 
       membership = Membership.new
       membership.user = current_user
@@ -55,6 +59,11 @@ class Creator::ChallengesController < ApplicationController
     end
   end
 
+  private
+
+  def challenge_name
+    params.require(:challenge).permit(:name)
+  end
 
   def challenge_params
     params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])

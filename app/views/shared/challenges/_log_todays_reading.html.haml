@@ -1,5 +1,5 @@
 -if todays_reading
   - unless todays_reading.read_by?(current_user)
-    = link_to "Log my reading",
+    = link_to "Log #{link_text}",
       membership_readings_path(reading_id: todays_reading.id, membership_id: membership.id, anchor: "readings"),
-      class: "btn btn-primary pull-right", method: :post
+      class: "btn btn-primary", method: :post

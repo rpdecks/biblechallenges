@@ -8,34 +8,21 @@ class Member::ChallengesController < ApplicationController
 
   def index
     # all challenges that user is a member of
-    @challenges = current_user.challenges.uniq
+    @challenges = current_user.challenges.newest_first
   end
 
   def show
     @challenge = Challenge.includes(:members).friendly.find(params[:id])
     @membership = @challenge.membership_for(current_user)
     @membership_readings = @membership.membership_readings if @membership
-    @readings  = @challenge.readings.includes(:chapter).order(:read_on)
+    @readings  = @challenge.readings.includes(:chapter).order(:read_on, :chapter_id)
     @group = current_user.find_challenge_group(@challenge)
     @groups = @challenge.groups.includes(:members,
                                          :group_statistic_progress_percentage,
                                          :group_statistic_on_schedule_percentage,
                                          :group_statistic_total_chapters_read)
     @user = current_user
-    @todays_reading = @challenge.todays_reading
-    if @todays_reading
-
-      #just need all verses for today, splitting into two columns with css
-      @todays_verses = @todays_reading.chapter.verses.
-        by_version(@membership.bible_version)
-      #
-      # @first_verses_in_todays_reading = @todays_reading.chapter.verses.
-      #   by_version(@membership.bible_version).
-      #   by_range(end_verse: FIRST_VERSES_LIMIT)
-      # @remaining_verses_in_todays_reading = @todays_reading.chapter.verses.
-      #   by_version(@membership.bible_version).
-      #   by_range(start_verse: FIRST_VERSES_LIMIT + 1)
-    end
+    @todays_readings = @challenge.todays_readings.order(:chapter_id)
   end
 
   private

@@ -7,7 +7,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
       if @user.update(user_params)
         @user.skip_reconfirmation! if @user.respond_to?(:skip_confirmation)
         flash[:notice] = "You have signed up successfully"
-        sign_in_and_redirect(@user)
+        if params[:challenge_id].present? #Joining new user to the challenge and redirect to the challenge
+          ch_id = params[:challenge_id]
+          @challenge = Challenge.find(ch_id)
+          membership = @challenge.join_new_member(@user)
+          MembershipCompletion.new(membership)
+          @challenge.update_stats
+          sign_in @user
+          redirect_to (member_challenges_path)
+        else
+          sign_in_and_redirect(@user)
+        end
       else
         flash[:alert] = @user.errors.full_messages.to_sentence
       end
@@ -16,7 +26,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-     super
+    super
+     if self.params[:challenge_id].present? #If challenge id is set, that means we need to add the user being created to the challenge and redirect to the challenge
+       ch_id = self.params[:challenge_id]
+       challenge = Challenge.find(ch_id)
+       email = self.params[:user][:email]
+       @user = User.where(email: email).first
+       membership = challenge.join_new_member(@user)
+       MembershipCompletion.new(membership)
+       challenge.update_stats
+     end
+  end
+
+  def after_sign_up_path_for(resource)
+    if self.params[:challenge_id].present?
+      member_challenges_path
+    else
+      root_path
+    end
   end
 
   private

@@ -1,9 +1,18 @@
 class ChallengesController < ApplicationController
   def index
-    @public_challenges = Challenge.includes(:members)
+
     if params[:query]
-      @public_challenges = @public_challenges.search_by_name(params[:query])
+      @public_challenges = Challenge.search_by_name(params[:query])
+    else
+      @public_challenges = Challenge.includes(:members).current
     end
+
+    if current_user
+      @my_challenges = current_user.challenges.current
+      @public_challenges -= @my_challenges
+    end
+
+
   end
 
   def show

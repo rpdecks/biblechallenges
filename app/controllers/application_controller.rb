@@ -7,6 +7,18 @@ class ApplicationController < ActionController::Base
     render json: {}, status: status
   end
 
+  def after_sign_in_path_for(resource)
+    if @user.challenges.present?
+      member_challenges_path
+    else
+      root_path
+    end
+  end
+
+  def test_exception_notifier
+    raise "This is only a test :) "
+  end
+
   protected
 
   def configure_devise_permitted_parameters

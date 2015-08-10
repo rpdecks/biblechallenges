@@ -80,7 +80,7 @@ describe MembershipReadingsController, type: :controller do
         #inline method will push all jobs through immediately, as opposed to default that will push jobs to an array
         Sidekiq::Testing.inline! do
           post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
-          expect(membership.membership_statistic_progress_percentage.value.to_i).to eq 50
+          expect(membership.membership_statistic_progress_percentage.value).to eq 50
         end
 
       end
@@ -95,7 +95,7 @@ describe MembershipReadingsController, type: :controller do
         Sidekiq::Testing.inline! do
           post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
         end
-        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 1
+        expect(user.user_statistic_chapters_read_all_time.value).to eq 1
       end
       it "should update chapter_read_all_time value with multiple memberships" do 
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
@@ -110,7 +110,7 @@ describe MembershipReadingsController, type: :controller do
           post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
         end
 
-        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 2
+        expect(user.user_statistic_chapters_read_all_time.value).to eq 2
       end
       it "should update chapters_read_all_time statistics even after leaving challenge" do 
         pending
@@ -127,7 +127,7 @@ describe MembershipReadingsController, type: :controller do
         membership2 = challenge2.join_new_member(user)
         post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
 
-        expect(user.user_statistic_chapters_read_all_time.value.to_i).to eq 3
+        expect(user.user_statistic_chapters_read_all_time.value).to eq 3
       end
       it "should update the membership statistics" do #todo this should use mocks/spies
         pending
