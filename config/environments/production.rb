@@ -93,5 +93,10 @@ Biblechallenge::Application.configure do
       :email_prefix => "[PREFIX] ",
       :sender_address => %{"Bible Challenges Exception Notifier" <notifier@biblechallenges.com>},
       :exception_recipients => %w{pdbradley@gmail.com}
+    },
+    :slack => {
+      :webhook_url => "https://hooks.slack.com/services/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",
+      :channel => "#biblechallenges"
     }
+
 end
