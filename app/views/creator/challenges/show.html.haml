@@ -1,21 +1,65 @@
-- breadcrumb :challenge, @challenge
-.container
-  = breadcrumbs
-  %center
-    = render 'shared/challenges/join_challenge'
 %br
-  %legend
-  .row.col-md-6
-    = render 'shared/challenges/challenge_groups'
+%br
+.container
+  %h3 
+    ="Challenge: #{@challenge.name}"
 
-  .row
-  = render 'shared/challenges/challenge_details'
+  .panel.panel-primary
+    .panel-heading
+      = "Total Members: #{@challenge.members.size} "
+      &nbsp;&nbsp;
+      = link_to new_creator_challenge_mass_email_path(@challenge.id), class: 'btn btn-success btn-xs', id: "Email All Members", :title => 'Email All Members', :rel => 'tooltip' do
+        %span.glyphicon.glyphicon-envelope
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Name
+          %th Email
+          %th Last Read
+          %th Action
+      %tbody
+      - @challenge.memberships.each do |membership|
+        %tr
+          %td
+            = render 'shared/avatar_medium', user: membership.user
+            - if @challenge.owner == membership.user
+              %span
+                = "#{membership.user.decorate.name} (Owner)"
+            - else 
+              %span
+                = membership.user.decorate.name
+          %td= membership.user.email
+          - unless membership.membership_readings.empty?
+            %td= membership.user.decorate.show_last_recorded_reading(membership)
+          - else
+            %td
+              No readings yet
+          - if @challenge.owner == membership.user
+            %td= "N/A"
+          - else
+            %td= link_to "Remove member", creator_remove_member_from_challenge_path(id: membership.id), method: :post, "data-confirm" => 'Are you sure you want to remove this member from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{membership.id}"
 
-  = render 'shared/challenges/challenge_statistics'
-
-
+  %br
+  .panel.panel-primary
+    .panel-heading
+      = "Total Groups: #{@challenge.groups.size} "
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Name
+          %th Progress Percentage
+          %th On-schedule Percentage
+          %th Total Chapters Read
+          %th Aciton
+      %tbody
+      - @challenge.groups.each do |g|
+        %tr
+          %td= g.name
+          %td= g.group_statistic_progress_percentage
+          %td= g.group_statistic_on_schedule_percentage
+          %td= g.group_statistic_total_chapters_read
+          %td= link_to "Remove group", creator_remove_group_from_challenge_path(id: g.id), method: :post, "data-confirm" => 'Are you sure you want to remove this group from the challenge? This will also destroy any comments on the group wall.', :class => "btn btn-danger btn-sm", :id => "remove_#{g.id}"
 
   %br
   %br
 
-  = render partial:  'shared/challenges/challenge_unsubscribe', locals: {challenge: @challenge}

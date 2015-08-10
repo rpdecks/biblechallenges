@@ -8,11 +8,15 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if @user.challenges.present?
+    if resource.is_a?(User) && resource.challenges.present?
       member_challenges_path
     else
       root_path
     end
+  end
+
+  def test_exception_notifier
+    raise "This is only a test :) "
   end
 
   protected
