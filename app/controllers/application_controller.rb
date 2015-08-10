@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def test_exception_notifier
+    raise "This is only a test :) "
+  end
+
   protected
 
   def configure_devise_permitted_parameters
