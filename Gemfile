@@ -42,7 +42,6 @@ gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
 gem 'intercom-rails'
 gem 'friendly_id'
-gem 'ledermann-rails-settings'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 
