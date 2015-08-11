@@ -28,13 +28,11 @@ class ApplicationController < ActionController::Base
   #todo: should this be in sessions_controller?
   def after_sign_in_path_for(resource)
     if session[:previous_url] == root_path
-      if @user.challenges.present?
+      if resource.is_a?(User) && resource.challenges.present?
         member_challenges_path
       else
         root_path
       end
-    #if resource.is_a?(User) && resource.challenges.present?
-    #  member_challenges_path
     else
       session[:previous_url] || root_path
     end
