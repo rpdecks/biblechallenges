@@ -28,7 +28,21 @@ feature "User Signs In" do
     fill_in 'user[password]', with: "password"
     click_button "Sign in"
 
-    expect(page).to have_content(challenge.name)
-    expect(page).to have_content(challenge2.name)
+    expect(current_path).to eq root_path
+  end
+
+  context "On challenge page that User not part of" do
+    scenario "Clicks 'Sign me up' and logs in" do
+      challenge = create(:challenge, name: "Awesome")
+
+      visit "/challenges/#{challenge.slug}"
+      click_link_or_button "Sign me up"
+      click_link "Login", :match => :first
+      fill_in 'user[email]', with: user.email
+      fill_in 'user[password]', with: "password"
+      click_button "Sign in"
+
+      expect(current_path).to eq challenge_path(challenge)
+    end
   end
 end

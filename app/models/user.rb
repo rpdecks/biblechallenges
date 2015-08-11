@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id
-  has_many :user_statistics
+  has_many :user_statistics, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :challenges, through: :memberships
   has_many :groups, through: :memberships
@@ -56,14 +56,8 @@ class User < ActiveRecord::Base
     user_membership.progress_percentage
   end
 
-  def show_last_recorded_reading(member, group)
-    user_membership = (member.memberships & group.memberships).first
-    user_membership.membership_readings.last.created_at.to_pretty
-  end
-
-  def has_logged_a_reading?(member, group)
-    user_membership = (member.memberships & group.memberships).first
-    MembershipReading.where(membership_id: user_membership).present?
+  def show_last_recorded_reading(membership)
+    membership.membership_readings.last.created_at.to_pretty
   end
 
   def find_challenge_group(challenge)
@@ -71,7 +65,7 @@ class User < ActiveRecord::Base
   end
 
   def update_stats
-    user_statistics.each do |us|
+    self.user_statistics.each do |us|
       us.update
     end
   end
