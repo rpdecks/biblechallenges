@@ -1,2 +1,10 @@
 _site
 .sass-cache
+
+
+.env
+tags
+tmp/
+log/
+
+quickfix.out
