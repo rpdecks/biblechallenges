@@ -49,8 +49,27 @@ feature 'User manages notification preferences via email' do
 
   feature 'From comment emails' do
     scenario 'User opts out of comment-notify emails, and is bypassed on the comment-notify mailer.' do
-      user = create(:user)
       user2 = create(:user)
+      challenge = create(:challenge, :with_readings, owner_id: user2.id)
+      group = create(:group, challenge: challenge)
+      original_comment = create(:group_comment, user: user2, commentable: group)
+
+      user = create(:user)
+      login(user)
+      challenge.join_new_member(user)
+      new_comment = create(:group_comment, commentable: original_comment, user: user, content: "cool dude")
+      CommentMailer.new_comment_notification(new_comment).deliver_now
+      open_last_email
+      visit_in_email("here")
+      uncheck('user_comment_notify')
+      click_button 'Update'
+      user.reload
+      expect(user.comment_notify).to be_falsey
+    end
+  end
+  feature 'From admin/creator message emails' do
+    scenario 'User opts out of admin-message emails.' do
+      user = create(:user)
       login(user)
       create(:challenge, :with_readings)
       original_comment = create(:group_comment, user: user2)
