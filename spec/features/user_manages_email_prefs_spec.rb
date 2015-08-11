@@ -13,9 +13,8 @@ feature 'User logs reading via email' do
     ReadingMailer.daily_reading_email([challenge.readings.first.id], user.id).deliver_now
 
     open_last_email
-    visit_in_email("Wish to stop")
-
-    expect(page).to have_content ("Update User Profile")
+    visit_in_email("Manage your notification preferences.")
+    expect(page).to have_content ("Receive daily readings by email?")
   end
 
 #  scenario 'User opts out of daily chapter email, and is bypassed on the daily reading email.' do

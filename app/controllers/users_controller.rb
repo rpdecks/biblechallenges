@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def edit
-    @user = current_user
+    @user = current_user || User.find_by_id(params[:id])
   end
 
   def update

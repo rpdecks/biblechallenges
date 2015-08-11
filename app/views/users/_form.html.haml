@@ -43,7 +43,7 @@
 
     = f.label :avatar, "Current avatar:    "
     %br
-    = render 'shared/avatar', user: current_user
+    = render 'shared/avatar', user: current_user || @user
     %br
     %br
 
