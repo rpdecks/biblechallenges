@@ -21,6 +21,8 @@
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li
+              = link_to "Blog", "http://blog.biblechallenges.com"
+            %li
               = link_to "FAQ", page_path("faq")
             %li
               - if user_signed_in?
