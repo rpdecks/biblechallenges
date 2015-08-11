@@ -72,15 +72,15 @@ feature 'User manages notification preferences via email' do
       user = create(:user)
       login(user)
       create(:challenge, :with_readings)
-      original_comment = create(:group_comment, user: user2)
-      new_comment = create(:group_comment, commentable: original_comment, user: user, content: "cool dude")
-      CommentMailer.new_comment_notification(new_comment).deliver_now
+      message = "Hola guys"
+      challenge = create(:challenge)
+      MessageMailer.message_all_users_email(user.email, message, challenge).deliver_now
       open_last_email
       visit_in_email("here")
-      uncheck('user_comment_notify')
+      uncheck('user_creator_notify')
       click_button 'Update'
       user.reload
-      expect(user.comment_notify).to be_falsey
+      expect(user.creator_notify).to be_falsey
     end
   end
 end
