@@ -9,13 +9,24 @@ class GroupStatisticProgressPercentage < GroupStatistic
   end
 
   def calculate
-    total = group.memberships.map{|m| m.membership_statistic_progress_percentage.try(:value)}.inject(:+)
-    total / group.memberships.size
+    if group_size == 0
+      0
+    else
+      total = group.memberships.map{|m| m.membership_statistic_progress_percentage.try(:value)}.inject(:+)
+      total / group_size
+    end
   end
 
   def update
     self.value = calculate
     save
   end
+
+  private
+
+  def group_size
+    group.memberships.count
+  end
+
 
 end
