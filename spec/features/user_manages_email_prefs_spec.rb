@@ -45,6 +45,34 @@ feature 'User manages notification preferences via email' do
       user.reload
       expect(user.reading_notify).to be_falsey
     end
+
+    scenario 'User whose reading email prefs are set to false joins challenge, and is skipped for initial reading email' do
+      user = create(:user, reading_notify: false)
+      login(user)
+      Sidekiq::Testing.inline! do
+        challenge = create(:challenge, :with_membership, :with_readings)
+        visit challenge_path(challenge)
+        click_link "Join Challenge"
+        expect(ActionMailer::Base.deliveries.size).to eq 1 # Thanks for joining (x1 for user1 only, [no readings email])
+        reading_email = ActionMailer::Base.deliveries.first
+        expect(reading_email.subject).to have_content("#{challenge.name}: Thanks for joining!")
+        expect(reading_email.To.value).to eq user.email
+      end
+    end
+
+    scenario 'User1 whose reading email prefs are set to false will be skipped for daily reading email' do
+      user1 = create(:user, reading_notify: false, email: "NotToSend@email.com")
+      user2 = create(:user, email: "DoSendThis@email.com")
+      Sidekiq::Testing.inline! do
+        challenge = create(:challenge, :with_membership, :with_readings, owner: user1)
+        challenge.join_new_member(user2)
+        DailyEmailScheduler.set_daily_email_jobs
+
+        reading_email = ActionMailer::Base.deliveries.first
+        expect(ActionMailer::Base.deliveries.size).to eq 1 
+        expect(reading_email.To.value).to eq user2.email
+      end
+    end
   end
 
   feature 'From comment emails' do
@@ -67,6 +95,7 @@ feature 'User manages notification preferences via email' do
       expect(user.comment_notify).to be_falsey
     end
   end
+
   feature 'From admin/creator message emails' do
     scenario 'User opts out of admin-message emails.' do
       user = create(:user)
@@ -81,34 +110,6 @@ feature 'User manages notification preferences via email' do
       click_button 'Update'
       user.reload
       expect(user.creator_notify).to be_falsey
-    end
-  end
-
-  scenario 'User whose reading email prefs are set to false joins challenge, and is skipped for initial reading email' do
-    user = create(:user, reading_notify: false)
-    login(user)
-    Sidekiq::Testing.inline! do
-      challenge = create(:challenge, :with_membership, :with_readings)
-      visit challenge_path(challenge)
-      click_link "Join Challenge"
-      expect(ActionMailer::Base.deliveries.size).to eq 1 # Thanks for joining (x1 for user1 only, [no readings email])
-      reading_email = ActionMailer::Base.deliveries.first
-      expect(reading_email.subject).to have_content("#{challenge.name}: Thanks for joining!")
-      expect(reading_email.To.value).to eq user.email
-    end
-  end
-
-  scenario 'User1 whose reading email prefs are set to false will be skipped for daily reading email' do
-    user1 = create(:user, reading_notify: false, email: "NotToSend@email.com")
-    user2 = create(:user, email: "DoSendThis@email.com")
-    Sidekiq::Testing.inline! do
-      challenge = create(:challenge, :with_membership, :with_readings, owner: user1)
-      challenge.join_new_member(user2)
-      DailyEmailScheduler.set_daily_email_jobs
-
-      reading_email = ActionMailer::Base.deliveries.first
-      expect(ActionMailer::Base.deliveries.size).to eq 1 
-      expect(reading_email.To.value).to eq user2.email
     end
   end
 end
