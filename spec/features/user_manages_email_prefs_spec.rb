@@ -119,18 +119,26 @@ feature 'User manages notification preferences via email' do
 
   feature 'From admin/creator message emails' do
     scenario 'User opts out of admin-message emails.' do
-      user = create(:user)
-      login(user)
-      create(:challenge, :with_readings)
-      message = "Hola guys"
-      challenge = create(:challenge)
-      MessageMailer.message_all_users_email(user.email, message, challenge).deliver_now
-      open_last_email
-      visit_in_email("here")
-      uncheck('user_creator_notify')
-      click_button 'Update'
-      user.reload
-      expect(user.creator_notify).to be_falsey
+      Sidekiq::Testing.inline! do
+        user1 = create(:user)
+        user2 = create(:user, creator_notify: false)
+        user3 = create(:user)
+        message = "Owner message"
+
+        login(user1)
+        challenge = create(:challenge, :with_readings, owner_id: user1.id)
+        challenge.join_new_member([user1, user2, user3])
+        visit creator_challenge_path(challenge)
+        click_link("Email All Members")
+        fill_in "mass-email", with: message
+        click_button "Send message"
+
+        message_emails = ActionMailer::Base.deliveries
+        expect(message_emails.size).to eq 1
+        expect(message_emails.first.body).to have_content("Owner message")
+        expect(message_emails.first.To.value).to eq user3.email
+        expect(message_emails.first.To.value).to_not eq user2.email
+      end
     end
   end
 end
