@@ -12,8 +12,8 @@ feature 'User manages user profile' do
     visit edit_user_path
 
     fill_in 'user[name]', with: new_user_params.name
-    select '(GMT-09:00) Alaska', from: 'Your Time Zone'
-    select '13:00', from: 'Your Preferred Reading Hour'
+    select '(GMT-09:00) Alaska', from: 'Time Zone'
+    select '13:00', from: 'Preferred Reading Hour'
     click_button 'Update User'
 
     user = User.first
