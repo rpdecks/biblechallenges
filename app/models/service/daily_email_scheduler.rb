@@ -22,7 +22,9 @@ class DailyEmailScheduler
         user_reading_hour_string = DateTime.tomorrow.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"
         user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
 
-        DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, tomorrows_reading_ids, m.id)
+        if m.reading_notify == true
+          DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, tomorrows_reading_ids, m.id)
+        end
       end
     end
   end

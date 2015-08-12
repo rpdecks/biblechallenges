@@ -2,6 +2,10 @@
   .row
     .col-md-4.col-md-offset-4
       %br
-      %h2 Update User Profile
+      %h2 Update Profile
+      %h6
+        %strong
+          Email:
+        = @user.email
       %br
       = render 'form'

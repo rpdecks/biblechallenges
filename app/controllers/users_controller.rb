@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
+
   def edit
     @user = current_user
   end
@@ -20,7 +22,8 @@ class UsersController < ApplicationController
   def user_params
     accessible = [ :name, :email,
                    :time_zone, :preferred_reading_hour,
-                   :avatar ]
+                   :avatar,
+                   :reading_notify, :message_notify, :comment_notify ]
     unless params[:user][:password].blank?
       accessible << [ :password, :password_confirmation ]
     end
