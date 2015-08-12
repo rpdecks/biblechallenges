@@ -15,7 +15,7 @@ feature 'User manages notification preferences via email' do
 
       open_last_email
       visit_in_email("Manage your notification preferences.")
-      expect(page).to have_content ("Receive daily readings by email?")
+      expect(page).to have_content ("Email Preferences")
     end
 
     scenario 'User gets redirected to sign-in page if not signed in' do
@@ -39,7 +39,7 @@ feature 'User manages notification preferences via email' do
 
       open_last_email
       visit_in_email("Manage your notification preferences.")
-      expect(page).to have_content ("Receive daily readings by email?")
+      expect(page).to have_content ("Email Preferences")
       uncheck('user_reading_notify')
       click_button 'Update'
       user.reload
