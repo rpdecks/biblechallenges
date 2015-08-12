@@ -96,27 +96,24 @@ feature 'User manages notification preferences via email' do
     end
 
     scenario 'User whose comment email prefs are set to false will not receive comment on comment notification' do
-      user2 = create(:user)
+      user2 = create(:user, comment_notify: false)
       challenge = create(:challenge, :with_readings, owner_id: user2.id)
-      group = create(:group, name: "Test", challenge: challenge)
-      original_comment = create(:group_comment, user: user2, commentable: group)
+      group = create(:group, name: "Test", challenge: challenge, user_id: user2.id)
+      original_comment = create(:group_comment, user_id: user2.id, commentable: group)
 
       user = create(:user)
       login(user)
       challenge.join_new_member(user)
 
-      Sidekiq::Testing.inline! do
-        visit member_challenge_path(challenge)
-        click_link "Join Group"
-        save_and_open_page
-        click_link "Respond"
-        within('.new_comment') do
-          fill_in 'new_comment', with: "Testing"
-          click_button "Post Comment"
-        end
-        comment_email = ActionMailer::Base.deliveries
-        expect(comment_email.size).to eq 0
+      visit member_challenge_path(challenge)
+      click_link "Join Group"
+      click_link "Respond"
+      within(".new_comment:eq(1)") do # for ambiguous page reference, can index Capybara elements
+        fill_in "comment_content", with: "Testing"
+        click_button "Post Comment"
       end
+      comment_email = ActionMailer::Base.deliveries
+      expect(comment_email.size).to eq 0
     end
   end
 
