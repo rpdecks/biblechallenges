@@ -129,7 +129,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def all_users_emails_except_challenge_owner
-    all_members_in_challenge = self.members
+    all_members_in_challenge = self.members.where(:creator_notify => true) #user_email_pref set to true to receive owner messages
     all_emails = all_members_in_challenge.pluck(:email)
     all_users = all_emails - [self.owner.email] #remove challenge owner's email
     return all_users
