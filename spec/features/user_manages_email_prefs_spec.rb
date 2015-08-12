@@ -94,6 +94,30 @@ feature 'User manages notification preferences via email' do
       user.reload
       expect(user.comment_notify).to be_falsey
     end
+
+    scenario 'User whose comment email prefs are set to false will not receive comment on comment notification' do
+      user2 = create(:user)
+      challenge = create(:challenge, :with_readings, owner_id: user2.id)
+      group = create(:group, name: "Test", challenge: challenge)
+      original_comment = create(:group_comment, user: user2, commentable: group)
+
+      user = create(:user)
+      login(user)
+      challenge.join_new_member(user)
+
+      Sidekiq::Testing.inline! do
+        visit member_challenge_path(challenge)
+        click_link "Join Group"
+        save_and_open_page
+        click_link "Respond"
+        within('.new_comment') do
+          fill_in 'new_comment', with: "Testing"
+          click_button "Post Comment"
+        end
+        comment_email = ActionMailer::Base.deliveries
+        expect(comment_email.size).to eq 0
+      end
+    end
   end
 
   feature 'From admin/creator message emails' do
