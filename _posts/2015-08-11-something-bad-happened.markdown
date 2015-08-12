@@ -18,7 +18,7 @@ It doesn't really shine through below, but this was a very unhappy 20 minutes:
 
 ![sad transcript](http://318ce10a4aff81d8fd77-9942159f0cde80bd1f0d981f1d813960.r48.cf1.rackcdn.com/mac-mini/Screen%20Shot%202015-08-11%20at%2011.17.15%20AM.png)
 
-I'm very sorry I made this mistake.  Now backups are set up daily (and by the end of the day, probably hourly).  One of the developers felt we should offer to massage the statistics for those of you who lost your consistency stat. So what we will do is this:  For the days that we wiped, which are Aug 6-10, roughly, we will mark all the readings on those days as "on\_schedule".  We will give everyone a couple days to re-enter those readings if they got disappeared, then we will update them all at once on Thursday.
+I'm very sorry I made this mistake.  Now backups are set up daily (and by the end of the day, probably hourly).  One of the developers felt we should offer to massage the statistics for those of you who lost your consistency stat. So what we will do is this:  For the days that we wiped, which are Aug 6-10, roughly, we will mark all the readings on those days as "on\_schedule".  We will give everyone a couple days to re-enter those readings if they got disappeared, then we will update them all at once on Friday.
 
 
 In better news, one recent improvement is an admin section for challenge creators.  Now, if you are the challenge creator, you have an admin dashboard where you can:
