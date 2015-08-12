@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     accessible = [ :name, :email,
                    :time_zone, :preferred_reading_hour,
                    :avatar,
-                   :reading_notify, :creator_notify, :comment_notify ]
+                   :reading_notify, :message_notify, :comment_notify ]
     unless params[:user][:password].blank?
       accessible << [ :password, :password_confirmation ]
     end

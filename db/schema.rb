@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805204642) do
+ActiveRecord::Schema.define(version: 20150812165144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,11 +219,11 @@ ActiveRecord::Schema.define(version: 20150805204642) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "authentication_token"
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.string   "image"
-    t.string   "authentication_token"
     t.string   "time_zone"
     t.integer  "preferred_reading_hour"
     t.string   "avatar_file_name"
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 20150805204642) do
     t.datetime "avatar_updated_at"
     t.string   "locale",                 default: "en"
     t.boolean  "reading_notify",         default: true
-    t.boolean  "creator_notify",         default: true
+    t.boolean  "message_notify",         default: true
     t.boolean  "comment_notify",         default: true
   end
 

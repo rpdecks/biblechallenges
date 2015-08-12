@@ -121,7 +121,7 @@ feature 'User manages notification preferences via email' do
     scenario 'User opts out of admin-message emails.' do
       Sidekiq::Testing.inline! do
         user1 = create(:user)
-        user2 = create(:user, creator_notify: false)
+        user2 = create(:user, message_notify: false)
         user3 = create(:user)
         message = "Owner message"
 
