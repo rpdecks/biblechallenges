@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
         request.path != "/users/password/edit" &&
         request.path != "/users/confirmation" &&
         request.path != "/users/sign_out" &&
+        request.path != "/users/auth/facebook/callback" &&
         !request.xhr?) # don't store ajax calls
       session[:previous_url] = request.fullpath
 
@@ -36,6 +37,10 @@ class ApplicationController < ActionController::Base
     else
       session[:previous_url] || root_path
     end
+  end
+
+  def after_sign_out_path_for(resource)
+    session[:previous_url] = ""
   end
 
   def test_exception_notifier
