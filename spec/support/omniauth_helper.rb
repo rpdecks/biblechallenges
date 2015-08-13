@@ -1,7 +1,7 @@
 OmniAuth.config.test_mode = true
 
 def mock_auth_hash(provider, email)
-  fb_user_params = build(:facebook_user)
+  fb_user_params = build(:existing_facebook_user)
   omniauth = { 'provider' => fb_user_params.provider,
                'uid' => fb_user_params.uid,
                'info' => {

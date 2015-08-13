@@ -18,9 +18,9 @@ feature "User Signs In" do
     expect(page).to_not have_content(challenge2.name)
   end
 
-  scenario "User signs in via website with no challenges shoudld see home page" do
-    challenge = create(:challenge, name: "Awesome")
-    challenge2 = create(:challenge, name: "Not Cool")
+  scenario "User signs in via website with no challenges should see home page" do
+    create(:challenge, name: "Awesome")
+    create(:challenge, name: "Not Cool")
 
     visit root_path
     click_link "Login"
