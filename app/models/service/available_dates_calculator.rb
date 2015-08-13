@@ -25,14 +25,21 @@ class AvailableDatesCalculator
       read_on_date += 1.day
     end
 
+    set_begindate(result)
     set_enddate(result)
     result
   end
   private
 
+  def set_begindate(result)
+    unless result.empty?
+      @challenge.begindate = result.first
+    end
+  end
+
   def set_enddate(result)
-    unless @challenge.enddate || result.empty?
-      @challenge.enddate = result.last unless @challenge.enddate
+    unless result.empty?
+      @challenge.enddate = result.last
     end
   end
 
