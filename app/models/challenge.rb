@@ -14,8 +14,12 @@ class Challenge < ActiveRecord::Base
   scope :top_8, -> { joins(:challenge_statistics).order("challenge_statistics.value desc").limit(8) }
   scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
   scope :newest_first, -> { order(begindate: :desc) }
+  scope :no_members, -> { where("memberships_count = ?", 0) }
+
+  scope :underway_at_least_x_days, lambda {|x| where("begindate < ?", Date.today - x.days) }
 
   scope :with_readings_tomorrow, -> { joins(:readings).where(readings: { read_on: Date.today+1 }) }
+  scope :abandoned, -> { underway_at_least_x_days(7).no_members }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
