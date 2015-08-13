@@ -7,9 +7,10 @@ FactoryGirl.define do
     time_zone "UTC"
     preferred_reading_hour 6
 
-    factory :facebook_user do
+    factory :existing_facebook_user do
       provider "facebook"
       uid '12345'
+      last_sign_in_at { Date.yesterday }
     end
   end
 end
