@@ -39,10 +39,13 @@ class Challenge < ActiveRecord::Base
   validates :chapters_to_read, presence: true
   validate  :validate_dates
   validates :book_chapters, presence: true
+  validate  :validate_days_of_week_to_skip
 
   # Callbacks
 
-  before_validation :generate_book_chapters, :generate_date_ranges_to_skip, :generate_schedule
+  before_validation :generate_book_chapters, :generate_date_ranges_to_skip
+  before_save :generate_schedule
+
   after_commit :successful_creation_email, :on => :create
 
 
@@ -145,7 +148,12 @@ class Challenge < ActiveRecord::Base
   def validate_dates
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
-      #errors[:begin_date] << "cannot be earlier than today" if begindate < Date.today
+    end
+  end
+
+  def validate_days_of_week_to_skip
+    if self.days_of_week_to_skip.size == 7
+      errors.add(:days_of_week_to_skip, "can't skip all seven days of the week")
     end
   end
 

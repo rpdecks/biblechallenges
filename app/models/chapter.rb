@@ -10,6 +10,14 @@ class Chapter < ActiveRecord::Base
   end
 
 
+  def self.book_name_from_pair(book_chapter_pair)
+    ActsAsScriptural::Bible.new.book_names[book_chapter_pair.first-1]
+  end
+
+  def self.book_and_chapter_from_pair(book_chapter_pair)
+    ActsAsScriptural::Bible.new.book_names[book_chapter_pair.first-1] + " " + book_chapter_pair.last.to_s
+  end
+
 
 
 end
