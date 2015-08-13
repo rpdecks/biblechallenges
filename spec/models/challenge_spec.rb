@@ -12,6 +12,18 @@ describe Challenge do
 
 
     describe "scopes" do
+      describe "underway_at_least_x_days" do
+        it "returns challenges that have started x days or more ago" do
+          challenge = create(:challenge, begindate: Date.today - 50.days)
+          challenge2 = create(:challenge, begindate: Date.today)
+
+          result = Challenge.underway_at_least_x_days(5)
+
+          expect(result).to include challenge
+          expect(result).not_to include challenge2
+        end
+      end
+
       describe "with_readings_tomorrow" do
         it "returns challenges with readings set for tomorrow (by checking reading.read_on)" do
           challenge = create(:challenge)
