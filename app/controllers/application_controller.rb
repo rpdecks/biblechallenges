@@ -39,26 +39,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_out_path_for(resource)
-    session[:previous_url] = ""
-  end
-
   def test_exception_notifier
     raise "This is only a test :) "
   end
 
   protected
 
+  # put these in registrations controller?
   def configure_devise_permitted_parameters
     registration_params = [:name, :email, :password, :password_confirmation]
 
     if params[:action] == 'update'
-      devise_parameter_sanitizer.for(:account_update) { 
+      devise_parameter_sanitizer.for(:account_update) {
         |u| u.permit(registration_params << :current_password)
       }
     elsif params[:action] == 'create'
-      devise_parameter_sanitizer.for(:sign_up) { 
-        |u| u.permit(registration_params) 
+      devise_parameter_sanitizer.for(:sign_up) {
+        |u| u.permit(registration_params)
       }
     end
   end
