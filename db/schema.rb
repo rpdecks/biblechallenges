@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812165144) do
+ActiveRecord::Schema.define(version: 20150813194635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150812165144) do
     t.integer  "num_chapters_per_day", default: 1
     t.hstore   "chapters_per_date",    default: {}, null: false
     t.json     "schedule",             default: {}, null: false
+    t.date     "available_dates",      default: [],              array: true
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
@@ -136,7 +137,6 @@ ActiveRecord::Schema.define(version: 20150812165144) do
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
     t.integer  "memberships_count"
-    t.string   "passcode"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -230,7 +230,6 @@ ActiveRecord::Schema.define(version: 20150812165144) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "locale",                 default: "en"
     t.boolean  "reading_notify",         default: true
     t.boolean  "message_notify",         default: true
     t.boolean  "comment_notify",         default: true
