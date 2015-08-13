@@ -6,5 +6,10 @@ FactoryGirl.define do
     password_confirmation "password"
     time_zone "UTC"
     preferred_reading_hour 6
+
+    factory :facebook_user do
+      provider "facebook"
+      uid '12345'
+    end
   end
 end

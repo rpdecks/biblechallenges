@@ -1,6 +1,14 @@
 require "spec_helper"
 
 feature "Omniauth Sign In / Sign Up" do
+
+  scenario "User signs in with facebook" do
+    user = create(:facebook_user)
+    mock_auth_user("facebook", user)
+    visit root_path
+    click_link "Sign in with Facebook"
+  end
+
   scenario "New User SIGNS UP with facebook, logs out, logs back in" do
     email = "barry.allen@flash.com"
     mock_auth_hash("facebook", email)
