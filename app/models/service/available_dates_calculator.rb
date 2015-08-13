@@ -20,13 +20,12 @@ class AvailableDatesCalculator
         read_on_date += 1.day
       end
 
-      result << read_on_date
+      result << read_on_date if before_end_date(read_on_date)
       chapters_left -= @challenge.num_chapters_per_day
       read_on_date += 1.day
     end
 
-    set_begindate(result)
-    set_enddate(result)
+    @challenge.available_dates = result
     result
   end
   private
