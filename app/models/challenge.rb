@@ -110,6 +110,8 @@ class Challenge < ActiveRecord::Base
 
   def generate_schedule
     self.schedule = ChaptersPerDateCalculator.new(self).schedule
+    self.begindate = self.available_dates.first
+    self.enddate = self.available_dates.last
   end
 
   def generate_book_chapters  # an array of [book,chapter] pairs, integers

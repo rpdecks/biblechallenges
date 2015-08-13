@@ -9,9 +9,9 @@
     to
     = Chapter.book_and_chapter_from_pair(@challenge.book_chapters.last)
   %br
-  = @challenge.begindate.strftime("%-m/%-d/%Y")
+  = @challenge.available_dates.first.strftime("%-m/%-d/%Y")
   = "-"
-  = @challenge.enddate.strftime("%-m/%-d/%Y")
+  = @challenge.available_dates.last.strftime("%-m/%-d/%Y")
 
 - @challenge.members.each do |m|
   = render 'shared/avatar_medium', user: m
