@@ -5,7 +5,9 @@
 
 .subtitle
   %b
-    = @challenge.chapters_to_read
+    = Chapter.book_and_chapter_from_pair(@challenge.book_chapters.first)
+    to
+    = Chapter.book_and_chapter_from_pair(@challenge.book_chapters.last)
   %br
   = @challenge.begindate.strftime("%-m/%-d/%Y")
   = "-"
