@@ -5,8 +5,21 @@
       %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"} Hi!
       This is a snapshot of
       = @challenge_snapshot.name
-      = @challenge_snapshot.total_chapters
-      = @challenge_snapshot.most_read_chapter
+      %hr
+      %br
+      Total Chapters Read by all members of the Challenge:
+      %br
+      = @challenge_snapshot.members.size
+      Members read a total of
+      = "#{@challenge_snapshot.total_chapters_read}!"
+      Way to go!
+      %br
+      %br
+      The Chapters read most often in the challenge:
+      = @challenge_snapshot.most_read_chapters
+      %br
+
+      %br
       = @challenge_snapshot.longest_individual_streak
       = @challenge_snapshot.top_reader
 
