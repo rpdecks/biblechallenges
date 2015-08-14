@@ -14,8 +14,12 @@ class Challenge < ActiveRecord::Base
   scope :top_8, -> { joins(:challenge_statistics).order("challenge_statistics.value desc").limit(8) }
   scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
   scope :newest_first, -> { order(begindate: :desc) }
+  scope :no_members, -> { where("memberships_count = ?", 0) }
+
+  scope :underway_at_least_x_days, lambda {|x| where("begindate < ?", Date.today - x.days) }
 
   scope :with_readings_tomorrow, -> { joins(:readings).where(readings: { read_on: Date.today+1 }) }
+  scope :abandoned, -> { underway_at_least_x_days(7).no_members }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
@@ -39,10 +43,13 @@ class Challenge < ActiveRecord::Base
   validates :chapters_to_read, presence: true
   validate  :validate_dates
   validates :book_chapters, presence: true
+  validate  :validate_days_of_week_to_skip
 
   # Callbacks
 
-  before_validation :generate_book_chapters, :generate_date_ranges_to_skip, :generate_schedule
+  before_validation :generate_book_chapters, :generate_date_ranges_to_skip
+  before_save :generate_schedule
+
   after_commit :successful_creation_email, :on => :create
 
 
@@ -107,6 +114,8 @@ class Challenge < ActiveRecord::Base
 
   def generate_schedule
     self.schedule = ChaptersPerDateCalculator.new(self).schedule
+    self.begindate = self.available_dates.first
+    self.enddate = self.available_dates.last
   end
 
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
@@ -145,7 +154,12 @@ class Challenge < ActiveRecord::Base
   def validate_dates
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
-      #errors[:begin_date] << "cannot be earlier than today" if begindate < Date.today
+    end
+  end
+
+  def validate_days_of_week_to_skip
+    if self.days_of_week_to_skip.size == 7
+      errors.add(:days_of_week_to_skip, "can't skip all seven days of the week")
     end
   end
 
