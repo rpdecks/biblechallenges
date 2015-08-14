@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "User Signs In" do
+feature "User session spec" do
   let(:user) {create(:user)}
 
   scenario "User signs in via website and sees only the challenges related to him" do
@@ -18,9 +18,9 @@ feature "User Signs In" do
     expect(page).to_not have_content(challenge2.name)
   end
 
-  scenario "User signs in via website with no challenges shoudld see home page" do
-    challenge = create(:challenge, name: "Awesome")
-    challenge2 = create(:challenge, name: "Not Cool")
+  scenario "User signs in via website with no challenges should see home page" do
+    create(:challenge, name: "Awesome")
+    create(:challenge, name: "Not Cool")
 
     visit root_path
     click_link "Login"
@@ -44,5 +44,15 @@ feature "User Signs In" do
 
       expect(current_path).to eq challenge_path(challenge)
     end
+  end
+
+  scenario "User signs in and signs out of biblechallenges" do
+    visit root_path
+    click_link "Login"
+    fill_in 'user[email]', with: user.email
+    fill_in 'user[password]', with: "password"
+    click_button "Sign in"
+    click_link "Logout"
+    expect(current_path).to eq "/"
   end
 end
