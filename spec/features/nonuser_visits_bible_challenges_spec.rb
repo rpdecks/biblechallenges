@@ -20,6 +20,13 @@ feature 'Nonuser visits BibleChallenges' do
 
       expect(page).to have_content("Create a Bible Challenges Account")
     end
+
+    scenario 'Nonuser visits member/group page and tries to create a group' do
+      challenge = create(:challenge)
+      visit new_member_challenge_group_path(challenge)
+
+      expect(page).to have_content("You will need to sign in")
+    end
   end
 
   feature "From the challenge page" do
