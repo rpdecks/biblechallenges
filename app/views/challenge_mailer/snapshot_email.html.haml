@@ -3,3 +3,16 @@
     %td.bodyContent{"mc:edit" => "body_content", style: "-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;padding-top: 20px;padding-right: 20px;padding-bottom: 20px;padding-left: 20px;text-align: left;", valign: "top"}
       %h2{style: "display: block;font-family: Helvetica;font-size: 20px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #404040;"} Challenge summary:
       %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"} Hi!
+      This is a snapshot of
+      = @challenge_snapshot.name
+      = @challenge_snapshot.total_chapters
+      = @challenge_snapshot.most_read_chapter
+      = @challenge_snapshot.longest_individual_streak
+      = @challenge_snapshot.top_reader
+
+      Groups ranked by percentage complete:
+      - @challenge_snapshot.groups_by_percentage_challenge_completed.each do |g|
+        = g.name
+        = g.group_statistic_progress_percentage.value
+        %br
+
