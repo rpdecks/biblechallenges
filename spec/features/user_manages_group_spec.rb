@@ -11,6 +11,7 @@ feature 'User manages groups' do
     scenario "When joins a group, also joins the challenge" do
       challenge = create(:challenge)
       group = challenge.groups.create(name: "UCLA", user_id: user.id)
+      challenge.join_new_member(user)
 
       visit member_challenge_path(challenge)
       click_link "Join Group"
