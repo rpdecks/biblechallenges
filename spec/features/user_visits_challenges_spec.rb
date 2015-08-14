@@ -18,4 +18,13 @@ feature 'User visits challenges' do
     expect(page).to_not have_content(challenge.name)
     expect(page).to have_content(challenge2.name)
   end
+
+  scenario 'User cannot see challenge details that he is not a part of' do
+    challenge = create(:challenge)
+    user1 = challenge.owner
+    challenge.join_new_member(user1)
+    visit member_challenge_path(challenge)
+    expect(page).to_not have_content("Today's Reading")
+    expect(page).to have_content("Join Challenge")
+  end
 end

@@ -4,6 +4,7 @@ class Member::ChallengesController < ApplicationController
   FIRST_VERSES_LIMIT = 10
 
   before_filter :authenticate_user!
+  before_filter :authenticate_member, only: [:show]
 
   def index
     # all challenges that user is a member of
@@ -28,5 +29,12 @@ class Member::ChallengesController < ApplicationController
 
   def challenge_params
     params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read, :dates_to_skip)
+  end
+
+  def authenticate_member
+    challenge = Challenge.friendly.find(params[:id])
+    unless challenge.memberships.pluck(:user_id).include? current_user.id #user not a member in challenge
+      redirect_to challenge_path(challenge)
+    end
   end
 end
