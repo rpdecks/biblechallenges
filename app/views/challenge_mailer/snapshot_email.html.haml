@@ -11,18 +11,25 @@
       %br
       = @challenge_snapshot.members.size
       Members read a total of
-      = "#{@challenge_snapshot.total_chapters_read}!"
-      Way to go!
+      = "#{@challenge_snapshot.total_chapters_read}"
+      chapters! Way to go!
       %br
       %br
       The Chapters read most often in the challenge:
       = @challenge_snapshot.most_read_chapters
       %br
-
       %br
-      = @challenge_snapshot.longest_individual_streak
-      = @challenge_snapshot.top_reader
-
+      Challenge members with the longest consecutive-days reading streak:
+      = @challenge_snapshot.longest_individual_streaks.keys.to_sentence
+      read for
+      = @challenge_snapshot.longest_individual_streaks.values.first
+      straight days!
+      %br
+      %br
+      Top Readers for the Challenge:
+      = @challenge_snapshot.top_readers
+      %br
+      %br
       Groups ranked by percentage complete:
       - @challenge_snapshot.groups_by_percentage_challenge_completed.each do |g|
         = g.name
@@ -41,3 +48,9 @@
         = x.user.name
         = x.membership_statistic_progress_percentage.value
         %br
+        %br
+      TOP READERS: (Overall score, based on all reading stats):
+      - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
+        = x.user.name
+        = x.membership_statistic_progress_percentage.value
+     

@@ -11,7 +11,7 @@ class ChallengeMailer < ActionMailer::Base
     @owner = @challenge.owner
     mail( to: @owner.email, subject: "Bible Challenge #{@challenge.name} created!")
   end
-
+ 
   def snapshot_email(challenge)
     @challenge_snapshot = ChallengeSnapshot.new(challenge)
     mail( to: 'pdbradley@gmail.com', subject: "Challenge Status")
