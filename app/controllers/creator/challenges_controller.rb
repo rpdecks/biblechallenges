@@ -24,7 +24,7 @@ class Creator::ChallengesController < ApplicationController
     @challenge.update_attributes(challenge_name)
 
     if @challenge.save
-      redirect_to member_challenge_path(@challenge), notice: "Successfully updated challenge"
+      redirect_to creator_challenge_path(@challenge), notice: "Successfully updated challenge"
     else
       flash[:error] = "Challenge cannot be updated. Please try again."
     end
