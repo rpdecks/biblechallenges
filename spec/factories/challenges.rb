@@ -21,6 +21,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_5_memberships do
+      after(:create) do |ch|
+        create_list(:membership, 5, challenge: ch)
+      end
+    end
+
     factory :invalid_challenge do
       name nil
     end

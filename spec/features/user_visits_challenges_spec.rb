@@ -13,7 +13,7 @@ feature 'User visits challenges' do
       challenge = create(:challenge_with_readings, chapters_to_read: "Matt 1-2", begindate: ch1_start_date)
     Timecop.return
     ch2_start_date = Date.today
-      challenge2 = create(:challenge_with_readings, chapters_to_read: "Matt 1-2", begindate: ch2_start_date)
+    challenge2 = create(:challenge, :with_5_memberships, chapters_to_read: "Matt 1-2", begindate: ch2_start_date)
     visit root_path
     expect(page).to_not have_content(challenge.name)
     expect(page).to have_content(challenge2.name)
