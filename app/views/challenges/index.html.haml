@@ -13,16 +13,23 @@
 
 .container
 
-  - unless @my_challenges.blank?
-    %h3.component-title My Current Challenges
-    .row
-      - @my_challenges.each do |challenge|
-        .col-md-6
-          = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
-
-  - unless @public_challenges.empty?
-    %h3.component-title Popular Challenges
+  -if params[:query].present?
+    %h3.component-title Search Results
     .row
       - @public_challenges.each do |challenge|
         .col-md-6
           = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+  -else
+    - unless @my_challenges.blank?
+      %h3.component-title My Current Challenges
+      .row
+        - @my_challenges.each do |challenge|
+          .col-md-6
+            = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+
+    - unless @public_challenges.empty?
+      %h3.component-title Popular Challenges
+      .row
+        - @public_challenges.each do |challenge|
+          .col-md-6
+            = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
