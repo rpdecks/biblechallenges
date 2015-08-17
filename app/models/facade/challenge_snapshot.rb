@@ -28,13 +28,17 @@ class ChallengeSnapshot
     @challenge.members
   end
 
+  def chapters
+    @challenge.chapters.size
+  end
+
   def total_chapters_read
     @challenge.membership_readings.all.size
   end
 
   def most_read_chapters
     arr = @challenge.membership_readings.pluck(:reading_id)
-    arr.size == 1 ? chapter_ids = arr :  modes(arr)  # private method below, gets chapter_id of most read chaps
+    arr.size == 1 ? chapter_ids = arr :  chapter_ids = modes(arr)  # private method below gets the mode/modes (most-read chapter_id/s)
     most_read = []
     if chapter_ids == nil
       return "No Readings Yet"
@@ -46,12 +50,33 @@ class ChallengeSnapshot
     end
   end
 
-  def longest_individual_streak
-
+  def longest_individual_streaks
+    streaks = {}
+    @challenge.memberships.each do |m|
+      membership_hash = { m.user.name => m.membership_statistic_record_reading_streak }
+      streaks = streaks.merge(membership_hash)
+    end
+    max_streak_value = streaks.values.max
+    streaks = streaks.select {|k,v| v == max_streak_value}
+#      - @challenge_snapshot.longest_individual_streaks.each do |s|
+#        - s.each {|k,v| puts "#{k}: #{v} days in a row"}
+    streaks
   end
 
-  def top_reader
-
+  def calculate_reader_score(streak, on_schedule, progress_percentage)
+    calculation = (((streak / chapters / @challenge.num_chapters_per_day) * 15) + (on_schedule * 15) + (progress_percentage * 70))
+    return calculation
+  end
+  
+  def top_readers
+    tops = {}
+    binding.pry
+    @challenge.memberships.each do |m|
+      reader_score = calculate_reader_score(m.rec_sequential_reading_count, m.punctual_reading_percentage, m.progress_percentage)
+      membership_hash = { m.user.name => reader_score }
+      tops = tops.merge(membership_hash)
+    end
+    tops.sort_by {|k,v| v}[0..@top_half_limit]
   end
 
   private
