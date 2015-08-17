@@ -4,7 +4,7 @@ class ChallengesController < ApplicationController
     if params[:query]
       @public_challenges = Challenge.search_by_name(params[:query])
     else
-      @public_challenges = Challenge.includes(:members).current
+      @public_challenges = Challenge.includes(:members).current.at_least_5_members
     end
 
     if current_user
