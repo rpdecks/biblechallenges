@@ -5,7 +5,6 @@ class Member::ChallengesController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :authenticate_member, only: [:show]
-  before_filter :find_challenge, only: [:destroy]
 
   def index
     # all challenges that user is a member of
@@ -27,11 +26,6 @@ class Member::ChallengesController < ApplicationController
   end
 
   private
-
-  def find_challenge
-    @challenge = Challenge.includes(:chapters).find_by_id(params[:id])
-    redirect_to challenges_url if @challenge.nil?
-  end
 
   def challenge_params
     params.require(:challenge).permit(:owner_id, :name, :begindate, :enddate, :chapters_to_read, :dates_to_skip)
