@@ -26,10 +26,6 @@
       straight days!
       %br
       %br
-      Top Readers for the Challenge:
-      = @challenge_snapshot.top_readers
-      %br
-      %br
       Groups ranked by percentage complete:
       - @challenge_snapshot.groups_by_percentage_challenge_completed.each do |g|
         = g.name
@@ -43,13 +39,11 @@
         = g.group_statistic_on_schedule_percentage.value
         %br
 
-      Top 50% Members ranked by on percentage complete reading:
+      Top 50% Members ranked by overall progress percentage:
       - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
-        = x.user.name
+        = x.user.id
         = x.membership_statistic_progress_percentage.value
-        %br
-        %br
+      %br
+      %br
       TOP READERS: (Overall score, based on all reading stats):
-      - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
-        = x.user.name
-        = x.membership_statistic_progress_percentage.value
+      = @challenge_snapshot.top_readers
