@@ -10,8 +10,8 @@ feature 'Owner manages challenges' do
   scenario 'Changes the name of the challenge after the challenge has been created' do
     challenge = create(:challenge, owner_id: user.id, name: "Awesome")
     create(:membership, challenge: challenge, user: user)
-    visit member_challenge_path(challenge)
-    click_link 'Edit Challenge'
+    visit creator_challenge_path(challenge)
+    click_link 'Edit'
     fill_in 'Challenge Name', with: "Wonderful"
     click_button 'Update'
     expect(page).to have_content("Successfully updated challenge")

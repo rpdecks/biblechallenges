@@ -12,7 +12,7 @@ class Challenge < ActiveRecord::Base
   scope :on_schedule_percentage, -> { joins(:challenge_statistics).where("challenge_statistics.type" => "ChallengeStatisticOnSchedulePercentage")}
   scope :no_nil_value, -> { joins(:challenge_statistics).where("challenge_statistics.value IS NOT NULL")}
   scope :top_8, -> { joins(:challenge_statistics).order("challenge_statistics.value desc").limit(8) }
-  scope :at_least_2_members, -> { where("memberships_count >= ?", 2) }
+  scope :at_least_5_members, -> { where("memberships_count >= ?", 5) }
   scope :newest_first, -> { order(begindate: :desc) }
   scope :no_members, -> { where("memberships_count = ?", 0) }
 
