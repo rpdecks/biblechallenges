@@ -54,7 +54,7 @@ class ChallengeSnapshot
     streaks = {}
     @challenge.memberships.each do |m|
       streak_stat = m.membership_statistic_record_reading_streak.value
-      membership_hash = { m.user.name => streak_stat }
+      membership_hash = { m.user_id => streak_stat }
       streaks = streaks.merge(membership_hash)
     end
     max_streak_value = streaks.values.max
@@ -65,19 +65,18 @@ class ChallengeSnapshot
   end
 
   def calculate_reader_score(streak, on_schedule, progress_percentage)
-    calculation = (((streak / chapters * @challenge.num_chapters_per_day) * 15) + (on_schedule * 15) + (progress_percentage * 70))
+    calculation = (((streak / chapters / @challenge.num_chapters_per_day * @challenge.percentage_completed) * 25) + ((on_schedule / 100) * 50) + ((progress_percentage / @challenge.percentage_completed) * 25))
     return calculation
   end
   
   def top_readers
     tops = {}
     @challenge.memberships.each do |m|
-      binding.pry
-      reader_score = calculate_reader_score(m.membership_statistic_record_reading_streak.value, m.membership_statistic_on_schedule_percentage.value, m.membership_statistic.progress_percentage.value)
-      membership_hash = { m.user.name => reader_score }
+      reader_score = calculate_reader_score(m.membership_statistic_record_reading_streak.value, m.membership_statistic_on_schedule_percentage.value, m.membership_statistic_progress_percentage.value)
+      membership_hash = { m.user_id => reader_score }
       tops = tops.merge(membership_hash)
     end
-    tops.sort_by {|k,v| v}[0..@top_half_limit]
+    tops.sort_by {|k,v| v}.reverse
   end
 
   private
