@@ -65,19 +65,19 @@ class Membership < ActiveRecord::Base
     send_reading_email
   end
 
+  def send_reading_email
+    todays_readings = self.readings.todays_readings.pluck(:id)
+    if todays_readings.size > 0 && self.user.reading_notify == true
+      DailyEmailWorker.perform_in(30.seconds, todays_readings, self.user_id)
+    end
+  end
+
   private
   # Callbacks
   def recalculate_group_stats
     if self.group_id.present?
       #group.recalculate_stats
       #replace this with calling group's group_statistics
-    end
-  end
-
-  def send_reading_email
-    todays_readings = self.readings.todays_readings.pluck(:id)
-    if todays_readings.size > 0 && self.user.reading_notify == true
-      DailyEmailWorker.perform_in(30.seconds, todays_readings, self.user_id)
     end
   end
 end

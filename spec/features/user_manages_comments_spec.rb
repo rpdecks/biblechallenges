@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'User manages challenges' do
+feature 'User manages comments' do
   let(:user) {create(:user)}
 
   before(:each) do
@@ -10,6 +10,7 @@ feature 'User manages challenges' do
   scenario 'User posts a comment' do
     challenge = create(:challenge, owner_id: user.id)
     challenge.groups.create(name: "UCLA", user_id: user.id)
+    challenge.join_new_member(user)
     visit member_challenge_path(challenge)
     click_link "Join Group"
     fill_in 'comment_content', with: "Testing"
