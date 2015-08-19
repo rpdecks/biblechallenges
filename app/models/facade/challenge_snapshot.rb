@@ -2,7 +2,11 @@ class ChallengeSnapshot
 
   def initialize(challenge)
     @challenge = challenge
-    @top_half_limit = @challenge.memberships.size / 2
+    @top_limit = Math.sqrt(@challenge.memberships.size).round
+  end
+  
+  def any_groups?
+    @challenge.groups.any?
   end
 
   def groups_by_percentage_challenge_completed
@@ -17,7 +21,7 @@ class ChallengeSnapshot
 
   def memberships_by_percentage_challenge_completed
     @challenge.memberships.joins(:membership_statistic_progress_percentage).
-      order('membership_statistics.value desc').limit(@top_half_limit)
+      order('membership_statistics.value desc').limit(@top_limit)
   end
 
   def name
@@ -54,7 +58,7 @@ class ChallengeSnapshot
     streaks = {}
     @challenge.memberships.each do |m|
       streak_stat = m.membership_statistic_record_reading_streak.value
-      membership_hash = { m.user_id => streak_stat }
+      membership_hash = { m.user.name => streak_stat }
       streaks = streaks.merge(membership_hash)
     end
     max_streak_value = streaks.values.max
@@ -65,7 +69,12 @@ class ChallengeSnapshot
   end
 
   def calculate_reader_score(streak, on_schedule, progress_percentage)
-    calculation = (((streak / chapters / @challenge.num_chapters_per_day * @challenge.percentage_completed) * 25) + ((on_schedule / 100) * 50) + ((progress_percentage / @challenge.percentage_completed) * 25))
+    streak == 0 ? streak = 1 : streak
+    completed = @challenge.percentage_completed
+    completed == 0 ? completed = 1 : completed
+    calculation = (((chapters / completed / @challenge.num_chapters_per_day / streak) * 1) + ((on_schedule / 4) * 2) + ((progress_percentage / completed * 25) * 1)) # coefficients {/4 & *25} are decided
+                                        # so that Total Score is 2 parts on_schedule
+                                        # and 1 part each _streak & _progress_percent
     return calculation
   end
   
@@ -73,10 +82,10 @@ class ChallengeSnapshot
     tops = {}
     @challenge.memberships.each do |m|
       reader_score = calculate_reader_score(m.membership_statistic_record_reading_streak.value, m.membership_statistic_on_schedule_percentage.value, m.membership_statistic_progress_percentage.value)
-      membership_hash = { m.user_id => reader_score }
+      membership_hash = { m.user.name => reader_score }
       tops = tops.merge(membership_hash)
     end
-    tops.sort_by {|k,v| v}.reverse
+    tops.sort_by {|k,v| v}.reverse.take(@top_limit)
   end
 
   private
