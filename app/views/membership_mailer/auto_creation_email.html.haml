@@ -49,7 +49,8 @@
           %th{style: "padding-right: 45px;"}  Date
           %th Chapter
         %tbody
-          - @challenge.readings.each do |read|
+          - readings = @challenge.readings
+          - readings.order(read_on: :asc).order(chapter_id: :asc).each do |read|
             %tr
               %td
                 = read.read_on.strftime("%-m/%-d/%y")
