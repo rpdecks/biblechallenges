@@ -1,11 +1,15 @@
 OmniAuth.config.test_mode = true
 
 def mock_auth_hash(provider, email)
-  fb_user_params = build(:existing_facebook_user)
-  omniauth = { 'provider' => fb_user_params.provider,
-               'uid' => fb_user_params.uid,
+  if provider == "facebook"
+    omniauth_user_params = build(:existing_facebook_user)
+  elsif provider == "google_oauth2"
+    omniauth_user_params = build(:existing_google_user)
+  end
+  omniauth = { 'provider' => omniauth_user_params.provider,
+               'uid' => omniauth_user_params.uid,
                'info' => {
-                 'name' => fb_user_params.name,
+                 'name' => omniauth_user_params.name,
                  'email' => email,
                }
   }
