@@ -12,5 +12,11 @@ FactoryGirl.define do
       uid '12345'
       last_sign_in_at { Date.yesterday }
     end
+
+    factory :existing_google_user do
+      provider "google_oauth2"
+      uid '54321'
+      last_sign_in_at { Date.yesterday }
+    end
   end
 end

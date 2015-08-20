@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
   # Validations
   validates :name, :email, presence: true
@@ -30,6 +30,27 @@ class User < ActiveRecord::Base
     :s3_host_name => ENV["AWS_HOST_NAME"],
     :default_url => "default_avatar.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  def self.from_omniauth(auth)
+    user = User.find_by(email: auth.info.email)
+
+    if user
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.image = auth.info.image
+      return user
+    end
+
+    User.where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+      u.provider = auth.provider
+      u.uid = auth.uid
+      u.email = auth.info.email
+      u.password = Devise.friendly_token[0,15]
+      u.name = auth.info.name
+      u.image = auth.info.image
+      u.save!
+    end
+  end
 
   #Callbacks
   #after_create :associate_statistics
@@ -72,19 +93,6 @@ class User < ActiveRecord::Base
 
   def existing_user?
     !last_sign_in_at.nil?
-  end
-
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0,15]
-      user.name = auth.info.name
-      user.image = auth.info.image
-      # timezone
-      # preferred reading hour
-
-      user.save!
-    end
   end
 
   private

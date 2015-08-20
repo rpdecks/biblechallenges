@@ -27,15 +27,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-     if self.params[:challenge_id].present? #If challenge id is set, that means we need to add the user being created to the challenge and redirect to the challenge
-       ch_id = self.params[:challenge_id]
-       challenge = Challenge.find(ch_id)
-       email = self.params[:user][:email]
-       @user = User.where(email: email).first
-       membership = challenge.join_new_member(@user)
-       MembershipCompletion.new(membership)
-       challenge.update_stats
-     end
+    # If challenge id is set, that means we need to add the user being created to the challenge and redirect to the challenge
+    if self.params[:challenge_id].present?
+      ch_id = self.params[:challenge_id]
+      challenge = Challenge.find(ch_id)
+      email = self.params[:user][:email]
+      @user = User.where(email: email).first
+      membership = challenge.join_new_member(@user)
+      MembershipCompletion.new(membership)
+      challenge.update_stats
+    end
   end
 
   def after_sign_up_path_for(resource)
