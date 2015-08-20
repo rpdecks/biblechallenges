@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
       return user
     end
 
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
+    User.where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
       u.provider = auth.provider
       u.uid = auth.uid
       u.email = auth.info.email
