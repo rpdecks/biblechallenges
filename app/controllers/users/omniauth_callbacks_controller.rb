@@ -12,7 +12,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if @user.persisted?
       if @user.existing_user?
-        sign_in_and_redirect @user
+        sign_in @user
+        redirect_to (member_challenges_path)
+        #sign_in_and_redirect @user
         if is_navigational_format?
           set_flash_message(:notice, :success, kind: provider)
         end

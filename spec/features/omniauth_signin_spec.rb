@@ -8,7 +8,7 @@ feature "Omniauth Sign In / Sign Up" do
     visit root_path
     # expect not to raise Capybara::InfiniteRedirectError
     click_link "Sign in with Facebook"
-    expect(current_path).to eq "/"
+    expect(current_path).to eq member_challenges_path
   end
 
   scenario "New User SIGNS UP with facebook, logs out, logs back in" do
