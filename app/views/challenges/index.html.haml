@@ -12,18 +12,6 @@
           %a.btn{href: new_user_registration_path} Sign me up!
 
 .container
-  - @front_page_leaderboard.users_by_longest_all_time_streak.each do |u|
-    = u.initialed_name
-    = u.user_statistic_days_read_in_a_row_all_time.value
-
-  - @front_page_leaderboard.users_by_longest_current_streak.each do |u|
-    = u.initialed_name
-    = u.user_statistic_days_read_in_a_row_current.value
-
-  - @front_page_leaderboard.users_by_all_time_chapters.each do |u|
-    = u.initialed_name
-    = u.user_statistic_chapters_read_all_time.value
-
   -if params[:query].present?
     %h3.component-title Search Results
     .row
@@ -31,6 +19,21 @@
         .col-md-6
           = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
   -else
+    %h3.component-title Leaderboards
+    %h4 All time streak....
+    - @front_page_leaderboard.users_by_longest_all_time_streak.each do |u|
+      = u.initialed_name
+      = u.user_statistic_days_read_in_a_row_all_time.value
+
+    %h4 Longest current streak...
+    - @front_page_leaderboard.users_by_longest_current_streak.each do |u|
+      = u.initialed_name
+      = u.user_statistic_days_read_in_a_row_current.value
+    %h4 Chapters read all time....
+    - @front_page_leaderboard.users_by_all_time_chapters.each do |u|
+      = u.initialed_name
+      = u.user_statistic_chapters_read_all_time.value
+
     - unless @my_challenges.blank?
       %h3.component-title My Current Challenges
       .row
