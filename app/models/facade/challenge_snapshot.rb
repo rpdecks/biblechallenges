@@ -24,6 +24,10 @@ class ChallengeSnapshot
       order('membership_statistics.value desc').limit(@top_limit)
   end
 
+  def membership_readings_last_week
+    @challenge.membership_readings.last_week
+  end
+
   def name
     @challenge.name
   end
@@ -54,6 +58,20 @@ class ChallengeSnapshot
     end
   end
 
+  def most_read_chapters_last_week
+    arr = membership_readings_last_week.pluck(:reading_id)
+    arr.size == 1 ? chapter_ids = arr :  chapter_ids = modes(arr)  # private method below gets the mode/modes (most-read chapter_id/s)
+    most_read = []
+    if chapter_ids == nil
+      return "No Readings last week"
+    else
+      chapter_ids.each do |id|
+        most_read << @challenge.readings.find_by_id(id).chapter.book_and_chapter
+      end
+      return most_read.to_sentence
+    end
+  end
+
   def longest_individual_streaks
     streaks = {}
     @challenge.memberships.each do |m|
@@ -72,9 +90,9 @@ class ChallengeSnapshot
     streak == 0 ? streak = 1 : streak
     completed = @challenge.percentage_completed
     completed == 0 ? completed = 1 : completed
-    calculation = (((chapters / completed / @challenge.num_chapters_per_day / streak) * 1) + ((on_schedule / 4) * 2) + ((progress_percentage / completed * 25) * 1)) # coefficients {/4 & *25} are decided
-                                        # so that Total Score is 2 parts on_schedule
-                                        # and 1 part each _streak & _progress_percent
+    calculation = (((chapters / completed / @challenge.num_chapters_per_day / streak) * 1) + ((on_schedule / 4) * 3) + ((progress_percentage / completed * 25) * 2)) # coefficients {/4 & *25} are decided
+                                        # so that Total Score is 3 parts on_schedule
+                                        # and 1 parts _streak & 2 parts _progress_percent
     return calculation
   end
   
@@ -85,7 +103,7 @@ class ChallengeSnapshot
       membership_hash = { m.user.name => reader_score }
       tops = tops.merge(membership_hash)
     end
-    tops.sort_by {|k,v| v}.reverse.take(@top_limit)
+    tops.keys.sort_by {|k,v| v}.reverse.take(@top_limit) #remove 'keys' to return both name and score hash elements.
   end
 
   private
