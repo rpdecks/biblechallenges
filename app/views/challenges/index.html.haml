@@ -21,6 +21,20 @@
   - else
     %h3.component-title Leaderboards
     .row
+      .col-md-12
+        %h4 Last chapters read (I don't want this to be so ugly / big just a placeholder)
+        %ol.leaderboard
+          - @front_page_leaderboard.users_by_most_recent_reading.each do |u|
+            %li
+              %img{:src => avatar_url(u.user), :alt => "", :class => "img-circle"}/
+              %strong
+                = u.initialed_name
+                = u.book_name
+                = u.chapter_number
+              %span.badge
+                = u.time_ago
+      
+    .row
       .col-md-4
         %h4 All time streak....
         %ol.leaderboard
