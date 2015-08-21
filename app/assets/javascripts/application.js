@@ -18,5 +18,6 @@
 //= require components
 //= require_tree .
 //= require bootstrap
+//= require bootstrap-switch
 //= require pickadate/picker
 //= require pickadate/picker.date
