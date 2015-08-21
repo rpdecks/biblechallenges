@@ -412,3 +412,55 @@ fieldset {
 .input-group .form-control {
   border-top-left-radius: 4px;
 }
+
+.latest-chapters {
+  .member {
+    display: inline-block;
+    vertical-align: top;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .chapter {
+    display: inline-block;
+  }
+  li { padding: 10px 0 0; }
+  li + li { border-top: 1px solid #e6e6e6; }
+
+  .muted {
+    opacity: .3;
+  }
+}
+
+.leaderboard {
+  padding-left: 20px;
+
+  li:first-child .badge {
+    background-color: gold;
+  }
+
+  li:nth-child(2) .badge {
+    background-color: silver;
+  }
+
+  li:nth-child(3) .badge {
+    background-color: #A0693F;
+  }
+
+  li:nth-child(3) + li {
+    border-top: 4px double #e6e6e6;
+  }
+
+  li { padding: 10px 0; }
+  li img {
+    width: 30px;
+    height: 30px;
+  }
+  li + li { border-top: 1px solid #e6e6e6; }
+  li .badge {
+    float: right;
+    margin-top: 4px;
+  }
+}
