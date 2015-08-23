@@ -25,7 +25,7 @@ class FrontPageLeaderboard
     most_recent_membership_readings.map do |mr|
       user = OpenStruct.new
       user.user = mr.user
-      user.initaled_name = mr.user.decorate.initialed_name
+      user.initialed_name = mr.user.decorate.initialed_name
       user.chapter_number = mr.chapter.chapter_number
       user.book_name = mr.chapter.book_name
       user.time_ago = time_ago_in_words(mr.created_at) + " ago"
