@@ -4,6 +4,7 @@ class FrontPageLeaderboard
   include ApplicationHelper
 
   DEFAULT_LIMIT = 10
+  CHAPTERS_READ_LIMIT = 8
 
   def users_by_longest_all_time_streak
     User.joins(:user_statistic_days_read_in_a_row_all_time).
@@ -38,7 +39,7 @@ class FrontPageLeaderboard
   def most_recent_membership_readings
     MembershipReading.unscoped.
       joins(:user, :reading, :chapter).
-      order('membership_readings.created_at desc').limit(DEFAULT_LIMIT)
+      order('membership_readings.created_at desc').limit(CHAPTERS_READ_LIMIT)
   end
 
 
