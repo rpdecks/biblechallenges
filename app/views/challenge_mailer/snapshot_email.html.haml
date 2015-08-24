@@ -48,6 +48,11 @@
           %br
           %br
 
+        Top Groups (based on all stats)
+        = @challenge_snapshot.top_groups
+        %br
+        %br
+
       Top Challenge Members ranked by overall progress percentage:
       - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
         = x.user.name

@@ -45,6 +45,7 @@ class ChallengeSnapshot
   end
 
   def most_read_chapters
+    binding.pry
     arr = @challenge.membership_readings.pluck(:reading_id)
     arr.size == 1 ? chapter_ids = arr :  chapter_ids = modes(arr)  # private method below gets the mode/modes (most-read chapter_id/s)
     most_read = []
@@ -86,7 +87,11 @@ class ChallengeSnapshot
     streaks
   end
 
-  def calculate_reader_score(streak, on_schedule, progress_percentage)
+  def calculate_reader_score(membership)
+    streak = membership.membership_statistic_record_reading_streak.value
+    on_schedule = membership.membership_statistic_on_schedule_percentage.value
+    progress_percentage = membership.membership_statistic_progress_percentage.value
+
     streak == 0 ? streak = 1 : streak
     completed = @challenge.percentage_completed
     completed == 0 ? completed = 1 : completed
@@ -99,11 +104,37 @@ class ChallengeSnapshot
   def top_readers
     tops = {}
     @challenge.memberships.each do |m|
-      reader_score = calculate_reader_score(m.membership_statistic_record_reading_streak.value, m.membership_statistic_on_schedule_percentage.value, m.membership_statistic_progress_percentage.value)
+      reader_score = calculate_reader_score(m)
       membership_hash = { m.user.name => reader_score }
       tops = tops.merge(membership_hash)
     end
     tops.keys.sort_by {|k,v| v}.reverse.take(@top_limit) #remove 'keys' to return both name and score hash elements.
+  end
+
+  def group_average_score(group)
+    group_size = group.members.size
+    total_score = 0
+
+    group.memberships.each do |m|
+      puts m.user.name
+      puts "score is #{calculate_reader_score(m)}"
+      total_score += calculate_reader_score(m)
+    end
+
+    return total_score / group_size
+  end
+
+  def groups_and_scores
+    result = Array.new
+
+    @challenge.groups.each do |g|
+      result << [g.name, group_average_score(g)]
+    end
+    return result
+  end
+
+  def group_names_by_average_score_highest_first
+    groups_and_scores.sort_by {|group_and_score| group_and_score.last }.reverse.map {|group_and_score| group_and_score.first }
   end
 
   private
