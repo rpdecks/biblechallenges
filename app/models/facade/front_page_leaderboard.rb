@@ -34,6 +34,20 @@ class FrontPageLeaderboard
     end
   end
 
+  def weeks_most_read_chapter
+    arr = MembershipReading.last_week.pluck(:reading_id)
+    arr.size == 1 ? chapter_ids = arr : chapter_ids = modes(arr)
+    most_read = []
+    if chapter_ids == nil
+      return "No Readings this week"
+    else
+      chapter_ids.each do |id|
+        most_read << Reading.find_by_id(id).chapter.book_and_chapter
+      end
+    most_read.to_sentence
+    end
+  end
+
   private
 
   def most_recent_membership_readings
@@ -42,5 +56,14 @@ class FrontPageLeaderboard
       order('membership_readings.created_at desc').limit(CHAPTERS_READ_LIMIT)
   end
 
+  def modes(arr, find_all = true)
+    histogram = arr.inject(Hash.new(0)) { |h, n| h[n] += 1; h }
+    modes = nil
+    histogram.each_pair do |item, times|
+      modes << item if modes && times == modes[0] and find_all
+      modes = [times, item] if (!modes && times > 1) or (modes && times > modes[0])
+    end
+    return modes ? modes[1..modes.size] : modes
+  end
 
 end
