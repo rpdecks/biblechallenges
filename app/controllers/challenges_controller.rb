@@ -1,6 +1,8 @@
 class ChallengesController < ApplicationController
   def index
 
+    @front_page_leaderboard = FrontPageLeaderboard.new
+
     if params[:query]
       @public_challenges = Challenge.search_by_name(params[:query])
     else
