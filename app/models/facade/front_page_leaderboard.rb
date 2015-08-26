@@ -56,11 +56,11 @@ class FrontPageLeaderboard
       order('membership_readings.created_at desc').limit(CHAPTERS_READ_LIMIT)
   end
 
-  def modes(arr, find_all = true)
+  def modes(arr)
     histogram = arr.inject(Hash.new(0)) { |h, n| h[n] += 1; h }
     modes = nil
     histogram.each_pair do |item, times|
-      modes << item if modes && times == modes[0] and find_all
+      modes << item if modes && times == modes[0]
       modes = [times, item] if (!modes && times > 1) or (modes && times > modes[0])
     end
     return modes ? modes[1..modes.size] : modes
