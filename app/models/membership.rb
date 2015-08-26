@@ -23,6 +23,7 @@ class Membership < ActiveRecord::Base
 
   #  Validations
   validates :challenge_id, presence: true
+  validates :user_id, presence: true
   validates :bible_version, presence: true
   validates_uniqueness_of :user_id, scope: :challenge_id
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}

@@ -58,6 +58,29 @@ describe Member::MembershipsController do
     end
   end
 
+  describe 'POST#sign_up_via_email' do
+    let(:newchallenge){create(:challenge_with_readings, :with_membership, owner: owner)}
+
+    it "creates a membership via email" do
+      email = "guy@example.com"
+      ch = newchallenge
+      membership = ch.memberships.first
+      expect {
+        post :sign_up_via_email, challenge_id: ch.id, id: membership.id, invite_email: email
+      }.to change(Membership, :count).by(1)
+      expect(User.last.email).to eq email
+    end
+
+    it "does not create a membership via email because of invalid user" do
+      email = "_@example.com"
+      ch = newchallenge
+      membership = ch.memberships.first
+      expect {
+        post :sign_up_via_email, challenge_id: ch.id, id: membership.id, invite_email: email
+      }.to change(Membership, :count).by(0)
+    end
+  end
+
   context 'when the user has already joined' do
     describe 'GET#show  (my-membership)' do
       it "finds the current_users membership" do
