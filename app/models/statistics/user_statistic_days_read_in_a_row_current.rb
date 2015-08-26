@@ -17,6 +17,7 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
   end
 
   def calculate
+    streak = 0
 
     dates_read = user.membership_readings.reload.map do |r| 
       r.created_at.utc.to_date.jd  # converts days to integers
