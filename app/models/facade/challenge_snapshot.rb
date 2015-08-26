@@ -45,7 +45,6 @@ class ChallengeSnapshot
   end
 
   def most_read_chapters
-    binding.pry
     arr = @challenge.membership_readings.pluck(:reading_id)
     arr.size == 1 ? chapter_ids = arr :  chapter_ids = modes(arr)  # private method below gets the mode/modes (most-read chapter_id/s)
     most_read = []
