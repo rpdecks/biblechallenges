@@ -66,12 +66,17 @@ class Member::MembershipsController < ApplicationController
       else
         email = params[:invite_email]
         @user = UserCreation.new(email).create_user
-        UserCompletion.new(@user)
-        @membership = challenge.join_new_member(@user)
-        MembershipCompletion.new(@membership, password: @user.password)
-        challenge.update_stats
-        flash[:notice] = "You have successfully added a new user to this challenge"
-        redirect_to challenge
+        if @user.valid?
+          UserCompletion.new(@user)
+          @membership = challenge.join_new_member(@user)
+          MembershipCompletion.new(@membership, password: @user.password)
+          challenge.update_stats
+          flash[:notice] = "You have successfully added a new user to this challenge"
+          redirect_to challenge
+        else
+          flash[:notice] = "Please enter a valid email"
+          redirect_to challenge
+        end
       end
     else
       flash[:notice] = "Please enter a valid email"
