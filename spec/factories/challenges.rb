@@ -31,6 +31,10 @@ FactoryGirl.define do
       name nil
     end
 
+    factory :closed_challenge do
+      joinable false
+    end
+
     factory :challenge_with_readings, traits: [:with_readings]
   end
 end
