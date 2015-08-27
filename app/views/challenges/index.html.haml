@@ -12,14 +12,74 @@
           %a.btn{href: new_user_registration_path} Sign me up!
 
 .container
-
   -if params[:query].present?
     %h3.component-title Search Results
     .row
       - @public_challenges.each do |challenge|
         .col-md-6
           = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
-  -else
+  - else
+    / %h3.component-title Leaderboards
+    .row
+      .col-md-3
+        %h3.component-title Last chapters read
+        %ul.list-unstyled.latest-chapters
+          - @front_page_leaderboard.users_by_most_recent_reading.each do |u|
+            %li
+              .member
+                %img{:src => avatar_url(u.user), :alt => "", :class => "img-circle"}/
+
+              .chapter
+                #{u.initialed_name},
+                %span.muted
+                  = u.time_ago
+
+                %p
+                  %em
+                    %a{:href => ""}
+                      = u.book_name
+                      = u.chapter_number
+      .col-md-3
+        %h3.component-title All time streak
+        %ol.leaderboard
+          - @front_page_leaderboard.users_by_longest_all_time_streak.each do |u|
+            %li
+              %img{:src => avatar_url(u), :alt => "", :class => "img-circle"}/
+              %strong
+                = u.initialed_name
+              %span.score
+                = u.user_statistic_days_read_in_a_row_all_time.value
+      
+      .col-md-3
+        %h3.component-title Longest current streak
+        %ol.leaderboard
+          - @front_page_leaderboard.users_by_longest_current_streak.each do |u|
+            %li
+              %img{:src => avatar_url(u), :alt => "", :class => "img-circle"}/
+              %strong
+                = u.initialed_name
+              %span.score
+                = u.user_statistic_days_read_in_a_row_current.value
+
+      .col-md-3
+        %h3.component-title Chapters read all time
+        %ol.leaderboard
+          - @front_page_leaderboard.users_by_all_time_chapters.each do |u|
+            %li
+              %img{:src => avatar_url(u), :alt => "", :class => "img-circle"}/
+              %strong
+                = u.initialed_name
+              %span.score
+                = u.user_statistic_chapters_read_all_time.value
+
+    .row
+      .centered
+        %hr
+        This week's most-read chapter:
+        %br
+        %strong
+          = @front_page_leaderboard.weeks_most_read_chapter
+
     - unless @my_challenges.blank?
       %h3.component-title My Current Challenges
       .row

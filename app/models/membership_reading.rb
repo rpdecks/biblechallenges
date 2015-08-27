@@ -3,10 +3,13 @@ class MembershipReading < ActiveRecord::Base
   default_scope {includes(:reading).order('readings.read_on')}
   scope :on_schedule, -> {where(on_schedule: 1)}
   scope :not_on_schedule, -> {where(on_schedule: 0)}
+  scope :last_week, -> {where("#{table_name}.created_at > ?", Time.now - 8.days)}
 
   # Relations
   belongs_to :membership
+  has_one :user, through: :membership
   belongs_to :reading
+  has_one :chapter, through: :reading
 
   #delegations
   delegate :read_on, to: :reading

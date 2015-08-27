@@ -18,7 +18,7 @@ module ApplicationHelper
   def avatar_url(user)
     # avatar = user upload
     # image = from facebook
-    if user.avatar_file_name
+    if user && user.avatar_file_name
       user.avatar.url(:thumb)
     else
       user.image || image_url('default_avatar.png')
