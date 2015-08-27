@@ -19,6 +19,16 @@ feature 'User invites friends via email' do
     expect(page).to have_content("Please enter a valid email")
   end
 
+  scenario 'User adds an invalid user due to invalid email' do
+    challenge = create(:challenge, :with_readings, owner_id: user.id)
+    create(:membership, challenge: challenge, user: user)
+    visit member_challenge_path(challenge)
+    click_button 'Add friends'
+    fill_in "addFriendsInput", with: '__^^@gmail.com'
+    click_button "Add"
+    expect(page).to have_content("Please enter a valid email")
+  end
+
   scenario 'sends a successfully email to new user to Bible Challenge' do
     Sidekiq::Testing.inline! do
       challenge = create(:challenge, :with_readings, owner_id: user.id)
