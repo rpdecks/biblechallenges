@@ -6,5 +6,4 @@ class DailyEmailWorker
   def perform(readings, member)
     ReadingMailer.daily_reading_email(readings, member).deliver_now
   end
-
 end

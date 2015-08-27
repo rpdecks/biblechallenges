@@ -11,16 +11,10 @@ class ReadingMailer < ActionMailer::Base
     @user = User.find(member)
     @membership = Membership.where(user: @user, challenge: @challenge).first
 
-  #  @reading = @readings.first
-  #  @chapter = @reading.chapter
-
     unless @membership.nil?
       mail( to: @user.email,
            subject: "Bible Challenge reading for #{@challenge.name}",
       from: "#{@challenge.name.capitalize} <no-reply@biblechallenges.com>")
     end
   end
-
-
-
 end
