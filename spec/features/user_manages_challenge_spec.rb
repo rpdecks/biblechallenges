@@ -50,6 +50,13 @@ feature 'User manages challenges' do
     end
   end
 
+  scenario 'User trys to join a closed challenge' do
+    challenge = create(:closed_challenge)
+    visit challenge_path(challenge)
+    click_link "Join Challenge"
+    expect(page).to have_content("Sorry, this challenge has been closed by the owner.")
+  end
+
   scenario 'User joins a challenge and the challenge stats get updated automatically' do
     start_date = Date.today
     challenge = create(:challenge_with_readings, 
