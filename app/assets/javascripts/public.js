@@ -3,5 +3,8 @@ $( document ).ready(function() {
     $(".alert-info").alert('close');
   });
 
-  $("[name='challenge-activity']").bootstrapSwitch();
+  $("[name='challenge-activity']").bootstrapToggle({
+    on: 'Open', 
+    off: 'Closed'
+  });
 });
