@@ -528,8 +528,7 @@ fieldset {
     width: 100%;
   }
   .col-xs-height {
-    display: inline-block;
-    vertical-align: top;
+    display: table-cell;
     float: none;
     height: 100%;
   }
@@ -552,8 +551,7 @@ fieldset {
     width: 100%;
   }
   .col-sm-height {
-    display: inline-block;
-    vertical-align: top;
+    display: table-cell;
     float: none;
     height: 100%;
   }
@@ -576,8 +574,7 @@ fieldset {
     width: 100%;
   }
   .col-md-height {
-    display: inline-block;
-    vertical-align: top;
+    display: table-cell;
     float: none;
     height: 100%;
   }
@@ -600,8 +597,7 @@ fieldset {
     width: 100%;
   }
   .col-lg-height {
-    display: inline-block;
-    vertical-align: top;
+    display: table-cell;
     float: none;
     height: 100%;
   }
