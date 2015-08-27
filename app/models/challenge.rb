@@ -27,6 +27,8 @@ class Challenge < ActiveRecord::Base
 
   # Relations
   has_many :memberships, dependent: :destroy
+  has_many :membership_statistics, through: :memberships
+
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
   has_many :membership_readings, through: :memberships  # needs default order #todo 
