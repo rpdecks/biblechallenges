@@ -22,8 +22,8 @@ describe MembershipReading do
   describe "Callbacks" do
     describe "Before save" do
       describe "#on_schedule?" do
+        pending
         it "will record the membership_reading as on_schedule", skip: true do
-          pending
           Timecop.travel(5.days.ago)
           challenge = create(:challenge_with_readings)
           challenge.generate_readings
@@ -46,6 +46,29 @@ describe MembershipReading do
         end
       end
     end
-  end
 
+    describe "Scopes" do
+      describe "#last_week" do
+        it "returns membership readings that were logged/created within the last 8 days" do
+          Timecop.travel(10.days.ago)
+          challenge = create(:challenge_with_readings)
+          challenge.generate_readings
+          user = User.first
+          membership = challenge.join_new_member(user)
+          create_list(:membership_reading, 3, membership: membership)
+          Timecop.return
+          Timecop.travel(7.days.ago)
+          create_list(:membership_reading, 2, membership: membership)
+          Timecop.return
+          Timecop.travel(2.days.ago)
+          create_list(:membership_reading, 1, membership: membership)
+
+          expect(challenge.membership_readings.size).to eq 6
+          expect(challenge.membership_readings.last_week.size).to eq 3
+        end
+      end
+    end
+
+  end
 end
+

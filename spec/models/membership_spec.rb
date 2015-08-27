@@ -9,6 +9,7 @@ describe Membership do
     end
 
     it { should validate_presence_of(:challenge_id) }
+    it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:bible_version) }
     it { should validate_inclusion_of(:bible_version).in_array(Membership::BIBLE_VERSIONS)}
     it do # This has to be written different. Check https://github.com/thoughtbot/shoulda-matchers#validate_uniqueness_of
