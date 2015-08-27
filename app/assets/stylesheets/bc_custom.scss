@@ -247,7 +247,8 @@ fieldset {
 }
 
 .list-group-item, a.list-group-item{
-  // margin-bottom: 12px !important;
+  // padding-bottom: 12px !important;
+  // display: inline;
   padding: 24px;
 
   &:last-child, &:first-child{
@@ -484,10 +485,6 @@ fieldset {
 .inside {
   margin-top: 20px;
   margin-bottom: 20px;
-  background: #ededed;
-  background: -webkit-gradient(linear, left top, left bottom,color-stop(0%, #f4f4f4), color-stop(100%, #ededed));
-  background: -moz-linear-gradient(top, #f4f4f4 0%, #ededed 100%);
-  background: -ms-linear-gradient(top, #f4f4f4 0%, #ededed 100%);
 }
 .inside-full-height {
   /*
@@ -531,7 +528,8 @@ fieldset {
     width: 100%;
   }
   .col-xs-height {
-    display: table-cell;
+    display: inline-block;
+    vertical-align: top;
     float: none;
     height: 100%;
   }
@@ -554,7 +552,8 @@ fieldset {
     width: 100%;
   }
   .col-sm-height {
-    display: table-cell;
+    display: inline-block;
+    vertical-align: top;
     float: none;
     height: 100%;
   }
@@ -577,7 +576,8 @@ fieldset {
     width: 100%;
   }
   .col-md-height {
-    display: table-cell;
+    display: inline-block;
+    vertical-align: top;
     float: none;
     height: 100%;
   }
@@ -600,7 +600,8 @@ fieldset {
     width: 100%;
   }
   .col-lg-height {
-    display: table-cell;
+    display: inline-block;
+    vertical-align: top;
     float: none;
     height: 100%;
   }
@@ -616,12 +617,12 @@ fieldset {
 }
 
 .challenges {
-  .row {
-    [class*="col-"] {
-      padding-bottom: 12px;
-    }
-  }
   .list-group-item {
     height: 100%;
   }
+}
+
+.challenge {
+  height: 100%;
+  padding-bottom: 12px;
 }
