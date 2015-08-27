@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821152051) do
+ActiveRecord::Schema.define(version: 20150827155738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,15 +58,15 @@ ActiveRecord::Schema.define(version: 20150821152051) do
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
     t.integer  "readings_count"
-    t.integer  "book_chapters",        default: [],                  array: true
+    t.integer  "book_chapters",        default: [],                array: true
     t.text     "date_ranges_to_skip"
-    t.integer  "days_of_week_to_skip", default: [],                  array: true
+    t.integer  "days_of_week_to_skip", default: [],                array: true
     t.string   "slug"
     t.integer  "num_chapters_per_day", default: 1
-    t.hstore   "chapters_per_date",    default: {},     null: false
-    t.json     "schedule",             default: {},     null: false
-    t.date     "available_dates",      default: [],                  array: true
-    t.string   "status",               default: "open"
+    t.hstore   "chapters_per_date",    default: {},   null: false
+    t.json     "schedule",             default: {},   null: false
+    t.date     "available_dates",      default: [],                array: true
+    t.boolean  "joinable",             default: true
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20150821152051) do
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
     t.integer  "memberships_count"
+    t.string   "passcode"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -234,9 +235,13 @@ ActiveRecord::Schema.define(version: 20150821152051) do
     t.boolean  "reading_notify",         default: true
     t.boolean  "message_notify",         default: true
     t.boolean  "comment_notify",         default: true
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
