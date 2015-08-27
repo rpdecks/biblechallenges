@@ -137,7 +137,6 @@ ActiveRecord::Schema.define(version: 20150813194635) do
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
     t.integer  "memberships_count"
-    t.string   "passcode"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -231,7 +230,6 @@ ActiveRecord::Schema.define(version: 20150813194635) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "locale",                 default: "en"
     t.boolean  "reading_notify",         default: true
     t.boolean  "message_notify",         default: true
     t.boolean  "comment_notify",         default: true
