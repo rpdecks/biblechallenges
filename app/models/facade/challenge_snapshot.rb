@@ -44,92 +44,17 @@ class ChallengeSnapshot
     @challenge.membership_readings.all.size
   end
 
-  def most_read_chapters
-    arr = @challenge.membership_readings.pluck(:reading_id)
-    arr.size == 1 ? chapter_ids = arr :  chapter_ids = modes(arr)  # private method below gets the mode/modes (most-read chapter_id/s)
-    most_read = []
-    if chapter_ids == nil
-      return "No Readings Yet"
-    else
-      chapter_ids.each do |id|
-        most_read << @challenge.readings.find_by_id(id).chapter.book_and_chapter
-      end
-      return most_read.to_sentence
-    end
-  end
-
-  def most_read_chapters_last_week
-    arr = membership_readings_last_week.pluck(:reading_id)
-    arr.size == 1 ? chapter_ids = arr :  chapter_ids = modes(arr)  # private method below gets the mode/modes (most-read chapter_id/s)
-    most_read = []
-    if chapter_ids == nil
-      return "No Readings last week"
-    else
-      chapter_ids.each do |id|
-        most_read << @challenge.readings.find_by_id(id).chapter.book_and_chapter
-      end
-      return most_read.to_sentence
-    end
-  end
-
   def longest_individual_streaks
-    streaks = {}
-    @challenge.memberships.each do |m|
-      streak_stat = m.membership_statistic_record_reading_streak.value
-      membership_hash = { m.user.name => streak_stat }
-      streaks = streaks.merge(membership_hash)
-    end
-    max_streak_value = streaks.values.max
-    streaks = streaks.select {|k,v| v == max_streak_value}
-#      - @challenge_snapshot.longest_individual_streaks.each do |s|
-#        - s.each {|k,v| puts "#{k}: #{v} days in a row"}
-    streaks
+    # grab the top 5
+   @challenge.membership_statistics.where(type: "MembershipStatisticRecordReadingStreak").top(5)
   end
 
-  def calculate_reader_score(membership)
-    streak = membership.membership_statistic_record_reading_streak.value
-    on_schedule = membership.membership_statistic_on_schedule_percentage.value
-    progress_percentage = membership.membership_statistic_progress_percentage.value
-
-    streak == 0 ? streak = 1 : streak
-    completed = @challenge.percentage_completed
-    completed == 0 ? completed = 1 : completed
-    calculation = (((chapters / completed / @challenge.num_chapters_per_day / streak) * 1) + ((on_schedule / 4) * 3) + ((progress_percentage / completed * 25) * 2)) # coefficients {/4 & *25} are decided
-                                        # so that Total Score is 3 parts on_schedule
-                                        # and 1 parts _streak & 2 parts _progress_percent
-    return calculation
-  end
-  
   def top_readers
-    tops = {}
-    @challenge.memberships.each do |m|
-      reader_score = calculate_reader_score(m)
-      membership_hash = { m.user.name => reader_score }
-      tops = tops.merge(membership_hash)
-    end
-    tops.keys.sort_by {|k,v| v}.reverse.take(@top_limit) #remove 'keys' to return both name and score hash elements.
-  end
-
-  def group_average_score(group)
-    group_size = group.members.size
-    total_score = 0
-
-    group.memberships.each do |m|
-      puts m.user.name
-      puts "score is #{calculate_reader_score(m)}"
-      total_score += calculate_reader_score(m)
-    end
-
-    return total_score / group_size
+    @challenge.memberships.map{ |membership| MembershipScore.new(membership) }
   end
 
   def groups_and_scores
-    result = Array.new
-
-    @challenge.groups.each do |g|
-      result << [g.name, group_average_score(g)]
-    end
-    return result
+    @challenge.groups.map{ |g| [g.name, GroupScore.new(g).score] }
   end
 
   def group_names_by_average_score_highest_first
@@ -138,13 +63,4 @@ class ChallengeSnapshot
 
   private
 
-  def modes(arr, find_all = true)
-    histogram = arr.inject(Hash.new(0)) { |h, n| h[n] += 1; h }
-    modes = nil
-    histogram.each_pair do |item, times|
-      modes << item if modes && times == modes[0] and find_all
-      modes = [times, item] if (!modes && times > 1) or (modes && times > modes[0])
-    end
-    return modes ? modes[1..modes.size] : modes
-  end
 end
