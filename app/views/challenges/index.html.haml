@@ -76,10 +76,12 @@
       %h3.component-title My Current Challenges
       .challenges
         - @my_challenges.each_slice(2) do |challenge_group|
-          .row.row-eq-height
-            - challenge_group.each do |challenge|
-              .col-md-6
-                = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+          .row
+            .row-lg-height.row-md-height
+              - challenge_group.each do |challenge|
+                .col-md-6.col-lg-height.col-md-height
+                  .inside.inside-full-height
+                    = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
 
     - unless @public_challenges.empty?
       %h3.component-title Popular Challenges
