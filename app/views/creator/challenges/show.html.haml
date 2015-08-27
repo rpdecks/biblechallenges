@@ -3,9 +3,23 @@
 .container
   %h2
     ="Challenge: #{@challenge.name}"
+  %h5
+    -if @challenge.joinable
+      Status:
+      %u
+        Open 
+    -else
+      Status:
+      %u
+        Closed 
+  %br
   = link_to "Edit Name", edit_creator_challenge_path(@challenge), :class=>"btn btn-default"
   = link_to "Delete", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger"
-  %input{:checked => @challenge.status == "opedfn" ? "checked" : "", :name => "challenge-activity", :type => "checkbox"}/
+  -if @challenge.joinable == true
+    = link_to "Close Challenge", creator_challenge_toggle_path(@challenge), :class=>"btn btn-warning", :method => :get, "data-confirm" => 'Closing this challenge will not allow others to join.'
+  -else 
+    = link_to "Open Challenge", creator_challenge_toggle_path(@challenge), :class=>"btn btn-success", :method => :get, "data-confirm" => 'Opening this challenge will allow others to join.'
+    /%input{:checked => @challenge.joinable ? "" : "checked", :name => "challenge-activity", :type => "checkbox" }/ Will revisit if we can get input to link with toggle controller
 
   %br
   %br
