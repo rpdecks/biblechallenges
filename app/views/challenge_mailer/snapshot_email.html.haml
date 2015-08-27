@@ -1,61 +1,74 @@
 %table#templateBody{border: "0", cellpadding: "0", cellspacing: "0", style: "-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;background-color: #F4F4F4;border-top: 1px solid #FFFFFF;border-bottom: 1px solid #CCCCCC;border-collapse: collapse;", width: "100%"}
   %tr
     %td.bodyContent{"mc:edit" => "body_content", style: "-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;padding-top: 20px;padding-right: 20px;padding-bottom: 20px;padding-left: 20px;text-align: left;", valign: "top"}
-      %h2{style: "display: block;font-family: Helvetica;font-size: 20px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #404040;"} Challenge summary:
-      %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"} Hi!
-      Challenge Snapshot for:
-      %strong
-        = @challenge_snapshot.name
+      %h2{style: "display: block;font-family: Helvetica;font-size: 20px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #404040;"} 
+        Challenge Snapshot:
+        %strong
+          = @challenge_snapshot.name
+      %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"} 
       %hr
-      %br
-      Total Chapters:
-      %br
-      = @challenge_snapshot.total_chapters
-      Members read a total of
-      = "#{@challenge_snapshot.total_chapters_read}"
-      chapters!!!
-      %br
-      %br
-      Challenge members with the longest consecutive-days reading streaks:
-      = @challenge_snapshot.top_reading_streak_names.to_sentence
-      read for
-      = @challenge_snapshot.top_reading_streak_values.to_sentence
-      straight days, respectively!
-      %br
-      %br
+      %table
+        %tr
+          %td Assigned Chapters:
+          %td= @challenge_snapshot.total_chapters
+        %tr
+          %td Number Members:
+          %td= @challenge_snapshot.total_members
+        %tr
+          %td Chapters Read:
+          %td= @challenge_snapshot.total_chapters_read
+        %tr
+          %td Challenge dates
+          %td
+            = @challenge_snapshot.challenge.begindate
+            to
+            = @challenge_snapshot.challenge.enddate
+        %tr
+          %td Days left in challenge:
+          %td= @challenge_snapshot.days_left 
 
       - if @challenge_snapshot.any_groups?
-        Top Groups ranked by percentage complete:
-        - @challenge_snapshot.groups_by_percentage_challenge_completed.each do |g|
-          = g.name
-          = g.group_statistic_progress_percentage.value
-          %br
-          %br
 
-        Top Groups ranked by on-schedule reading:
-        - @challenge_snapshot.groups_by_on_schedule_percentage.each do |g|
-          = g.name
-          = g.group_statistic_on_schedule_percentage.value
-          %br
-          %br
+        %h4 Groups ranked by percentage complete:
+        %table
+          - @challenge_snapshot.groups_by_percentage_challenge_completed.each do |g|
+            %tr
+              %td= g.name
+              %td= g.group_statistic_progress_percentage.value
 
-        Top Groups (based on average of completion and on-schedule)
-        - @challenge_snapshot.groups_and_scores_highest_first.each do |gs|
-          = gs.first  # name
-          = gs.last  # score
-        %br
-        %br
+        %h4 Groups ranked by on-schedule reading:
+        %table
+          - @challenge_snapshot.groups_by_on_schedule_percentage.each do |g|
+            %tr
+              %td= g.name
+              %td= g.group_statistic_on_schedule_percentage.value
 
-      Members ranked by overall progress percentage:
-      - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
-        = x.user.name
-        = x.membership_statistic_progress_percentage.value
-      %br
-      %br
+      %h4 
+        Top
+        = ChallengeSnapshot::INDIV_LIMIT 
+        Longest Consecutive-day reading streaks:
+      %table
+        - @challenge_snapshot.top_member_reading_streaks.each do |nv|
+          %tr
+            %td= nv.name
+            %td= nv.value
 
-      Top Individual Readers (based on average of completion and on-schedule)
-      - @challenge_snapshot.top_readers.each do |tr|
-        = tr.membership.name
-        = tr.score
-        %br
+      %h4
+        Top
+        = ChallengeSnapshot::INDIV_LIMIT 
+        Overall Progress Percentage
+      %table
+        - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
+          %tr
+            %td= x.name
+            %td= x.membership_statistic_progress_percentage.value
 
+      %h4
+        Top
+        = ChallengeSnapshot::INDIV_LIMIT 
+        On Schedule Percentage
+      %table
+        - @challenge_snapshot.memberships_by_on_schedule_percentage.each do |x|
+          %tr
+            %td= x.name
+            %td= x.membership_statistic_on_schedule_percentage.value

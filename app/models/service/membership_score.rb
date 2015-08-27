@@ -1,7 +1,9 @@
 class MembershipScore
   
+  attr_accessor :membership
+
   def initialize(membership)
-    @membership = membership 
+    @membership = membership
   end
 
 

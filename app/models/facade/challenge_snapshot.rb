@@ -1,5 +1,9 @@
 class ChallengeSnapshot
 
+  attr_accessor :challenge
+
+  INDIV_LIMIT = 10
+
   def initialize(challenge)
     @challenge = challenge
     @top_limit = Math.sqrt(@challenge.memberships.size).round
@@ -19,13 +23,23 @@ class ChallengeSnapshot
       order('group_statistics.value desc')
   end
 
+  def memberships_by_on_schedule_percentage
+    @challenge.memberships.joins(:membership_statistic_on_schedule_percentage).
+      order('membership_statistics.value desc').limit(INDIV_LIMIT)
+  end
+
   def memberships_by_percentage_challenge_completed
     @challenge.memberships.joins(:membership_statistic_progress_percentage).
-      order('membership_statistics.value desc').limit(@top_limit)
+      order('membership_statistics.value desc').limit(INDIV_LIMIT)
   end
 
   def membership_readings_last_week
     @challenge.membership_readings.last_week
+  end
+
+  def days_left
+    dl = (@challenge.enddate - Date.today).to_i 
+    (dl < 0) ? 0 : dl
   end
 
   def name
@@ -36,6 +50,10 @@ class ChallengeSnapshot
     @challenge.members
   end
 
+  def total_members
+    @challenge.members.size
+  end
+
   def total_chapters
     @challenge.chapters.size
   end
@@ -44,17 +62,15 @@ class ChallengeSnapshot
     @challenge.membership_readings.size
   end
 
-  def top_reading_streak_stats
+  def membership_statistic_name_value_pairs(type, limit)
+    # return an array objects that respond to name and value
+    stats = @challenge.membership_statistics.where(type: type).top(limit)
+    stats.map{|s| OpenStruct.new(name: s.membership.name, value: s.value) }
+  end
+
+  def top_member_reading_streaks
     # grab the top 5
-   @challenge.membership_statistics.where(type: "MembershipStatisticRecordReadingStreak").top(5)
-  end
-
-  def top_reading_streak_names
-    top_membership_statistic_record_reading_streaks.map{|stat| stat.membership.name}
-  end
-
-  def top_reading_streak_values
-    top_membership_statistic_record_reading_streaks.map{|stat| stat.value }
+    membership_statistic_name_value_pairs("MembershipStatisticRecordReadingStreak", INDIV_LIMIT) 
   end
 
   def top_readers
@@ -69,6 +85,5 @@ class ChallengeSnapshot
     groups_and_scores.sort_by {|group_and_score| group_and_score.last }.reverse
   end
 
-  private
 
 end
