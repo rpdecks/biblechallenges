@@ -1,9 +1,8 @@
 class DailyEmailScheduler
 
   def self.set_daily_email_jobs
-    # what we need is a collection of readings per user per challenge to pass 
+    # what we need is a collection of readings per user per challenge to pass
     # to the daily email worker
-
 
     #tomorrows_readings = Reading.tomorrows_readings
     tomorrows_challenges = Challenge.with_readings_tomorrow
@@ -23,7 +22,9 @@ class DailyEmailScheduler
         user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
 
         if m.reading_notify == true
-          DailyEmailWorker.perform_at(user_reading_hour_utc.to_i, tomorrows_reading_ids, m.id)
+          DailyEmailWorker.perform_at(user_reading_hour_utc.to_i,
+                                      tomorrows_reading_ids,
+                                      m.id)
         end
       end
     end
