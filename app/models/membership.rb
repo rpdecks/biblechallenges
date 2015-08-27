@@ -20,6 +20,7 @@ class Membership < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
+  delegate :name, to: :user
 
   #  Validations
   validates :challenge_id, presence: true
