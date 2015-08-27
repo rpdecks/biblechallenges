@@ -3,33 +3,24 @@
     %td.bodyContent{"mc:edit" => "body_content", style: "-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;padding-top: 20px;padding-right: 20px;padding-bottom: 20px;padding-left: 20px;text-align: left;", valign: "top"}
       %h2{style: "display: block;font-family: Helvetica;font-size: 20px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #404040;"} Challenge summary:
       %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;color: #808080;"} Hi!
-      Challenge "Snapshot" for:
+      Challenge Snapshot for:
       %strong
         = @challenge_snapshot.name
       %hr
       %br
       Total Chapters:
       %br
-      = @challenge_snapshot.members.size
+      = @challenge_snapshot.total_chapters
       Members read a total of
       = "#{@challenge_snapshot.total_chapters_read}"
       chapters!!!
       %br
       %br
-      Chapter(s) read most often in the challenge:
-      = @challenge_snapshot.most_read_chapters
-      %br
-      %br
-      Most-read chapter(s) last week:
-      = @challenge_snapshot.most_read_chapters_last_week
-      %br
-      %br
-
-      Challenge members with the longest consecutive-days reading streak:
-      = @challenge_snapshot.longest_individual_streaks.keys.to_sentence
+      Challenge members with the longest consecutive-days reading streaks:
+      = @challenge_snapshot.top_reading_streak_names.to_sentence
       read for
-      = @challenge_snapshot.longest_individual_streaks.values.first
-      straight days!
+      = @challenge_snapshot.top_reading_streak_values.to_sentence
+      straight days, respectively!
       %br
       %br
 
@@ -48,16 +39,23 @@
           %br
           %br
 
-        Top Groups (based on all stats)
-        = @challenge_snapshot.top_groups
+        Top Groups (based on average of completion and on-schedule)
+        - @challenge_snapshot.groups_and_scores_highest_first.each do |gs|
+          = gs.first  # name
+          = gs.last  # score
         %br
         %br
 
-      Top Challenge Members ranked by overall progress percentage:
+      Members ranked by overall progress percentage:
       - @challenge_snapshot.memberships_by_percentage_challenge_completed.each do |x|
         = x.user.name
         = x.membership_statistic_progress_percentage.value
       %br
       %br
-      TOP READERS (Based on a combination of all statistics for this Bible Challenge):
-      = @challenge_snapshot.top_readers
+
+      Top Individual Readers (based on average of completion and on-schedule)
+      - @challenge_snapshot.top_readers.each do |tr|
+        = tr.membership.name
+        = tr.score
+        %br
+

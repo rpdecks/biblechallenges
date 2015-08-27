@@ -36,17 +36,25 @@ class ChallengeSnapshot
     @challenge.members
   end
 
-  def chapters
+  def total_chapters
     @challenge.chapters.size
   end
 
   def total_chapters_read
-    @challenge.membership_readings.all.size
+    @challenge.membership_readings.size
   end
 
-  def longest_individual_streaks
+  def top_reading_streak_stats
     # grab the top 5
    @challenge.membership_statistics.where(type: "MembershipStatisticRecordReadingStreak").top(5)
+  end
+
+  def top_reading_streak_names
+    top_membership_statistic_record_reading_streaks.map{|stat| stat.membership.name}
+  end
+
+  def top_reading_streak_values
+    top_membership_statistic_record_reading_streaks.map{|stat| stat.value }
   end
 
   def top_readers
@@ -57,8 +65,8 @@ class ChallengeSnapshot
     @challenge.groups.map{ |g| [g.name, GroupScore.new(g).score] }
   end
 
-  def group_names_by_average_score_highest_first
-    groups_and_scores.sort_by {|group_and_score| group_and_score.last }.reverse.map {|group_and_score| group_and_score.first }
+  def groups_and_scores_highest_first
+    groups_and_scores.sort_by {|group_and_score| group_and_score.last }.reverse
   end
 
   private
