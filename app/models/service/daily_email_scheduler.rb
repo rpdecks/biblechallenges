@@ -18,11 +18,18 @@ class DailyEmailScheduler
         user_reading_hour = m.preferred_reading_hour
 
         # e.g. format => "2050-05-02 07:00:00"
-        user_reading_hour_string = DateTime.tomorrow.strftime("%Y-%m-%d") + " " + user_reading_hour.to_s + ":00:00"
+        user_reading_hour_string = DateTime.tomorrow.strftime("%Y-%m-%d") + 
+          " " + user_reading_hour.to_s + ":00:00"
         user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
 
         if m.reading_notify == true
-          EmailLog.create(event: "Schedule", membership_id: m.id)
+          EmailLog.create(event: "Schedule",
+                          challenge_id: challenge.id,
+                          user_id: m.id,
+                          email: m.email,
+                          time_zone: m.time_zone,
+                          preferred_reading_hour: m.preferred_reading_hour)
+
           DailyEmailWorker.perform_at(user_reading_hour_utc.to_i,
                                       tomorrows_reading_ids,
                                       m.id)
