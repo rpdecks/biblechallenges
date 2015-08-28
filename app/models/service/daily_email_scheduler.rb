@@ -22,6 +22,7 @@ class DailyEmailScheduler
         user_reading_hour_utc = Time.zone.parse(user_reading_hour_string).utc
 
         if m.reading_notify == true
+          EmailLog.create(event: "Schedule", membership_id: m.id)
           DailyEmailWorker.perform_at(user_reading_hour_utc.to_i,
                                       tomorrows_reading_ids,
                                       m.id)
