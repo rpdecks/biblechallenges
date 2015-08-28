@@ -526,6 +526,10 @@ fieldset {
     table-layout: fixed;
     height: 100%;
     width: 100%;
+    &:after {
+      content: '';
+      display: table-cell;
+    }
   }
   .col-xs-height {
     display: table-cell;
@@ -549,6 +553,10 @@ fieldset {
     table-layout: fixed;
     height: 100%;
     width: 100%;
+    &:after {
+      content: '';
+      display: table-cell;
+    }
   }
   .col-sm-height {
     display: table-cell;
@@ -572,6 +580,10 @@ fieldset {
     table-layout: fixed;
     height: 100%;
     width: 100%;
+    &:after {
+      content: '';
+      display: table-cell;
+    }
   }
   .col-md-height {
     display: table-cell;
@@ -595,6 +607,10 @@ fieldset {
     table-layout: fixed;
     height: 100%;
     width: 100%;
+    &:after {
+      content: '';
+      display: table-cell;
+    }
   }
   .col-lg-height {
     display: table-cell;

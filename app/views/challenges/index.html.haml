@@ -14,10 +14,14 @@
 .container
   -if params[:query].present?
     %h3.component-title Search Results
-    .row
-      - @public_challenges.each do |challenge|
-        .col-md-6
-          = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+    .challenges
+      - @public_challenges.each_slice(2) do |challenge_group|
+        .row
+          .row-lg-height.row-md-height
+            - challenge_group.each do |challenge|
+              .col-md-6.col-lg-height.col-md-height
+                .inside.inside-full-height
+                  = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
   - else
     / %h3.component-title Leaderboards
     .row
