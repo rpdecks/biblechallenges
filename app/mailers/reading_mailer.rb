@@ -17,7 +17,8 @@ class ReadingMailer < ActionMailer::Base
                           user_id: @user.id,
                           email: @user.email,
                           time_zone: @user.time_zone,
-                          preferred_reading_hour: @user.preferred_reading_hour)
+                          preferred_reading_hour: @user.preferred_reading_hour,
+                          readings: readings)
           #include readings
 
       mail( to: @user.email,

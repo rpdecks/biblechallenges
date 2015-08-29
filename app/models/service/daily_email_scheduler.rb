@@ -28,7 +28,8 @@ class DailyEmailScheduler
                           user_id: m.id,
                           email: m.email,
                           time_zone: m.time_zone,
-                          preferred_reading_hour: m.preferred_reading_hour)
+                          preferred_reading_hour: m.preferred_reading_hour,
+                          schedule_time: user_reading_hour_utc)
 
           DailyEmailWorker.perform_at(user_reading_hour_utc.to_i,
                                       tomorrows_reading_ids,
