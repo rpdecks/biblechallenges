@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe EmailLog, type: :model do
   it "logs email scheduling" do
-    user = create(:user)
+    user = create(:user, time_zone: "Central Time (US & Canada)")
     challenge = create(:challenge, :with_membership, :with_readings)
     create(:membership, user: user, challenge: challenge)
 
@@ -20,13 +20,16 @@ describe EmailLog, type: :model do
   end
 
   it "logs email delivering" do
-    skip
     user = create(:user)
     challenge = create(:challenge, :with_membership, :with_readings)
     create(:membership, user: user, challenge: challenge)
 
+    readings_ids = challenge.readings.tomorrows_readings.pluck(:id)
+
     expect {
-      DailyEmailScheduler.set_daily_email_jobs
+      DailyEmailWorker.perform_async(readings_ids, user.id)
+      DailyEmailWorker.perform_async(readings_ids, challenge.owner.id)
+      DailyEmailWorker.drain
     }.to change(EmailLog, :count).by(2)
   end
 end
