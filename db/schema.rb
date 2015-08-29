@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150828174628) do
+ActiveRecord::Schema.define(version: 20150829003328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,8 @@ ActiveRecord::Schema.define(version: 20150828174628) do
     t.string   "email"
     t.string   "time_zone"
     t.integer  "preferred_reading_hour"
+    t.datetime "schedule_time"
+    t.integer  "readings",                            array: true
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
