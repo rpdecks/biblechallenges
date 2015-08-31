@@ -1,6 +1,4 @@
 class ReadingsGenerator
-
-
   def initialize(challenge)
     @challenge = challenge
   end
