@@ -1,3 +1,5 @@
+include ActionDispatch::TestProcess
+
 FactoryGirl.define do
   factory :user do
     name { Faker::Name.name }
@@ -6,6 +8,8 @@ FactoryGirl.define do
     password_confirmation "password"
     time_zone "UTC"
     preferred_reading_hour 6
+    avatar { fixture_file_upload(Rails.root.join('spec', 'images', 'my_avatar.png'),
+                                 'image/png') }
 
     factory :existing_facebook_user do
       provider "facebook"
