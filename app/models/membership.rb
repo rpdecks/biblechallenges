@@ -13,7 +13,7 @@ class Membership < ActiveRecord::Base
   has_many :membership_readings
   has_many :readings, through: :challenge
   has_many :membership_statistics, dependent: :destroy
-  
+
   # autogenerate has_one associations for all the membership statistic types
   Rails.application.eager_load!
   MembershipStatistic.descendants.each do |stat| 
