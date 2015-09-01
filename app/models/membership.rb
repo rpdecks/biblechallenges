@@ -28,7 +28,6 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
-  #after_commit :successful_creation_email, :on => :create
   after_update :recalculate_group_stats
 
   def to_date_progress_percentage(adate)
@@ -57,12 +56,10 @@ class Membership < ActiveRecord::Base
 
   def successful_creation_email
     NewMembershipEmailWorker.perform_in(30.seconds, self.id)
-    send_reading_email
   end
 
   def successful_auto_creation_email(membership, password)
     NewAutoMembershipEmailWorker.perform_in(30.seconds, membership.id, password)
-    send_reading_email
   end
 
   def send_reading_email
