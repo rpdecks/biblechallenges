@@ -18,7 +18,7 @@ class Challenge < ActiveRecord::Base
 
   scope :underway_at_least_x_days, lambda {|x| where("begindate < ?", Date.today - x.days) }
 
-  scope :with_readings_tomorrow, -> { joins(:readings).where(readings: { read_on: Date.today+1 }).group(:id) }
+  scope :with_readings_tomorrow, -> { includes(:readings).where(readings: { read_on: Date.today+1 }) }
   scope :abandoned, -> { underway_at_least_x_days(7).no_members }
 
   include FriendlyId
