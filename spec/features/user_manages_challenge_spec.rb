@@ -19,6 +19,22 @@ feature 'User manages challenges' do
     end
   end
 
+  scenario 'User joins a challenge with multiple chapters per day, should only receive 1 email each day' do
+    Sidekiq::Testing.inline! do
+      start_date = Date.today
+      end_date = (start_date + 4.days)
+      challenge = create(:challenge_with_readings, 
+                          chapters_to_read: "Matt 1-20",
+                          begindate: start_date, 
+                          enddate: end_date,
+                          owner_id: user.id)
+      challenge.join_new_member(user)
+      expect(challenge.members).to include user
+      DailyEmailScheduler.set_daily_email_jobs
+      expect(ActionMailer::Base.deliveries.size).to eq 1 #Today's reading.
+    end
+  end
+
   scenario 'User joins a challenge and the challenge stats get updated automatically' do
     start_date = Date.today
     challenge = create(:challenge_with_readings, 
