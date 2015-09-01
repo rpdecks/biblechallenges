@@ -19,8 +19,8 @@ feature 'User manages challenges' do
       number_of_stats = ChallengeStatistic.descendants.size
       expect(ChallengeStatistic.count).to eq number_of_stats
       all_emails = ActionMailer::Base.deliveries
-      expect(all_emails.size).to eq 1 #Today's reading
-      todays_reading = all_emails.first
+      expect(all_emails.size).to eq 2 #Today's reading and creation notification
+      todays_reading = all_emails.second
       expect(todays_reading.subject).to eq "Bible Challenge reading for challenge 1"
     end
   end
