@@ -24,6 +24,9 @@ Biblechallenge::Application.routes.draw do
 
   namespace :creator do
     resources :challenges do
+      member do
+        get 'snapshot_email' 
+      end
       resources :mass_emails, only: [:new, :create]
     end
     post 'remove_member_from_challenge', controller: 'challenges'
