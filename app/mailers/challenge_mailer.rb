@@ -15,9 +15,9 @@ class ChallengeMailer < ActionMailer::Base
     )
   end
  
-  def snapshot_email(challenge)
-    @challenge_snapshot = ChallengeSnapshot.new(challenge)
-    mail( to: 'pdbradley@gmail.com', subject: "Challenge Status")
+  def snapshot_email(recipient,challenge_snapshot)
+    @challenge_snapshot = challenge_snapshot
+    mail( to: recipient, subject: "#{@challenge_snapshot.name} Snapshot")
   end
 
 

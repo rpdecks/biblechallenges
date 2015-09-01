@@ -1,6 +1,6 @@
 class Creator::ChallengesController < ApplicationController
   before_filter :authenticate_user!, except: [:show]
-  before_filter :find_challenge, only: [:show, :destroy, :edit, :update]
+  before_filter :find_challenge, only: [:show, :destroy, :edit, :update, :snapshot_email]
   before_action :validate_ownership, only: [:show, :edit, :destroy, :update]
 
   def new
@@ -77,6 +77,15 @@ class Creator::ChallengesController < ApplicationController
       flash[:notice] = "Successfully deleted Challenge" 
       redirect_to member_challenges_path
     end
+  end
+
+  def snapshot_email
+    @challenge.members.each do |m|
+      ChallengeMailer.snapshot_email(m.email, ChallengeSnapshot.new(@challenge)).deliver_now
+      SnapshotEmailWorker.perform_in(10.seconds, m.email, @challenge.id)
+    end
+
+    redirect_to :back
   end
 
   private
