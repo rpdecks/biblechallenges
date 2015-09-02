@@ -1,0 +1,9 @@
+%h3.component-title All time streak
+%ol.leaderboard
+  - @front_page_leaderboard.users_by_longest_all_time_streak.each do |u|
+    %li
+      %img{:src => avatar_url(u), :alt => "", :class => "img-circle"}/
+      %strong
+        = u.initialed_name
+      %span.score
+        = u.user_statistic_days_read_in_a_row_all_time.value
