@@ -3,7 +3,7 @@
 .container
   %h2
     Challenge:
-    = link_to "#{@challenge.name}", challenge_path(@challenge), title: "Back to #{@challenge.name}"
+    = link_to "#{@challenge.name}", challenge_path(@challenge), title: "Back to Challenge"
 
   = link_to "Edit", edit_creator_challenge_path(@challenge), :class=>"btn btn-default"
   = link_to "Delete", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger"
