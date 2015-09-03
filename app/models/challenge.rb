@@ -150,6 +150,10 @@ class Challenge < ActiveRecord::Base
       MessageUsersEmailWorker.perform_in(30.seconds, email_array, message, challenge)
   end
 
+  def send_challenge_snapshot_email_to_members
+    memberships.each {|m| m.send_challenge_snapshot_email}
+  end
+
   private
 
   # Validations
