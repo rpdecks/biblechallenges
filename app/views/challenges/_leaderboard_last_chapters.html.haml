@@ -1,0 +1,17 @@
+%h3.component-title Last chapters read
+%ul.list-unstyled.latest-chapters
+  - @front_page_leaderboard.users_by_most_recent_reading.each do |u|
+    %li
+      .member
+        %img{:src => avatar_url(u.user), :alt => "", :class => "img-circle"}/
+
+      .chapter
+        #{u.initialed_name},
+        %span.muted
+          = u.time_ago
+
+        %p
+          %em
+            %a{:href => ""}
+              = u.book_name
+              = u.chapter_number

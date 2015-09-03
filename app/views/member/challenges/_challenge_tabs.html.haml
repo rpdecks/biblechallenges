@@ -1,0 +1,11 @@
+%ul#grouptabs.nav.nav-tabs.nav-justified{role: "tablist"}
+  %li.active{role: "presentation"}
+    %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
+  - if current_user.find_challenge_group(@challenge) != nil
+    %li{role: "presentation"}
+      %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
+  - else
+    %li{role: "presentation"}
+      %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
+  %li{role: "presentation"}
+    %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics

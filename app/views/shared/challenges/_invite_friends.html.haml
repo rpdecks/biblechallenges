@@ -1,0 +1,16 @@
+%button.btn.btn-primary{type: "button", id: "addFriendsToChallenge", data: { toggle: "collapse", target: "#addFriends"}}
+  %i.fa.fa-user-plus
+  Add friends
+%br
+%br
+.collapse#addFriends
+  .row
+    .col-md-6
+      %p
+        You can add your friends to this challenge by entering their email below.
+      = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post do
+        .input-group
+          = text_field_tag 'invite_email', nil, class: "form-control", id: "addFriendsInput", hide_label:true, placeholder: "Add email here", required: true, type: "email"
+
+          %span.input-group-btn
+            = submit_tag "Add", class: "btn btn-primary"

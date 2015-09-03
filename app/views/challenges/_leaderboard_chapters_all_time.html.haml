@@ -1,0 +1,9 @@
+%h3.component-title Chapters read all time
+%ol.leaderboard
+  - @front_page_leaderboard.users_by_all_time_chapters.each do |u|
+    %li
+      %img{:src => avatar_url(u), :alt => "", :class => "img-circle"}/
+      %strong
+        = u.initialed_name
+      %span.score
+        = u.user_statistic_chapters_read_all_time.value
