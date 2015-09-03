@@ -39,8 +39,7 @@
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
           - unless @challenge.owner == current_user
-            %center
-              = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
+            = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
