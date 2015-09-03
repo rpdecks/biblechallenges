@@ -11,10 +11,10 @@ FactoryGirl.define do
 
     trait :with_readings do
       after(:create) do |challenge|
-        ReadingsGenerator.new(challenge).generate 
+        ReadingsGenerator.new(challenge).generate
       end
     end
-    
+
     trait :with_membership do
       after(:create) do |ch|
         create(:membership, challenge: ch, user: ch.owner)

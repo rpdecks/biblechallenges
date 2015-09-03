@@ -9,19 +9,20 @@ class MembershipMailer < ActionMailer::Base
     @membership = Membership.find(membership_id)
     @challenge = @membership.challenge
     @user = @membership.user
-    mail( to: @user.email,
-      subject: "#{@challenge.name}: Thanks for joining!",
-      from: "#{@challenge.name.capitalize} <no-reply@biblechallenges.com>")
+    mail(
+      to: @user.email,
+      subject: "#{@challenge.name}: Thanks for joining!"
+    )
   end
 
   def auto_creation_email(membership_id, password)
-      @password = password
-      @membership = Membership.find(membership_id)
-      @challenge = @membership.challenge
-      @user = @membership.user
-      mail( to: @user.email,
-        subject: "#{@challenge.name}: Thanks for joining!",
-        from: "#{@challenge.name.capitalize} <no-reply@biblechallenges.com>")
+    @password = password
+    @membership = Membership.find(membership_id)
+    @challenge = @membership.challenge
+    @user = @membership.user
+    mail(
+      to: @user.email,
+      subject: "#{@challenge.name}: Thanks for joining!"
+    )
   end
-
 end
