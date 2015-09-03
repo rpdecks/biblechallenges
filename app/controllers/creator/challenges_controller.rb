@@ -80,11 +80,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def snapshot_email
-    @challenge.members.each do |m|
-      ChallengeMailer.snapshot_email(m.email, ChallengeSnapshot.new(@challenge)).deliver_now
-      SnapshotEmailWorker.perform_in(10.seconds, m.email, @challenge.id)
-    end
-
+    @challenge.send_challenge_snapshot_email_to_members
     redirect_to :back
   end
 
