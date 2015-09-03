@@ -81,6 +81,7 @@ class Creator::ChallengesController < ApplicationController
 
   def snapshot_email
     @challenge.send_challenge_snapshot_email_to_members
+    flash[:notice] = "Successfully sent snapshot email to challenge members." 
     redirect_to :back
   end
 
