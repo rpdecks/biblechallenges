@@ -9,7 +9,7 @@
 
   .form-group
     = f.label :time_zone, "Time Zone:"
-    = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, {prompt: "Yout Time Zone"}, {class: "form-control"}
+    = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, {prompt: "Your Time Zone"}, {class: "form-control"}
     %p.help-block
 
   .form-group
