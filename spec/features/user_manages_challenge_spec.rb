@@ -19,8 +19,8 @@ feature 'User manages challenges' do
       number_of_stats = ChallengeStatistic.descendants.size
       expect(ChallengeStatistic.count).to eq number_of_stats
       all_emails = ActionMailer::Base.deliveries
-      expect(all_emails.size).to eq 1 #Today's reading
-      todays_reading = all_emails.first
+      expect(all_emails.size).to eq 2 #Today's reading and creation notification
+      todays_reading = all_emails.second
       expect(todays_reading.subject).to eq "Bible Challenge reading for challenge 1"
     end
   end
@@ -55,6 +55,22 @@ feature 'User manages challenges' do
     visit challenge_path(challenge)
     click_link "Join Challenge"
     expect(page).to have_content("Sorry, this challenge has been closed by the owner.")
+  end
+
+  scenario 'User joins a challenge with multiple chapters per day, should only receive 1 email each day' do
+    Sidekiq::Testing.inline! do
+      start_date = Date.today
+      end_date = (start_date + 4.days)
+      challenge = create(:challenge_with_readings, 
+                          chapters_to_read: "Matt 1-20",
+                          begindate: start_date, 
+                          enddate: end_date,
+                          owner_id: user.id)
+      challenge.join_new_member(user)
+      expect(challenge.members).to include user
+      DailyEmailScheduler.set_daily_email_jobs
+      expect(ActionMailer::Base.deliveries.size).to eq 1 #Today's reading.
+    end
   end
 
   scenario 'User joins a challenge and the challenge stats get updated automatically' do

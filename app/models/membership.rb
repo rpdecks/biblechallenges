@@ -13,13 +13,15 @@ class Membership < ActiveRecord::Base
   has_many :membership_readings
   has_many :readings, through: :challenge
   has_many :membership_statistics, dependent: :destroy
-  
+
   # autogenerate has_one associations for all the membership statistic types
   Rails.application.eager_load!
   MembershipStatistic.descendants.each do |stat| 
     has_one stat.name.underscore.to_sym
   end
 
+  delegate :name, to: :user
+  delegate :email, to: :user
 
   #  Validations
   validates :challenge_id, presence: true
@@ -29,7 +31,6 @@ class Membership < ActiveRecord::Base
   validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
-  #after_commit :successful_creation_email, :on => :create
   after_update :recalculate_group_stats
 
   def to_date_progress_percentage(adate)
@@ -58,12 +59,10 @@ class Membership < ActiveRecord::Base
 
   def successful_creation_email
     NewMembershipEmailWorker.perform_in(30.seconds, self.id)
-    send_reading_email
   end
 
   def successful_auto_creation_email(membership, password)
     NewAutoMembershipEmailWorker.perform_in(30.seconds, membership.id, password)
-    send_reading_email
   end
 
   def send_reading_email
@@ -71,6 +70,10 @@ class Membership < ActiveRecord::Base
     if todays_readings.size > 0 && self.user.reading_notify == true
       DailyEmailWorker.perform_in(30.seconds, todays_readings, self.user_id)
     end
+  end
+
+  def send_challenge_snapshot_email
+    SnapshotEmailWorker.perform_in(10.seconds, self.email, self.challenge_id)
   end
 
   private
