@@ -2,7 +2,8 @@
 %br
 .container
   %h2
-    ="Challenge: #{@challenge.name}"
+    Challenge:
+    = link_to "#{@challenge.name}", challenge_path(@challenge), title: "Back to Challenge"
   %h5
     -if @challenge.joinable
       Status:
@@ -20,65 +21,23 @@
   -else 
     = link_to "Open Challenge", creator_challenge_toggle_path(@challenge), :class=>"btn btn-success", :method => :get, "data-confirm" => 'Opening this challenge will allow others to join.'
     /%input{:checked => @challenge.joinable ? "" : "checked", :name => "challenge-activity", :type => "checkbox" }/ Will revisit if we can get input to link with toggle controller
+  = link_to "Send Challenge Snapshot Email", snapshot_email_creator_challenge_path(@challenge), method: :get, "data-confirm" => 'This will send a summary email of the challenge statistics up to the present day to all challenge members.', :class=>"btn btn-danger pull-right"
 
+  = render partial: 'shared/challenges/invite_friends'
   %br
   %br
+
   .panel.panel-primary
     .panel-heading
       = "Total Members: #{@challenge.members.size} "
       &nbsp;&nbsp;
       = link_to new_creator_challenge_mass_email_path(@challenge.id), class: 'btn btn-success btn-xs', id: "Email All Members", :title => 'Email All Members', :rel => 'tooltip' do
         %span.glyphicon.glyphicon-envelope
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
-        %tr
-          %th Name
-          %th Email
-          %th Last Read
-          %th Action
-      %tbody
-      - @challenge.memberships.each do |membership|
-        %tr
-          %td
-            = render 'shared/avatar_medium', user: membership.user
-            - if @challenge.owner == membership.user
-              %span
-                = "#{membership.user.decorate.name} (Owner)"
-            - else 
-              %span
-                = membership.user.decorate.name
-          %td= membership.user.email
-          - unless membership.membership_readings.empty?
-            %td= membership.user.decorate.show_last_recorded_reading(membership)
-          - else
-            %td
-              No readings yet
-          - if @challenge.owner == membership.user
-            %td= "N/A"
-          - else
-            %td= link_to "Remove", creator_remove_member_from_challenge_path(id: membership.id), method: :post, "data-confirm" => 'Are you sure you want to remove this member from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{membership.id}"
-
+    = render partial: 'creator/challenges/members_table', locals: {challenge: @challenge}
   %br
+
   .panel.panel-primary
     .panel-heading
       = "Total Groups: #{@challenge.groups.size} "
-    %table.table.table-striped.table-bordered.table-hover
-      %thead
-        %tr
-          %th Name
-          %th Progress Percentage
-          %th On-schedule Percentage
-          %th Total Chapters Read
-          %th Action
-      %tbody
-      - @challenge.groups.each do |g|
-        %tr
-          %td= g.name
-          %td= g.group_statistic_progress_percentage
-          %td= g.group_statistic_on_schedule_percentage
-          %td= g.group_statistic_total_chapters_read
-          %td= link_to "Remove", creator_remove_group_from_challenge_path(id: g.id), method: :post, "data-confirm" => 'Are you sure you want to remove this group from the challenge? This will also destroy any comments on the group wall.', :class => "btn btn-danger btn-sm", :id => "remove_#{g.id}"
-
+    = render partial: 'creator/challenges/groups_table', locals: {challenge: @challenge}
   %br
-  %br
-

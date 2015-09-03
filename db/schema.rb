@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827155738) do
+ActiveRecord::Schema.define(version: 20150829003328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,19 @@ ActiveRecord::Schema.define(version: 20150827155738) do
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "email_logs", force: :cascade do |t|
+    t.string   "event"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "challenge_id"
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "time_zone"
+    t.integer  "preferred_reading_hour"
+    t.datetime "schedule_time"
+    t.integer  "readings",                            array: true
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -138,7 +151,6 @@ ActiveRecord::Schema.define(version: 20150827155738) do
     t.integer  "ave_punctual_reading_percentage", default: 0
     t.integer  "ave_progress_percentage",         default: 0
     t.integer  "memberships_count"
-    t.string   "passcode"
   end
 
   add_index "groups", ["challenge_id"], name: "index_groups_on_challenge_id", using: :btree
@@ -235,13 +247,9 @@ ActiveRecord::Schema.define(version: 20150827155738) do
     t.boolean  "reading_notify",         default: true
     t.boolean  "message_notify",         default: true
     t.boolean  "comment_notify",         default: true
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
