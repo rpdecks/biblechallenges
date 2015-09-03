@@ -22,6 +22,8 @@ Biblechallenge::Application.routes.draw do
 
   resource :user, only: [:edit, :update]
 
+  get 'user/:id/remove_avatar', to: 'users#remove_avatar', as: 'remove_user_avatar'
+
   namespace :creator do
     resources :challenges do
       member do
