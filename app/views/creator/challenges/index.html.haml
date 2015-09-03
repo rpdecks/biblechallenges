@@ -1,23 +1,20 @@
-.pull-right
-  %a.btn.btn-xs.btn-primary{href: new_challenge_path} Create A New Challenge
-
-%h4 Challenges
-%table.table.table-striped.table-bordered.table-hover
-  %thead
-    %tr
-      %th Owner?
-      %th Name
-      %th Begin Date
-      %th.hidden-xs End Date
-      %th Delete
-  - @challenges.each do |challenge|
-    %tr
-      %td= "X" if challenge.owner == current_user
-      %td= link_to challenge.name, challenge
-      %td= challenge.begindate
-      %td.hidden-xs= challenge.enddate
-      %td= link_to "delete", challenge, method: :delete
-%br/
-
-
-
+/.pull-right
+/  %a.btn.btn-xs.btn-primary{href: new_challenge_path} Create A New Challenge
+/
+/%h4 Challenges
+/%table.table.table-striped.table-bordered.table-hover
+/  %thead
+/    %tr
+/      %th Owner?
+/      %th Name
+/      %th Begin Date
+/      %th.hidden-xs End Date
+/      %th Delete
+/  - @challenges.each do |challenge|
+/    %tr
+/      %td= "X" if challenge.owner == current_user
+/      %td= link_to challenge.name, challenge
+/      %td= challenge.begindate
+/      %td.hidden-xs= challenge.enddate
+/      %td= link_to "delete", challenge, method: :delete
+/%br/
