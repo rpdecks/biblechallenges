@@ -21,4 +21,12 @@ feature 'User manages user profile' do
     expect(user.time_zone).to eq "Alaska"
     expect(user.preferred_reading_hour).to eql 13
   end
+
+  scenario 'User removes avatar file' do
+    visit edit_user_path
+    click_link 'Remove Avatar'
+    expect(page).to have_content 'User avatar has been removed'
+    user.reload
+    expect(user.avatar_file_name).to be_nil
+  end
 end
