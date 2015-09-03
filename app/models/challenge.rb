@@ -27,6 +27,8 @@ class Challenge < ActiveRecord::Base
 
   # Relations
   has_many :memberships, dependent: :destroy
+  has_many :membership_statistics, through: :memberships
+
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
   has_many :membership_readings, through: :memberships  # needs default order #todo 
@@ -146,6 +148,10 @@ class Challenge < ActiveRecord::Base
 
   def send_challenge_msg_via_email(email_array, message, challenge)
       MessageUsersEmailWorker.perform_in(30.seconds, email_array, message, challenge)
+  end
+
+  def send_challenge_snapshot_email_to_members
+    memberships.each {|m| m.send_challenge_snapshot_email}
   end
 
   private

@@ -20,6 +20,8 @@ class Membership < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
+  delegate :name, to: :user
+  delegate :email, to: :user
 
   #  Validations
   validates :challenge_id, presence: true
@@ -68,6 +70,10 @@ class Membership < ActiveRecord::Base
     if todays_readings.size > 0 && self.user.reading_notify == true
       DailyEmailWorker.perform_in(30.seconds, todays_readings, self.user_id)
     end
+  end
+
+  def send_challenge_snapshot_email
+    SnapshotEmailWorker.perform_in(10.seconds, self.email, self.challenge_id)
   end
 
   private
