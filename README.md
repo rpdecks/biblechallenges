@@ -40,7 +40,13 @@ You will need two environment variables:
  - `GOOGLE_CLIENT_SECRET`
 
 You can obtain from registering app at to `console.developers.google.com`
-Note: Under `APIs` remember to enable (Contacts API) and (Google+ API). Under `Credentials`, click `Create new client id`.
+Note: Under `APIs` remember to enable (Contacts API) and (Google+ API). 
+Setup Credentials:
+ 1. Go to `Credentials`
+ 2. Click `Add Credentials` 
+ 3. Select `OAuth 2.0 Client ID`
+ 4. Select `Web Application`
+ 5. Type in the `Authorized redirect URIs`
 
 ### AWS
 You will need four environment variables: 
