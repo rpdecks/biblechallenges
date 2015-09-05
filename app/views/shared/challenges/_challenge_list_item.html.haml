@@ -1,13 +1,14 @@
-= link_to challenge_path(challenge), :class => 'list-group-item', display: 'inline' do
-  %span.badge
-    = challenge.memberships_count
-    = "member".pluralize(challenge.memberships_count)
-  %h4.list-group-item-heading
-    = "#{challenge.name}"
+.challenge
+  = link_to challenge_path(challenge), :class => 'list-group-item' do
+    %span.badge
+      = challenge.memberships_count
+      = "member".pluralize(challenge.memberships_count)
+    %h4.list-group-item-heading
+      = "#{challenge.name}"
 
-  %p.list-group-item-text
-    = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
+    %p.list-group-item-text
+      = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
 
-  %p.list-group-item-text
-    - challenge.members.limit(24).each do |m|
-      = render 'shared/avatar_small', user: m
+    %p.list-group-item-text
+      - challenge.members.limit(24).each do |m|
+        = render 'shared/avatar_small', user: m
