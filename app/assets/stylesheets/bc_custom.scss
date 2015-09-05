@@ -195,7 +195,8 @@ fieldset {
 
 
 .content{
-  background-color: white;
+  // background-color: white;
+  
   padding-top: 48px;
   flex: 1;
 }
@@ -246,7 +247,8 @@ fieldset {
 }
 
 .list-group-item, a.list-group-item{
-  margin-bottom: 12px !important;
+  // padding-bottom: 12px !important;
+  // display: inline;
   padding: 24px;
 
   &:last-child, &:first-child{
@@ -437,18 +439,6 @@ fieldset {
 .leaderboard {
   padding-left: 20px;
 
-  // li:first-child .score:before,
-  // li:nth-child(2) .score:before,
-  // li:nth-child(3) .score:before {
-  //   content: '';
-  //   height: 10px;
-  //   width: 10px;
-  //   position: absolute;
-  //   left: -5px;
-  //   // top: 8px;
-  //   border-radius: 2px 0 2px 0;
-  // }
-
   li:first-child,
   li:nth-child(2),
   li:nth-child(3) {
@@ -456,14 +446,6 @@ fieldset {
       background-color: #b2c6cd;
     }
   }
-
-  // li:nth-child(2) .score {
-  //   background-color: silver;
-  // }
-
-  // li:nth-child(3) .score {
-  //   background-color: #A0693F;
-  // }
 
   li:nth-child(3) + li {
     border-top: 4px double #e6e6e6;
