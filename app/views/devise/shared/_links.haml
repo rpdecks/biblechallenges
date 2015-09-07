@@ -5,11 +5,13 @@
 - if devise_mapping.omniauthable?
   -if params[:challenge_id].present?
     - resource_class.omniauth_providers.each do |provider|
-      = link_to "Sign in with #{provider.to_s.titleize}", user_omniauth_authorize_path(provider, challenge_id: params[:challenge_id])
+      - provider_name = provider.to_s.split("_")[0].titleize
+      = link_to "Sign in with #{provider_name}", user_omniauth_authorize_path(provider, challenge_id: params[:challenge_id])
       %br/
   -else
     - resource_class.omniauth_providers.each do |provider|
-      = link_to "Sign in with #{provider.to_s.titleize}", user_omniauth_authorize_path(provider)
+      - provider_name = provider.to_s.split("_")[0].titleize
+      = link_to "Sign in with #{provider_name}", user_omniauth_authorize_path(provider)
       %br/
 - if devise_mapping.registerable? && controller_name != 'registrations'
   = link_to "Don't have an account? Sign up", new_registration_path(resource_name), class: ""
