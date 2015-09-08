@@ -8,22 +8,31 @@ feature 'User manages member/challenge' do
   end
 
   scenario "User is able to see Todays reading", :js => true do
-    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-3")
+    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
     ChallengeCompletion.new(challenge)
     create(:membership, challenge: challenge, user: user)
-    #pending "TODO: Need to test content within javascript generated view"
     visit member_challenge_path(challenge)
-    #wait_for_ajax
     expect(page).to have_content("David")
   end
 
   scenario "User is able to log todays reading" do
-    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-3")
+    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
     ChallengeCompletion.new(challenge)
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
     click_link "Log #{challenge.readings.first.book_and_chapter}"
     expect(MembershipReading.count).to eq 1
+  end
+
+  scenario "User is able to see Todays reading when timezone is blank" do
+    user.time_zone = ""
+    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
+    ChallengeCompletion.new(challenge)
+    create(:membership, challenge: challenge, user: user)
+    visit member_challenge_path(challenge)
+    within('.chapter') do
+      expect(page).to have_content("Matthew 1")
+    end
   end
 
   scenario "Today's reading accounts for Timezone" do
