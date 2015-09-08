@@ -8,18 +8,14 @@ feature 'User manages readings' do
     login(@user)
   end
 
-  context "from the challenge page" do
-    scenario "sees references to the reading pages" do
-      visit challenge_path(@challenge)
-      expect(page).to have_link "Matthew 1"
-    end
-    scenario "clicking reading link takes him to the reading page" do
-      visit challenge_path(@challenge)
-      click_link "Matthew 1"
-      expect(current_path).to eq reading_path(@challenge.readings.first)
-    end
+  scenario "sees references to the reading pages" do
+    visit challenge_path(@challenge)
+    expect(page).to have_link "Matthew 1"
   end
-    
 
-
+  scenario "clicking reading link takes him to the reading page" do
+    visit challenge_path(@challenge)
+    click_link "Matthew 1"
+    expect(current_path).to eq reading_path(@challenge.readings.first)
+  end
 end

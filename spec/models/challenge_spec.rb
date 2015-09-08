@@ -68,10 +68,7 @@ describe Challenge do
         challenge.save
         expect(challenge.enddate).to eql(challenge.begindate + 8.days)
       end
-
     end
-
-
   end
 
   describe "Relations" do
@@ -81,8 +78,6 @@ describe Challenge do
     it { should have_many(:readings) }
     it { should have_many(:membership_readings) }
   end
-
-
 
   describe 'Instance methods' do
 
@@ -104,6 +99,7 @@ describe Challenge do
         expect(challenge.todays_reading).to eq challenge.readings.last
       end
     end
+
     describe '#generate_book_chapters' do
       it "generates book chapter pairs in book_chapters" do
         challenge = build(:challenge, chapters_to_read: 'Matt 1-2')
@@ -128,7 +124,6 @@ describe Challenge do
 
         it 'creates a reading for every chapter assigned in the challenge'do
           challenge.generate_readings
-          
           expect(challenge.readings.length).to eql 6
         end
 
@@ -139,9 +134,7 @@ describe Challenge do
           end
           expect(challenge.readings.last.read_on.strftime("%a, %-d %b %Y")).to eql(challenge.enddate.strftime("%a, %-d %b %Y"))
         end
-
       end
-
     end
 
     describe '#membership_for' do
