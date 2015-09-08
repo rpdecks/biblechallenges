@@ -16,6 +16,7 @@
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
+          - # todo: take into account user's timezone
           %h4
             Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})
 
