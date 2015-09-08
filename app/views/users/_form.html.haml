@@ -14,7 +14,7 @@
 
   .form-group
     = f.label :preferred_reading_hour, "Preferred Reading Hour:"
-    = f.collection_select :preferred_reading_hour, (0..23).map {|n| number_to_hour_of_day(n)}, :to_i, :to_s, {prompt: "Yout Preferred Reading Hour"}, {class: "form-control"}
+    = f.collection_select :preferred_reading_hour, (0..23).map {|n| number_to_hour_of_day(n)}, :to_i, :to_s, {prompt: "Your Preferred Reading Hour"}, {class: "form-control"}
     %p.help-block
       Your daily reading emails will be sent out at
       #{number_to_hour_of_day(f.object.preferred_reading_hour)}

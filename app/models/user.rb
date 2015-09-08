@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
   private
 
   def set_default_values
-    self.preferred_reading_hour ||= "3"
-    self.time_zone ||= "Central Time (US & Canada)"
+    self.preferred_reading_hour ||= "4"
+    self.time_zone ||= "Eastern Time (US & Canada)"
   end
 end
