@@ -137,8 +137,11 @@ class Challenge < ActiveRecord::Base
   end
 
   def todays_readings(user)
-    userdate = Time.now.in_time_zone(user.time_zone).to_date
-    # todo: what if time_zone is null?
+    userdate = if user.time_zone.present?
+                 Time.now.in_time_zone(user.time_zone).to_date
+               else
+                 Time.zone.now.to_date
+               end
     readings.where(read_on: userdate)
   end
 
