@@ -29,6 +29,7 @@ feature 'User manages member/challenge' do
   scenario "Today's reading accounts for Timezone" do
     user.time_zone = "Paris"
 
+    Time.zone = "Eastern Time (US & Canada)"
     creation_time = Time.local(2015, 7, 4, 10, 0, 0) # time challenge was created
     Timecop.travel(creation_time)
     challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-3")
@@ -39,8 +40,10 @@ feature 'User manages member/challenge' do
     Timecop.travel(read_time)
     visit member_challenge_path(challenge)
 
-    expect(page).to_not have_content("Matthew 2")
-    expect(page).to have_content("Matthew 3")
+    within('.chapter') do
+      expect(page).to_not have_content("Matthew 2")
+      expect(page).to have_content("Matthew 3")
+    end
 
     Timecop.return
   end

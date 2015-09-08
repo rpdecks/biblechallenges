@@ -1,10 +1,9 @@
 %br
 -if todays_reading
-  %h4
+  %h4.chapter
     = todays_reading.book_and_chapter
 
   %br
-
 
   #verses
     - todays_verses.each do |verse|

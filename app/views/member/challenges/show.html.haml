@@ -20,13 +20,15 @@
             Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})
 
           - if @challenge.membership_for(current_user)
-            = render partial: "shared/challenges/change_bible_version", locals: {membership: @membership}
+            = render partial: "shared/challenges/change_bible_version",
+              locals: {membership: @membership}
             %br
 
+          - # todo: refactor this to todays_chapters
           - @todays_readings.each do |todays_reading|
             - todays_verses = todays_reading.chapter.verses.by_version(@membership.bible_version)
 
-            = render partial: 'shared/challenges/todays_reading', 
+            = render partial: 'shared/challenges/todays_reading',
             locals: { todays_reading: todays_reading, todays_verses: todays_verses}
 
             = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
