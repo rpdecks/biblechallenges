@@ -1,13 +1,9 @@
 require 'spec_helper'
 
 feature 'User manages user profile' do
-  let(:user) {create(:user)}
-
-  before(:each) do
-    login(user)
-  end
-
   scenario 'User edits own profile successfully' do
+    user = create(:user)
+    login(user)
     new_user_params = build(:user)
     visit edit_user_path
 
@@ -23,6 +19,8 @@ feature 'User manages user profile' do
   end
 
   scenario 'User removes avatar file' do
+    user = create(:user_with_avatar)
+    login(user)
     visit edit_user_path
     click_link 'Remove Avatar'
     expect(page).to have_content 'User avatar has been removed'
