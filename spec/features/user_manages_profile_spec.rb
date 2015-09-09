@@ -26,5 +26,8 @@ feature 'User manages user profile' do
     expect(page).to have_content 'User avatar has been removed'
     user.reload
     expect(user.avatar_file_name).to be_nil
+
+    # destroy avatar uploads after test
+    clean_test_uploads
   end
 end
