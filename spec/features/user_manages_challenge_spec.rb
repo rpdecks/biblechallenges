@@ -50,6 +50,13 @@ feature 'User manages challenges' do
     end
   end
 
+  scenario 'User trys to join a closed challenge' do
+    challenge = create(:closed_challenge)
+    visit challenge_path(challenge)
+    click_link "Join Challenge"
+    expect(page).to have_content("Sorry, this challenge has been closed by the owner.")
+  end
+
   scenario 'User joins a challenge with multiple chapters per day, should only receive 1 email each day' do
     Sidekiq::Testing.inline! do
       start_date = Date.today

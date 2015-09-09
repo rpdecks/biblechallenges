@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829003328) do
+ActiveRecord::Schema.define(version: 20150908190524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,14 +58,15 @@ ActiveRecord::Schema.define(version: 20150829003328) do
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
     t.integer  "readings_count"
-    t.integer  "book_chapters",        default: [],              array: true
+    t.integer  "book_chapters",        default: [],                array: true
     t.text     "date_ranges_to_skip"
-    t.integer  "days_of_week_to_skip", default: [],              array: true
+    t.integer  "days_of_week_to_skip", default: [],                array: true
     t.string   "slug"
     t.integer  "num_chapters_per_day", default: 1
-    t.hstore   "chapters_per_date",    default: {}, null: false
-    t.json     "schedule",             default: {}, null: false
-    t.date     "available_dates",      default: [],              array: true
+    t.hstore   "chapters_per_date",    default: {},   null: false
+    t.json     "schedule",             default: {},   null: false
+    t.date     "available_dates",      default: [],                array: true
+    t.boolean  "joinable",             default: true
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
@@ -185,7 +186,7 @@ ActiveRecord::Schema.define(version: 20150829003328) do
     t.integer  "challenge_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "bible_version",                default: "ASV"
+    t.string   "bible_version",                default: "ESV"
     t.integer  "group_id"
     t.integer  "rec_sequential_reading_count", default: 0
     t.integer  "punctual_reading_percentage",  default: 0
