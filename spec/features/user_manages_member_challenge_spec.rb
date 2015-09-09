@@ -12,7 +12,9 @@ feature 'User manages member/challenge' do
     ChallengeCompletion.new(challenge)
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
-    expect(page).to have_content("David")
+    within('.chapter') do
+      expect(page).to have_content("Matthew 1")
+    end
   end
 
   scenario "User is able to log todays reading" do
