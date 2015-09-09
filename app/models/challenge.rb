@@ -139,11 +139,10 @@ class Challenge < ActiveRecord::Base
     readings.where(read_on: Date.today)
   end
 
-  def all_users_emails_except_challenge_owner
+  def all_users_emails
     all_members_in_challenge = self.members.where(:message_notify => true) #user_email_pref set to true to receive owner messages
     all_emails = all_members_in_challenge.pluck(:email)
-    all_users = all_emails - [self.owner.email] #remove challenge owner's email
-    return all_users
+    return all_emails
   end
 
   def send_challenge_msg_via_email(email_array, message, challenge)

@@ -3,7 +3,7 @@ class Creator::MassEmailsController < ApplicationController
   before_action :validate_ownership, only: [:new, :create]
 
   def create
-    email_array = @challenge.all_users_emails_except_challenge_owner
+    email_array = @challenge.all_users_emails
     if params[:message].present?
       flash[:notice] = "You have successfully sent your message"
       message = params[:message]
