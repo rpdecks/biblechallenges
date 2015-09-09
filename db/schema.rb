@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829003328) do
+ActiveRecord::Schema.define(version: 20150908190524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(version: 20150829003328) do
     t.integer  "challenge_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "bible_version",                default: "ASV"
+    t.string   "bible_version",                default: "ESV"
     t.integer  "group_id"
     t.integer  "rec_sequential_reading_count", default: 0
     t.integer  "punctual_reading_percentage",  default: 0
