@@ -40,14 +40,22 @@
 
     - unless @my_challenges.blank?
       %h3.component-title My Current Challenges
-      .row
-        - @my_challenges.each do |challenge|
-          .col-md-6
-            = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+      .challenges
+        - @my_challenges.each_slice(2) do |challenge_group|
+          .row
+            .row-lg-height.row-md-height
+              - challenge_group.each do |challenge|
+                .col-md-6.col-lg-height.col-md-height
+                  .inside.inside-full-height
+                    = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
 
     - unless @public_challenges.empty?
       %h3.component-title Popular Challenges
-      .row
-        - @public_challenges.each do |challenge|
-          .col-md-6
-            = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+      .challenges
+        - @public_challenges.each_slice(2) do |challenge_group|
+          .row
+            .row-lg-height.row-md-height
+              - challenge_group.each do |challenge|
+                .col-md-6.col-lg-height.col-md-height
+                  .inside.inside-full-height
+                    = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
