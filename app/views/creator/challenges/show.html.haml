@@ -18,12 +18,13 @@
       %thead
         %tr
           %th Name
+          %th Group
           %th Email
           %th Completed
           %th Last Read
           %th Action
       %tbody
-      - @challenge.memberships.each do |membership|
+      - @challenge.memberships.by_group.each do |membership|
         %tr
           %td
             = render 'shared/avatar_medium', user: membership.user
@@ -33,10 +34,13 @@
             - else 
               %span
                 = membership.user.decorate.name
-          %td= membership.user.email
+          %td= membership.group.try(:name)
+          %td= mail_to(membership.user.email)
           %td= membership.x_of_total_read
           - unless membership.membership_readings.empty?
-            %td= time_ago_in_words(membership.last_recorded_reading_time)
+            %td
+              = time_ago_in_words(membership.last_recorded_reading_time)
+              ago
           - else
             %td
               No readings yet

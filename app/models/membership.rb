@@ -20,6 +20,9 @@ class Membership < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
+  # Scopes
+  scope :by_group, -> { order(:group_id) }
+
 
   #  Validations
   validates :challenge_id, presence: true
