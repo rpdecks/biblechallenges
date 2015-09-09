@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'User manages member/challenge' do
+feature 'User views challenge page as member' do
   let(:user) {create(:user)}
 
   before(:each) do
