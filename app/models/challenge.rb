@@ -137,12 +137,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def todays_readings(user)
-    userdate = if user.time_zone.present?
-                 Time.now.in_time_zone(user.time_zone).to_date
-               else
-                 Time.zone.now.to_date
-               end
-    readings.where(read_on: userdate)
+    readings.where(read_on: user.date_by_timezone)
   end
 
   def all_users_emails_except_challenge_owner
