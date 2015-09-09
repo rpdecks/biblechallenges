@@ -70,6 +70,7 @@ GEM
       railties (>= 3.0)
     bootstrap-sass (3.0.2.1)
       sass (~> 3.2)
+    bootstrap-switch-rails (3.0.2)
     bootstrap_form (2.3.0)
     bootswatch-rails (3.3.4)
       railties (>= 3.1)
@@ -427,6 +428,7 @@ DEPENDENCIES
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
   bootstrap-sass (~> 3.0.2.0)
+  bootstrap-switch-rails (~> 3.0.0)
   bootstrap_form
   bootswatch-rails
   capybara

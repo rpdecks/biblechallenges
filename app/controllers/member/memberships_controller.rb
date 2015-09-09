@@ -23,15 +23,20 @@ class Member::MembershipsController < ApplicationController
   end
 
   def create
-    @membership = challenge.memberships.build(params[:membership])
-    @membership.user = current_user if current_user
-    if @membership.save
-      MembershipCompletion.new(@membership)
-      flash[:notice] = "Thank you for joining!" 
+    if challenge.joinable
+      @membership = challenge.memberships.build(params[:membership])
+      @membership.user = current_user if current_user
+      if @membership.save
+        MembershipCompletion.new(@membership)
+        flash[:notice] = "Thank you for joining!"
+      else
+        flash[:error] = @membership.errors.full_messages.to_sentence
+      end
+      redirect_to [:member, challenge]
     else
-      flash[:error] = @membership.errors.full_messages.to_sentence
+      flash[:notice] = "Sorry, this challenge has been closed by the owner."
+      redirect_to challenge
     end
-    redirect_to [:member, challenge]
   end
 
   def join_group
