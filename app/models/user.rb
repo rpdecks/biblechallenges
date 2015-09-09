@@ -77,10 +77,6 @@ class User < ActiveRecord::Base
     user_membership.progress_percentage
   end
 
-  def show_last_recorded_reading(membership)
-    membership.membership_readings.last.created_at.to_pretty
-  end
-
   def find_challenge_group(challenge)
     groups.where(challenge: challenge).first
   end
@@ -98,7 +94,7 @@ class User < ActiveRecord::Base
   private
 
   def set_default_values
-    self.preferred_reading_hour ||= "3"
-    self.time_zone ||= "Central Time (US & Canada)"
+    self.preferred_reading_hour ||= "6"
+    self.time_zone ||= "Eastern Time (US & Canada)"
   end
 end
