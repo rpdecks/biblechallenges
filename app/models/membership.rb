@@ -20,6 +20,9 @@ class Membership < ActiveRecord::Base
     has_one stat.name.underscore.to_sym
   end
 
+  # Scopes
+  scope :by_group, -> { order(:group_id) }
+
   delegate :name, to: :user
   delegate :email, to: :user
 
@@ -71,6 +74,15 @@ class Membership < ActiveRecord::Base
       DailyEmailWorker.perform_in(30.seconds, todays_readings, self.user_id)
     end
   end
+
+  def last_recorded_reading_time
+    membership_readings.order(:created_at).last.created_at
+  end
+
+  def x_of_total_read
+    "#{membership_readings.size} of #{readings.size}"
+  end
+
 
   def send_challenge_snapshot_email
     SnapshotEmailWorker.perform_in(10.seconds, self.email, self.challenge_id)
