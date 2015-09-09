@@ -5,50 +5,29 @@
   .container
     = render 'shared/challenges/challenge_overview'
 
-    %button.btn.btn-primary{type: "button", id: "addFriendsToChallenge", data: { toggle: "collapse", target: "#addFriends"}}
-      %i.fa.fa-user-plus
-      Add friends
-
-    %br
-    %br
-    .collapse#addFriends
-      .row
-        .col-md-6
-          %p
-            You can add your friends to this challenge by entering their email below.
-          = form_tag sign_up_via_email_member_membership_path(challenge_id: @challenge.id), method: :post do
-            .input-group
-              = text_field_tag 'invite_email', nil, class: "form-control", id: "addFriendsInput", hide_label:true, placeholder: "Add email here", required: true, type: "email"
-
-              %span.input-group-btn
-                = submit_tag "Add", class: "btn btn-primary"
+    = render partial: 'shared/challenges/invite_friends'
 
 .content
   .container
     %br
-    %br
     %div{role: "tabpanel"}
-      %ul#grouptabs.nav.nav-tabs.nav-justified{role: "tablist"}
-        %li.active{role: "presentation"}
-          %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
-        - if current_user.find_challenge_group(@challenge) != nil
-          %li{role: "presentation"}
-            %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
-        - else
-          %li{role: "presentation"}
-            %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
-        %li{role: "presentation"}
-          %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
+
+      = render partial: "member/challenges/challenge_tabs", locals: {challenge: @challenge}
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
           %h4
             Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})
+
+          - if @challenge.membership_for(current_user)
+            = render partial: "shared/challenges/change_bible_version", locals: {membership: @membership}
+            %br
+
           - @todays_readings.each do |todays_reading|
             - todays_verses = todays_reading.chapter.verses.by_version(@membership.bible_version)
 
-            = render partial: 'shared/challenges/todays_reading', locals: { todays_reading: todays_reading,
-            todays_verses: todays_verses}
+            = render partial: 'shared/challenges/todays_reading', 
+            locals: { todays_reading: todays_reading, todays_verses: todays_verses}
 
             = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
 
@@ -58,13 +37,6 @@
           .panel.panel-primary
             .panel-heading Challenge Readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
-
-            - if current_user && membership = @challenge.membership_for(current_user)
-              %tr
-                %td Bible Version:
-                %td
-                  = membership.bible_version
-                  =link_to "Change", member_membership_path(membership), :method => :get
 
           - unless @challenge.owner == current_user
             = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
