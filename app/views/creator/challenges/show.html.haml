@@ -14,7 +14,7 @@
       %u
         Closed 
   %br
-  = link_to "Edit Name", edit_creator_challenge_path(@challenge), :class=>"btn btn-default"
+  = link_to "Edit", edit_creator_challenge_path(@challenge), :class=>"btn btn-default"
   = link_to "Delete", creator_challenge_path(@challenge), method: :delete, "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger"
   -if @challenge.joinable == true
     = link_to "Close Challenge", creator_challenge_toggle_path(@challenge), :class=>"btn btn-warning", :method => :get, "data-confirm" => 'By closing this challenge, others will no longer be able to join it.'
