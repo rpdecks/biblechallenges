@@ -18,7 +18,7 @@
         .tab-pane.active#readings{role: "tabpanel"}
           - # todo: take into account user's timezone
           %h4
-            Today's Reading (#{DateTime.now.strftime("%m/%d/%Y")})
+            Today's Reading (#{Time.now.in_time_zone(current_user.time_zone).strftime("%m/%d/%Y")})
 
           - if @challenge.membership_for(current_user)
             = render partial: "shared/challenges/change_bible_version",
