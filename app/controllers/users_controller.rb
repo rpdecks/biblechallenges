@@ -17,6 +17,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def remove_avatar
+    @user = current_user
+    @user.update_attributes(avatar_file_name: nil)
+    redirect_to edit_user_path, notice: "User avatar has been removed"
+  end
+
   private
 
   def user_params

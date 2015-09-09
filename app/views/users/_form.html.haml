@@ -9,7 +9,7 @@
 
   .form-group
     = f.label :time_zone, "Time Zone:"
-    = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, {prompt: "Yout Time Zone"}, {class: "form-control"}
+    = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, {prompt: "Your Time Zone"}, {class: "form-control"}
     %p.help-block
 
   .form-group
@@ -49,10 +49,14 @@
     = f.file_field :avatar, {class: "form-control"}
     %p.help-block
 
-
     = f.label :avatar, "Current Avatar: "
     &nbsp;
     = render 'shared/avatar', user: current_user || @user
+    - if @user.persisted?
+      %br
+      &emsp; &emsp;
+      - if @user.avatar_file_name
+        = link_to 'Remove Avatar', remove_user_avatar_path(@user.id)
     %br
     %br
 
