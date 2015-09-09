@@ -7,7 +7,7 @@ feature 'User views challenge page as member' do
     login(user)
   end
 
-  scenario "User is able to see Todays reading", :js => true do
+  scenario "User is able to see Todays reading" do
     challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
     ChallengeCompletion.new(challenge)
     create(:membership, challenge: challenge, user: user)
