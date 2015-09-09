@@ -132,7 +132,6 @@ class Challenge < ActiveRecord::Base
   end
 
   def todays_reading
-    # todo: take time zone into consideration
     readings.find_by_read_on(Date.today)
   end
 

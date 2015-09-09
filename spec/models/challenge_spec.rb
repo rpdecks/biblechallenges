@@ -10,7 +10,6 @@ describe Challenge do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:owner_id) }
 
-
     describe "scopes" do
       describe "underway_at_least_x_days" do
         it "returns challenges that have started x days or more ago" do
@@ -55,8 +54,6 @@ describe Challenge do
           expect(challenge.valid?).to be true
         end
       end
-
-
     end
 
     context 'when end date is not provided' do
