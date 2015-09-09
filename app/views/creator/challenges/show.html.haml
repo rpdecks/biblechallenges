@@ -19,6 +19,7 @@
         %tr
           %th Name
           %th Email
+          %th Completed
           %th Last Read
           %th Action
       %tbody
@@ -33,8 +34,9 @@
               %span
                 = membership.user.decorate.name
           %td= membership.user.email
+          %td= membership.x_of_total_read
           - unless membership.membership_readings.empty?
-            %td= membership.user.decorate.show_last_recorded_reading(membership)
+            %td= time_ago_in_words(membership.last_recorded_reading_time)
           - else
             %td
               No readings yet
