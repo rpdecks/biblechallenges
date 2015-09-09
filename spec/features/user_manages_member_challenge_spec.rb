@@ -17,6 +17,21 @@ feature 'User manages member/challenge' do
     end
   end
 
+  scenario "Today's reading accounts for multiple readings per day" do
+    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-2",
+                       begindate: Date.today,
+                       enddate: Date.today)
+    ChallengeCompletion.new(challenge)
+    create(:membership, challenge: challenge, user: user)
+    visit member_challenge_path(challenge)
+    within all(".chapter")[0] do
+      expect(page).to have_content("Matthew 1")
+    end
+    within all(".chapter")[1] do
+      expect(page).to have_content("Matthew 2")
+    end
+  end
+
   scenario "User is able to log todays reading" do
     challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
     ChallengeCompletion.new(challenge)
@@ -82,6 +97,4 @@ feature 'User manages member/challenge' do
 
     Timecop.return
   end
-
-  scenario "Today's reading accounts for multiple readings per day"
 end
