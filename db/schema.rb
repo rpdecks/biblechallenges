@@ -58,14 +58,15 @@ ActiveRecord::Schema.define(version: 20150908190524) do
     t.string   "dates_to_skip"
     t.integer  "memberships_count"
     t.integer  "readings_count"
-    t.integer  "book_chapters",        default: [],              array: true
+    t.integer  "book_chapters",        default: [],                array: true
     t.text     "date_ranges_to_skip"
-    t.integer  "days_of_week_to_skip", default: [],              array: true
+    t.integer  "days_of_week_to_skip", default: [],                array: true
     t.string   "slug"
     t.integer  "num_chapters_per_day", default: 1
-    t.hstore   "chapters_per_date",    default: {}, null: false
-    t.json     "schedule",             default: {}, null: false
-    t.date     "available_dates",      default: [],              array: true
+    t.hstore   "chapters_per_date",    default: {},   null: false
+    t.json     "schedule",             default: {},   null: false
+    t.date     "available_dates",      default: [],                array: true
+    t.boolean  "joinable",             default: true
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
