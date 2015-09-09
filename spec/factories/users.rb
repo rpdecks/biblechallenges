@@ -8,8 +8,11 @@ FactoryGirl.define do
     password_confirmation "password"
     time_zone "UTC"
     preferred_reading_hour 6
-    avatar { fixture_file_upload(Rails.root.join('spec', 'images', 'my_avatar.png'),
-                                 'image/png') }
+
+    factory :user_with_avatar do
+      avatar { fixture_file_upload(Rails.root.join('spec', 'images', 'my_avatar.png'),
+                                   'image/png') }
+    end
 
     factory :existing_facebook_user do
       provider "facebook"
