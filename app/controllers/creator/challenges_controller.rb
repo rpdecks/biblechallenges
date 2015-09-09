@@ -20,6 +20,12 @@ class Creator::ChallengesController < ApplicationController
     @readings  = @challenge.readings.order(:date)
   end
 
+  def toggle
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+    @challenge.toggle!(:joinable)
+    redirect_to creator_challenge_path(@challenge)
+  end
+
   def update
     @challenge.update_attributes(challenge_name)
 

@@ -7,6 +7,15 @@ feature 'Owner manages challenges' do
     login(user)
   end
 
+  scenario 'Closes the challenge so it is not joinable' do
+    challenge = create(:challenge, owner_id: user.id, name: "Awesome")
+    create(:membership, challenge: challenge, user: user)
+    visit creator_challenge_path(challenge)
+    click_link 'Close Challenge'
+    challenge.reload
+    expect(challenge.joinable).to eq false
+  end
+
   scenario 'Changes the name of the challenge after the challenge has been created' do
     challenge = create(:challenge, owner_id: user.id, name: "Awesome")
     create(:membership, challenge: challenge, user: user)
