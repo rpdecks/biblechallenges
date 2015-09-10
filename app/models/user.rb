@@ -91,6 +91,14 @@ class User < ActiveRecord::Base
     !last_sign_in_at.nil?
   end
 
+  def date_by_timezone
+    if self.time_zone.present?
+      Time.now.in_time_zone(self.time_zone).to_date
+    else
+      Time.zone.now.to_date
+    end
+  end
+
   private
 
   def set_default_values
