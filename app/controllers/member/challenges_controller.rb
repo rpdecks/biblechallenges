@@ -22,7 +22,7 @@ class Member::ChallengesController < ApplicationController
                                          :group_statistic_on_schedule_percentage,
                                          :group_statistic_total_chapters_read)
     @user = current_user
-    @todays_readings = @challenge.todays_readings.order(:chapter_id)
+    @todays_readings = @challenge.todays_readings(@user).order(:chapter_id)
   end
 
   private
