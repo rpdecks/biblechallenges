@@ -97,6 +97,7 @@ describe MembershipReadingsController, type: :controller do
         end
         expect(user.user_statistic_chapters_read_all_time.value).to eq 1
       end
+
       it "should update chapter_read_all_time value with multiple memberships" do 
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
