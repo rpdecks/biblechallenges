@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+         :omniauthable, :omniauth_providers => [:facebook]
 
   # Validations
   validates :name, :email, presence: true
@@ -89,6 +89,14 @@ class User < ActiveRecord::Base
 
   def existing_user?
     !last_sign_in_at.nil?
+  end
+
+  def date_by_timezone
+    if self.time_zone.present?
+      Time.now.in_time_zone(self.time_zone).to_date
+    else
+      Time.zone.now.to_date
+    end
   end
 
   private
