@@ -6,8 +6,8 @@ class Creator::MembershipsController < ApplicationController
 
   def update
     @membership = Membership.find(params[:id])
-    @group = Group.find(params[:group_id])
-    @challenge = Challenge.find(params[:challenge_id])
+    @group = Group.find(params[:membership][:group_id])
+    @challenge = Challenge.find(params[:membership][:challenge_id])
 
     if @membership.update_attributes(group_id: @group.id)
       flash[:notice] = "You have successfully changed this member's group"
@@ -19,10 +19,10 @@ class Creator::MembershipsController < ApplicationController
   end
 
   def edit
-    binding.pry
+    @challenge = Challenge.friendly.find(params[:id])
+    @membership = Membership.find(params[:format])
+    @all_challenge_groups = @challenge.groups
+
   end
 
-  def membership
-    @membership ||= current_user.memberships.find(params[:id])
-  end
 end
