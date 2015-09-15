@@ -7,7 +7,7 @@ class Group < ActiveRecord::Base
   has_many :group_statistics, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 
-  validates :user, :challenge, presence: true
+  validates :challenge, presence: true
 
   Rails.application.eager_load!
   GroupStatistic.descendants.each do |stat| 
