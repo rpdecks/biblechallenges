@@ -11,7 +11,7 @@
   - challenge.memberships.by_group.each do |membership|
     %tr
       %td
-        = link_to edit_creator_membership_path(@challenge, membership.id) do
+        = link_to edit_creator_membership_path(@challenge, membership.id), title: "Assign to Group" do
           %button.btn-outlined
             = render 'shared/avatar_medium', user: membership.user
             - if challenge.owner == membership.user
