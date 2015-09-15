@@ -35,10 +35,9 @@
       = link_to new_creator_challenge_mass_email_path(@challenge.id), class: 'btn btn-success btn-xs', id: "Email All Members", :title => 'Email All Members', :rel => 'tooltip' do
         %span.glyphicon.glyphicon-envelope
     = render partial: 'creator/challenges/members_table', locals: {challenge: @challenge}
-  %br
 
   .panel.panel-primary
     .panel-heading
       = "Total Groups: #{@challenge.groups.size} "
     = render partial: 'creator/challenges/groups_table', locals: {challenge: @challenge}
-  %br
+  = render 'shared/challenges/create_a_group'
