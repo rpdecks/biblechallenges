@@ -135,8 +135,8 @@ class Challenge < ActiveRecord::Base
     readings.find_by_read_on(Date.today)
   end
 
-  def todays_readings
-    readings.where(read_on: Date.today)
+  def todays_readings(user)
+    readings.where(read_on: user.date_by_timezone)
   end
 
   def all_users_emails

@@ -9,6 +9,11 @@ Biblechallenge::Application.configure do
 
   config.eager_load = true
 
+  # Paperclip to upload to test folder
+  config.paperclip_defaults = {
+    path: ':rails_root/tmp/test_uploads/:class/:id/:attachment/:filename.:extension',
+    url: ':rails_root/tmp/test_uploads/:class/:id/:attachment/:filename.:extension'
+  }
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_files = true
