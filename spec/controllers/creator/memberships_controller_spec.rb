@@ -13,7 +13,7 @@ describe Creator::MembershipsController do
       group2 = create(:group, challenge_id: challenge.id)
       membership = create(:membership, group_id: group1.id, challenge_id: challenge.id)
 
-      post :update, id: membership.id, group_id: group2.id, challenge_id: challenge.id
+      post :update, id: membership.id, membership: {group_id: group2.id, challenge_id: challenge.id }
       membership.reload
       expect(membership.group_id).to eq group2.id
     end
