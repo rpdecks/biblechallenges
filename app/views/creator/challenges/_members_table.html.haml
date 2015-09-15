@@ -12,7 +12,7 @@
     %tr
       %td
         = link_to edit_creator_membership_path(@challenge, membership.id) do
-          %button.btn
+          %button.btn-outlined
             = render 'shared/avatar_medium', user: membership.user
             - if challenge.owner == membership.user
               = "#{membership.user.decorate.name} (Owner)"
