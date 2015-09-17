@@ -12,3 +12,18 @@
   #verses
     - @verses.each do |verse|
       = verse.decorate.to_div
+
+  %hr
+  -binding.pry
+
+  .row-fluid
+    .centered
+      Click to Confirm you read this challenge chapter:
+      %td{id: dom_id(@reading)}
+        - if @membership
+          = react_component 'ReadingButton',
+            { reading_id: @reading.id, membership_id: @membership.id,
+          membership_reading_id: @membership_reading_id }
+      Next Chapter >> 
+      %td= link_to next_reading.chapter.book_and_chapter, reading_path(next_reading)
+
