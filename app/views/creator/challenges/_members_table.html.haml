@@ -6,7 +6,7 @@
       %th Email
       %th Completed
       %th Last Read
-      %th Action
+      %th Action (Challenge)
   %tbody
   - challenge.memberships.by_group.each do |membership|
     %tr
@@ -32,6 +32,3 @@
       - else
         %td
           = link_to "Remove", creator_remove_member_from_challenge_path(id: membership.id), method: :post, "data-confirm" => 'Are you sure you want to remove this member from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{membership.id}"
-
-
-
