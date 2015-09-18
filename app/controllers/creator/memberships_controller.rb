@@ -9,7 +9,7 @@ class Creator::MembershipsController < ApplicationController
     @group = Group.find(params[:membership][:group_id])
     @challenge = Challenge.find(params[:membership][:challenge_id])
 
-    if @membership.update_attributes(group_id: @group.id)
+    if @challenge.memberships.include?(@membership) && @membership.update_attributes(group_id: @group.id)
       flash[:notice] = "You have successfully changed this member's group"
       redirect_to creator_challenge_path(@challenge.id)
     else
