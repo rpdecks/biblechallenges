@@ -14,7 +14,6 @@
       = verse.decorate.to_div
 
   %hr
-  -binding.pry
 
   .row-fluid
     .centered
@@ -23,7 +22,12 @@
         - if @membership
           = react_component 'ReadingButton',
             { reading_id: @reading.id, membership_id: @membership.id,
-          membership_reading_id: @membership_reading_id }
-      Next Chapter >> 
-      %td= link_to next_reading.chapter.book_and_chapter, reading_path(next_reading)
-
+          membership_reading_id: @membership.membership_readings.find{|mr| mr.reading_id == @reading.id && mr.membership_id = @membership.id}.try(:id) } 
+      %br
+      - if @membership.readings.last.chapter_id == @reading.chapter_id
+        = link_to "Back to Challenge", member_challenge_path(@membership.challenge)
+      -else
+        Next Chapter >> 
+        = link_to @next_reading.chapter.book_and_chapter, reading_path(@next_reading)
+      %br
+      %br
