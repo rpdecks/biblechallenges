@@ -7,7 +7,7 @@ class ReadingsController < ApplicationController
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
     @reading = Reading.find_by_id(params[:id])
-    @next_reading = Reading.find_by_id((params[:id]).to_i + 1)
+#    @next_reading = Reading.find_by_id((params[:id]).to_i + 1)
     @discussion_md = markdown.render(@reading.discussion || "")
 
     if @reading.challenge.members.include? current_user
