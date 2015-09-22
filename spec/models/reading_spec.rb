@@ -85,5 +85,24 @@ describe Reading do
         expect(reading.last_readers(2)).to match_array []
       end
     end
+    describe "next_reading" do
+      it "should return the next sequential reading for a challenge reading instance" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1-2')
+        challenge.generate_readings
+        reading = challenge.readings.first
+        reading2 = challenge.readings.last
+        expect(reading.next_reading).to eq reading2
+      end
+    end
+    describe "last_challenge_reading?" do
+      it "should return true if reading instance is the last of challenge readings" do
+        challenge = create(:challenge, chapters_to_read: 'Mar 1-2')
+        challenge.generate_readings
+        reading2 = challenge.readings.last
+        reading = challenge.readings.first
+        expect(reading2.last_challenge_reading?).to eq true
+        expect(reading.last_challenge_reading?).to be_falsey
+      end
+    end
   end
 end
