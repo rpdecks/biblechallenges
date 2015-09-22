@@ -24,10 +24,13 @@
             { reading_id: @reading.id, membership_id: @membership.id,
           membership_reading_id: @membership.membership_readings.find{|mr| mr.reading_id == @reading.id && mr.membership_id = @membership.id}.try(:id) } 
       %br
-      - if @membership.readings.last.chapter_id == @reading.chapter_id
-        = link_to "Back to Challenge", member_challenge_path(@membership.challenge)
+      - if @reading.last_challenge_reading?
+        = button_to "Back to Challenge", member_challenge_path(@membership.challenge), :method => :get
       -else
         Next Chapter >> 
-        = link_to @next_reading.chapter.book_and_chapter, reading_path(@next_reading)
-      %br
+        = link_to @reading.next_reading.chapter.book_and_chapter, reading_path(@reading.next_reading)
+        %br
+        %br
+        = button_to "Back to Challenge", member_challenge_path(@membership.challenge), :method => :get
+        %br
       %br
