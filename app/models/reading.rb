@@ -44,7 +44,10 @@ class Reading < ActiveRecord::Base
   end
 
   def next_reading
-    challenge.readings.where("read_on > ?", self.read_on).order(:read_on).first
+    value = (challenge.readings.where("read_on >= ?", self.read_on).order(:chapter_id)).to_ary
+    value.each do |v|
+      return v unless v.chapter_id <= self.chapter_id
+    end
   end
 
   def last_challenge_reading?
