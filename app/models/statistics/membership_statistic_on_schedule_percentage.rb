@@ -9,7 +9,7 @@ class MembershipStatisticOnSchedulePercentage < MembershipStatistic
   end
 
   def calculate
-    readings_to_date = membership.readings.to_date(Date.today - 1.day)
+    readings_to_date = membership.readings.to_date(Time.current.utc.yesterday.to_date)
     on_schedule_membership_readings = membership.membership_readings.on_schedule
     on_time_readings = 0
 
