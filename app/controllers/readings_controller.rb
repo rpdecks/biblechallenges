@@ -7,12 +7,13 @@ class ReadingsController < ApplicationController
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
     @reading = Reading.find_by_id(params[:id])
+#    @next_reading = Reading.find_by_id((params[:id]).to_i + 1)
     @discussion_md = markdown.render(@reading.discussion || "")
 
     if @reading.challenge.members.include? current_user
       @comment = Comment.new
       @comments = @reading.comments.order("created_at desc")
-      @last_read_by = @reading.last_read_by  
+      @last_read_by = @reading.last_read_by
       @membership = Membership.find_by_user_id_and_challenge_id(current_user.id, @reading.challenge.id)
       @verses = @reading.chapter.verses.by_version(@membership.bible_version)
     else
