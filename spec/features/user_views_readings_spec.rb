@@ -11,7 +11,6 @@ feature 'User manages readings' do
 
   scenario "sees references to the reading pages" do
     visit challenge_path(@challenge)
-    save_and_open_page
     expect(page).to have_link "Matthew 1"
   end
 
