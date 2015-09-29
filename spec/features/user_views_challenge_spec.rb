@@ -57,14 +57,14 @@ feature 'User views challenge page as member' do
 
     # create a challenge
     Time.zone = "Eastern Time (US & Canada)"
-    creation_time = Time.local(2015, 7, 4, 10, 0, 0) # time challenge was created
+    creation_time = Time.zone.local(2015, 7, 4, 10, 0, 0) # time challenge was created
     Timecop.travel(creation_time)
     challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-3")
     ChallengeCompletion.new(challenge)
     create(:membership, challenge: challenge, user: user)
 
     # user visits challenge show page
-    read_time = Time.local(2015, 7, 5, 23, 0, 0) # a day later, at night
+    read_time = Time.zone.local(2015, 7, 5, 23, 0, 0) # a day later, at night
     Timecop.travel(read_time)
     visit member_challenge_path(challenge)
 
