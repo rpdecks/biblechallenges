@@ -25,6 +25,28 @@ feature "calculates personal stats" do
 
       Timecop.return
     end
+
+    scenario "calculate all-time streaks correctly" do
+      challenge = create(:challenge_with_readings,
+                         owner: user)
+      m = create(:membership, user: user, challenge: challenge)
+      user.associate_statistics
+      create_list(:membership_reading, 2, membership: m) # day 1 with two readings
+      Timecop.travel(1.day)
+      create_list(:membership_reading, 2, membership: m) # day 2 with two readings
+      Timecop.travel(2.day)
+      create_list(:membership_reading, 2, membership: m) # day 4 with two readings
+      Timecop.travel(1.day)
+      create_list(:membership_reading, 2, membership: m) # day 5 with two readings
+      Timecop.travel(1.day)
+      create_list(:membership_reading, 2, membership: m) # day 6 with two readings
+
+      user.update_stats
+      user.reload
+      expect(user.user_statistic_days_read_in_a_row_all_time.value).to eq 3
+
+      Timecop.return
+    end
   end
 
   scenario "challenge in eastern time. user in paris" do
@@ -37,7 +59,6 @@ feature "calculates personal stats" do
     challenge = create(:challenge_with_readings,
                        chapters_to_read: "Matthew 1-3",
                        owner: user)
-    binding.pry
     create(:membership, user: user, challenge: challenge)
     user.associate_statistics
 
