@@ -150,10 +150,11 @@ feature "User logs reading" do
     end
 
     #challenge
-    binding.pry
     expect(c.challenge_statistics.find_by_type("ChallengeStatisticOnSchedulePercentage").value).to eq 100
     #expect(c.membership_statistics.membership_statistic_chapters_read.reload.value).to eq 2
     #expect(c.membership_statistics.membership_statistic_progress_percentage.reload.value).to eq 50
+
+    Timecop.return
   end
 
   scenario "log reading via email correctly"
