@@ -19,7 +19,7 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
   def calculate
     streak = 0
 
-    dates_read = user.membership_readings.reload.map do |r| 
+    dates_read = user.membership_readings.reload.map do |r|
       r.created_at.utc.to_date.jd  # converts days to integers
     end
 
@@ -37,7 +37,7 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
     #  streak = 1
     #end
 
-    @streaks = dates_read.find_consecutive
+    @streaks = dates_read.uniq.find_consecutive
 
     if @streaks.any? && ([Time.zone.yesterday.jd, Time.zone.today.jd].include? most_recent_day_in_most_recent_streak)
       streak = most_recent_streak.size
