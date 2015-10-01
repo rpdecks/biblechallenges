@@ -3,6 +3,11 @@ require 'spec_helper'
 describe UserStatisticDaysReadInARowCurrent do
   describe "#update" do
     it "should calculate the proper value for user reading on consecutive days" do
+
+      # to expose timezone issue in streak calculation
+      challenge_creation_time = Time.zone.local(2015, 7, 4, 23, 0, 0)
+      Timecop.travel(challenge_creation_time)
+
       challenge = create(:challenge, :with_membership, chapters_to_read: 'Mark 1-7')
       user = challenge.members.first
       membership = challenge.memberships.first
@@ -14,8 +19,9 @@ describe UserStatisticDaysReadInARowCurrent do
         Timecop.travel(1.day)
       end
 
-        Timecop.return
       expect(user_stat.value).to eq 5
+
+      Timecop.return
     end
 
     it "should calculate the proper value for user reading on consecutive days in separate challenges" do
@@ -44,8 +50,11 @@ describe UserStatisticDaysReadInARowCurrent do
       Timecop.return
     end
 
-
     it "calculates the right streak with a skipped day in between" do
+      # to expose timezone issue in streak calculation
+      challenge_creation_time = Time.zone.local(2015, 7, 4, 23, 0, 0)
+      Timecop.travel(challenge_creation_time)
+
       challenge = create(:challenge, :with_membership, chapters_to_read: 'Mark 1-5')
       user = challenge.members.first
       membership = challenge.memberships.first
