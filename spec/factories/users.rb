@@ -6,7 +6,7 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     password "password"
     password_confirmation "password"
-    time_zone "Eastern Time (US & Canada)"
+    time_zone "UTC"
     preferred_reading_hour 6
 
     factory :user_with_avatar do

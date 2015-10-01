@@ -9,7 +9,7 @@ require 'shoulda/matchers'
 require 'email_spec'
 require 'sidekiq/testing'
 
-Time.zone = 'Eastern Time (US & Canada)'
+Time.zone = 'UTC'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
