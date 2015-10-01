@@ -3,10 +3,6 @@ require "spec_helper"
 feature "calculates personal user stats" do
   let(:user) {create(:user)}
 
-  before(:each) {
-    login(user)
-  }
-
   context "multiple chapters logged per day" do
     scenario "calculate current streaks correctly" do
       challenge = create(:challenge_with_readings,
