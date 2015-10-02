@@ -83,11 +83,6 @@ feature 'One user reads various parts of a challenge' do
 
   context "One user reads all one chapters in the challenge" do
     scenario "When joins a group, also joins the challenge" do
-
-      Time.zone = "Eastern Time (US & Canada)"
-      creation_time = Time.zone.local(2015, 7, 4, 20, 0, 0)
-      Timecop.travel(creation_time)
-
       create_account_and_log_in(email: 'c@c.com', name: 'C')
       create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  #below
       click_link "Log Matthew 1"
