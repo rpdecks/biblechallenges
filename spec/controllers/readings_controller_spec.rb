@@ -8,7 +8,6 @@ describe ReadingsController do
   let!(:membership){create(:membership, challenge: challenge, user: user)}
   let(:membership_reading){membership.membership_readings.first}
 
-
   describe "for a guest" do
     describe "GET #show" do
       it "redirects to login" do
@@ -53,8 +52,6 @@ describe ReadingsController do
     end
   end
 
-
-
   describe "User Access" do
     before do
       sign_in :user, user
@@ -87,7 +84,6 @@ describe ReadingsController do
           expect(assigns(:reading)).to_not eq randomreading
         end
 
-
         it "does not render the show template" do
           randomreading = create(:reading)
           get :show, id: randomreading
@@ -99,9 +95,7 @@ describe ReadingsController do
           get :show, id: randomreading
           expect(response).to redirect_to root_url
         end
-
       end
-
     end
   end
 end
