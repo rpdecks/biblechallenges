@@ -87,6 +87,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def last_recorded_reading_time
+    membership_readings.order(:created_at).last.created_at
+  end
+
+  def last_chapter_posted
+    membership_readings.order(:created_at).last.reading.chapter.book_and_chapter
+  end
+
   def existing_user?
     !last_sign_in_at.nil?
   end

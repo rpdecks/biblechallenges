@@ -2,9 +2,18 @@
 %table.table.table-bordered.table-hover.table-condensed
   %thead
     %tr
-      %th= challenge.name
-      %th By Me
-      %th By All Members
+      %th
+        %h6
+          %strong
+            = challenge.name
+      %th 
+        %h6
+          %strong
+            By Me
+      %th 
+        %h6
+          %strong
+            By All Members
     %tbody
       %tr
         %td= challenge.challenge_statistic_chapters_read.try(:name)

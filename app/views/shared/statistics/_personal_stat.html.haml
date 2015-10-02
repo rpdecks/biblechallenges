@@ -1,6 +1,15 @@
 %span
 %table.table.table-bordered.table-hover.table-condensed
   %tbody
+    - unless user.membership_readings.empty?
+      %tr
+        %td= "Last Read Chapter"
+        %td
+          %strong
+            = user.last_chapter_posted
+          (
+          = time_ago_in_words(user.last_recorded_reading_time)
+          ago )
     %tr
       %td= user.user_statistic_chapters_read_all_time.try(:name)
       %td= user.user_statistic_chapters_read_all_time
