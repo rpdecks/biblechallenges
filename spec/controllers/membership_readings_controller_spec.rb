@@ -57,7 +57,7 @@ describe MembershipReadingsController, type: :controller do
         }.to raise_error('Not allowed')
       end
 
-      it "should redirect to :back if params[:location] is not  provided" do
+      it "should redirect to :back if params[:location] is not provided" do
         reading = challenge.readings.first
         post :create, reading_id: reading.id, membership_id: membership.id
         expect(response).to redirect_to "where_i_came_from"
@@ -74,18 +74,31 @@ describe MembershipReadingsController, type: :controller do
         user = create(:user)
         sign_in :user, user
         membership = challenge.join_new_member(user)
-
         membership.associate_statistics
 
-        #inline method will push all jobs through immediately, as opposed to default that will push jobs to an array
+        # inline method will push all jobs through immediately,
+        # as opposed to default that will push jobs to an array
         Sidekiq::Testing.inline! do
           post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
           expect(membership.membership_statistic_progress_percentage.value).to eq 50
         end
-
       end
 
-      it "should update the chapters_all_time_read statistics after posting a reading" do 
+      it "updates days_read_in_a_row statistics" do
+        challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
+        user = create(:user)
+        sign_in :user, user
+        membership = challenge.join_new_member(user)
+        membership.associate_statistics
+
+        Sidekiq::Testing.inline! do
+          post :create, reading_id: challenge.readings.first.id, membership_id: membership.id
+        end
+
+        expect(membership.membership_statistic_record_reading_streak.value).to eq 1
+      end
+
+      it "should update the chapters_all_time_read statistics after posting a reading" do
         challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         user = create(:user)
         sign_in :user, user
@@ -97,7 +110,8 @@ describe MembershipReadingsController, type: :controller do
         end
         expect(user.user_statistic_chapters_read_all_time.value).to eq 1
       end
-      it "should update chapter_read_all_time value with multiple memberships" do 
+
+      it "should update chapter_read_all_time value with multiple memberships" do
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
         user = create(:user)
@@ -112,7 +126,8 @@ describe MembershipReadingsController, type: :controller do
 
         expect(user.user_statistic_chapters_read_all_time.value).to eq 2
       end
-      it "should update chapters_read_all_time statistics even after leaving challenge" do 
+
+      it "should update chapters_read_all_time statistics even after leaving challenge" do
         pending
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
@@ -129,6 +144,7 @@ describe MembershipReadingsController, type: :controller do
 
         expect(user.user_statistic_chapters_read_all_time.value).to eq 3
       end
+
       it "should update the membership statistics" do #todo this should use mocks/spies
         pending
         reading = challenge.readings.first
@@ -142,6 +158,7 @@ describe MembershipReadingsController, type: :controller do
         MembershipStatistic.descendants.each do |desc|
           expect(desc.name.constantize).to have_received(:update)
         end
+
         membership.membership_statistics.each do |ms|
           expect(ms).to have_received(:update)
         end
@@ -156,6 +173,7 @@ describe MembershipReadingsController, type: :controller do
           delete :destroy, id: mr.id
         }.to change(MembershipReading, :count).by(-1)
       end
+
       it "deletes a membership_reading allowed only by a member of a challenge" do
         reading = challenge.readings.first
         user2 = create(:user)
@@ -166,12 +184,14 @@ describe MembershipReadingsController, type: :controller do
           delete :destroy, id: mr.id
         }.to raise_error
       end
+
       it "should redirect to :back if params[:location] is not  provided" do
         reading = challenge.readings.first
         mr = create(:membership_reading, membership:membership, reading: reading)
         delete :destroy, id: mr.id
         expect(response).to redirect_to "where_i_came_from"
       end
+
       it "should redirect to params[:location] if it's provided" do
         reading = challenge.readings.first
         mr = create(:membership_reading, membership:membership, reading: reading)
@@ -193,4 +213,3 @@ describe MembershipReadingsController, type: :controller do
     end
   end
 end
-
