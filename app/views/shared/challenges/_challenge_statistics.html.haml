@@ -12,9 +12,3 @@
       .panel-heading Challenge Statistics
       = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
 
-    -if user.membership_readings.any?
-      .panel.panel-primary
-        .panel-heading Personal Statistics
-        = render partial: 'shared/statistics/personal_stat', locals: {user: current_user}
-    -else
-      You have not logged a chapter yet
