@@ -6,9 +6,13 @@
           Congratulations! You have completed this Bible Challenge!
     -if challenge.groups.any?
       .panel.panel-primary
-        .panel-heading Group Statistics
+        .panel-heading 
+          %strong
+            Group Statistics
         = render partial: 'shared/statistics/group_stat', locals: {groups: groups}
     .panel.panel-primary
-      .panel-heading Challenge Statistics
+      .panel-heading 
+        %strong
+          Challenge Statistics
       = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
 
