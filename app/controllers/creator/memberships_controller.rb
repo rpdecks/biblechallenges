@@ -1,6 +1,7 @@
 class Creator::MembershipsController < ApplicationController
 
   before_filter :authenticate_user!
+  before_action :validate_ownership, only: [:edit, :update]
 
   #respond_to :html, :json, :js
 
@@ -25,4 +26,19 @@ class Creator::MembershipsController < ApplicationController
 
   end
 
+  private
+
+  def validate_ownership
+    if params[:action] == "update"
+      challenge_id = params[:membership][:challenge_id]
+      @challenge = Challenge.find(challenge_id)
+    else
+      @challenge = Challenge.friendly.find(params[:id])
+    end
+
+    unless current_user == @challenge.owner
+      flash[:notice] = "Access denied"
+      redirect_to member_challenges_path
+    end
+  end
 end
