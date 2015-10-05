@@ -49,7 +49,7 @@ feature "User logs reading" do
     end
   end
 
-  scenario "Calculate days read in a row current streak" do
+  scenario "Calculate days read in a row streak" do
     user.time_zone = "Pacific Time (US & Canada)"
 
     # create challenge
@@ -74,6 +74,7 @@ feature "User logs reading" do
       click_link_or_button "Log Matthew 2"
 
       expect(user.user_statistic_days_read_in_a_row_current.value).to eq 2
+      expect(user.user_statistic_days_read_in_a_row_all_time.value).to eq 2
       Timecop.return
     end
   end
