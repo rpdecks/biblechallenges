@@ -83,22 +83,22 @@ feature 'One user reads various parts of a challenge' do
 
   context "One user reads all one chapters in the challenge" do
     scenario "When joins a group, also joins the challenge" do
-        create_account_and_log_in(email: 'c@c.com', name: 'C')
-        create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  #below
-        click_link "Log Matthew 1"
+      create_account_and_log_in(email: 'c@c.com', name: 'C')
+      create_a_challenge(name: "One Day", chapters_to_read: "Mat 1")  #below
+      click_link "Log Matthew 1"
 
-        #job created through updating of reading, now need to push the sidekiq UpdateStatsWorker through
-        UpdateStatsWorker.drain
+      #job created through updating of reading, now need to push the sidekiq UpdateStatsWorker through
+      UpdateStatsWorker.drain
 
-        c = Challenge.first
-        expect(c.challenge_statistic_on_schedule_percentage.value).to eq 0
-        expect(c.challenge_statistic_chapters_read.value).to eq 1
-        expect(c.challenge_statistic_progress_percentage.value).to eq 100
+      c = Challenge.first
+      expect(c.challenge_statistic_on_schedule_percentage.value).to eq 0
+      expect(c.challenge_statistic_chapters_read.value).to eq 1
+      expect(c.challenge_statistic_progress_percentage.value).to eq 100
 
-        u = User.first
-        expect(u.user_statistic_chapters_read_all_time.value).to eq 1
-        expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq 1
-        expect(u.user_statistic_days_read_in_a_row_current.value).to eq 1
+      u = User.first
+      expect(u.user_statistic_chapters_read_all_time.value).to eq 1
+      expect(u.user_statistic_days_read_in_a_row_all_time.value).to eq 1
+      expect(u.user_statistic_days_read_in_a_row_current.value).to eq 1
 
       click_to_delete_a_reading(membership_reading: MembershipReading.first)
       UpdateStatsWorker.drain
@@ -141,4 +141,3 @@ feature 'One user reads various parts of a challenge' do
     click_button "Create Challenge"
   end
 end
-
