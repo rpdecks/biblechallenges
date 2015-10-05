@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook]
+         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
   # Validations
   validates :name, :email, presence: true
@@ -85,6 +85,14 @@ class User < ActiveRecord::Base
     self.user_statistics.each do |us|
       us.update
     end
+  end
+
+  def last_recorded_reading_time
+    membership_readings.order(:created_at).last.created_at
+  end
+
+  def last_chapter_posted
+    membership_readings.order(:created_at).last.reading.chapter.book_and_chapter
   end
 
   def existing_user?
