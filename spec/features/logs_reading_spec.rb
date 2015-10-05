@@ -48,4 +48,33 @@ feature "User logs reading" do
       Timecop.return
     end
   end
+
+  scenario "Calculate days read in a row current streak" do
+    user.time_zone = "Pacific Time (US & Canada)"
+
+    # create challenge
+    challenge_date = Date.new(2015, 7, 4)
+    challenge = create(:challenge_with_readings,
+                       chapters_to_read: "Matthew 1-3",
+                       owner: user, begindate: challenge_date)
+    create(:membership, user: user, challenge: challenge)
+    user.associate_statistics
+
+    Sidekiq::Testing.inline! do
+      Time.zone = "UTC" # heroku timezone
+
+      # read in morning on first day
+      Timecop.travel(Time.zone.local(2015, 7, 4, 15, 0, 0))
+      visit member_challenge_path(challenge)
+      click_link_or_button "Log Matthew 1"
+
+      # read at night on second day
+      Timecop.travel(Time.zone.local(2015, 7, 6, 2, 0, 0))
+      visit member_challenge_path(challenge)
+      click_link_or_button "Log Matthew 2"
+
+      expect(user.user_statistic_days_read_in_a_row_current.value).to eq 2
+      Timecop.return
+    end
+  end
 end
