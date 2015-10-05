@@ -28,7 +28,7 @@ class Member::GroupsController < ApplicationController
     @challenge = Challenge.friendly.find(params[:challenge_id])
     membership = @challenge.membership_for(current_user)
     @group = @challenge.groups.build(group_params)
-    @group.user_id = current_user.id unless @challenge.owner == current_user
+    @group.user_id = current_user.id 
 
     if @group.save
       membership.group = @group
