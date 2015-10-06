@@ -32,7 +32,6 @@ class ApplicationController < ActionController::Base
   end
 
   def validate_challenge_ownership
-    binding.pry
     @challenge = Challenge.friendly.find(params[:challenge_id])
 
     unless current_user == @challenge.owner
