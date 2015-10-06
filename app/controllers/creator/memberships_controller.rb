@@ -1,7 +1,7 @@
 class Creator::MembershipsController < ApplicationController
 
   before_filter :authenticate_user!
-  before_action :validate_ownership, only: [:edit, :update]
+  before_action :validate_challenge_ownership, only: [:edit]
 
   #respond_to :html, :json, :js
 
@@ -15,14 +15,13 @@ class Creator::MembershipsController < ApplicationController
       redirect_to creator_challenge_path(@challenge.id)
     else
       flash[:notice] = "Could not update group settings"
-      redirect_to edit_creator_membership_path
+      redirect_to edit_creator_challenge_membership_path
     end
   end
 
   def edit
-    @challenge = Challenge.friendly.find(params[:id])
-    @membership = Membership.find(params[:format])
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+    @membership = Membership.find(params[:id])
     @all_challenge_groups = @challenge.groups
-
   end
 end

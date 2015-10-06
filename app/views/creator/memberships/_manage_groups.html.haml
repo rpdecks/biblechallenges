@@ -26,7 +26,7 @@
           %strong
             = @membership.group.try(:name)
         %td
-          = form_for [:creator, @membership], html: {class: 'form-horizontal'} do |f|
+          = form_for [:creator, @challenge, @membership], html: {class: 'form-horizontal'} do |f|
             = f.collection_select(:group_id, @all_challenge_groups, :id, :name, {:prompt => 'Select a Group'})
             = f.hidden_field :challenge_id, :value => @challenge.id
             %td{:style => "white-space:nowrap;"}
