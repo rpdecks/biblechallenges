@@ -109,7 +109,7 @@ Biblechallenge::Application.configure do
     },
     :slack => {
       :webhook_url => "https://hooks.slack.com/services/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",
-      :channel => "#biblechallenges"
+      :channel => "#exceptions"
     }
 
 end
