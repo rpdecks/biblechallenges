@@ -32,5 +32,5 @@
                   = link_to "Join Group", join_member_group_path(id: g.id), :class=> "btn btn-primary btn-sm", method: :post
 
       %span
-        = render 'shared/challenges/create_a_group'
+        = render 'shared/challenges/create_a_group', locals: {challenge: @challenge}
 
