@@ -42,4 +42,4 @@
     .panel-heading
       = "Total Groups: #{@challenge.groups.size} "
     = render partial: 'creator/challenges/groups_table', locals: {challenge: @challenge}
-  = render 'shared/challenges/create_a_group'
+  = link_to "Add a group", new_creator_challenge_group_path(challenge_id: @challenge.id), :class => 'btn btn-success btn-sm'

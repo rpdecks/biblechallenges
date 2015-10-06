@@ -31,16 +31,9 @@ class ApplicationController < ActionController::Base
     raise "This is only a test :) "
   end
 
-  def validate_ownership
-    if params[:action] == "update" 
-      challenge_id = params[:membership][:challenge_id]
-      @challenge = Challenge.find(challenge_id)
-    elsif params[:controller] == "creator/groups"
-      challenge_id = params[:challenge_id]
-      @challenge = Challenge.find(challenge_id)
-    else
-      @challenge = Challenge.friendly.find(params[:id])
-    end
+  def validate_challenge_ownership
+    binding.pry
+    @challenge = Challenge.friendly.find(params[:challenge_id])
 
     unless current_user == @challenge.owner
       flash[:notice] = "Access denied"

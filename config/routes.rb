@@ -26,6 +26,7 @@ Biblechallenge::Application.routes.draw do
 
   namespace :creator do
     resources :challenges do
+      resources :memberships, only: [:edit, :update]
       resources :groups, only: [:new, :create, :edit]
       member do
         get 'snapshot_email' 
@@ -35,8 +36,6 @@ Biblechallenge::Application.routes.draw do
     end
     post 'remove_member_from_challenge', controller: 'challenges'
     post 'remove_group_from_challenge', controller: 'challenges'
-
-    resources :memberships, only: [:edit, :update]
   end
 
   resources :contact_forms

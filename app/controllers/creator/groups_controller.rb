@@ -1,9 +1,9 @@
 class Creator::GroupsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :validate_ownership, only: [:edit, :new, :create]
+  before_action :validate_challenge_ownership, only: [:edit, :new]
 
   def new
-    @challenge = Challenge.friendly.find(params[:challenge_id])
+    @challenge = Challenge.find(params[:challenge_id])
     @group = Group.new
   end
 
@@ -19,7 +19,7 @@ class Creator::GroupsController < ApplicationController
       MembershipCompletion.new(membership)
       GroupCompletion.new(@group)
       flash[:notice] = "Group created successfully"
-      redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
+      redirect_to creator_challenge_path(@challenge.id)
     else
       flash[:notice] = "Group could not be created"
       render action: :new
