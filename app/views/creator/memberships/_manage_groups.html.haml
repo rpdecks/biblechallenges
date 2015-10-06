@@ -26,10 +26,14 @@
           %strong
             = @membership.group.try(:name)
         %td
-          = form_for [:creator, @challenge, @membership], html: {class: 'form-horizontal'} do |f|
-            = f.collection_select(:group_id, @all_challenge_groups, :id, :name, {:prompt => 'Select a Group'})
-            = f.hidden_field :challenge_id, :value => @challenge.id
-            %td{:style => "white-space:nowrap;"}
-              = f.submit 'Update', class: 'btn btn-primary'
+          - if (@all_challenge_groups.find_by_user_id(@membership.user_id)) && @membership.user_id != @challenge.owner.id
+            Group creator, 
+            %br can't reassign
+          - else
+            = form_for [:creator, @challenge, @membership], html: {class: 'form-horizontal'} do |f|
+              = f.collection_select(:group_id, @all_challenge_groups, :id, :name, {:prompt => 'Select a Group'})
+              = f.hidden_field :challenge_id, :value => @challenge.id
+              %td{:style => "white-space:nowrap;"}
+                = f.submit 'Update', class: 'btn btn-primary'
 
   = link_to "Back to Owner Dashboard", creator_challenge_path(@challenge), :class=>"btn btn-success"

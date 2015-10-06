@@ -9,6 +9,7 @@ RSpec.describe Group, type: :model do
 
   describe "Validations" do
     it { should validate_presence_of(:challenge)} 
+    it { should validate_presence_of(:user)} 
   end
 
 end

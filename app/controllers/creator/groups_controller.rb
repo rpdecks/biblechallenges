@@ -14,10 +14,12 @@ class Creator::GroupsController < ApplicationController
     @group.user_id = current_user.id 
 
     if @group.save
-      membership.group = @group
-      membership.save
-      MembershipCompletion.new(membership)
-      GroupCompletion.new(@group)
+      unless @challenge.owner == current_user
+        membership.group = @group
+        membership.save
+        MembershipCompletion.new(membership)
+        GroupCompletion.new(@group)
+      end
       flash[:notice] = "Group created successfully"
       redirect_to creator_challenge_path(@challenge.id)
     else
