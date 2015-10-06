@@ -7,26 +7,11 @@ feature 'Owner manages group members within challenge' do
     login(user)
   end
 
-  scenario 'Adds a challenge member to a goup within the challenge' do
-    user2 = create(:user)
-    challenge = create(:challenge, owner_id: user.id, name: "Wonderful")
-    create(:membership, challenge: challenge, user: user)
-    create(:membership, challenge: challenge, user: user2)
-    group = create(:group, challenge_id: challenge.id, user_id: user.id)
+  scenario 'Adds a challenge member to a goup within the challenge'
+    pending "TODO"
 
-    visit creator_challenge_path(challenge)
-
-
-  end
-
-  scenario 'Changes challenge group member to another group within same challenge' do
-    user2 = create(:user)
-    challenge = create(:challenge, owner_id: user.id, name: "Wonderful")
-    create(:membership, challenge: challenge, user: user)
-    create(:group, challenge_id: challenge.id, user_id: user.id)
-
-    visit creator_challenge_path(challenge)
-  end
+  scenario 'Changes challenge group member to another group within same challenge' 
+    pending "TODO"
 
   scenario 'Challenge owner cannot access Change-Group option for its group owner' do
     user2 = create(:user)
