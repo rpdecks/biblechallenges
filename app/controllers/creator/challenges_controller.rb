@@ -9,7 +9,6 @@ class Creator::ChallengesController < ApplicationController
 
   def index
     @challenges = current_user.created_challenges
-    @group.user_id = current_user.id unless @challenge.owner == current_user
   end
 
   def show
