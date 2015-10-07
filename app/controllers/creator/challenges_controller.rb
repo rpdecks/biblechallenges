@@ -13,6 +13,11 @@ class Creator::ChallengesController < ApplicationController
 
   def show
     @challenge = Challenge.includes(:members).friendly.find(params[:id])
+    @challenge_members = @challenge.members
+    @search = @challenge.memberships.search(params[:q])
+    @challenge_memberships = @search.result
+    @memberships = @challenge_memberships
+
     @groups = @challenge.groups.includes(:members,
                                          :group_statistic_progress_percentage,
                                          :group_statistic_on_schedule_percentage,

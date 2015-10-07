@@ -1,14 +1,17 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th Name
-      %th Group
+      %th 
+        = sort_link @search, :user_name, 'Name'
+      %th 
+        = sort_link @search, :group_name, 'Group'
       %th Email
       %th Completed
       %th Last Read
       %th Action (Challenge)
   %tbody
-  - challenge.memberships.by_group.each do |membership|
+  - @challenge_memberships.each do |membership|
+  - #@challenge_memberships.all.sort_by(&:last_recorded_reading_time).reverse!.each do |membership|
     %tr
       %td
         = link_to edit_creator_challenge_membership_path(@challenge, membership.id), title: "Assign to Group" do
