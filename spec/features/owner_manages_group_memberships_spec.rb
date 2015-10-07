@@ -7,23 +7,6 @@ feature 'Owner manages group members within challenge' do
     login(user)
   end
 
-  scenario 'Adds a challenge member to a goup within the challenge'
-    pending "TODO"
-
-  scenario 'Changes challenge group member to another group within same challenge' 
-    pending "TODO"
-
-  scenario 'Challenge owner cannot access Change-Group option for its group owner' do
-    user2 = create(:user)
-    challenge = create(:challenge, owner_id: user.id, name: "Wonderful")
-    create(:membership, challenge: challenge, user: user2)
-    group = create(:group, challenge_id: challenge.id, user_id: user2.id)
-
-    visit edit_creator_challenge_membership_path(challenge_id: challenge.id, id: group.id)
-    expect(page).to_not have_content("Select a Group")
-  end
-
-
   scenario 'Challenge owner adds a group but does not become a member of that group' do
     challenge = create(:challenge, owner_id: user.id, name: "Wonderful")
     membership = create(:membership, challenge: challenge, user: user)
@@ -80,6 +63,23 @@ feature 'Owner manages group members within challenge' do
 
     expect(group_stat.value).to eq 50
   end
+
+  scenario "Challenge owner cannot access Change-Group pull-down option for group's owner" do
+    user2 = create(:user)
+    challenge = create(:challenge, owner_id: user.id, name: "Wonderful")
+    membership = create(:membership, challenge: challenge, user: user2)
+    group = create(:group, challenge_id: challenge.id, user_id: user2.id)
+
+    visit edit_creator_challenge_membership_path(challenge_id: challenge.id, id: membership.id)
+    expect(page).to_not have_content("Select a Group")
+  end
+
+  scenario 'Adds a challenge member to a goup within the challenge'
+    pending "TODO"
+
+  scenario 'Changes challenge group member to another group within same challenge' 
+    pending "TODO"
+
 end
 
 
