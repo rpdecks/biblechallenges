@@ -10,7 +10,7 @@ class MembershipStatisticTotalChaptersRead < MembershipStatistic
   end
 
   def calculate
-    membership.membership_readings.size
+    membership.membership_readings.count
   end
 
   def update
