@@ -6,12 +6,12 @@
       %th 
         = sort_link @search, :group_name, 'Group'
       %th Email
-      %th Completed
+      %th 
+        = sort_link @search, :membership_readings_count, 'Completed'
       %th Last Read
       %th Action (Challenge)
   %tbody
   - @challenge_memberships.each do |membership|
-  - #@challenge_memberships.all.sort_by(&:last_recorded_reading_time).reverse!.each do |membership|
     %tr
       %td
         = link_to edit_creator_challenge_membership_path(@challenge, membership.id), title: "Assign to Group" do
