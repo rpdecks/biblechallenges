@@ -1,0 +1,39 @@
+.container
+  %h2
+    Challenge:
+    = link_to "#{@challenge.name}", challenge_path(@challenge), title: "Back to Challenge"
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+          %span
+            Challenge Member
+            %br
+            (*) Group Owner
+        %th Current Group
+        %th Assign to Group
+    %tbody
+      %tr
+        %td
+          = render 'shared/avatar_medium', user: @membership.user
+          - if @challenge.owner == @membership.user
+            %span
+              = "#{@membership.user.decorate.name} (*)"
+          - else 
+            %span
+              = @membership.user.decorate.name
+        %td
+          %strong
+            = @membership.group.try(:name)
+        %td
+          - if (@all_challenge_groups.find_by_user_id(@membership.user_id)) && @membership.user_id != @challenge.owner.id
+            Group creator, 
+            %br can't reassign
+          - else
+            = form_for [:creator, @challenge, @membership], html: {class: 'form-horizontal'} do |f|
+              = f.collection_select(:group_id, @all_challenge_groups, :id, :name, {:prompt => 'Select a Group'})
+              = f.hidden_field :challenge_id, :value => @challenge.id
+              %td{:style => "white-space:nowrap;"}
+                = f.submit 'Update', class: 'btn btn-primary'
+
+  = link_to "Back to Owner Dashboard", creator_challenge_path(@challenge), :class=>"btn btn-success"
