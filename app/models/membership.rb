@@ -49,17 +49,14 @@ class Membership < ActiveRecord::Base
   end
 
   def update_stats
+    associate_statistics
     self.membership_statistics.each do |ms|
       ms.update
     end
   end
 
   def associate_statistics
-    self.membership_statistics << MembershipStatisticProgressPercentage.create
-    self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
-    self.membership_statistics << MembershipStatisticRecordReadingStreak.create
-    self.membership_statistics << MembershipStatisticCurrentReadingStreak.create
-    self.membership_statistics << MembershipStatisticTotalChaptersRead.create
+    MembershipStatisticAttacher.attach_statistics(self)
   end
 
   def successful_creation_email
@@ -78,7 +75,7 @@ class Membership < ActiveRecord::Base
   end
 
   def last_recorded_reading_time
-    membership_readings.order(:created_at).last.created_at
+    membership_readings.order(:created_at).last.try(:created_at)
   end
 
   def x_of_total_read

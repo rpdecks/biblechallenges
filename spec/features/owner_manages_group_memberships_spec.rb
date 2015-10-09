@@ -9,7 +9,7 @@ feature 'Owner manages group members within challenge' do
 
   scenario 'Challenge owner adds a group but does not become a member of that group' do
     challenge = create(:challenge, owner_id: user.id, name: "Wonderful")
-    membership = create(:membership, challenge: challenge, user: user)
+    membership = create(:membership, :with_statistics, challenge: challenge, user: user)
 
     visit creator_challenge_path(challenge)
     click_link "Add a group"
@@ -24,12 +24,11 @@ feature 'Owner manages group members within challenge' do
     user2 = create(:user)
     start_date = Date.today
     challenge = create(:challenge_with_readings, 
-                        :with_membership,
                         chapters_to_read: "Matt 1-2",
                         begindate: start_date,
                         owner_id: user.id)
-    m1 = Membership.first
-    m2 = create(:membership, challenge: challenge, user: user2)
+    m1 = create(:membership, :with_statistics, challenge: challenge, user: user)
+    m2 = create(:membership, :with_statistics, challenge: challenge, user: user2)
 
     visit creator_challenge_path(challenge) #owner logs in and creates a group
     click_link "Add a group"
