@@ -15,7 +15,7 @@ describe MembershipStatisticTimeOfLastReading do
 
     it "calculates the time of the most recent membership_reading for this membership" do
       old_date_of_reading = Date.parse("2000-10-10")
-      most_recent_date_of_reading = Time.now
+      most_recent_date_of_reading = DateTime.new(2050,10,10)
       challenge = create(:challenge_with_readings, chapters_to_read: 'Matt 1-2')
       membership = create(:membership, challenge: challenge, user: create(:user))
 
