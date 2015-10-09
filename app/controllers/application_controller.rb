@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
   def render_nothing(status = :ok)
     render json: {}, status: status
   end
+  
+  def is_a_challenge_owner?
+    self.challenges
+  end
 
   def test_exception_notifier
     raise "This is only a test :) "

@@ -51,6 +51,26 @@ class User < ActiveRecord::Base
       u.save!
     end
   end
+  
+  def is_a_challenge_owner?
+    challenges = self.challenges
+    @owner_ids = []
+    challenges.each do |c|
+      @owner_ids << c.owner_id
+    end
+    @owner_ids.include?(self.id)
+  end
+
+  def past_created_challenges
+    challenges = self.challenges
+    @owned_challenges = []
+    challenges.each do |c|
+      if self.id == c.owner_id
+        @owned_challenges << c
+      end
+    end
+    return @owned_challenges
+  end
 
   #Callbacks
   #after_create :associate_statistics
