@@ -1,7 +1,7 @@
 class MembershipGenerator
   def initialize(challenge, *users)
     @challenge = challenge
-    @users = users
+    @users = users.flatten
   end
 
   def generate

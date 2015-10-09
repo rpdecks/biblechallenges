@@ -63,20 +63,23 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def create
+    if params[:challenge][:users]
+      users_param = params[:challenge][:users]
+      @users = []
+      users_param.each do |u|
+        user = User.find(u)
+        @users << user
+      end
+    else
+      @users = current_user
+    end
+
     @challenge = current_user.created_challenges.build(challenge_params)
-    #@array_of_users = array of users
 
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
       ReadingsGenerator.new(@challenge).generate
-
-      MembershipGenerator.new(challenge, users)
-      membership = Membership.new
-      membership.user = current_user
-      membership.challenge = @challenge
-      membership.save
-
-      MembershipCompletion.new(membership)
+      MembershipGenerator.new(@challenge, @users).generate
       ChallengeCompletion.new(@challenge)
       redirect_to member_challenge_path(@challenge)
     else
@@ -109,7 +112,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
+    params.require(:challenge).permit(:owner_id, :name, :users, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
   end
 
   def validate_ownership

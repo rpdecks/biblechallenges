@@ -98,6 +98,18 @@ describe Creator::ChallengesController do
           expect(Challenge.first.dates_to_skip).to eq "2017-01-01"
         end
       end
+      describe "with past challenge members attributes" do
+        it "creates the challenge with past challenge members to the challenge he created" do
+          user1 = create(:user)
+          user2 = create(:user)
+          user3 = create(:user)
+          challenge_params = FactoryGirl.attributes_for(:challenge)
+          challenge_params[:users] = user1, user2, user3
+          post :create, challenge: challenge_params
+
+          expect(Challenge.first.members).to include user1, user2, user3
+        end
+      end
     end
   end
 end
