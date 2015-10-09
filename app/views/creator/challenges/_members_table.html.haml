@@ -8,7 +8,8 @@
       %th Email
       %th 
         = sort_link @search, :membership_readings_count, 'Completed'
-      %th Last Read
+      %th 
+        = sort_link @search, :membership_statistic_time_of_last_reading_date_value, 'Last Read'
       %th Action (Challenge)
   %tbody
   - @challenge_memberships.each do |membership|
@@ -28,7 +29,7 @@
         %td= "No readings yet"
       - else
         %td
-          = time_ago_in_words(membership.last_recorded_reading_time)
+          = time_ago_in_words(membership.membership_statistic_time_of_last_reading.date_value)
           ago
       - if challenge.owner == membership.user
         %td= "N/A"
