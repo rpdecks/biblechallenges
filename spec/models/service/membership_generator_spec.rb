@@ -6,7 +6,8 @@ describe MembershipGenerator do
       user1 = create(:user)
       user2 = create(:user)
       user3 = create(:user)
-      MembershipGenerator.new(user1, user2, user3)
+      challenge = create(:challenge)
+      MembershipGenerator.new(challenge, user1, user2, user3).generate
       expect(Membership.count).to eq 3
     end
   end
