@@ -64,11 +64,13 @@ class Creator::ChallengesController < ApplicationController
 
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
+    #@array_of_users = array of users
 
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
       ReadingsGenerator.new(@challenge).generate
 
+      #MembershipGenerator.new(array_users)
       membership = Membership.new
       membership.user = current_user
       membership.challenge = @challenge
