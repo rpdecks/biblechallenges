@@ -70,7 +70,7 @@ class Creator::ChallengesController < ApplicationController
       flash[:notice] = "Successfully created Challenge"
       ReadingsGenerator.new(@challenge).generate
 
-      #MembershipGenerator.new(array_users)
+      MembershipGenerator.new(challenge, users)
       membership = Membership.new
       membership.user = current_user
       membership.challenge = @challenge
