@@ -5,6 +5,7 @@ class Creator::ChallengesController < ApplicationController
 
   def new
     @challenge = Challenge.new
+    @past_created_challenges = current_user.past_created_challenges
   end
 
   def index
