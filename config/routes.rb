@@ -26,6 +26,8 @@ Biblechallenge::Application.routes.draw do
 
   namespace :creator do
     resources :challenges do
+      resources :memberships, only: [:edit, :update]
+      resources :groups, only: [:new, :create, :edit]
       member do
         get 'snapshot_email' 
       end

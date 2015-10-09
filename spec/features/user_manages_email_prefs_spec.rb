@@ -134,10 +134,13 @@ feature 'User manages notification preferences via email' do
         click_button "Send message"
 
         message_emails = ActionMailer::Base.deliveries
-        expect(message_emails.size).to eq 1
+        expect(message_emails.size).to eq 2
         expect(message_emails.first.body).to have_content("Owner message")
-        expect(message_emails.first.To.value).to eq user3.email
-        expect(message_emails.first.To.value).to_not eq user2.email
+        @sent_emails = []
+        message_emails.each do |me|
+          @sent_emails << me.to
+        end
+        expect @sent_emails.flatten.should_not include([user2.email])
       end
     end
   end
