@@ -77,7 +77,7 @@
           .form-group
             = f.label :challenge
             = collection_select :previous_challenge, :id, @created_challenges,
-              :id, :name, {:prompt => 'Add users from past challenges'}, {:class => 'form-control'}
+              :id, :name, {:prompt => "Add users from past challenges"}, {:class => "form-control"}
             %p.help-block Enter any spans of dates you want to skip, in the format "YYYY-MM-DD..YYYY-MM-DD".  For example, to skip November 1-7, 2016, you would enter 2016-11-01..2016-11-07
 
         %br
