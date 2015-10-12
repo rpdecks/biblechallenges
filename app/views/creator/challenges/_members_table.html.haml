@@ -29,7 +29,7 @@
         %td= "No readings yet"
       - else
         %td
-          = time_ago_in_words(membership.membership_statistic_time_of_last_reading.date_value)
+          = time_ago_in_words(membership.last_recorded_reading_time)
           ago
       - if challenge.owner == membership.user
         %td= "N/A"
