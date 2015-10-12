@@ -53,19 +53,11 @@ class User < ActiveRecord::Base
   end
 
   def is_a_challenge_owner?
-    challenges = self.challenges
-    @owner_ids = challenges.pluck(:owner_id)
-    @owner_ids.include?(self.id)
+    Challenge.where(owner_id: self.id).present?
   end
 
   def past_created_challenges
-    @created_challenges = self.challenges.where(owner_id: self.id)
-    #@owned_challenges = []
-    #challenges.each do |c|
-    #  if self.id == c.owner_id
-    #    @owned_challenges << c
-    #  end
-    #end
+    @created_challenges = Challenge.where(owner_id: self.id)
     return @created_challenges
   end
 
