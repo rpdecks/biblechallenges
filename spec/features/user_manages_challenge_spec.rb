@@ -27,7 +27,8 @@ feature 'User manages challenges' do
 
   scenario 'User creates a new challenge with past challenge_members' do
     challenge = create(:challenge, :with_membership, owner: user)
-    challenge_user = challenge.members.first
+    user2 = create(:user)
+    challenge.join_new_member(user2)
 
     visit root_path
     click_link 'Create a challenge'
@@ -39,7 +40,7 @@ feature 'User manages challenges' do
 
     challenge2 = Challenge.find_by_name("challenge 2")
     expect(Challenge.all.size).to eq 2
-    expect(challenge2.members.first).to eq challenge_user
+    expect(challenge2.members).to include user2
   end
 
   scenario 'User creates a challenge and automatically joins the challenge' do
