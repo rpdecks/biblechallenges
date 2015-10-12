@@ -53,15 +53,10 @@ class User < ActiveRecord::Base
   end
 
   def is_a_challenge_owner?
-    Challenge.where(owner_id: self.id).present?
+    created_challenges.present?
   end
 
-  def past_created_challenges
-    @created_challenges = Challenge.where(owner_id: self.id)
-    return @created_challenges
-  end
-
-  #Callbacks
+  #Callback
   #after_create :associate_statistics
   before_save :set_default_values
 
