@@ -64,10 +64,11 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def create
-    if params[:challenge][:users]
-      users_param = params[:challenge][:users]
+    if params[:previous_challenge]
+      previous_challenge = Challenge.find(params[:previous_challenge][:id])
+      previous_challenge_member_ids = previous_challenge.members.pluck(:id)
       @users = []
-      users_param.each do |u|
+      previous_challenge_member_ids.each do |u|
         user = User.find(u)
         @users << user
       end
