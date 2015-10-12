@@ -16,8 +16,20 @@
             My Personal Statistics
         = render partial: 'shared/statistics/personal_stat', locals: {user: current_user}
 
-  - @challenges.each do |challenge|
+    .panel.panel-body
+      .panel-heading
+        %h5
+          Challenges that I am currently in
+      - @challenges.each do |challenge|
+        .col-md-6
+          = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
 
-    .col-md-6
-      = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+    -if @user.is_a_challenge_owner?
+      .panel.panel-body
+        .panel-heading
+          %h5
+            Challenges that I own
+        - @owner_challenges.each do |challenge|
+          .col-md-6
+            = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
 

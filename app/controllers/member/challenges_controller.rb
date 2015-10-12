@@ -9,6 +9,7 @@ class Member::ChallengesController < ApplicationController
   def index
     # all challenges that user is a member of
     @challenges = current_user.challenges.newest_first
+    @owner_challenges = Challenge.where(owner_id: current_user.id)
     @user = current_user
   end
 
