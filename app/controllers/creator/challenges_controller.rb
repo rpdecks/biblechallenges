@@ -66,12 +66,7 @@ class Creator::ChallengesController < ApplicationController
   def create
     if params[:previous_challenge]
       previous_challenge = Challenge.find(params[:previous_challenge][:id])
-      previous_challenge_member_ids = previous_challenge.members.pluck(:id)
-      @users = []
-      previous_challenge_member_ids.each do |u|
-        user = User.find(u)
-        @users << user
-      end
+      @users = previous_challenge.members
     else
       @users = current_user
     end
