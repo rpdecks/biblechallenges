@@ -20,6 +20,7 @@ class Challenge < ActiveRecord::Base
 
   scope :with_readings_tomorrow, -> { includes(:readings).where(readings: { read_on: Date.today+1 }) }
   scope :abandoned, -> { underway_at_least_x_days(7).no_members }
+  scope :with_no_mr_for_the_past_x_days, lambda { |x| joins(:membership_readings).where("membership_readings.created_at >=?", Time.now - x.days) }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
@@ -102,6 +103,7 @@ class Challenge < ActiveRecord::Base
       membership.user =  userz
       membership.bible_version = options[:bible_version] unless options[:bible_version].blank?
       membership.save
+      membership.update_stats
       membership
     end
   end
@@ -139,11 +141,10 @@ class Challenge < ActiveRecord::Base
     readings.where(read_on: user.date_by_timezone)
   end
 
-  def all_users_emails_except_challenge_owner
+  def all_users_emails
     all_members_in_challenge = self.members.where(:message_notify => true) #user_email_pref set to true to receive owner messages
     all_emails = all_members_in_challenge.pluck(:email)
-    all_users = all_emails - [self.owner.email] #remove challenge owner's email
-    return all_users
+    return all_emails
   end
 
   def send_challenge_msg_via_email(email_array, message, challenge)

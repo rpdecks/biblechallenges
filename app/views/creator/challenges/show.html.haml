@@ -21,23 +21,25 @@
   -else 
     = link_to "Open Challenge", creator_challenge_toggle_path(@challenge), :class=>"btn btn-success", :method => :get, "data-confirm" => 'Opening this challenge will allow others to join.'
     /%input{:checked => @challenge.joinable ? "" : "checked", :name => "challenge-activity", :type => "checkbox" }/ Will revisit if we can get input to link with toggle controller
-  = link_to "Send Challenge Snapshot Email", snapshot_email_creator_challenge_path(@challenge), method: :get, "data-confirm" => 'This will send a summary email of the challenge statistics up to the present day to all challenge members.', :class=>"btn btn-danger pull-right"
-
+  %br
+  %br
   = render partial: 'shared/challenges/invite_friends'
-  %br
-  %br
 
   .panel.panel-primary
     .panel-heading
-      = "Total Members: #{@challenge.members.size} "
+      = "Total Members: #{@challenge_members.size} "
       &nbsp;&nbsp;
-      = link_to new_creator_challenge_mass_email_path(@challenge.id), class: 'btn btn-success btn-xs', id: "Email All Members", :title => 'Email All Members', :rel => 'tooltip' do
+      = link_to new_creator_challenge_mass_email_path(@challenge.id), id: "Email All Members", :title => 'Email All Challenge Members', "data-confirm" => 'Your message will be sent by email to ALL Challenge Members.  Continue?', class: 'btn btn-success btn-xs' do
         %span.glyphicon.glyphicon-envelope
-    = render partial: 'creator/challenges/members_table', locals: {challenge: @challenge}
-  %br
+        Message
+      &nbsp;&nbsp;
+      = link_to snapshot_email_creator_challenge_path(@challenge), method: :get, "data-confirm" => 'This will send a summary email of the challenge statistics up to the present day to all challenge members.', :title => 'Send Challenge Snapshot email', class: "btn btn-danger btn-xs" do
+        %span.glyphicon.glyphicon-camera
+        Snapshot email
+    = render partial: 'creator/challenges/members_table', locals: {challenge_memberships: @challenge_memberships, challenge: @challenge}
 
   .panel.panel-primary
     .panel-heading
       = "Total Groups: #{@challenge.groups.size} "
     = render partial: 'creator/challenges/groups_table', locals: {challenge: @challenge}
-  %br
+  = link_to "Add a group", new_creator_challenge_group_path(challenge_id: @challenge.id), :class => 'btn btn-success btn-sm'

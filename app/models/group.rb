@@ -7,11 +7,15 @@ class Group < ActiveRecord::Base
   has_many :group_statistics, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 
-  validates :user, :challenge, presence: true
+  validates :challenge, :user, presence: true
 
   Rails.application.eager_load!
   GroupStatistic.descendants.each do |stat| 
     has_one stat.name.underscore.to_sym
+  end
+
+  def is_an_owner?(user)
+    self.owner.id == user.id
   end
 
   def has_member?(member)

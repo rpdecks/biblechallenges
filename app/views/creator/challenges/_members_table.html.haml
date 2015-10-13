@@ -1,34 +1,38 @@
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
-      %th Name
-      %th Group
+      %th 
+        = sort_link @search, :user_name, 'Name'
+      %th 
+        = sort_link @search, :group_name, 'Group'
       %th Email
-      %th Completed
-      %th Last Read
-      %th Action
+      %th 
+        = sort_link @search, :membership_readings_count, 'Completed'
+      %th 
+        = sort_link @search, :membership_statistic_time_of_last_reading_date_value, 'Last Read'
+      %th Action (Challenge)
   %tbody
-  - challenge.memberships.by_group.each do |membership|
+  - @challenge_memberships.each do |membership|
     %tr
       %td
-        = render 'shared/avatar_medium', user: membership.user
-        - if challenge.owner == membership.user
-          %span
-            = "#{membership.user.decorate.name} (Owner)"
-        - else 
-          %span
-            = membership.user.decorate.name
+        = link_to edit_creator_challenge_membership_path(@challenge, membership.id), title: "Assign to Group" do
+          %button.btn-outlined
+            = render 'shared/avatar_medium', user: membership.user
+            - if challenge.owner == membership.user
+              = "#{membership.user.decorate.name} (Owner)"
+            - else 
+              = membership.user.decorate.name
       %td= membership.group.try(:name)
       %td= mail_to(membership.user.email)
       %td= membership.x_of_total_read
-      - unless membership.membership_readings.empty?
+      - if membership.membership_readings.empty?
+        %td= "No readings yet"
+      - else
         %td
           = time_ago_in_words(membership.last_recorded_reading_time)
           ago
-      - else
-        %td
-          No readings yet
       - if challenge.owner == membership.user
         %td= "N/A"
       - else
-        %td= link_to "Remove", creator_remove_member_from_challenge_path(id: membership.id), method: :post, "data-confirm" => 'Are you sure you want to remove this member from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{membership.id}"
+        %td
+          = link_to "Remove", creator_remove_member_from_challenge_path(id: membership.id), method: :post, "data-confirm" => 'Are you sure you want to remove this member from the challenge?', :class => "btn btn-danger btn-sm", :id => "remove_#{membership.id}"

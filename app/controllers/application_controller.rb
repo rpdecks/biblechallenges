@@ -31,6 +31,15 @@ class ApplicationController < ActionController::Base
     raise "This is only a test :) "
   end
 
+  def validate_challenge_ownership
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+
+    unless current_user == @challenge.owner
+      flash[:notice] = "Access denied"
+      redirect_to member_challenges_path
+    end
+  end
+
   protected
 
   # put these in registrations controller?

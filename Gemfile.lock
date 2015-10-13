@@ -239,6 +239,8 @@ GEM
       arel
     pickadate-rails (3.5.6.0)
       railties (>= 3.1.0)
+    polyamorous (1.2.0)
+      activerecord (>= 3.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -286,6 +288,12 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
+    ransack (1.7.0)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.2)
     react-rails (1.0.0)
       coffee-script-source (~> 1.8)
       connection_pool
@@ -474,6 +482,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails-observers
   rails_12factor
+  ransack
   react-rails
   redcarpet
   rspec-collection_matchers

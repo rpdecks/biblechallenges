@@ -6,7 +6,7 @@ class MembershipReading < ActiveRecord::Base
   scope :last_week, -> {where("#{table_name}.created_at > ?", Time.now - 8.days)}
 
   # Relations
-  belongs_to :membership
+  belongs_to :membership, :counter_cache => true
   has_one :user, through: :membership
   belongs_to :reading
   has_one :chapter, through: :reading
