@@ -13,6 +13,10 @@ class SignUpViaEmail
     add_user_to_challenge(@user)
   end
 
+  def flash
+    @flash
+  end
+
   private
 
   def add_user_to_challenge(user)
@@ -34,9 +38,8 @@ class SignUpViaEmail
   end
 
   def user_already_in_challenge?
-    binding.pry
     if @challenge.has_member?(@user)
-      @flash[:notice] = "#{@user.name} is already in this challenge"
+      @flash = "#{@user.name} is already in this challenge"
       return true
     end
   end
