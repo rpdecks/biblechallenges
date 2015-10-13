@@ -11,7 +11,7 @@ feature 'Challenge Statistic' do
     scenario 'Removes the challenge_statistics all together' do
       challenge = create(:challenge, owner_id: user.id)
       ChallengeCompletion.new(challenge)
-      create(:membership, challenge: challenge, user: user)
+      create(:membership, :with_statistics, challenge: challenge, user: user)
       visit creator_challenge_path(challenge)
       click_link "Delete"
       membership_statistic = ChallengeStatistic.first

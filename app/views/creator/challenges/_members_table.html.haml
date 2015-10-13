@@ -8,7 +8,8 @@
       %th Email
       %th 
         = sort_link @search, :membership_readings_count, 'Completed'
-      %th Last Read
+      %th 
+        = sort_link @search, :membership_statistic_time_of_last_reading_date_value, 'Last Read'
       %th Action (Challenge)
   %tbody
   - @challenge_memberships.each do |membership|
