@@ -35,7 +35,7 @@ feature 'User manages challenges' do
     fill_in 'challenge[name]', with: "challenge 2"
     fill_in 'challenge[begindate]', with: Date.today
     fill_in 'challenge[chapters_to_read]', with: "Matthew 1-8"
-    select challenge.name, from: "previous_challenge_id"
+    select challenge.name, from: "challenge_previous_challenge_id"
     click_button "Create Challenge"
 
     challenge2 = Challenge.find_by_name("challenge 2")
