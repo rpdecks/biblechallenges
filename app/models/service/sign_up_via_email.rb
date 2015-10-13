@@ -3,25 +3,54 @@ class SignUpViaEmail
   def initialize(email, challenge)
     @email = email
     @challenge = challenge
+    sign_up
+  end
 
-
-
-
-    create_user_if_doesnt_exist
-
-
-
+  def sign_up
+    return if email_not_valid?
+    @user = find_or_create_user
+    return if user_already_in_challenge?
+    add_user_to_challenge(@user)
   end
 
   private
+
+  def add_user_to_challenge(user)
+    membership = @challenge.join_new_member(user)
+    if @new_user
+      MembershipCompletion.new(membership, password: user.password)
+    else
+      MembershipCompletion.new(membership)
+    end
+    @challenge.update_stats
+    @flash = "You have successfully added #{user.name} to this challenge"
+  end
+
+  def email_not_valid?
+    unless EmailValidator.new(@email).valid? 
+      @flash = "Please enter a valid email"
+      return true
+    end
+  end
+
+  def user_already_in_challenge?
+    binding.pry
+    if @challenge.has_member?(@user)
+      @flash[:notice] = "#{@user.name} is already in this challenge"
+      return true
+    end
+  end
 
   def email_is_valid?
     EmailValidator.new(@email).valid?
   end
 
-  def create_user_if_doesnt_exist
-    unless User.find_by_email(@email)
-      @user = UserCreation.new(email).create_user
+  def find_or_create_user
+    if user = User.find_by_email(@email)
+      user
+    else
+      @new_user = true
+      user = AutoUserCreation.new(@email).create_user
     end
   end
 
