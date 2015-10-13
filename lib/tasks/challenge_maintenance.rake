@@ -24,7 +24,8 @@ namespace :challenge do
     end
   end
 
-  desc "delete challeges begun at least 3 weeks ago that have had 0 membership readings during the past 3 weeks, unless begindate is in the future"
+  desc "delete challeges older than 3 weeks with either 0 members or no membership readings unless the challenge begindate is in the future"
+
 
   task prune_stale_challenges: :environment do
     last_3_weeks_of_challenges = Challenge.underway_at_least_x_days(21)
@@ -34,12 +35,14 @@ namespace :challenge do
     stale_queue = []
     stale_challenge_ids.each do |id|
       challenge = Challenge.find(id)
-      stale_queue << challenge unless challenge.begindate >= Date.today
+      stale_queue << challenge 
     end
+
     abandoned_and_stale_challenges = stale_queue | abandoned_queue
+
     puts "Destroying stale & abandoned challenges"
     abandoned_and_stale_challenges.each do |c|
-      c.destroy
+      c.destroy unless c.begindate >= Date.today
       print "."
     end
   end
