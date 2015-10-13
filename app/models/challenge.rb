@@ -95,6 +95,7 @@ class Challenge < ActiveRecord::Base
 
   # Accepts one or multiple users
   def join_new_member(userz,options={})
+    binding.pry
     if userz.class == Array
       userz.map {|u| join_new_member(u,options) }
     else
