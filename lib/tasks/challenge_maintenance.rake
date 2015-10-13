@@ -2,9 +2,11 @@ namespace :challenge do
   desc "challenge queries etc"
 
   task destroy_abandoned_challenges: :environment do
-    Challenge.abandoned.each do |c|
-      if (c.memberships.count == 0)
-        c.destroy
+    abandoned_challenges = Challenge.underway_at_least_x_days(5).abandoned
+    binding.pry
+    abandoned_challenges.each do |acs|
+      if (acs.memberships.count == 0)
+        acs.destroy unless acs.begindate >= Date.today
         puts "Destroyed one :("
       end
     end
