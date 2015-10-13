@@ -65,17 +65,13 @@ class Creator::ChallengesController < ApplicationController
 
   def create
     @challenge = current_user.created_challenges.build(challenge_params)
-    if challenge_params.include? :previous_challenge
-      @user = ImportsMembersFromPreviousChallenge.new(challenge_params[:previous_challenge][:id]).import
-    else
-      @user = current_user
-    end
 
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
 
       ReadingsGenerator.new(@challenge).generate
-      MembershipGenerator.new(@challenge, @user).generate
+      MembershipGenerator.new(@challenge, current_user).generate
+      ImportsMembersFromPreviousChallenge.new(challenge_params[:previous_challenge][:id], @challenge).import
       ChallengeCompletion.new(@challenge)
       redirect_to member_challenge_path(@challenge)
     else

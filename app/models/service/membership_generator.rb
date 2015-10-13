@@ -5,7 +5,7 @@ class MembershipGenerator
   end
 
   def generate
-    @users.each do |u|
+    new_members.each do |u|
       membership = Membership.new
       membership.user = u
       membership.challenge = @challenge
@@ -13,5 +13,11 @@ class MembershipGenerator
 
       MembershipCompletion.new(membership)
     end
+  end
+
+  private
+
+  def new_members
+    @users - @challenge.members
   end
 end

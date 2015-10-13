@@ -56,6 +56,11 @@ class Member::MembershipsController < ApplicationController
   end
 
   def sign_up_via_email
+    flash[:notice] = SignsUpViaEmail.new(params[:invite_email], challenge).flash
+    redirect_to challenge
+  end
+
+  end
     if email_validated?
       if existing_user
         if challenge.has_member?(@user)
