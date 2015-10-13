@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008151459) do
+ActiveRecord::Schema.define(version: 20151009181229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 20151008151459) do
     t.string   "type"
     t.integer  "value",         default: 0
     t.integer  "membership_id"
+    t.datetime "date_value"
   end
 
   add_index "membership_statistics", ["id", "type"], name: "index_membership_statistics_on_id_and_type", using: :btree
@@ -192,6 +193,7 @@ ActiveRecord::Schema.define(version: 20151008151459) do
     t.integer  "punctual_reading_percentage",  default: 0
     t.integer  "progress_percentage",          default: 0
     t.integer  "membership_readings_count",    default: 0
+    t.datetime "time_of_last_reading"
   end
 
   add_index "memberships", ["challenge_id", "user_id"], name: "index_memberships_on_challenge_id_and_user_id", using: :btree

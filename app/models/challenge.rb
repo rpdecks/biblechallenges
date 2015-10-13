@@ -102,6 +102,7 @@ class Challenge < ActiveRecord::Base
       membership.user =  userz
       membership.bible_version = options[:bible_version] unless options[:bible_version].blank?
       membership.save
+      membership.update_stats
       membership
     end
   end
