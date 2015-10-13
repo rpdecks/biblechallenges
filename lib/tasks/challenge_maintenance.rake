@@ -26,7 +26,7 @@ namespace :challenge do
   desc "delete challeges begun at least 3 weeks ago that have had 0 membership readings during the past 3 weeks, unless begindate is in the future"
 
   task prune_stale_challenges: :environment do
-    stale_challenge_ids = Challenge.underway_at_least_x_days(21).with_no_mr_for_the_past_three_weeks.pluck(:id).uniq # pluck id puts AR-relation to an array
+    stale_challenge_ids = Challenge.underway_at_least_x_days(21).with_no_mr_for_the_past_x_days(21).pluck(:id).uniq # pluck id puts AR-relation to an array
     queue = []
     stale_challenge_ids.each do |sc|
       challenge = Challenge.find(sc)

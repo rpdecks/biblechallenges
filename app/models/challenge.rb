@@ -20,7 +20,7 @@ class Challenge < ActiveRecord::Base
 
   scope :with_readings_tomorrow, -> { includes(:readings).where(readings: { read_on: Date.today+1 }) }
   scope :abandoned, -> { underway_at_least_x_days(7).no_members }
-  scope :with_no_mr_for_the_past_three_weeks, -> { joins(:membership_readings).where("membership_readings.created_at >=?", Time.now - 21.days) }
+  scope :with_no_mr_for_the_past_x_days, lambda { |x| joins(:membership_readings).where("membership_readings.created_at >=?", Time.now - x.days) }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
