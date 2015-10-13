@@ -49,6 +49,10 @@ gem 'slack-notifier'
 
 gem "autoprefixer-rails" #prefix styles for cross-browser
 
+#sortable table/link
+gem 'ransack'
+
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

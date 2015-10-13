@@ -22,6 +22,8 @@ class Membership < ActiveRecord::Base
 
   # Scopes
   scope :by_group, -> { order(:group_id) }
+  #scope :by_last_read_chapter, -> { joins(:membership_readings).group(:membership_id).order("membership_readings.created_at, memberships.id")}
+  #scope :by_last_read_chapter, -> { includes(:membership_readings).order("membership_readings.created_at")}
 
   delegate :name, to: :user
   delegate :email, to: :user
@@ -47,17 +49,14 @@ class Membership < ActiveRecord::Base
   end
 
   def update_stats
+    associate_statistics
     self.membership_statistics.each do |ms|
       ms.update
     end
   end
 
   def associate_statistics
-    self.membership_statistics << MembershipStatisticProgressPercentage.create
-    self.membership_statistics << MembershipStatisticOnSchedulePercentage.create
-    self.membership_statistics << MembershipStatisticRecordReadingStreak.create
-    self.membership_statistics << MembershipStatisticCurrentReadingStreak.create
-    self.membership_statistics << MembershipStatisticTotalChaptersRead.create
+    MembershipStatisticAttacher.attach_statistics(self)
   end
 
   def successful_creation_email
@@ -76,11 +75,11 @@ class Membership < ActiveRecord::Base
   end
 
   def last_recorded_reading_time
-    membership_readings.order(:created_at).last.created_at
+    membership_readings.order(:created_at).last.try(:created_at)
   end
 
   def x_of_total_read
-    "#{membership_readings.size} of #{readings.size}"
+    "#{membership_readings_count} of #{readings.size}"
   end
 
 

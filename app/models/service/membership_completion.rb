@@ -7,7 +7,6 @@ class MembershipCompletion
   end
 
   def complete
-    MembershipStatisticAttacher.attach_statistics(@membership)
     @membership.update_stats   
     @membership.challenge.update_stats  # this can definitely be backgrounded ask manny how todo
 
