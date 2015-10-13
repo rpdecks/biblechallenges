@@ -3,7 +3,6 @@ namespace :challenge do
 
   task destroy_abandoned_challenges: :environment do
     abandoned_challenges = Challenge.underway_at_least_x_days(5).abandoned
-    binding.pry
     abandoned_challenges.each do |acs|
       if (acs.memberships.count == 0)
         acs.destroy unless acs.begindate >= Date.today
@@ -28,14 +27,19 @@ namespace :challenge do
   desc "delete challeges begun at least 3 weeks ago that have had 0 membership readings during the past 3 weeks, unless begindate is in the future"
 
   task prune_stale_challenges: :environment do
-    stale_challenge_ids = Challenge.underway_at_least_x_days(21).with_no_mr_for_the_past_x_days(21).pluck(:id).uniq # pluck id puts AR-relation to an array
-    queue = []
-    stale_challenge_ids.each do |sc|
-      challenge = Challenge.find(sc)
-      queue << challenge unless challenge.begindate >= Date.today
+    last_3_weeks_of_challenges = Challenge.underway_at_least_x_days(21)
+    abandoned_queue = last_3_weeks_of_challenges.abandoned
+
+    stale_challenge_ids = last_3_weeks_of_challenges.with_no_mr_for_the_past_x_days(21).pluck(:id).uniq # pluck id puts AR-relation to an array
+    stale_queue = []
+    stale_challenge_ids.each do |id|
+      challenge = Challenge.find(id)
+      stale_queue << challenge unless challenge.begindate >= Date.today
     end
-    queue.each do |q|
-      q.destroy
+    abandoned_and_stale_challenges = stale_queue | abandoned_queue
+    puts "Destroying stale & abandoned challenges"
+    abandoned_and_stale_challenges.each do |c|
+      c.destroy
       print "."
     end
   end
