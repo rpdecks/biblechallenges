@@ -76,7 +76,7 @@
         -if current_user.is_a_challenge_owner?
           .form-group
             = f.label :Add_users_from_your_past_challenges
-            = collection_select 'challenge[previous_challenge]', :id, @created_challenges,
+            = f.collection_select :previous_challenge_id, @created_challenges,
               :id, :name, {:prompt => "Select a past challenge"}, {:class => "form-control"}
 
         %br
