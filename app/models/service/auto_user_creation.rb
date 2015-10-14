@@ -7,7 +7,6 @@ class AutoUserCreation
     password = auto_generated_password
     name = @email.split("@").first
     user = User.create(email: @email, name: name, password: password, password_confirmation: password)
-    user.password = password
     user.save
 
     UserCompletion.new(user)
