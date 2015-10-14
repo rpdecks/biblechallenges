@@ -1,5 +1,5 @@
 class Challenge < ActiveRecord::Base
-  attr_accessor :previous_challenge
+  attr_accessor :previous_challenge_id
   serialize :date_ranges_to_skip  # array of ranges
 
   Rails.application.eager_load!

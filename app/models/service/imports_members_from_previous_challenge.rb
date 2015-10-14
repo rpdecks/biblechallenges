@@ -7,7 +7,7 @@ class ImportsMembersFromPreviousChallenge
 
   def import
     if challenge_exists_and_belongs_to_same_creator?
-      MembershipGenerator.new(@new_challenge, previous_challenge.members).generate 
+      MembershipGenerator.new(@new_challenge, @previous_challenge.members).generate 
     end
   end
 

@@ -71,7 +71,7 @@ class Creator::ChallengesController < ApplicationController
 
       ReadingsGenerator.new(@challenge).generate
       MembershipGenerator.new(@challenge, current_user).generate
-      ImportsMembersFromPreviousChallenge.new(challenge_params[:previous_challenge][:id], @challenge).import
+      ImportsMembersFromPreviousChallenge.new(challenge_params[:previous_challenge_id], @challenge).import
       ChallengeCompletion.new(@challenge)
       redirect_to member_challenge_path(@challenge)
     else
@@ -104,7 +104,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :users, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [], :previous_challenge => [:id])
+    params.require(:challenge).permit(:owner_id, :name, :users, :dates_to_skip, :begindate, :enddate, :chapters_to_read, :previous_challenge_id, days_of_week_to_skip: [])
   end
 
   def validate_ownership
