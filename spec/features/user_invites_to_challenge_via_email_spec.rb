@@ -24,7 +24,7 @@ feature 'User invites friends via email' do
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
     click_button 'Add friends'
-    fill_in "addFriendsInput", with: '__^^@gmail.com'
+    fill_in "addFriendsInput", with: '__^^@gmail'
     click_button "Add"
     expect(page).to have_content("Please enter a valid email")
   end

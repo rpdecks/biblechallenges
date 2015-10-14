@@ -5,6 +5,7 @@ class Creator::ChallengesController < ApplicationController
 
   def new
     @challenge = Challenge.new
+    @created_challenges = current_user.created_challenges
   end
 
   def index
@@ -67,14 +68,10 @@ class Creator::ChallengesController < ApplicationController
 
     if @challenge.save
       flash[:notice] = "Successfully created Challenge"
+
       ReadingsGenerator.new(@challenge).generate
-
-      membership = Membership.new
-      membership.user = current_user
-      membership.challenge = @challenge
-      membership.save
-
-      MembershipCompletion.new(membership)
+      MembershipGenerator.new(@challenge, current_user).generate
+      ImportsMembersFromPreviousChallenge.new(challenge_params[:previous_challenge_id], @challenge).import
       ChallengeCompletion.new(@challenge)
       redirect_to member_challenge_path(@challenge)
     else
@@ -107,7 +104,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :dates_to_skip, :begindate, :enddate, :chapters_to_read, days_of_week_to_skip: [])
+    params.require(:challenge).permit(:owner_id, :name, :users, :dates_to_skip, :begindate, :enddate, :chapters_to_read, :previous_challenge_id, days_of_week_to_skip: [])
   end
 
   def validate_ownership

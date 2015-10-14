@@ -56,37 +56,8 @@ class Member::MembershipsController < ApplicationController
   end
 
   def sign_up_via_email
-    if email_validated?
-      if existing_user
-        if challenge.has_member?(@user)
-          flash[:notice] = "#{@user.name} is already in this challenge"
-          redirect_to challenge
-        else
-          @membership = challenge.join_new_member(@user)
-          MembershipCompletion.new(@membership)
-          challenge.update_stats
-          flash[:notice] = "You have successfully added #{@user.name} to this challenge"
-          redirect_to challenge
-        end
-      else
-        email = params[:invite_email]
-        @user = UserCreation.new(email).create_user
-        if @user.valid?
-          UserCompletion.new(@user)
-          @membership = challenge.join_new_member(@user)
-          MembershipCompletion.new(@membership, password: @user.password)
-          challenge.update_stats
-          flash[:notice] = "You have successfully added a new user to this challenge"
-          redirect_to challenge
-        else
-          flash[:notice] = "Please enter a valid email"
-          redirect_to challenge
-        end
-      end
-    else
-      flash[:notice] = "Please enter a valid email"
-      redirect_to challenge
-    end
+    flash[:notice] = SignUpViaEmail.new(params[:invite_email], challenge).flash
+    redirect_to challenge
   end
 
   private

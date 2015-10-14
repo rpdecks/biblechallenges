@@ -52,7 +52,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  #Callbacks
+  def is_a_challenge_owner?
+    created_challenges.present?
+  end
+
+  #Callback
   #after_create :associate_statistics
   before_save :set_default_values
 

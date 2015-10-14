@@ -43,7 +43,7 @@ feature 'Owner manages challenges' do
       click_button 'Send message'
       message_emails = ActionMailer::Base.deliveries
       expect(page).to have_content("You have successfully sent your message")
-      expect(message_emails.first.to).to eq [user2.email]
+      expect(message_emails.map(&:to)).to include [user2.email]
       expect(message_emails.count).to eq 3
       expect(message_emails.first.body).to have_content("Hello everyone")
     end

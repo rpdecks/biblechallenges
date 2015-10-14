@@ -71,8 +71,8 @@ describe Member::MembershipsController do
       expect(User.last.email).to eq email
     end
 
-    it "does not create a membership via email because of invalid user" do
-      email = "_@example.com"
+    it "does not create a membership via email because of invalid email" do
+      email = "invalid@example"
       ch = newchallenge
       membership = ch.memberships.first
       expect {
