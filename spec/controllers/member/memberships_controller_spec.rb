@@ -74,8 +74,7 @@ describe Member::MembershipsController do
     it "does not create a membership via email because of invalid email" do
       email = "invalid@example"
       ch = newchallenge
-      membership = ch.memberships.first
-      expect {
+      membership = ch.memberships.first expect {
         post :sign_up_via_email, challenge_id: ch.id, id: membership.id, invite_email: email
       }.to change(Membership, :count).by(0)
     end
