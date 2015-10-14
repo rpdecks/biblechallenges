@@ -26,7 +26,6 @@ class SignUpViaEmail
     else
       MembershipCompletion.new(membership)
     end
-    @challenge.update_stats
     @flash = "You have successfully added #{user.name} to this challenge"
   end
 
