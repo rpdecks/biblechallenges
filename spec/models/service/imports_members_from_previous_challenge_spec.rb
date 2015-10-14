@@ -9,7 +9,7 @@ describe ImportsMembersFromPreviousChallenge do
       new_challenge = create(:challenge, owner_id: users.first.id)
       ImportsMembersFromPreviousChallenge.new(old_challenge.id, new_challenge).import
       new_challenge.reload
-      expect(old_challenge.members).to eq new_challenge.members
+      expect(old_challenge.members).to match_array new_challenge.members
     end
   end
 end
