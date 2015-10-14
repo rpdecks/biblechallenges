@@ -25,6 +25,24 @@ feature 'User manages challenges' do
     end
   end
 
+  scenario 'User creates a new challenge with past challenge_members' do
+    challenge = create(:challenge, :with_membership, owner: user)
+    user2 = create(:user)
+    challenge.join_new_member(user2)
+
+    visit root_path
+    click_link 'Create a challenge'
+    fill_in 'challenge[name]', with: "challenge 2"
+    fill_in 'challenge[begindate]', with: Date.today
+    fill_in 'challenge[chapters_to_read]', with: "Matthew 1-8"
+    select challenge.name, from: "challenge_previous_challenge_id"
+    click_button "Create Challenge"
+
+    challenge2 = Challenge.find_by_name("challenge 2")
+    expect(Challenge.all.size).to eq 2
+    expect(challenge2.members).to include user2
+  end
+
   scenario 'User creates a challenge and automatically joins the challenge' do
     visit root_path
     click_link 'Create a challenge'
@@ -62,10 +80,10 @@ feature 'User manages challenges' do
       start_date = Date.today
       end_date = (start_date + 4.days)
       challenge = create(:challenge_with_readings, 
-                          chapters_to_read: "Matt 1-20",
-                          begindate: start_date, 
-                          enddate: end_date,
-                          owner_id: user.id)
+                         chapters_to_read: "Matt 1-20",
+                         begindate: start_date, 
+                         enddate: end_date,
+                         owner_id: user.id)
       challenge.join_new_member(user)
       expect(challenge.members).to include user
       DailyEmailScheduler.set_daily_email_jobs
@@ -77,7 +95,7 @@ feature 'User manages challenges' do
     start_date = Date.today
     challenge = create(:challenge_with_readings, 
                        :with_membership,
-                         chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+                       chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
     MembershipCompletion.new(challenge.memberships.first)
     ChallengeCompletion.new(challenge)
     user2 = create(:user)
@@ -117,7 +135,7 @@ feature 'User manages challenges' do
     start_date = Date.today
     challenge = create(:challenge_with_readings,
                        :with_membership,
-                         chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
+                       chapters_to_read: "Matt 1-2", begindate: start_date, owner_id: user.id)
     MembershipCompletion.new(challenge.memberships.first)
     ChallengeCompletion.new(challenge)
     user2 = create(:user)

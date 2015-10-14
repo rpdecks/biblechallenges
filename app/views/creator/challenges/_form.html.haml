@@ -11,6 +11,8 @@
   .row
     .col-md-6.col-md-offset-3
 
+      %br
+
       = form_for [:creator, @challenge], html: {class: 'form-horizontal'} do |f|
         .form-group
           = f.label :name, "Challenge Name"
@@ -69,6 +71,13 @@
             = f.check_box :days_of_week_to_skip, {multiple: true}, '6', false
             &nbsp; Saturday
 
+        %br
+
+        -if current_user.is_a_challenge_owner?
+          .form-group
+            = f.label :Add_users_from_your_past_challenges
+            = f.collection_select :previous_challenge_id, @created_challenges,
+              :id, :name, {:prompt => "Select a past challenge"}, {:class => "form-control"}
 
         %br
         %br
