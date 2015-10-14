@@ -5,7 +5,7 @@ class AutoUserCreation
 
   def create_user
     password = auto_generated_password
-    name = @email.split("@").first.gsub(/[^0-9a-z ]/i, '')
+    name = @email.split("@").first
     user = User.create(email: @email, name: name, password: password, password_confirmation: password)
     user.password = password
     user.save
