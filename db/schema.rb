@@ -193,7 +193,6 @@ ActiveRecord::Schema.define(version: 20151009181229) do
     t.integer  "punctual_reading_percentage",  default: 0
     t.integer  "progress_percentage",          default: 0
     t.integer  "membership_readings_count",    default: 0
-    t.datetime "time_of_last_reading"
   end
 
   add_index "memberships", ["challenge_id", "user_id"], name: "index_memberships_on_challenge_id_and_user_id", using: :btree
