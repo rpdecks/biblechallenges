@@ -14,7 +14,7 @@ feature 'User manages challenges' do
     Sidekiq::Testing.inline! do
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
-      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-2"
 
       click_button "Create Challenge"
 
@@ -37,7 +37,7 @@ feature 'User manages challenges' do
     expect{
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
-      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-2"
       click_button "Create Challenge"
     }.to change(Challenge, :count).by(1)
     expect(Membership.count).to be 1
@@ -51,7 +51,7 @@ feature 'User manages challenges' do
     fill_in 'challenge[name]', with: "challenge 1"
     fill_in 'challenge[begindate]', with: Date.today
     fill_in 'challenge[enddate]', with: (Date.today + 7.days)
-    fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+    fill_in 'challenge[chapters_to_read]', with: "Matthew 1-2"
     click_button "Create Challenge"
     expect(page).to have_content("Successfully created Challenge")
   end
