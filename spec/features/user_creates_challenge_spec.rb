@@ -53,7 +53,6 @@ feature 'User manages challenges' do
     fill_in 'challenge[enddate]', with: (Date.today + 7.days)
     fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
     click_button "Create Challenge"
-    binding.pry
     expect(page).to have_content("Successfully created Challenge")
   end
 end
