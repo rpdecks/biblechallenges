@@ -12,7 +12,7 @@ class GroupStatisticProgressPercentage < GroupStatistic
     if group_size == 0
       0
     else
-      total = group.memberships.map{|m| m.membership_statistic_progress_percentage.try(:value)}.inject(:+)
+      total = group.memberships.map{|m| m.membership_statistic_progress_percentage.try(:value) || 0}.inject(:+)
       total / group_size
     end
   end
