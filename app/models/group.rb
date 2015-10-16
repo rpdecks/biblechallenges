@@ -28,16 +28,8 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def associate_statistics
-    current_group_statistics = group_statistics.pluck(:type)
-    all_statistics = GroupStatistic.descendants.map(&:name)
-    missing_statistics = all_statistics - current_group_statistics
-    missing_statistics.each do |s|
-      group_statistics << s.constantize.create
-    end
-  end
-
   def update_stats
+    GroupStatisticAttacher.attach_statistics(self)
     self.group_statistics.each do |gs|
       gs.update
     end

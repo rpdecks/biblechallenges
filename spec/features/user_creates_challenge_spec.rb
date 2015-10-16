@@ -43,4 +43,16 @@ feature 'User manages challenges' do
     expect(Membership.count).to be 1
     expect(Membership.first.user).to eq user
   end
+
+  scenario 'User creates a challenge and sees confirmation page/message' do
+    visit root_path
+    click_link 'Create a challenge'
+
+    fill_in 'challenge[name]', with: "challenge 1"
+    fill_in 'challenge[begindate]', with: Date.today
+    fill_in 'challenge[enddate]', with: (Date.today + 7.days)
+    fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+    click_button "Create Challenge"
+    expect(page).to have_content("Successfully created Challenge")
+  end
 end

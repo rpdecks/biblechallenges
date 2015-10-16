@@ -24,7 +24,7 @@ class GroupStatisticOnSchedulePercentage < GroupStatistic
   private
 
   def sum_of_percentages
-    array_of_percentages = group.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value)}
+    array_of_percentages = group.memberships.map{|m| m.membership_statistic_on_schedule_percentage.try(:value) || 0}
     result = array_of_percentages.inject(0,:+)
     result
   end
