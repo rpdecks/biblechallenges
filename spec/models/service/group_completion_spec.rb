@@ -4,13 +4,13 @@ require 'spec_helper'
 describe GroupCompletion do
 
   describe "GroupStatistics" do
-    it "should attach group statistics to the group" do
-      allow(GroupStatisticAttacher).to receive(:attach_statistics)
-      group = create(:group, challenge: create(:challenge))
+    it "should update group statistics" do
+      group = stub("group")
+      allow(group).to receive(:update_stats)
 
       GroupCompletion.new(group)
 
-      expect(GroupStatisticAttacher).to have_received(:attach_statistics)
+      expect(group).to have_received(:update_stats)
     end
   end
 
