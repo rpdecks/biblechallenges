@@ -19,7 +19,7 @@ class ImportsMembersFromPreviousChallenge
   end
 
   def challenges_owned_by_same?
-    @previous_challenge.owner == @new_challenge.owner
+    @challenge_with_members_to_import.owner == @new_challenge.owner
   end
 
 end
