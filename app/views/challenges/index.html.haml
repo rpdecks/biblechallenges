@@ -39,13 +39,12 @@
           = @front_page_leaderboard.weeks_most_read_chapter
 
     - unless @my_challenges.blank?
-      %h3.component-title My Challenges
+      %h3.component-title My Current Challenges
       .challenges
         - @my_challenges.each_slice(2) do |challenge_group|
           .row
             .row-lg-height.row-md-height
               - challenge_group.each do |challenge|
-                -binding.pry
                 .col-md-6.col-lg-height.col-md-height
                   .inside.inside-full-height
                     = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
