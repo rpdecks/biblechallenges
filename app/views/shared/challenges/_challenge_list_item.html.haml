@@ -1,14 +1,31 @@
 .challenge
-  = link_to challenge_path(challenge), :class => 'list-group-item' do
-    %span.badge
-      = challenge.memberships_count
-      = "member".pluralize(challenge.memberships_count)
-    %h4.list-group-item-heading
-      = "#{challenge.name}"
+  - if challenge.is_over?
+    = link_to challenge_path(challenge) do
+      .list-group-item.list-group-item-danger
+        %span.badge
+          = challenge.memberships_count
+          = "member".pluralize(challenge.memberships_count)
+        %h4.list-group-item-heading
+          = "#{challenge.name}"
 
-    %p.list-group-item-text
-      = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
+        %p.list-group-item-text
+          = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
 
-    %p.list-group-item-text
-      - challenge.members.limit(24).each do |m|
-        = render 'shared/avatar_small', user: m
+        %p.list-group-item-text
+          - challenge.members.limit(24).each do |m|
+            = render 'shared/avatar_small', user: m
+  - else
+    = link_to challenge_path(challenge) do
+      .list-group-item.list-group-success-border
+        %span.badge
+          = challenge.memberships_count
+          = "member".pluralize(challenge.memberships_count)
+        %h4.list-group-item-heading
+          = "#{challenge.name}"
+
+        %p.list-group-item-text
+          = "#{challenge.begindate.strftime("%b %d, %Y")} - #{challenge.enddate.strftime("%b %d, %Y")}"
+
+        %p.list-group-item-text
+          - challenge.members.limit(24).each do |m|
+            = render 'shared/avatar_small', user: m
