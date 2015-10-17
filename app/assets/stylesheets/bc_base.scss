@@ -742,9 +742,13 @@ a.list-group-item.active:focus .list-group-item-heading {
   color: white;
 }
 .list-group-item-text {
-  color: #93a4aa;
+  color: #888888;
   font-size: 14px;
   line-height: 1.7;
+}
+.list-group-success-border {
+  border-color: #00CC00;
+  border-width: 1px;
 }
 .list-group-item-primary {
   color: #009dcd;
