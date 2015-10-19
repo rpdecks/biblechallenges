@@ -742,9 +742,13 @@ a.list-group-item.active:focus .list-group-item-heading {
   color: white;
 }
 .list-group-item-text {
-  color: #93a4aa;
+  color: #888888;
   font-size: 14px;
   line-height: 1.7;
+}
+.list-group-success-border {
+  border-color: #00CC00;
+  border-width: 1px;
 }
 .list-group-item-primary {
   color: #009dcd;
@@ -836,7 +840,7 @@ a.list-group-item-warning.active:focus {
 }
 .list-group-item-danger {
   color: #cc0000;
-  background-color: rgba(248, 69, 69, 0.2);
+  background-color: rgba(85, 50, 50, 0.2);
 }
 a.list-group-item-danger {
   color: #cc0000;
@@ -847,13 +851,13 @@ a.list-group-item-danger .list-group-item-heading {
 a.list-group-item-danger:hover,
 a.list-group-item-danger:focus {
   color: #cc0000;
-  background-color: rgba(248, 69, 69, 0.3);
+  background-color: rgba(100, 50, 50, 0.3);
 }
 a.list-group-item-danger.active,
 a.list-group-item-danger.active:hover,
 a.list-group-item-danger.active:focus {
   color: #fff;
-  background-color: #cc0000;
+  background-color: rgba(85, 50, 50, 0.2);
   border-color: #cc0000;
 }
 @media screen and (min-width: 320px) and (max-width: 1000px) {

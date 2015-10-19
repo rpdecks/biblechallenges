@@ -87,6 +87,10 @@ class Challenge < ActiveRecord::Base
     membership_for(member) && membership_for(member).group
   end
 
+  def is_over?
+    self.enddate < Date.today
+  end
+
   def percentage_completed
     scheduled = readings.where(read_on: (self.begindate)..(Date.today)).count
     total = readings.count
