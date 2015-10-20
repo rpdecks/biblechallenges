@@ -21,6 +21,7 @@ class Challenge < ActiveRecord::Base
 
   scope :with_readings_tomorrow, -> { includes(:readings).where(readings: { read_on: Date.today+1 }) }
   scope :abandoned, -> { underway_at_least_x_days(7).no_members }
+  scope :persisted, -> { where "id IS NOT NULL" }
 
   include FriendlyId
   # :history option: keeps track of previous slugs
