@@ -60,8 +60,21 @@ feature 'User manages challenges' do
     visit root_path
     click_link 'Create a challenge'
 
-    fill_in 'challenge[name]', with: "  jasdlfkjasd;f  "
+    fill_in 'challenge[name]', with: "  leading-and-trailing-spaces  "
     fill_in 'challenge[begindate]', with: Date.today
+    fill_in 'challenge[chapters_to_read]', with: "Matthew 1-2"
+
+    click_button "Create Challenge"
+
+    expect(page).to have_content("Successfully created Challenge")
+  end
+
+  scenario 'User creates a future challenge' do
+    visit root_path
+    click_link 'Create a challenge'
+
+    fill_in 'challenge[name]', with: "awesome"
+    fill_in 'challenge[begindate]', with: Date.tomorrow
     fill_in 'challenge[chapters_to_read]', with: "Matthew 1-2"
 
     click_button "Create Challenge"
