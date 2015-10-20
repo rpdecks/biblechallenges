@@ -8,16 +8,6 @@ feature "User logs reading" do
     login(user)
   }
 
-  scenario "via challenge page 'Log' button" do
-    challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
-    create(:membership, user: user, challenge: challenge)
-
-    visit member_challenge_path(challenge)
-    expect{
-      click_link_or_button "Log Matthew 1"
-    }.to change(user.membership_readings, :count).by(1)
-  end
-
   scenario "Calculate membership on schedule percentage" do
     user.time_zone = "Pacific Time (US & Canada)"
 
