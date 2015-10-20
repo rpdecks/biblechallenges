@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def is_a_challenge_owner?
-    created_challenges.present?
+    created_challenges.persisted.present?
   end
 
   #Callback
