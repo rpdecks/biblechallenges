@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Creator::ChallengesController do
+  render_views
 
   describe "Routing" do
     it { {get: "/creator/challenges"}.should route_to(controller: "creator/challenges", action: "index") }
@@ -73,6 +74,13 @@ describe Creator::ChallengesController do
           expect(response).to render_template(:new)
         end
       end
+      describe "with invalid attributes as a challenge owner" do
+        it "renders new template again" do
+          challenge #makes user a challenge owner
+          post :create, challenge: FactoryGirl.attributes_for(:challenge, name: nil)
+          expect(response).to render_template(:new)
+        end
+      end
       describe "with valid attributes" do
         it "joins the creator to the challenge he created" do
           expect{
@@ -100,16 +108,17 @@ describe Creator::ChallengesController do
       end
       describe "with past challenge members attributes" do
         it "creates the challenge with past challenge members to the challenge he created" do
-          challenge = create(:challenge, :with_membership, owner: challenge_creator)
+          previous_challenge = create(:challenge, :with_membership, owner: challenge_creator)
           user1 = create(:user)
           user2 = create(:user)
           user3 = create(:user)
-          challenge.join_new_member([user1, user2, user3])
+          previous_challenge.join_new_member([user1, user2, user3])
           new_challenge_params = FactoryGirl.attributes_for(:challenge)
-          new_challenge_params[:previous_challenge] = challenge.id
+          new_challenge_params[:previous_challenge_id] = previous_challenge.id
           post :create, challenge: new_challenge_params
+          new_challenge = Challenge.last
 
-          expect(Challenge.first.members).to include user1, user2, user3
+          expect(new_challenge.members).to include user1, user2, user3
         end
       end
     end
