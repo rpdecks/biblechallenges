@@ -8,10 +8,11 @@ feature "User manages membership reading" do
     login(user)
   }
 
-  scenario "via challenge page 'Log' button" do
+  scenario "records a membership reading via challenge page 'Log' button" do
     challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
-    create(:membership, user: user, challenge: challenge)
     chapter = challenge.chapters.first
+    group = create(:group, user_id: user.id, challenge_id: challenge.id)
+    create(:membership, user: user, challenge: challenge, group_id: group.id)
 
     visit member_challenge_path(challenge)
     expect{
@@ -23,5 +24,7 @@ feature "User manages membership reading" do
     expect(mr.challenge_name).to eq challenge.name
     expect(mr.chapter_id).to eq chapter.id
     expect(mr.chapter_name).to eq chapter.book_and_chapter
+    expect(mr.group_name).to eq group.name
+    expect(mr.group_id).to eq group.id
   end
 end
