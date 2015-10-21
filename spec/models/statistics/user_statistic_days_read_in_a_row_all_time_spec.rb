@@ -11,8 +11,8 @@ describe UserStatisticDaysReadInARowAllTime do
       current_stat = user.user_statistics.find_by_type("UserStatisticDaysReadInARowCurrent")
       all_time_stat = user.user_statistics.find_by_type("UserStatisticDaysReadInARowAllTime")
 
-      challenge.readings[0..4].each do |mr|
-        create(:membership_reading, membership: membership, reading: mr)
+      challenge.readings[0..4].each do |r|
+        create(:membership_reading, membership: membership, reading: r, user_id: user.id)
         Timecop.travel(1.day)
       end
       current_stat.update
@@ -20,8 +20,8 @@ describe UserStatisticDaysReadInARowAllTime do
 
       Timecop.travel(1.days) # skip one day
 
-      challenge.readings[5..6].each do |mr|
-        create(:membership_reading, membership: membership, reading: mr)
+      challenge.readings[5..6].each do |r|
+        create(:membership_reading, membership: membership, reading: r, user_id: user.id)
         Timecop.travel(1.day)
       end
       current_stat.update

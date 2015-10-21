@@ -8,8 +8,8 @@ describe UserStatisticChaptersReadAllTime do
       membership = challenge.memberships.first
       challenge.generate_readings
       user_stat = UserStatisticChaptersReadAllTime.new(user: user)
-      challenge.readings[0..3].each do |mr|
-        create(:membership_reading, membership: membership, reading: mr)
+      challenge.readings[0..3].each do |r|
+        create(:membership_reading, membership: membership, reading: r, user_id: user.id)
         user_stat.update
       end
 
@@ -22,16 +22,16 @@ describe UserStatisticChaptersReadAllTime do
       membership = challenge1.memberships.first
       challenge1.generate_readings
       user_stat = UserStatisticChaptersReadAllTime.new(user: user)
-      challenge1.readings[0..3].each do |mr|
-        create(:membership_reading, membership: membership, reading: mr)
+      challenge1.readings[0..3].each do |r|
+        create(:membership_reading, membership: membership, reading: r, user_id: user.id)
         user_stat.update
       end
 
       challenge2 = create(:challenge, :with_membership, chapters_to_read: 'Matt  1-7', owner: user)
       membership2 = challenge2.memberships.first
       challenge2.generate_readings
-      challenge2.readings[0..3].each do |mr|
-        create(:membership_reading, membership: membership2, reading: mr)
+      challenge2.readings[0..3].each do |r|
+        create(:membership_reading, membership: membership2, reading: r, user_id: user.id)
         user_stat.update
       end
 
