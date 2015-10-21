@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
   end
 
   def update_stats
+    associate_statistics
     self.user_statistics.each do |us|
       us.update
     end
