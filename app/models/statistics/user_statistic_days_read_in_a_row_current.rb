@@ -21,7 +21,7 @@ class UserStatisticDaysReadInARowCurrent < UserStatistic
     today_jd = self.user.date_by_timezone.jd
     yesterday_jd = today_jd - 1
 
-    dates_read = user.membership_readings.reload.map do |r|
+    dates_read = MembershipReading.where(user_id: user.id).map do |r|
       r.created_at.in_time_zone(self.user.time_zone).to_date.jd  # converts days to integers
     end
     dates_read.sort!  # dates as integers in ascending order
