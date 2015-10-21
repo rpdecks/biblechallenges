@@ -13,8 +13,8 @@ describe UserStatisticDaysReadInARowCurrent do
       membership = challenge.memberships.first
       challenge.generate_readings
       user_stat = UserStatisticDaysReadInARowCurrent.new(user: user)
-      challenge.readings[0..4].each do |mr|
-        create(:membership_reading, membership: membership, reading: mr)
+      challenge.readings[0..4].each do |r|
+        create(:membership_reading, membership: membership, reading: r, user_id: user.id)
         user_stat.update
         Timecop.travel(1.day)
       end
@@ -34,16 +34,16 @@ describe UserStatisticDaysReadInARowCurrent do
       challenge2.generate_readings
       user_stat = UserStatisticDaysReadInARowCurrent.new(user: user)
 
-      challenge1.readings[0..2].each do |mr| # 3 chapters in challenge 1
-        create(:membership_reading, membership: membership1, reading: mr)
+      challenge1.readings[0..2].each do |r| # 3 chapters in challenge 1
+        create(:membership_reading, membership: membership1, reading: r, user_id: user.id)
         Timecop.travel(1.day)
       end
-      challenge2.readings[0..2].each do |mr| # 3 chaptres in challenge 2
-        create(:membership_reading, membership: membership2, reading: mr)
+      challenge2.readings[0..2].each do |r| # 3 chaptres in challenge 2
+        create(:membership_reading, membership: membership2, reading: r, user_id: user.id)
         Timecop.travel(1.day)
       end
-      challenge1.readings[3..5].each do |mr| # 3 chapters in challenge 1
-        create(:membership_reading, membership: membership1, reading: mr)
+      challenge1.readings[3..5].each do |r| # 3 chapters in challenge 1
+        create(:membership_reading, membership: membership1, reading: r, user_id: user.id)
         Timecop.travel(1.day)
       end
      expect(user_stat.calculate).to eq 9
@@ -62,11 +62,11 @@ describe UserStatisticDaysReadInARowCurrent do
       user_stat = UserStatisticDaysReadInARowCurrent.new(user: user)
 
       # two day streak
-      create(:membership_reading, membership: membership, reading: challenge.readings.first)
+      create(:membership_reading, membership: membership, reading: challenge.readings.first, user_id: user.id)
       Timecop.travel(2.day)
-      create(:membership_reading, membership: membership, reading: challenge.readings.second)
+      create(:membership_reading, membership: membership, reading: challenge.readings.second, user_id: user.id)
       Timecop.travel(1.day)
-      create(:membership_reading, membership: membership, reading: challenge.readings.third)
+      create(:membership_reading, membership: membership, reading: challenge.readings.third, user_id: user.id)
 
       expect(user_stat.calculate).to eq 2
       Timecop.return
