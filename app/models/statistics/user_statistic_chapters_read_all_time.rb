@@ -9,7 +9,7 @@ class UserStatisticChaptersReadAllTime < UserStatistic
   end
 
   def calculate
-    user.membership_readings.count
+    MembershipReading.where(user_id: user.id).count
   end
 
   def update
