@@ -7,7 +7,7 @@ describe MembershipReadingCompletion do
     membership = challenge.join_new_member(user)
     reading = challenge.readings.first
     membership_reading = create(:membership_reading, membership_id: membership.id, reading_id: reading.id)
-    MembershipReadingCompletion.new(user, challenge, membership_reading).attach_attributes
+    MembershipReadingCompletion.new(user, membership, membership_reading).attach_attributes
     expect(membership_reading.user_id).to eq user.id
   end
 end
