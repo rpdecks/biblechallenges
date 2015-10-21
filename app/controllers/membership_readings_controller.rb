@@ -16,7 +16,7 @@ class MembershipReadingsController < ApplicationController
       end
 
       if @membership_reading.save
-        MembershipReadingCompletion.new(current_user, @challenge, @membership_reading).attach_attributes
+        MembershipReadingCompletion.new(current_user, membership, @membership_reading).attach_attributes
         update_stats
       end
 
