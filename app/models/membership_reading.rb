@@ -10,7 +10,6 @@ class MembershipReading < ActiveRecord::Base
   belongs_to :chapter
   has_one :user, through: :membership
   belongs_to :reading
-  has_one :chapter, through: :reading
 
   #delegations
   delegate :read_on, to: :reading
