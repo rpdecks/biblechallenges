@@ -1,9 +1,10 @@
+.fb-like{"data-share" => "false", "layout" => "button_count", "data-show-faces" => "true", "data-width" => "450"}
+
 .title
   = @challenge.name
 
   - if @challenge.owner == current_user
     = link_to "Owner Dashboard", creator_challenge_path(@challenge), :class=>"btn btn-success"
-  .fb-like{"data-share" => "true", "data-show-faces" => "true", "data-width" => "450"}
 
 .subtitle
   %b
