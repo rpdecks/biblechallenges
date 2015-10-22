@@ -9,22 +9,6 @@
         = csrf_meta_tags
   %body
 
-    :javascript
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '#{ENV['FACEBOOK_APP_ID']}',
-          xfbml      : true,
-          version    : 'v2.5'
-        });
-      };
-
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
 
     / Nav Header
     %nav.navbar.navbar-default.navbar-fixed-top
@@ -34,7 +18,9 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: "/"} BibleChallenges.com
+          %span
+            .fb-like{"data-share" => "false", "layout" => "button_count", "data-show-faces" => "true", "data-width" => "450"}
+            %a.navbar-brand{href: "/"} BibleChallenges.com
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li
@@ -70,3 +56,20 @@
     = yield
 
     = yield :javascripts
+    
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '#{ENV['FACEBOOK_APP_ID']}',
+          xfbml      : true,
+          version    : 'v2.5'
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
