@@ -3,20 +3,20 @@ require 'spec_helper'
 describe UserDecorator do
 
   describe "initialed_name" do
-    it "shows last name and initials for three names" do
-      user = build_stubbed(:user, name: "Evan Tiberius Koch").decorate
+    it "for three names, shows first name and initials for other names" do
+      user = build_stubbed(:user, name: "Skhor Tiberius Dilletante").decorate
 
-      expect(user.initialed_name).to eq "E. T. Koch"
+      expect(user.initialed_name).to eq "Skhor T. D."
     end
-    it "shows last name and initials for one name" do
-      user = build_stubbed(:user, name: "Kochster").decorate
+    it "for one name, shows entire name" do
+      user = build_stubbed(:user, name: "Lemonjello").decorate
 
-      expect(user.initialed_name).to eq "Kochster"
+      expect(user.initialed_name).to eq "Lemonjello"
     end
-    it "shows last name and initials for two names" do
+    it "for two names, shows first name and initial for 2nd name" do
       user = build_stubbed(:user, name: "Evan Koch").decorate
 
-      expect(user.initialed_name).to eq "E. Koch"
+      expect(user.initialed_name).to eq "Evan K."
     end
 
   end
