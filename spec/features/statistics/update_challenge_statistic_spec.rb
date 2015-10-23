@@ -12,7 +12,7 @@ feature 'Challenge Statistic' do
       challenge = create(:challenge, owner_id: user.id)
       ChallengeCompletion.new(challenge)
       create(:membership, :with_statistics, challenge: challenge, user: user)
-      visit creator_challenge_path(challenge)
+      visit edit_creator_challenge_path(challenge)
       click_link "Delete"
       membership_statistic = ChallengeStatistic.first
       expect(membership_statistic).to be_falsey
