@@ -12,9 +12,16 @@ feature 'Owner manages challenges' do
     create(:membership, :with_statistics, challenge: @challenge, user: @user)
   end
 
+  scenario 'Deletes the challenge' do
+    create_challenge_with_owner_as_member
+    visit edit_creator_challenge_path(@challenge)
+    click_link 'Delete'
+    expect(Challenge.all.size).to eq 0
+  end
+
   scenario 'Closes the challenge so it is not joinable' do
     create_challenge_with_owner_as_member
-    visit creator_challenge_path(@challenge)
+    visit edit_creator_challenge_path(@challenge)
     click_link 'Close Challenge'
     @challenge.reload
     expect(@challenge.joinable).to eq false
