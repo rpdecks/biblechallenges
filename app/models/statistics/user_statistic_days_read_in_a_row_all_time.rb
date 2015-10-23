@@ -11,10 +11,10 @@ class UserStatisticDaysReadInARowAllTime < UserStatistic
   def calculate
 
     user = self.user
-    membership_readings = MembershipReading.where(user_id: user.id)
+    membership_readings = user.membership_readings
     if membership_readings.any?
 
-      streaks = MembershipReading.where(user_id: user.id).
+      streaks = user.membership_readings.
         map{|mr| mr.created_at.in_time_zone(user.time_zone).to_date.jd}.
         sort.uniq.find_consecutive
 
