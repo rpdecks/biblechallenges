@@ -36,5 +36,6 @@
         #{link_to 'Manage your notification preferences.', edit_user_url}
       %br
       %br
+      -unless @user == @membership.challenge.owner
         If for ANY reason you would like to opt-out of this bible reading challenge, simply click
         #{link_to 'Here', unsubscribe_member_membership_url(@membership.id, user_email: @user.email, user_token: @user.authentication_token)} here to be unsubscribed.
