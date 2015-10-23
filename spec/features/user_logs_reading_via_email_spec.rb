@@ -32,7 +32,6 @@ feature 'User logs reading via email' do
     open_last_email
     visit_in_email("Confirm")
     }.to change(user.membership_readings, :count).by(2)
-    binding.pry
 
     expect(page).to have_content ("Thank you")
   end
