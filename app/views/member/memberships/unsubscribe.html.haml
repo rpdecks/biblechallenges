@@ -1,9 +1,22 @@
 You are choosing to unsubscribe from the 
-=@membership.challenge.name
-Bible Challenge.
-%br
+%h5
+  "
+  =@membership.challenge.name
+  "
+  Bible Challenge.
 %br
 
+- if current_user == @membership.challenge.owner
+  %h6 
+    %strong
+      %u
+        WARNING: You are the owner of this Challenge!  
+      %br
+      %br
+        If you unsubscribe, the challenge itself will be deleted along with all the members and groups within it.
+      %p
+        Are you sure you want to unsubscribe?
+%br
 =button_to "Unsubscribe Me", member_membership_path(@membership,
                               user_email: @membership.user.email,
                               user_token: @membership.user.authentication_token), 

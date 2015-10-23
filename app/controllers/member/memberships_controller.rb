@@ -49,7 +49,11 @@ class Member::MembershipsController < ApplicationController
 
   def destroy
     challenge = membership.challenge
-    membership.destroy
+    if current_user == membership.challenge.owner
+      challenge.destroy
+    else
+      membership.destroy
+    end
     challenge.update_stats
     flash[:notice] = "You have been successfully unsubscribed from this challenge"
     redirect_to challenge
