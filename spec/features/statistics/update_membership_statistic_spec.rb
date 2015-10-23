@@ -27,7 +27,7 @@ feature 'Membership Statistic' do
       membership2 = create(:membership, challenge: challenge, user: user2)
       MembershipCompletion.new(membership1)
       MembershipCompletion.new(membership2)
-      visit creator_challenge_path(challenge)
+      visit edit_creator_challenge_path(challenge)
       click_link "Delete"
       membership_statistic = MembershipStatistic.first
       expect(membership_statistic).to be_falsey

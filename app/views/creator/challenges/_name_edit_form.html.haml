@@ -19,8 +19,13 @@
           = f.text_field :name, required: true, class: "form-control"
           %p.help-block The name of your challenge, for example "The Book of Acts in July"
 
-        %br
-        %br
-
         .form-group
-          = f.submit class: 'btn btn-primary btn-block', disable_with: 'Please Wait...'
+          = f.submit "Update", class: 'btn btn-primary', disable_with: 'Please Wait...', title: 'Update Challenge'
+
+          -if @challenge.joinable == true
+            = link_to "Close", creator_challenge_toggle_path(@challenge), :class=>"btn btn-warning", :method => :get, title: 'Close Challenge', "data-confirm" => 'By closing this challenge, others will no longer be able to join it.'
+          -else 
+            = link_to "Open", creator_challenge_toggle_path(@challenge), :class=>"btn btn-success", :method => :get, title: 'Open Challenge', "data-confirm" => 'Opening this challenge will allow others to join.'
+
+          = link_to "Delete", creator_challenge_path(@challenge), method: :delete, title: 'Delete Challenge', "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger"
+          %p.help-block Options: 1) Update the name. 2) Restrict access by opening or closing challenge. 3) Delete the challenge altogether.
