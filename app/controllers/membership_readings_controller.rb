@@ -13,11 +13,10 @@ class MembershipReadingsController < ApplicationController
       readings.each do |reading|
         #we want to create a membership reading for each reading so I'm merging the reading params in
         @membership_reading = MembershipReading.create(membership_reading_params.merge(reading_id: reading.id))
-      end
-
-      if @membership_reading.save
-        MembershipReadingCompletion.new(current_user, membership, @membership_reading).attach_attributes
-        update_stats
+        if @membership_reading.save
+          MembershipReadingCompletion.new(current_user, membership, @membership_reading).attach_attributes
+          update_stats
+        end
       end
 
       respond_to do |format|
