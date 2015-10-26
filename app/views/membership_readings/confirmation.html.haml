@@ -1,3 +1,13 @@
+:javascript
+
+  FB.ui({
+  method: 'share_open_graph',
+  action_type: 'og.likes',
+  action_properties: JSON.stringify({
+    object:'http: #{ENV['APP_URL']+'member/challenges/'+@slug}'
+  })
+  }, function(response){});
+
 .fb-like{"data-share" => "true", "layout" => "button", "data-show-faces" => "false", "data-width" => "450"}
 %br
 %br
@@ -6,7 +16,7 @@
   %br
   %br
   = link_to "BibleChallenges.com",  root_path
-
+-binding.pry
 
 :javascript
   window.fbAsyncInit = function() {
