@@ -65,6 +65,7 @@ class MembershipReadingsController < ApplicationController
   end
 
   def confirmation
+    @slug = Membership.find(params[:membership_id]).challenge.slug
   end
 
   def membership_reading_params
