@@ -1,14 +1,6 @@
-:javascript
-
-  FB.ui({
-  method: 'share_open_graph',
-  action_type: 'og.likes',
-  action_properties: JSON.stringify({
-    object:'http: #{ENV['APP_URL']+'member/challenges/'+@slug}'
-  })
-  }, function(response){});
-
-.fb-like{"data-share" => "true", "layout" => "button", "data-show-faces" => "false", "data-width" => "450"}
+%br
+%br
+.fb-share-button{"data-href" => "#{ENV['APP_URL']+'/challenges/'+@slug}", "layout" => "button", "data-width" => "450"}
 %br
 %br
 %h5
@@ -17,12 +9,13 @@
   %br
   = link_to "BibleChallenges.com",  root_path
 
+
 :javascript
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '#{ENV['FACEBOOK_APP_ID']}',
       xfbml      : true,
-      version    : 'v2.5'
+      status    : true
     });
   };
 
