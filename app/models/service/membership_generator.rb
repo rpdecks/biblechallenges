@@ -11,8 +11,6 @@ class MembershipGenerator
     end
   end
 
-  private
-
   def new_members_not_in_this_challenge
     @new_members - @challenge.members
   end
