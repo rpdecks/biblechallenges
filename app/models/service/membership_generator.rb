@@ -6,11 +6,7 @@ class MembershipGenerator
 
   def generate
     new_members_not_in_this_challenge.each do |new_member|
-      membership = Membership.new
-      membership.user = new_member 
-      membership.challenge = @challenge
-      membership.save
-
+      membership = Membership.create(user: new_member, challenge: @challenge)
       MembershipCompletion.new(membership)
     end
   end
