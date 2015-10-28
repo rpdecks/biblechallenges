@@ -4,8 +4,10 @@
 .section.primary
   .container
     = render 'shared/challenges/challenge_overview'
-
+    - unless @challenge.owner == current_user
+      = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
     = render partial: 'shared/challenges/invite_friends'
+
 
 .content
   .container
@@ -39,9 +41,6 @@
           .panel.panel-primary
             .panel-heading Challenge Readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
-
-          - unless @challenge.owner == current_user
-            = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}

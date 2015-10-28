@@ -1,10 +1,10 @@
-%div{"data-href" => "#{request.original_url}", "data-layout" => "icon_link"}
-
 .title
+  Challenge:
   = @challenge.name
 
+%p
   - if @challenge.owner == current_user
-    = link_to "Owner Dashboard", creator_challenge_path(@challenge), :class=>"btn btn-success"
+    = link_to "Owner-Dashboard", creator_challenge_path(@challenge), :class=>"btn-sm btn-default"
 
 .subtitle
   %b
