@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MembershipGenerator do
   describe '#generate' do
-    it 'Should create memberships if challenge and new_members' do
+    it 'Should create memberships if challenge and new_members are passed in' do
       fake_members = [double(:member1), double(:member2)]
       challenge = double(:challenge, members: [])
       allow(Membership).to receive(:create)

@@ -4,17 +4,31 @@ describe ChallengeStatisticAttacher do
 
   describe "#attach_statistics" do
     it "should attach all the ChallengeStatistics in the system to a challenge" do
-      challenge = create(:challenge)
+      challenge_statistics = double(:challenge_statistics, pluck: []).as_null_object
+      challenge = double(:challenge, challenge_statistics: challenge_statistics)
+      allow(ChallengeStatistic).to receive(:create)
+
       ChallengeStatisticAttacher.attach_statistics(challenge)
-      expect(challenge.challenge_statistics.size).to eq ChallengeStatistic.descendants.size
+
+      expect(ChallengeStatistic).to have_received(:create).exactly(num_challenge_statistics).times
     end
+
     it "should only attach the statistics the challenge does not have" do
-      challenge = create(:challenge)
-      challenge.challenge_statistics << ChallengeStatisticChaptersRead.create
+      challenge_statistics = double(:challenge_statistics, pluck: [challenge_statistics_names.first]).as_null_object
+      challenge = double(:challenge, challenge_statistics: challenge_statistics)
+      allow(ChallengeStatistic).to receive(:create)
+
       ChallengeStatisticAttacher.attach_statistics(challenge)
-      expect(challenge.challenge_statistics.size).to eq ChallengeStatistic.descendants.size
+
+      expect(ChallengeStatistic).to have_received(:create).exactly(num_challenge_statistics - 1).times
     end
   end
 
+  def num_challenge_statistics
+    ChallengeStatistic.descendants.size
+  end
 
+  def challenge_statistics_names
+    ChallengeStatistic.descendants.map(&:name)
+  end
 end
