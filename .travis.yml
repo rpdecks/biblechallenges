@@ -16,3 +16,5 @@ script:
 - bundle exec rspec -fp -t ~skip spec/
 notifications:
   slack:
+env:
+  - APP_URL=http://www.biblechallenges.com
