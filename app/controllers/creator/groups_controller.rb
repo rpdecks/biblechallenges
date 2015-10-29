@@ -18,6 +18,7 @@ class Creator::GroupsController < ApplicationController
         membership.group = @group
         membership.save
         MembershipCompletion.new(membership)
+        ChallengeCompletion.new(@challenge)
         GroupCompletion.new(@group)
       end
       flash[:notice] = "Group created successfully"

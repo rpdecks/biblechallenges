@@ -7,8 +7,7 @@ class MembershipCompletion
   end
 
   def complete
-    @membership.update_stats   
-    @membership.challenge.update_stats  # this can definitely be backgrounded ask manny how todo
+    @membership.update_stats
 
     if password_passed_in?
       @membership.successful_auto_creation_email(@membership, @options[:password])
