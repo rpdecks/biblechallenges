@@ -1,11 +1,8 @@
 class BadgeAttacher
 
-
-
   def self.attach_badges(user)
     self.new.attach_badges(user)
   end
-
 
   def attach_badges(user)
     user_badges = user.badges.pluck(:type)
