@@ -6,4 +6,5 @@
       %strong
         = u.initialed_name
       %span.score
-        = u.user_statistic_days_read_in_a_row_all_time.value
+        - if u.user_statistic_days_read_in_a_row_all_time
+          = u.user_statistic_days_read_in_a_row_all_time.value
