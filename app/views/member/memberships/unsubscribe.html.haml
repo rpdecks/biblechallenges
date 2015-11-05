@@ -1,9 +1,12 @@
 You are choosing to unsubscribe from the 
-=@membership.challenge.name
-Bible Challenge.
-%br
+%h5
+  "
+  =@membership.challenge.name
+  "
+  Bible Challenge.
 %br
 
+%br
 =button_to "Unsubscribe Me", member_membership_path(@membership,
                               user_email: @membership.user.email,
                               user_token: @membership.user.authentication_token), 
