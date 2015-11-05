@@ -51,7 +51,6 @@
         .tab-pane#statistics{role: "tabpanel"}
           = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge, groups: @groups, user: @current_user}
 
-
 :javascript
   // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
   // store the currently selected tab in the hash value
@@ -69,3 +68,19 @@
       $( "#addFriendsInput" ).focus();
     }, 0);
   });
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '#{ENV['FACEBOOK_APP_ID']}',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=#{ENV['FACEBOOK_APP_ID']}";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
