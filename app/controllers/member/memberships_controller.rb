@@ -28,6 +28,7 @@ class Member::MembershipsController < ApplicationController
       @membership.user = current_user if current_user
       if @membership.save
         MembershipCompletion.new(@membership)
+        ChallengeCompletion.new(challenge)
         flash[:notice] = "Thank you for joining!"
       else
         flash[:error] = @membership.errors.full_messages.to_sentence

@@ -5,12 +5,13 @@ describe ChallengeCompletion do
 
   describe "ChallengeStatistics" do
     it "should attach user statistics to the user" do
+      challenge = double(:challenge)
       allow(ChallengeStatisticAttacher).to receive(:attach_statistics)
-      challenge = create(:challenge)
+      allow(challenge).to receive(:update_stats)
 
       ChallengeCompletion.new(challenge)
 
-      expect(ChallengeStatisticAttacher).to have_received(:attach_statistics)
+      expect(challenge).to have_received(:update_stats)
     end
   end
 
