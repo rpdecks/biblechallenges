@@ -168,7 +168,7 @@ describe MembershipReadingsController, type: :controller do
     describe 'DELETE#destroy' do
       it "deletes a membership_reading" do
         reading = challenge.readings.first
-        mr = create(:membership_reading, membership:membership, reading: reading)
+        mr = create(:membership_reading, membership:membership, reading: reading, user_id: user.id)
         expect {
           delete :destroy, id: mr.id
         }.to change(MembershipReading, :count).by(-1)
@@ -179,7 +179,7 @@ describe MembershipReadingsController, type: :controller do
         user2 = create(:user)
         challenge2 = create(:challenge, chapters_to_read:'John 1-4')
         membership2 = challenge2.join_new_member(user2)
-        mr = create(:membership_reading, membership:membership2, reading: reading)
+        mr = create(:membership_reading, membership:membership2, reading: reading, user_id: user2.id)
         expect {
           delete :destroy, id: mr.id
         }.to raise_error
@@ -187,14 +187,14 @@ describe MembershipReadingsController, type: :controller do
 
       it "should redirect to :back if params[:location] is not  provided" do
         reading = challenge.readings.first
-        mr = create(:membership_reading, membership:membership, reading: reading)
+        mr = create(:membership_reading, membership:membership, reading: reading, user_id: user.id)
         delete :destroy, id: mr.id
         expect(response).to redirect_to "where_i_came_from"
       end
 
       it "should redirect to params[:location] if it's provided" do
         reading = challenge.readings.first
-        mr = create(:membership_reading, membership:membership, reading: reading)
+        mr = create(:membership_reading, membership:membership, reading: reading, user_id: user.id)
         delete :destroy, id: mr.id, location: root_path
         should redirect_to(root_path)
       end
