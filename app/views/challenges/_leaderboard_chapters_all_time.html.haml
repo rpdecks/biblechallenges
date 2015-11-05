@@ -6,4 +6,5 @@
       %strong
         = u.initialed_name
       %span.score
-        = u.user_statistic_chapters_read_all_time.value
+        - if u.user_statistic_chapters_read_all_time
+          = u.user_statistic_chapters_read_all_time.value
