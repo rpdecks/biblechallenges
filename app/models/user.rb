@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :groups, through: :memberships
   has_many :comments
   has_many :badges, dependent: :destroy
-  has_many :membership_readings, through: :memberships
+  has_many :membership_readings
 
   has_attached_file :avatar,
     :styles => {
@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
   end
 
   def update_stats
+    associate_statistics
     self.user_statistics.each do |us|
       us.update
     end

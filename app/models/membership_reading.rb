@@ -7,9 +7,9 @@ class MembershipReading < ActiveRecord::Base
 
   # Relations
   belongs_to :membership, :counter_cache => true
-  has_one :user, through: :membership
+  belongs_to :chapter
+  belongs_to :user
   belongs_to :reading
-  has_one :chapter, through: :reading
 
   #delegations
   delegate :read_on, to: :reading
