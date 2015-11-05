@@ -9,7 +9,6 @@ class UserStatisticDaysReadInARowAllTime < UserStatistic
   end
 
   def calculate
-
     user = self.user
     membership_readings = user.membership_readings
     if membership_readings.any?

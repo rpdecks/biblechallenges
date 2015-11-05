@@ -17,7 +17,7 @@ RSpec.describe OneChapterBadge, type: :model do
         challenge = create(:challenge_with_readings)
         membership = create(:membership, challenge: challenge, user: user)
         ocb = OneChapterBadge.create(user: user)
-        create(:membership_reading, membership: membership, reading: challenge.readings.first, user_id: user.id)
+        create(:membership_reading, membership: membership, reading: challenge.readings.first)
 
         expect(ocb.qualify?).to eq true
       end
