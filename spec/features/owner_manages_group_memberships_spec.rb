@@ -46,7 +46,7 @@ feature 'Owner manages group members within challenge' do
 
     #generate 1 membership_reading for user2
     r = challenge.readings.first
-    create(:membership_reading, membership: m2, reading: r, user_id: user2.id)
+    create(:membership_reading, membership: m2, reading: r)
 
     #update stats
     m1.update_stats

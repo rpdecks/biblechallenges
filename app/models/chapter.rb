@@ -4,7 +4,6 @@ class Chapter < ActiveRecord::Base
   has_many :chapter_challenges
   has_many :challenges, through: :chapter_challenges
   has_many :verses, primary_key: :chapter_index, foreign_key: :chapter_index  # needs to be ordered by verse_number #todo
-  has_many :membership_readings
 
   def book_and_chapter
     book_name + " " + chapter_number.to_s
