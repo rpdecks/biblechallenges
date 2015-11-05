@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019183637) do
+ActiveRecord::Schema.define(version: 20151009181229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,22 +162,11 @@ ActiveRecord::Schema.define(version: 20151019183637) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "on_schedule"
-    t.string   "chapter_name"
-    t.integer  "chapter_id"
-    t.string   "challenge_name"
-    t.integer  "challenge_id"
-    t.string   "group_name"
-    t.integer  "group_id"
-    t.integer  "user_id"
   end
 
-  add_index "membership_readings", ["challenge_id"], name: "index_membership_readings_on_challenge_id", using: :btree
-  add_index "membership_readings", ["chapter_id"], name: "index_membership_readings_on_chapter_id", using: :btree
-  add_index "membership_readings", ["group_id"], name: "index_membership_readings_on_group_id", using: :btree
   add_index "membership_readings", ["membership_id", "reading_id"], name: "index_membership_readings_on_membership_id_and_reading_id", using: :btree
   add_index "membership_readings", ["membership_id"], name: "index_membership_readings_on_membership_id", using: :btree
   add_index "membership_readings", ["reading_id"], name: "index_membership_readings_on_reading_id", using: :btree
-  add_index "membership_readings", ["user_id"], name: "index_membership_readings_on_user_id", using: :btree
 
   create_table "membership_statistics", force: :cascade do |t|
     t.integer  "user_id"
@@ -204,6 +193,7 @@ ActiveRecord::Schema.define(version: 20151019183637) do
     t.integer  "punctual_reading_percentage",  default: 0
     t.integer  "progress_percentage",          default: 0
     t.integer  "membership_readings_count",    default: 0
+    t.datetime "time_of_last_reading"
   end
 
   add_index "memberships", ["challenge_id", "user_id"], name: "index_memberships_on_challenge_id_and_user_id", using: :btree

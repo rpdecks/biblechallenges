@@ -4,6 +4,5 @@ FactoryGirl.define do
   factory :membership_reading do
     membership
     reading
-    user
   end
 end
