@@ -1,9 +1,8 @@
 class ImportsMembersFromPreviousChallenge
 
-  def initialize(challenge_with_members_to_import_id, challenge)
-    @challenge_with_members_to_import = 
-      Challenge.find(challenge_with_members_to_import_id) unless challenge_with_members_to_import_id.blank?
-    @new_challenge = challenge
+  def initialize(challenge_with_members_to_import, new_challenge)
+    @challenge_with_members_to_import = challenge_with_members_to_import
+    @new_challenge = new_challenge
   end
 
   def import
