@@ -1,6 +1,12 @@
 !!!
 %html
   %head
+    %meta{:content => "#{ENV['APP_URL']}", :property => "og:url"}/
+    %meta{:content => "#{ENV['FACEBOOK_APP_ID']}", :property => "fb:app_id"}/
+    %meta{:content => "website", :property => "og:type"}/
+    %meta{:content => "BibleChallenges.com", :property => "og:title"}/
+    %meta{:content => "Visit my Bible challenge, or create your own! -- New and ongoing reading challenges at BibleChallenges.com.  Set a goal. Challenge yourself/your friends. Read God's Word!", :property => "og:description"}/
+    %meta{:content => "https://s3-us-west-1.amazonaws.com/biblechallenges.com/facebook/logo-1105.png", :property => "og:image"}/
     %meta{:charset => "utf-8"}
       %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
         %title Bible Challenges
@@ -8,6 +14,7 @@
         = javascript_include_tag "application"
         = csrf_meta_tags
   %body
+
 
     / Nav Header
     %nav.navbar.navbar-default.navbar-fixed-top
@@ -17,7 +24,9 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: "/"} BibleChallenges.com
+          %span
+            .fb-like{"data-share" => "false", "layout" => "button_count", "data-show-faces" => "true", "data-width" => "450"}
+            %a.navbar-brand{href: "/"} BibleChallenges.com
         #navbar-main.navbar-collapse.collapse
           %ul.nav.navbar-nav.navbar-right
             %li
@@ -53,3 +62,20 @@
     = yield
 
     = yield :javascripts
+    
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '#{ENV['FACEBOOK_APP_ID']}',
+          xfbml      : true,
+          status    : true
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=#{ENV['FACEBOOK_APP_ID']}";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));

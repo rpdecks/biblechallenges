@@ -1,6 +1,10 @@
 %button.btn.btn-primary{type: "button", id: "addFriendsToChallenge", title: "Add friends to this challenge", data: { toggle: "collapse", target: "#addFriends"}}
   %i.fa.fa-user-plus
   Add friends
+&nbsp;
+&nbsp;
+.fb-share-button{"data-href" => "#{ENV['APP_URL']+challenge_path}", "layout" => "button", "data-width" => "450"}
+
 %br
 %br
 .collapse#addFriends
