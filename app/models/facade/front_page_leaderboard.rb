@@ -7,17 +7,17 @@ class FrontPageLeaderboard
   CHAPTERS_READ_LIMIT = 8
 
   def users_by_longest_all_time_streak
-    User.includes(:user_statistic_days_read_in_a_row_all_time).
+    User.joins(:user_statistic_days_read_in_a_row_all_time).
       order('user_statistics.value desc').limit(DEFAULT_LIMIT).decorate
   end
 
   def users_by_longest_current_streak
-    User.includes(:user_statistic_days_read_in_a_row_current).
+    User.joins(:user_statistic_days_read_in_a_row_current).
       order('user_statistics.value desc').limit(DEFAULT_LIMIT).decorate
   end
 
   def users_by_all_time_chapters
-    User.includes(:user_statistic_chapters_read_all_time).
+    User.joins(:user_statistic_chapters_read_all_time).
       order('user_statistics.value desc').limit(DEFAULT_LIMIT).decorate
   end
 
