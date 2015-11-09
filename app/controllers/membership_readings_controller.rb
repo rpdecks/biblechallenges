@@ -65,6 +65,7 @@ class MembershipReadingsController < ApplicationController
   end
 
   def confirmation
+    binding.pry
     @slug = Membership.find(params[:membership_id]).challenge.slug
   end
 
