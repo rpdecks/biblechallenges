@@ -40,6 +40,9 @@
 
           .panel.panel-primary
             .panel-heading Challenge Readings
+            %center
+              %strong
+                = paginate @readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
         - if current_user.find_challenge_group(@challenge) != nil
