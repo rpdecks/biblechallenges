@@ -51,8 +51,7 @@ gem "autoprefixer-rails" #prefix styles for cross-browser
 
 #sortable table/link
 gem 'ransack'
-
-
+gem 'rcv_bible'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
