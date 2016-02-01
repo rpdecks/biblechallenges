@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/evo21/rcv_bible.git
-  revision: 3b421a8370b76d618c73a26e9bf09db188acf5bd
+  remote: git@github.com:evo21/rcv_bible.git
+  revision: ab7cfc137bedd6666c6634c0e72d35a80c97ac30
   specs:
-    rcv_bible (0.1.0)
+    rcv_bible (0.0.2)
       acts_as_scriptural (~> 0.0.2)
       httparty (~> 0.13.7)
 
