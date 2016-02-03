@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Comments::CommentsController, "Routing" do
-  it { {post: "/comments/1/comments"}.should route_to(controller: "comments/comments",
+  specify { expect({post: "/comments/1/comments"}).to route_to(controller: "comments/comments",
                                                       action: "create",
                                                       comment_id: "1") }
 end

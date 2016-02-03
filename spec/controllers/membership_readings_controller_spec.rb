@@ -126,43 +126,6 @@ describe MembershipReadingsController, type: :controller do
 
         expect(user.user_statistic_chapters_read_all_time.value).to eq 2
       end
-
-      it "should update chapters_read_all_time statistics even after leaving challenge" do
-        pending
-        challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
-        challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
-        user = create(:user)
-        membership1 = challenge1.join_new_member(user)
-        user.associate_statistics
-
-        post :create, reading_id: challenge1.readings.first.id, membership_id: membership1.id
-        post :create, reading_id: challenge1.readings.second.id, membership_id: membership1.id
-        membership1.destroy  # this is not really leaving a challenge
-
-        membership2 = challenge2.join_new_member(user)
-        post :create, reading_id: challenge2.readings.first.id, membership_id: membership2.id
-
-        expect(user.user_statistic_chapters_read_all_time.value).to eq 3
-      end
-
-      it "should update the membership statistics" do #todo this should use mocks/spies
-        pending
-        reading = challenge.readings.first
-        membership.associate_statistics
-        MembershipStatistic.descendants.each do |desc|
-          desc.name.constantize.stub(:update)
-        end
-
-        post :create, reading_id: reading.id, membership_id: membership.id
-
-        MembershipStatistic.descendants.each do |desc|
-          expect(desc.name.constantize).to have_received(:update)
-        end
-
-        membership.membership_statistics.each do |ms|
-          expect(ms).to have_received(:update)
-        end
-      end
     end
 
     describe 'DELETE#destroy' do
