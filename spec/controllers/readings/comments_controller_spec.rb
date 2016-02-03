@@ -71,17 +71,17 @@ describe Readings::CommentsController, "Actions" do
 
     it "should redirect to params[:location] if it's provided" do
       post :create, reading_id: reading.id, comment: newcomment_attr, location: new_user_session_path
-      should redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "should redirect to params[:location] if the comment is invalid" do
       post :create, reading_id: reading.id, comment: attributes_for(:reading_comment, content: nil), location: new_user_session_path
-      should redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "should set the flash" do
       post :create, reading_id: reading.id, comment: newcomment_attr
-      should set_flash
+      expect(response).to  set_flash
     end
 
     it "does not allow a user to create a comment for a reading he is not part of (through a challenge)" do
