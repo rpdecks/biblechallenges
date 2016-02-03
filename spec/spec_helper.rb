@@ -20,6 +20,8 @@ RSpec::Sidekiq.configure do |config|
   config.warn_when_jobs_not_processed_by_sidekiq = false
 end
 
+RSpec::Expectations.configuration.warn_about_potential_false_positives = false
+
 RSpec.configure do |config|
 
   #clears jobs in in worker array before each
