@@ -65,9 +65,9 @@ describe Groups::CommentsController, "Actions" do
     end
 
     it "redirects to the user's profile if the user does not have a username" do
-      pending
+      current_user.update_attribute(:name, nil)
       post :create, group_id: group.id, comment: newcomment_attr
-      expect(response).to redirect_to edit_user_registration_url
+      expect(response).to redirect_to edit_user_path
     end
 
     it "creates a new group comment" do
