@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Member::ChallengesController do
   describe "Routing" do
-    it { {get: "/member/challenges"}.should route_to(controller: "member/challenges", action: "index") }
+    specify { expect({get: "/member/challenges"}).to route_to(controller: "member/challenges", action: "index") }
   end
 
   describe 'Guest access' do
