@@ -74,9 +74,8 @@ describe Readings::CommentsController, "Actions" do
       should redirect_to(new_user_session_path)
     end
 
-    it "should redirect to params[:location] if the comment is invalid", skip: true do
-      pending
-      post :create, reading_id: reading.id, comment: build(:reading_comment, content: nil), location: new_user_session_path
+    it "should redirect to params[:location] if the comment is invalid" do
+      post :create, reading_id: reading.id, comment: attributes_for(:reading_comment, content: nil), location: new_user_session_path
       should redirect_to(new_user_session_path)
     end
 

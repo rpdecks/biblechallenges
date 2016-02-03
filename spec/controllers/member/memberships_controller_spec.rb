@@ -4,7 +4,7 @@ describe Member::MembershipsController do
   let(:owner){create(:user)}
   let(:challenge){create(:challenge, :with_membership, owner: owner)}
   let(:user){create(:user)}
-  let(:membership){challenge.join_new_member(user)}
+  let!(:membership){challenge.join_new_member(user)}
 
   before(:each) do
     sign_in :user, user
@@ -16,8 +16,7 @@ describe Member::MembershipsController do
       expect(assigns(:membership)).to eql(membership)
     end
 
-    it "destroys the membership", skip: true do
-      pending
+    it "destroys the membership" do
       expect{
         delete :destroy, id: membership
       }.to change(Membership,:count).by(-1)
