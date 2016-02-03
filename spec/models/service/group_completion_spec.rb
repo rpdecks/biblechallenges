@@ -5,7 +5,7 @@ describe GroupCompletion do
 
   describe "GroupStatistics" do
     it "should update group statistics" do
-      group = stub("group")
+      group = double("group")
       allow(group).to receive(:update_stats)
 
       GroupCompletion.new(group)
