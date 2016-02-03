@@ -82,18 +82,18 @@ describe Groups::CommentsController, "Actions" do
 
     it "should redirect to params[:location] if it's provided" do
       post :create, group_id: group.id, comment: newcomment_attr, location: new_user_session_path
-      should redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "should redirect to params[:location] if the comment is invalid" do
       newcomment_attr[:content] = nil
       post :create, group_id: group.id, comment: newcomment_attr, location: new_user_session_path
-      should redirect_to(new_user_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "should set the flash" do
       post :create, group_id: group.id, comment: newcomment_attr
-      should set_flash
+      expect(response).to set_flash
     end
 
     it "does not allow a user to create a comment for a group he is not part of " do

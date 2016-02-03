@@ -66,7 +66,7 @@ describe MembershipReadingsController, type: :controller do
       it "should redirect to params[:location] if it's provided" do
         reading = challenge.readings.first
         post :create, reading_id: reading.id, membership_id: membership.id, location: root_path
-        should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "should update one of the membership statistics (lamo test)" do 
@@ -159,7 +159,7 @@ describe MembershipReadingsController, type: :controller do
         reading = challenge.readings.first
         mr = create(:membership_reading, membership:membership, reading: reading, user_id: user.id)
         delete :destroy, id: mr.id, location: root_path
-        should redirect_to(root_path)
+        expect(response).to redirect_to(root_path)
       end
     end
 

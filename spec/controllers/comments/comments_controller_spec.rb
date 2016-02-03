@@ -29,7 +29,7 @@ describe Comments::CommentsController, "Actions" do
       it "redirects back to the comment's reading" do
         post :create, comment_id: @comment.to_param, comment: {content: "Hello"}
 
-        should redirect_to(reading_path(reading))
+        expect(response).to redirect_to(reading_path(reading))
       end
     end
   end
