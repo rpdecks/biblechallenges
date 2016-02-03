@@ -22,8 +22,6 @@ class Membership < ActiveRecord::Base
 
   # Scopes
   scope :by_group, -> { order(:group_id) }
-  #scope :by_last_read_chapter, -> { joins(:membership_readings).group(:membership_id).order("membership_readings.created_at, memberships.id")}
-  #scope :by_last_read_chapter, -> { includes(:membership_readings).order("membership_readings.created_at")}
 
   delegate :name, to: :user
   delegate :email, to: :user

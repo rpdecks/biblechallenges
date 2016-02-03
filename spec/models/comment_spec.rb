@@ -4,7 +4,7 @@ describe Comment do
   describe "Validations" do
     it { should validate_presence_of(:user)}
     it { should validate_presence_of(:content)}
-    it { should ensure_length_of(:content).is_at_most(1000)}
+    it { should validate_length_of(:content).is_at_most(1000)}
 
     #this seems like a retarded way to determine ownership of a commentable by a user. ask jose
     it "should ensure a reading comment is from a member of the reading" do
@@ -21,14 +21,6 @@ describe Comment do
     it { should belong_to(:user) }
     it { should belong_to(:commentable) }
     it { should have_many(:comments) }
-  end
-
-  describe "Instance Methods" do
-    describe "#relatedchapter" do
-      it "returns the book and chapter it is related to" do
-        chapter = build_stubbed(:chapter)
-      end
-    end
   end
 
 end
