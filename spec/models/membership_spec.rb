@@ -41,32 +41,6 @@ describe Membership do
     it { should have_many(:membership_readings) }
   end
 
-  describe "Class methods" do
-    describe '#send_daily_emails' do
-      it "sends email according to user's timezone and time preference", skip: true do
-        pending
-        challenge = create(:challenge, :with_readings, begindate: Date.today)
-        membership = create(:membership, challenge: challenge)
-        user = membership.user
-        create(:profile, time_zone: 'Eastern Time (US & Canada)', preferred_reading_hour: DateTime.now.strftime("%H"), user: user)
-        Membership.send_daily_emails
-        successful_sending_email = ActionMailer::Base.deliveries.last
-        expect(successful_sending_email.to).to match_array [user.email] 
-      end
-
-      it "sends email according to user's timezone and time preference", skip: true do
-        pending
-        challenge = create(:challenge, :with_readings, begindate: Date.today)
-        membership = create(:membership, challenge: challenge)
-        user = membership.user
-        create(:profile, time_zone: 'Hawaii', preferred_reading_hour: 6)
-        Membership.send_daily_emails
-        successful_sending_email = ActionMailer::Base.deliveries.last
-        expect(successful_sending_email.to).to match_array [user.email] 
-      end
-    end
-  end
-
   describe 'Instance methods' do
     describe "#associate_statistics" do
       it "creates named statistics and associates them with new membership" do
@@ -105,50 +79,4 @@ describe Membership do
     end
   end
 
-  describe 'Callbacks' do
-    describe 'After create' do
-      describe '#associate_readings' do
-    #    let(:membership){create(:membership)}
-    let(:newchallenge){create(:challenge_with_readings, :with_membership)}
-    let(:membership){newchallenge.memberships.first}
-        it 'associates all the readings from its challenge' do
-          expect(membership.readings).to match_array(membership.challenge.readings)
-        end
-        it 'sends out a thanks for joining email' do
-            pending
-            membership2 = create(:membership)
-            membership2.run_callbacks(:commit)
-            NewMembershipEmailWorker.drain
-            expect(ActionMailer::Base.deliveries.last.subject).to include "Thanks for joining"
-        end
-        it 'sends out a verses email if challenge started that day' do
-            pending
-            newchallenge
-            membership2 = create(:membership, challenge: newchallenge)
-            membership2.run_callbacks(:commit)
-            DailyEmailWorker.drain
-            expect(ActionMailer::Base.deliveries.first.subject).to include "Bible Challenge reading for"
-        end
-      end
-
-      describe '#send_todays_reading' do
-        it "sends todays reading after creation if it exists", skip: true do
-          pending
-          user = create(:user)
-          challenge = create(:challenge, begindate: Date.today)  
-          membership = build(:membership, challenge: challenge, user: user)
-          #MembershipReadingMailer.should_receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
-          expect(ReadingMailer).to receive(:daily_reading_email).and_return(double("MembershipReadingMailer", deliver: true))  #params?
-          membership.save
-        end
-        it "does not send todays reading after creation if it does not exist" do
-          user = create(:user)
-          challenge = create(:challenge, begindate: Date.tomorrow) 
-          membership = build(:membership, challenge: challenge, user: user)
-          expect(ReadingMailer).not_to receive(:daily_reading_email)
-          membership.save
-        end
-      end
-    end
-  end
 end
