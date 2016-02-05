@@ -19,6 +19,8 @@ class Chapter < ActiveRecord::Base
     ActsAsScriptural::Bible.new.book_names[book_chapter_pair.first-1] + " " + book_chapter_pair.last.to_s
   end
 
-
+  def by_version(version = Verse::DEFAULT_VERSION)
+    verses.by_version(version)
+  end
 
 end
