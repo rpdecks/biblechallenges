@@ -46,8 +46,8 @@ gem 'friendly_id'
 gem 'mail_form'
 gem 'exception_notification'
 gem 'slack-notifier'
-
 gem "autoprefixer-rails" #prefix styles for cross-browser
+gem 'fastercsv'
 
 #sortable table/link
 gem 'ransack'

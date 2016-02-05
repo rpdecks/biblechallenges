@@ -9,7 +9,12 @@ class Verse < ActiveRecord::Base
 
   def self.by_version(version)
     response = where(version: version)
-    response.any? ? response : where(version: DEFAULT_VERSION)
+    if response.any?
+      response
+    else
+      RetrieveRCV() if version == 'RCV'
+      where(version: DEFAULT_VERSION)
+    end
   end
 
   def self.by_range(start_verse: nil, end_verse: nil)
@@ -29,3 +34,26 @@ class Verse < ActiveRecord::Base
     coder.decode(self.versetext)
   end
 end
+
+=begin
+
+when someone has RCV as their version....
+  - check for RCV in our DB if it is there
+    - use it immediately
+  - if RCV is NOT in our DB
+    - make an API call to put it in the DB (in the background?)
+
+class RetrieveRCV(book: chapter:)
+  retrieves RCV verses
+  updates those rows in verses table with RCV content
+end
+
+
+
+
+
+
+
+
+
+=end
