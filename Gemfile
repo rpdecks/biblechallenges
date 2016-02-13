@@ -15,7 +15,7 @@ gem 'activerecord-import'
 gem 'thin'
 gem 'sidekiq'
 gem 'sidekiq-failures'
-gem 'airbrake'
+gem 'airbrake', '~> 4.3.4'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
 gem 'font-awesome-rails'
@@ -48,10 +48,10 @@ gem 'exception_notification'
 gem 'slack-notifier'
 gem "autoprefixer-rails" #prefix styles for cross-browser
 gem 'fastercsv'
+gem 'rcv_bible', '~> 0.0.5'
 
 #sortable table/link
 gem 'ransack'
-gem 'rcv_bible', :git => 'git@github.com:evo21/rcv_bible.git'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -91,7 +91,7 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'spring-commands-rspec'
   gem 'shoulda-matchers', require: false
-  gem 'pry'
+  gem 'pry-byebug'
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
@@ -102,7 +102,6 @@ group :development, :test do
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
-  gem 'pry-nav'
 end
 
 group :test do
