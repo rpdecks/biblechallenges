@@ -2,7 +2,6 @@ class Verse < ActiveRecord::Base
   require 'htmlentities'
   Verse::DEFAULT_VERSION = "ASV"
 
-  # Relations
   belongs_to :chapter, foreign_key: :chapter_index
 
   default_scope { order(:verse_number) }
@@ -10,10 +9,20 @@ class Verse < ActiveRecord::Base
   def self.by_version(version)
     response = where(version: version)
     if response.any?
+      if version == 'RCV'
+        if response.first.updated_at < 10.days.ago
+          RetrieveRcv.new(chapter_number: self.first.chapter_number, book_name: self.first.book_name, book_id: self.first.book_id, chapter_index: self.first.chapter_index).retouch_rcv_chapter
+        end
+      end
       response
+    elsif version == "RCV"
+      bookname = self.first.book_name
+      chapternumber = self.first.chapter_number
+      bookid = self.first.book_id
+      chapterindex = self.first.chapter_index
+      RetrieveRcv.new(chapter_number: chapternumber, book_name: bookname, book_id: bookid, chapter_index: chapterindex).park_rcv_chapter
     else
-      RetrieveRCV() if version == 'RCV'
-      where(version: DEFAULT_VERSION)
+      # some error?
     end
   end
 
@@ -33,27 +42,8 @@ class Verse < ActiveRecord::Base
     coder = HTMLEntities.new
     coder.decode(self.versetext)
   end
+
+  def book_and_chapter
+    @book_name + " " + @chapter_number.to_s
+  end
 end
-
-=begin
-
-when someone has RCV as their version....
-  - check for RCV in our DB if it is there
-    - use it immediately
-  - if RCV is NOT in our DB
-    - make an API call to put it in the DB (in the background?)
-
-class RetrieveRCV(book: chapter:)
-  retrieves RCV verses
-  updates those rows in verses table with RCV content
-end
-
-
-
-
-
-
-
-
-
-=end

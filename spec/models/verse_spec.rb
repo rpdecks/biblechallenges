@@ -16,7 +16,35 @@ describe Verse do
       it "returns a specified version when that version exists" do
         matthew1 = Chapter.find_by_book_id_and_chapter_number(40, 1)
         verses = matthew1.verses.by_version("NASB")
+
         expect(verses.first.version).to eq "NASB"
+      end
+      it "returns specified RCV version (after adding verse object/text) " do
+        matthew1 = Chapter.find_by_book_id_and_chapter_number(40, 1)
+        first_check_for_rcv_verses = matthew1.verses.by_version("RCV")
+          # this 'check' also populates the nonexistant RCV text
+
+        expect(first_check_for_rcv_verses).to be nil
+
+        second_check_for_rcv_verses = matthew1.verses.by_version("RCV")
+
+        expect(second_check_for_rcv_verses.first.version).to eq "RCV"
+      end
+      it "Does not update/replace the RCV verse text if verse_text not updated within past 10 days" do
+        psalm23 = Chapter.find_by_book_id_and_chapter_number(19, 23)
+        psalm23.verses.by_version("RCV") #initially populates db with RCV verse_text
+        Timecop.travel(9.days)
+
+        expect(psalm23.verses.by_version("RCV").first.updated_at.to_date).to eq 9.days.ago.to_date
+        Timecop.return
+      end
+      it "Updates/replaces the RCV verse text if verse_text not updated within past 10 days" do
+        psalm23 = Chapter.find_by_book_id_and_chapter_number(19, 23)
+        psalm23.verses.by_version("RCV") #initially populates db with RCV verse_text
+        Timecop.travel(11.days)
+        psalm23.verses.by_version("RCV")
+        expect(psalm23.verses.first.updated_at.to_date).to eq Time.zone.now.to_date
+        Timecop.return
       end
 
       it "returns the default version when the specified version does not exist" do
