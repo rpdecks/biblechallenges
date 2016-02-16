@@ -88,14 +88,13 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.3.0'
   gem 'spring-commands-rspec'
-  gem 'shoulda-matchers', require: false
   gem 'pry-byebug'
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
   gem 'factory_girl_rails', '4.1.0'
-  gem 'rspec-rails'
   gem 'quiet_assets'
   gem 'annotate'
   gem 'timecop'
@@ -110,6 +109,7 @@ group :test do
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
+  gem 'shoulda-matchers', require: false
   gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy'
   gem 'selenium-webdriver'

@@ -17,11 +17,6 @@ describe Chapter do
   describe "RcvBible"
     it "should do something" do
       something = RcvBible::Reference.new("John 1").verses
-      binding.pry
-      expect something.not_to be nil
+      expect(something).not_to be nil
     end
-
-
-
-
 end
