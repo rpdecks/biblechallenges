@@ -140,7 +140,7 @@ feature 'User manages notification preferences via email' do
         message_emails.each do |me|
           @sent_emails << me.to
         end
-        expect @sent_emails.flatten.should_not include([user2.email])
+        expect(@sent_emails.flatten).to_not include([user2.email])
       end
     end
   end
