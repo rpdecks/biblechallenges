@@ -7,13 +7,16 @@ class RetrieveRcv
     @verses = RcvBible::Reference.new(book_and_chapter).verses
   end
 
-  def park_rcv_chapter
+  def park_and_return_rcv_chapter
+    verses = []
     @verses.each.with_index(1) do |v, index|
       verse = Verse.new(version: "RCV", book_name: @book_name, chapter_number: @chapter_number, verse_number: index, versetext: v["text"], book_id: @book_id, chapter_index: @chapter_index)
       if verse.versetext
         verse.save
+        verses << verse
       end
     end
+    verses
   end
 
   def retouch_rcv_chapter

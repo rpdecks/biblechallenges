@@ -20,9 +20,9 @@ class Verse < ActiveRecord::Base
       chapternumber = self.first.chapter_number
       bookid = self.first.book_id
       chapterindex = self.first.chapter_index
-      RetrieveRcv.new(chapter_number: chapternumber, book_name: bookname, book_id: bookid, chapter_index: chapterindex).park_rcv_chapter
+      RetrieveRcv.new(chapter_number: chapternumber, book_name: bookname, book_id: bookid, chapter_index: chapterindex).park_and_return_rcv_chapter
     else
-      # some error?
+      where(version: DEFAULT_VERSION)
     end
   end
 

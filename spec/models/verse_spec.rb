@@ -21,14 +21,10 @@ describe Verse do
       end
       it "returns specified RCV version (after adding verse object/text) " do
         matthew1 = Chapter.find_by_book_id_and_chapter_number(40, 1)
-        first_check_for_rcv_verses = matthew1.verses.by_version("RCV")
           # this 'check' also populates the nonexistant RCV text
+        rcv_verses = matthew1.verses.by_version("RCV")
 
-        expect(first_check_for_rcv_verses).to be nil
-
-        second_check_for_rcv_verses = matthew1.verses.by_version("RCV")
-
-        expect(second_check_for_rcv_verses.first.version).to eq "RCV"
+        expect(rcv_verses.first.version).to eq "RCV"
       end
       it "Does not update/replace the RCV verse text if verse_text not updated within past 10 days" do
         psalm23 = Chapter.find_by_book_id_and_chapter_number(19, 23)
