@@ -73,11 +73,9 @@ feature 'Owner manages group members within challenge' do
     expect(page).to_not have_content("Select a Group")
   end
 
-  scenario 'Adds a challenge member to a goup within the challenge'
-    pending "TODO"
+  #todo scenario 'Adds a challenge member to a goup within the challenge'
 
-  scenario 'Changes challenge group member to another group within same challenge' 
-    pending "TODO"
+  #todo scenario 'Changes challenge group member to another group within same challenge' 
 
 end
 
