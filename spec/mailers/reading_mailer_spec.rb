@@ -29,7 +29,6 @@ describe ReadingMailer do
       ReadingMailer.daily_reading_email([challenge.readings.first.id], user.id).deliver_now
 
       successful_daily_email = ActionMailer::Base.deliveries.last
-      binding.pry
       expect(successful_daily_email.body).to have_content "Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry"
     end
   end
