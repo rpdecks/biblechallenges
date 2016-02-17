@@ -17,6 +17,10 @@
         %h2
           %center
             #{chapter.book_name}  #{chapter.chapter_number} (#{@membership.bible_version.upcase})
+        -if @membership.bible_version == "RCV"
+          %center
+            %strong
+              Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
 
         %ol
           - verses.each do |v|
