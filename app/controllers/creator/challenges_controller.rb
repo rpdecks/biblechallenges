@@ -70,7 +70,7 @@ class Creator::ChallengesController < ApplicationController
 
       ReadingsGenerator.new(@challenge).generate
       MembershipGenerator.new(@challenge, current_user).generate
-      previous_challenge = Challenge.find(challenge_params[:previous_challenge_id]) if challenge_params[:previous_challenge_id]
+      previous_challenge = Challenge.find(challenge_params[:previous_challenge_id]) if challenge_params[:previous_challenge_id].present?
       ImportsMembersFromPreviousChallenge.new(previous_challenge, @challenge).import
       ChallengeCompletion.new(@challenge)
       redirect_to member_challenge_path(@challenge)
