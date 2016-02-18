@@ -9,15 +9,15 @@
   %legend
     = "#{@reading.chapter.book_and_chapter}"
 
-  -if @verses.first.version == "RCV"
-    %center
-      %strong
-        Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
-  %br
   #verses
 
     - @verses.each do |verse|
       = verse.decorate.to_div
+    %br
+  -if @verses.first.version == "RCV"
+    %center
+      %strong
+        Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
 
   %hr
 
