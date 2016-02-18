@@ -1,6 +1,6 @@
 class Verse < ActiveRecord::Base
   require 'htmlentities'
-  Verse::DEFAULT_VERSION = "ASV"
+  Verse::DEFAULT_VERSION = "RCV"
 
   belongs_to :chapter, foreign_key: :chapter_index
 
