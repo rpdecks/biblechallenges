@@ -28,7 +28,7 @@
 
           - # todo: refactor this to todays_chapters
           - @todays_readings.each do |todays_reading|
-            - todays_verses = todays_reading.chapter.verses.by_version(@membership.bible_version)
+            - todays_verses = todays_reading.chapter.by_version(@membership.bible_version)
 
             = render partial: 'shared/challenges/todays_reading',
             locals: { todays_reading: todays_reading, todays_verses: todays_verses, bible_version: @membership.bible_version}

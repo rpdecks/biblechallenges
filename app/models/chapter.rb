@@ -19,7 +19,16 @@ class Chapter < ActiveRecord::Base
   end
 
   def by_version(version = Verse::DEFAULT_VERSION)
-    verses.by_version(version)
+    RetrieveRcv.new(self).refresh if version == 'RCV'
+    version = Verse::DEFAULT_VERSION if version_missing?(version)
+
+    verses.where(version: version)
+  end
+
+  private
+
+  def version_missing?(version)
+    verses.where(version: version).empty?
   end
 
 end

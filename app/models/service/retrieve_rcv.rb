@@ -1,33 +1,56 @@
 class RetrieveRcv
-  def initialize(book_name:, chapter_number:, chapter_index:, book_id:)
-    @book_name = book_name
-    @chapter_number = chapter_number
-    @chapter_index = chapter_index
-    @book_id = book_id
-    @verses = RcvBible::Reference.new(book_and_chapter).verses
+
+  EXPIRED_CACHE = 30
+  
+  def initialize(chapter)
+    @chapter = chapter
   end
 
-  def park_and_return_rcv_chapter
-    verses = []
-    @verses.each.with_index(1) do |v, index|
-      verse = Verse.new(version: "RCV", book_name: @book_name, chapter_number: @chapter_number, verse_number: index, versetext: v["text"], book_id: @book_id, chapter_index: @chapter_index)
-      if verse.versetext
-        verse.save
-        verses << verse
+  def cache_chapter
+    rcv_verses = RcvBible::Reference.new(@chapter.book_and_chapter).verses
+
+    rcv_verses.each.with_index(1) do |v, index|
+      if v['text'] 
+        Verse.create(version: "RCV", book_name: @chapter.book_name,
+                          chapter_number: @chapter.chapter_number,
+                          verse_number: index,
+                          versetext: v["text"],
+                          book_id: @chapter.book_id,
+                          chapter_index: @chapter.chapter_index)
       end
     end
-    verses
   end
 
   def retouch_rcv_chapter
-    @verses.each.with_index(1) do |v, index|
-      verse = Verse.where(chapter_index: @chapter_index).find_by_verse_number(index)
-      verse.touch unless verse.nil?
+    cached_verses.each { |verse| verse.touch}
+  end
+
+  def refresh
+    if chapter_missing?
+      cache_chapter
+    elsif chapter_present? && expired_cache?
+      retouch_rcv_chapter
     end
   end
 
+  def chapter_missing?
+    cached_verses.empty?
+  end
+
+  def chapter_present?
+    cached_verses.any?
+  end
+
+  def expired_cache?
+    cached_verses.first.updated_at < EXPIRED_CACHE.days.ago
+  end
+
+  def cached_verses
+    @cached_verses ||= @chapter.verses.where(version: 'RCV')
+  end
+
   def book_and_chapter
-    @book_name + " " + @chapter_number.to_s
+    @chapter.book_name + " " + @chapter.chapter_number.to_s
   end
 
 end

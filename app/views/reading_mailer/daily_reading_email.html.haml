@@ -11,7 +11,7 @@
       %br
       - @readings.each do |reading|
         - chapter = reading.chapter
-        - verses = chapter.verses.by_version(@membership.bible_version)
+        - verses = chapter.by_version(@membership.bible_version)
         %br
         %hr
         %h2
