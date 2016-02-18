@@ -143,7 +143,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def todays_readings(user)
-    readings.where(read_on: user.date_by_timezone)
+    readings.where(read_on: user.date_by_timezone).limit(Reading::DAILY_LIMIT)
   end
 
   def all_users_emails

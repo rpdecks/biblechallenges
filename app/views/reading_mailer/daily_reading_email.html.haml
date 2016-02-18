@@ -17,15 +17,15 @@
         %h2
           %center
             #{chapter.book_name}  #{chapter.chapter_number} (#{@membership.bible_version.upcase})
-        -if @membership.bible_version == "RCV"
-          %center
-            %strong
-              Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
 
         %ol
           - verses.each do |v|
             %li=raw v.text
 
+        -if @membership.bible_version == "RCV"
+          %center
+            %strong
+              Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
       %br
       %center
       %div{style: "font-family: Helvetica, Arial, sans-serif; border: 1px solid transparent;font-size: 16px;line-height: 1.6;border-radius: 4px;padding: 7px 15px 7px 15px;background-color: #0078b4;text-align:center;"}

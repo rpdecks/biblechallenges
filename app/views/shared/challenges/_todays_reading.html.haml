@@ -2,12 +2,7 @@
 -if todays_reading
   %h4.chapter
     = todays_reading.book_and_chapter
-  -if bible_version == "RCV"
-    %center
-      %strong
-        Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
 
-  %br
 
   #verses
     - todays_verses.each do |verse|
@@ -18,3 +13,7 @@
   %h3 No reading today
   %br
   %br
+-if bible_version == "RCV"
+  %center
+    %strong
+      Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
