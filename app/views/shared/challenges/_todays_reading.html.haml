@@ -3,14 +3,18 @@
   %h4.chapter
     = todays_reading.book_and_chapter
 
-  %br
 
   #verses
     - todays_verses.each do |verse|
       = verse.decorate.to_div
+    %br
 -else
   %br
   %br
   %h3 No reading today
   %br
   %br
+-if bible_version == "RCV"
+  %center
+    %strong
+      Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org

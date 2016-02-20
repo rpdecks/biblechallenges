@@ -26,7 +26,7 @@ module ApplicationHelper
   end
 
   def select_options_for_bible
-    [["ASV (American Standard)",'ASV'],["ESV (English Standard)",'ESV'],["KJV (King James)",'KJV'],["NASB (New American Standard)",'NASB'],["NKJV (New King James)",'NKJV']]
+    [["ASV (American Standard)",'ASV'],["ESV (English Standard)",'ESV'],["KJV (King James)",'KJV'],["NASB (New American Standard)",'NASB'],["NKJV (New King James)",'NKJV'],["RCV (Recovery Version)", 'RCV']]
   end
 
 end
