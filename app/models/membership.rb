@@ -3,7 +3,7 @@ class Membership < ActiveRecord::Base
   attr_accessor :auto_created_user
 
   # Constants
-  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV)
+  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV RCV)
 
   # Relations
   belongs_to :user

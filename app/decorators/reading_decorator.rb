@@ -2,7 +2,7 @@ class ReadingDecorator < Draper::Decorator
   delegate_all
 
   def todays_chapter(membership)
-    reading.chapter.verses.by_version(membership.bible_version).each do |v|
+    reading.chapter.by_version(membership.bible_version).each do |v|
       v.text
     end
   end

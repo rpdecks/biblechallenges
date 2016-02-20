@@ -4,7 +4,7 @@ class ReadingMailer < ActionMailer::Base
   layout 'default_mailer'
 
   def daily_reading_email(readings, member)
-    @readings = Reading.find(readings)
+    @readings = Reading.where(id: readings).limit(Reading::DAILY_LIMIT)
     @reading_ids = @readings.map(&:id)
     @reading_date = @readings.first.read_on
     @challenge = @readings.first.challenge
