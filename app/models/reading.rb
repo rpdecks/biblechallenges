@@ -1,6 +1,6 @@
 class Reading < ActiveRecord::Base
 
-  DAILY_LIMIT = 10
+  DAILY_LIMIT = 30
 
   # Relations
   belongs_to :challenge, counter_cache: true
