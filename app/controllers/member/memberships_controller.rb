@@ -78,7 +78,7 @@ class Member::MembershipsController < ApplicationController
   end
 
   def membership_update_params
-    params.require(:membership).permit(:bible_version)
+    params.require(:membership)#.permit(:bible_version)
   end
 
   def challenge

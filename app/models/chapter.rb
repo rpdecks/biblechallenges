@@ -19,7 +19,7 @@ class Chapter < ActiveRecord::Base
   end
 
   def by_version(version = Verse::DEFAULT_VERSION)
-    version = Verse::DEFAULT_VERSION if !Membership::BIBLE_VERSIONS.include?(version)
+    version = Verse::DEFAULT_VERSION if !User::BIBLE_VERSIONS.include?(version)
     RetrieveRcv.new(self).refresh if version == 'RCV'
     version = Verse::DEFAULT_VERSION if version_missing?(version)
 

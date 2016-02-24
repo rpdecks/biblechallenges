@@ -106,7 +106,7 @@ class Challenge < ActiveRecord::Base
       membership = Membership.new
       membership.challenge =  self
       membership.user =  userz
-      membership.bible_version = options[:bible_version] unless options[:bible_version].blank?
+      membership.user.update_attributes(bible_version: options[:bible_version]) unless options[:bible_version].blank?
       membership.save
       membership.update_stats
       membership

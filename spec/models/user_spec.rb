@@ -7,6 +7,8 @@ describe User do
     end
 
     it { should validate_presence_of :name }
+    it { should validate_presence_of(:bible_version) }
+    it { should validate_inclusion_of(:bible_version).in_array(User::BIBLE_VERSIONS)}
   end
 
   describe "Relations" do
