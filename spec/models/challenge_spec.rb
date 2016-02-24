@@ -173,7 +173,7 @@ describe Challenge do
           expect {
             challenge.join_new_member(user,{bible_version: 'NASB'})
           }.to change(challenge.memberships, :count).by(1)
-          expect(challenge.memberships.last.bible_version).to eql 'NASB'
+          expect(challenge.memberships.last.user.bible_version).to eql 'NASB'
         end
       end
       context 'with multiple users' do

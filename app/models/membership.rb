@@ -2,9 +2,6 @@ class Membership < ActiveRecord::Base
 
   attr_accessor :auto_created_user
 
-  # Constants
-  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV RCV)
-
   # Relations
   belongs_to :user
   belongs_to :challenge, counter_cache: true
@@ -29,9 +26,7 @@ class Membership < ActiveRecord::Base
   #  Validations
   validates :challenge_id, presence: true
   validates :user_id, presence: true
-  validates :bible_version, presence: true
   validates_uniqueness_of :user_id, scope: :challenge_id
-  validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
   after_update :recalculate_group_stats

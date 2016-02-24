@@ -22,14 +22,23 @@ describe ReadingMailer do
       expect(successful_daily_email.to).to match_array [user.email]
     end
 
-    it "sends the readig email with Copyright notice for RcV membership Bible  version" do
-      user = create(:user)
+    it "sends the reading email with Copyright notice for users with RcV version prefs" do
+      user = create(:user, bible_version: "RCV")
       challenge = create(:challenge, :with_readings)
-      create(:membership, user: user, challenge: challenge, bible_version: "RCV")
+      create(:membership, user: user, challenge: challenge)
       ReadingMailer.daily_reading_email([challenge.readings.first.id], user.id).deliver_now
 
       successful_daily_email = ActionMailer::Base.deliveries.last
+
       expect(successful_daily_email.body).to have_content "Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry"
+
+      user.update_attributes(bible_version: "NKJV")
+      ReadingMailer.daily_reading_email([challenge.readings.first.id], user.reload.id).deliver_now
+
+      second_successful_daily_email = ActionMailer::Base.deliveries.last
+
+      expect(second_successful_daily_email.body).not_to have_content "Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry"
+      expect(second_successful_daily_email.body).to have_content "NKJV"
     end
 #  ** valid/working test, but very heavy request to LSM API for RcV text **
 #    it "only sends number of chapters up to the daily limit of readings" do
@@ -44,5 +53,4 @@ describe ReadingMailer do
 #      expect(successful_daily_email.body).not_to have_content "Genesis 31"
 #    end
   end
-
 end

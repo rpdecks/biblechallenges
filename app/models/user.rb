@@ -9,9 +9,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
 
+  # Constants
+  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV RCV)
+
   # Validations
   validates :name, :email, presence: true
   validates :email, uniqueness: true
+  validates :bible_version, presence: true
+  validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Relations
   has_many :created_challenges, class_name: "Challenge", foreign_key: :owner_id

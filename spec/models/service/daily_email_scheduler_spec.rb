@@ -99,18 +99,6 @@ describe DailyEmailScheduler do
       time_lapse = ( b - a ) / 3600
       expect(time_lapse).to eq 3
     end
-    it "schedules an email job for two users with the same hour preference different Bible version prefs" do
-      challenge = create(:challenge, :with_membership, :with_readings, begindate: "2050-01-01")
-      create(:membership, user: user_7am_eastern_time, challenge: challenge)
-      create(:membership, user: user_nkjv_version, challenge: challenge)
-
-      todays_date = Date.parse("2050-01-01")
-      DailyEmailScheduler.set_daily_email_jobs2(todays_date)
-      a = Time.at(DailyEmailWorker.jobs.second["at"])
-      b = Time.at(DailyEmailWorker.jobs.last["at"])
-      time_lapse = ( b - a ) / 3600
-      expect(time_lapse).to eq 3
-    end
     it "schedules an email job for users in different timezones but at the same scheduled universal time" do
       challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
       create(:membership, user: user_7am_eastern_time, challenge: challenge)
@@ -138,8 +126,7 @@ describe DailyEmailScheduler do
   end
 
   def user_nkjv_version
-    binding.pry
-    create(:user, time_zone: "Eastern Time (US & Canada)", preferred_bible_version: "NKJV", preferred_reading_hour: 7)
+    create(:user, time_zone: "Eastern Time (US & Canada)", bible_version: "NKJV", preferred_reading_hour: 7)
   end
 end
 

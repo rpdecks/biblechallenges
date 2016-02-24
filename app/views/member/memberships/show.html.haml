@@ -2,7 +2,7 @@
   .container
     %br
 
-    = form_for [:member, @membership], method: :put do |f|
+    = form_for [:membership, @membership.user], method: :put do |f|
       .row
         .col-md-6
           .contrl-group
@@ -11,6 +11,6 @@
               = f.select :bible_version,  select_options_for_bible,  { include_blank: false },  { class: 'chosen-select' }
               %br
               %br
-            = f.submit 'Update my Challenge Settings', class: 'btn btn-primary btn-sm', disable_with: 'Please Wait...'
+            = f.submit 'Update my Bible version settings', class: 'btn btn-primary btn-sm', disable_with: 'Please Wait...'
     %p
     %br
