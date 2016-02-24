@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219183911) do
+ActiveRecord::Schema.define(version: 20160224144939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,8 +234,8 @@ ActiveRecord::Schema.define(version: 20160219183911) do
   add_index "user_statistics", ["user_id"], name: "index_user_statistics_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",   null: false
-    t.string   "encrypted_password",     default: "",   null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -260,6 +260,7 @@ ActiveRecord::Schema.define(version: 20160219183911) do
     t.boolean  "reading_notify",         default: true
     t.boolean  "message_notify",         default: true
     t.boolean  "comment_notify",         default: true
+    t.string   "bible_version",          default: "RCV"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
