@@ -20,7 +20,7 @@ class Chapter < ActiveRecord::Base
 
   def by_version(version = Verse::DEFAULT_VERSION)
     version = Verse::DEFAULT_VERSION if !User::BIBLE_VERSIONS.include?(version) ||
-      version_missing?(version)
+      verses_from_version_missing?(version)
     RetrieveRcv.new(self).refresh if version == 'RCV'
 
     verses.where(version: version)
@@ -28,7 +28,7 @@ class Chapter < ActiveRecord::Base
 
   private
 
-  def version_missing?(version)
+  def verses_from_version_missing?(version)
     verses.where(version: version).empty?
   end
 
