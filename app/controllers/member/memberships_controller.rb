@@ -6,20 +6,8 @@ class Member::MembershipsController < ApplicationController
 
   respond_to :html, :json, :js
 
-  def show
-    respond_with(membership)
-  end
-
   def unsubscribe
     membership
-  end
-
-  def update
-    if membership.update_attributes(membership_update_params)
-      flash[:notice] = "You have successfully updated your challenge settings."
-    end
-    challenge = membership.challenge
-    redirect_to member_challenge_path(challenge)
   end
 
   def create
@@ -75,10 +63,6 @@ class Member::MembershipsController < ApplicationController
 
   def existing_user
     @user ||= User.find_by_email(params[:invite_email])
-  end
-
-  def membership_update_params
-    params.require(:membership).permit(:bible_version)
   end
 
   def challenge

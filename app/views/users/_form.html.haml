@@ -8,6 +8,11 @@
     %p.help-block
 
   .form-group
+    = f.label :bible_version, "Preferred Bible Version"
+    = f.select :bible_version, select_options_for_bible, { include_blank: false }, { class: 'chosen-select' }
+    %p.help-block
+
+  .form-group
     = f.label :time_zone, "Time Zone:"
     = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, {prompt: "Your Time Zone"}, {class: "form-control"}
     %p.help-block

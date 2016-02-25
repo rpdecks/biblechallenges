@@ -15,7 +15,7 @@ class ReadingsController < ApplicationController
       @comments = @reading.comments.order("created_at desc")
       @last_read_by = @reading.last_read_by
       @membership = Membership.find_by_user_id_and_challenge_id(current_user.id, @reading.challenge.id)
-      @verses = @reading.chapter.by_version(@membership.bible_version)
+      @verses = @reading.chapter.by_version(current_user.bible_version)
     else
       @reading = nil
       redirect_to root_url

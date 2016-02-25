@@ -24,7 +24,7 @@
     %tr
       %td Bible Version:
       %td
-        = membership.bible_version
+        = current_user.bible_version
         =link_to "Change", member_membership_path(membership), :method => :get
   - if challenge.owner == current_user
     %tr

@@ -124,5 +124,9 @@ describe DailyEmailScheduler do
   def user_7am_eastern_time
     create(:user, time_zone: "Eastern Time (US & Canada)", preferred_reading_hour: 7)
   end
+
+  def user_nkjv_version
+    create(:user, time_zone: "Eastern Time (US & Canada)", bible_version: "NKJV", preferred_reading_hour: 7)
+  end
 end
 

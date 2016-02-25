@@ -99,14 +99,14 @@ class Challenge < ActiveRecord::Base
   end
 
   # Accepts one or multiple users
-  def join_new_member(userz,options={})
+  def join_new_member(userz,options={})  # not currently using option/arg 
+                                         # hashes in the app but leaving here
     if userz.class == Array
       userz.map {|u| join_new_member(u,options) }
     else
       membership = Membership.new
       membership.challenge =  self
       membership.user =  userz
-      membership.bible_version = options[:bible_version] unless options[:bible_version].blank?
       membership.save
       membership.update_stats
       membership
