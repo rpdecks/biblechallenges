@@ -28,10 +28,10 @@
 
           - # todo: refactor this to todays_chapters
           - @todays_readings.each do |todays_reading|
-            - todays_verses = todays_reading.chapter.by_version(@membership.user.bible_version)
+            - todays_verses = todays_reading.chapter.by_version(current_user.bible_version)
 
             = render partial: 'shared/challenges/todays_reading',
-            locals: { todays_reading: todays_reading, todays_verses: todays_verses, bible_version: @membership.user.bible_version}
+            locals: { todays_reading: todays_reading, todays_verses: todays_verses, bible_version: current_user.bible_version}
 
             = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
 

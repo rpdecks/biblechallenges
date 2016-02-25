@@ -79,18 +79,4 @@ describe Member::MembershipsController do
       }.to change(Membership, :count).by(0)
     end
   end
-
-  context 'when the user has already joined' do
-    describe 'GET#show  (my-membership)' do
-      it "finds the current_users membership" do
-        get :show, id: membership.id
-        expect(assigns(:membership)).to eql(membership)
-      end
-
-      it "renders the :show template" do
-        get :show, id: membership.id
-        expect(response).to render_template :show
-      end
-    end
-  end
 end
