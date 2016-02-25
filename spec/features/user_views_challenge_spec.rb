@@ -21,7 +21,7 @@ feature 'User views challenge page as member' do
 #  scenario "only sends number of chapters up to the daily limit of readings" do
 #    challenge = create(:challenge, :with_readings, begindate: Date.today, enddate: Date.today,
 #                      chapters_to_read: "Gen 1-33")
-#    create(:membership, user: user, challenge: challenge, bible_version: "RCV")
+#    create(:membership, user: user, challenge: challenge)
 #    visit member_challenge_path(challenge)
 #
 #    expect(page).to have_content "a good dowry"  # from Gen 30

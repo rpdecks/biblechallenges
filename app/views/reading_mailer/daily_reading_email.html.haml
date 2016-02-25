@@ -11,18 +11,18 @@
       %br
       - @readings.each do |reading|
         - chapter = reading.chapter
-        - verses = chapter.by_version(@membership.bible_version)
+        - verses = chapter.by_version(@membership.user.bible_version)
         %br
         %hr
         %h2
           %center
-            #{chapter.book_name}  #{chapter.chapter_number} (#{@membership.bible_version.upcase})
+            #{chapter.book_name}  #{chapter.chapter_number} (#{@membership.user.bible_version.upcase})
 
         %ol
           - verses.each do |v|
             %li=raw v.text
 
-        -if @membership.bible_version == "RCV"
+        -if @membership.user.bible_version == "RCV"
           %center
             %strong
               Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org

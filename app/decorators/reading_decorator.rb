@@ -2,7 +2,7 @@ class ReadingDecorator < Draper::Decorator
   delegate_all
 
   def todays_chapter(membership)
-    reading.chapter.by_version(membership.bible_version).each do |v|
+    reading.chapter.by_version(membership.user.bible_version).each do |v|
       v.text
     end
   end
@@ -15,6 +15,6 @@ class ReadingDecorator < Draper::Decorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-  #@membership.readings.to_date(Date.today).first.chapter.verses.by_version(@membership.bible_version).each do |v|
+  #@membership.readings.to_date(Date.today).first.chapter.verses.by_version(@membership.user.bible_version).each do |v|
 
 end

@@ -8,6 +8,7 @@ FactoryGirl.define do
     password_confirmation "password"
     time_zone "UTC"
     preferred_reading_hour 6
+    bible_version { %w(RCV ASV ESV KJV NASB NKJV).sample }
 
     factory :user_with_avatar do
       avatar { fixture_file_upload(Rails.root.join('spec', 'images', 'my_avatar.png'),

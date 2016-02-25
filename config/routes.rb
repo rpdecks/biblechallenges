@@ -52,7 +52,7 @@ Biblechallenge::Application.routes.draw do
         post 'leave'
       end
     end
-    resources :memberships, only: [:update, :show, :destroy, :edit] do
+    resources :memberships, only: [:destroy] do
       member do
         get 'unsubscribe'
         post 'sign_up_via_email'
