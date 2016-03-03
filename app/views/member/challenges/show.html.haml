@@ -28,7 +28,6 @@
 
           - # todo: refactor this to todays_chapters
           - @todays_readings.each do |todays_reading|
-            -binding.pry
             - todays_verses = todays_reading.chapter.by_version(current_user.bible_version)
 
             = render partial: 'shared/challenges/todays_reading',
