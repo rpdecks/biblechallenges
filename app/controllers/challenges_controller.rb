@@ -9,7 +9,7 @@ class ChallengesController < ApplicationController
       @public_challenges = Challenge.includes(:members).current.at_least_5_members
     end
 
-    if current_user
+    if current_user && current_user.is_a?(User)
       @my_challenges = current_user.challenges.current
       unless params[:query]
         @public_challenges -= @my_challenges

@@ -40,6 +40,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user
+    @current_user ||= super || Guest.new
+  end
+
+  def user_signed_in?
+    super && !current_user.is_a?(Guest)
+  end
+
   protected
 
   # put these in registrations controller?
