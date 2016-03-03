@@ -16,7 +16,7 @@ gem 'activerecord-import'
 gem 'thin'
 gem 'sidekiq'
 gem 'sidekiq-failures'
-gem 'airbrake'
+gem 'airbrake', '~> 4.3.4'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
 gem 'font-awesome-rails'
@@ -39,7 +39,6 @@ gem 'htmlentities'
 gem 'react-rails'
 gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
-gem 'skylight'
 gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
 gem 'intercom-rails'
@@ -47,13 +46,12 @@ gem 'friendly_id'
 gem 'mail_form'
 gem 'exception_notification'
 gem 'slack-notifier'
-
 gem "autoprefixer-rails" #prefix styles for cross-browser
+gem 'fastercsv'
+gem 'rcv_bible', '~> 0.0.5'
 
 #sortable table/link
 gem 'ransack'
-
-
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -91,20 +89,18 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.3.0'
   gem 'spring-commands-rspec'
-  gem 'shoulda-matchers', require: false
-  gem 'pry'
+  gem 'pry-byebug'
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
   gem 'factory_girl_rails', '4.1.0'
-  gem 'rspec-rails'
   gem 'quiet_assets'
   gem 'annotate'
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
-  gem 'pry-nav'
 end
 
 group :test do
@@ -114,6 +110,7 @@ group :test do
   gem 'turn', :require => false
   gem 'simplecov', '0.5.4'
   gem 'faker', '~> 1.4.3'
+  gem 'shoulda-matchers', require: false
   gem 'database_cleaner', '~> 1.2.0'
   gem 'launchy'
   gem 'selenium-webdriver'

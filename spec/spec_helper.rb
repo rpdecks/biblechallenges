@@ -1,9 +1,7 @@
-require 'rubygems'
-
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
-#require Rails.root.join("db/seeds.rb")
 require 'rspec/rails'
+require 'rubygems'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'email_spec'
@@ -11,13 +9,23 @@ require 'sidekiq/testing'
 
 Time.zone = 'UTC'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+ActiveRecord::Migration.maintain_test_schema!
 
 # Disable Sidekiq will NOT process message
 RSpec::Sidekiq.configure do |config|
   config.warn_when_jobs_not_processed_by_sidekiq = false
+end
+
+RSpec::Expectations.configuration.warn_about_potential_false_positives = false
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    # Choose a test framework:
+    with.test_framework :rspec
+    with.library :rails
+  end
 end
 
 RSpec.configure do |config|
@@ -90,4 +98,3 @@ RSpec.configure do |config|
   config.include CreationMacros
   config.include ControllerMacros, type: :controller
 end
-

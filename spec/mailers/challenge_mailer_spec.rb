@@ -8,7 +8,7 @@ describe ChallengeMailer do
     let(:challenge){build(:challenge, owner: owner)}
 
     it "sends a successful creation email" do
-      expect{ ChallengeMailer.creation_email(challenge).deliver_now }.to_not raise_error
+      expect{ ChallengeMailer.creation_email(challenge.id).deliver_now }.to_not raise_error
     end
 
     before {challenge.save}

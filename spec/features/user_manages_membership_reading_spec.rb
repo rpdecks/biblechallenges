@@ -27,4 +27,16 @@ feature "User manages membership reading" do
     expect(mr.group_name).to eq group.name
     expect(mr.group_id).to eq group.id
   end
+
+  scenario "views correct versions of Bible on challenge page" do
+    challenge = create(:challenge_with_readings, chapters_to_read: "Job 8")
+    create(:membership, user: user, challenge: challenge)
+    user.update_attributes(bible_version: "NKJV")
+
+    visit member_challenge_path(challenge)
+    click_link_or_button "Job 8"
+
+    expect(page).to have_content "Recovery Version" #changes to default version for missing OT version
+    expect(page).to have_content "He will yet fill your mouth with laughter"
+  end
 end

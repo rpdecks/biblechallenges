@@ -35,7 +35,4 @@ feature 'User logs reading via email' do
 
     expect(page).to have_content ("Thank you")
   end
-
 end
-
-

@@ -4,7 +4,7 @@ describe Member::MembershipsController do
   let(:owner){create(:user)}
   let(:challenge){create(:challenge, :with_membership, owner: owner)}
   let(:user){create(:user)}
-  let(:membership){challenge.join_new_member(user)}
+  let!(:membership){challenge.join_new_member(user)}
 
   before(:each) do
     sign_in :user, user
@@ -16,8 +16,7 @@ describe Member::MembershipsController do
       expect(assigns(:membership)).to eql(membership)
     end
 
-    it "destroys the membership", skip: true do
-      pending
+    it "destroys the membership" do
       expect{
         delete :destroy, id: membership
       }.to change(Membership,:count).by(-1)
@@ -78,20 +77,6 @@ describe Member::MembershipsController do
       expect {
         post :sign_up_via_email, challenge_id: ch.id, id: membership.id, invite_email: email
       }.to change(Membership, :count).by(0)
-    end
-  end
-
-  context 'when the user has already joined' do
-    describe 'GET#show  (my-membership)' do
-      it "finds the current_users membership" do
-        get :show, id: membership.id
-        expect(assigns(:membership)).to eql(membership)
-      end
-
-      it "renders the :show template" do
-        get :show, id: membership.id
-        expect(response).to render_template :show
-      end
     end
   end
 end

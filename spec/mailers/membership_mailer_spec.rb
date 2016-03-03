@@ -7,11 +7,12 @@ describe MembershipMailer do
     let!(:membership){challenge.join_new_member(user)}
 
     it "sends a successful creation email" do
-      expect{ MembershipMailer.creation_email(membership).deliver_now }.to_not raise_error
+      expect{ MembershipMailer.creation_email(membership.id).deliver_now }.to_not raise_error
     end
 
-    it "sends the email to the user's email", skip: true do
-      pending
+    it "sends the email to the user's email" do
+      MembershipMailer.creation_email(membership.id).deliver_now
+
       successful_creation_email = ActionMailer::Base.deliveries.last
       expect(successful_creation_email.to).to match_array [user.email]
     end

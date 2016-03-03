@@ -169,12 +169,13 @@ describe Challenge do
             challenge.join_new_member(user)
           }.to change(challenge.memberships, :count).by(1)
         end
-        it 'creates a membership for that user specifying the bible version' do
-          expect {
-            challenge.join_new_member(user,{bible_version: 'NASB'})
-          }.to change(challenge.memberships, :count).by(1)
-          expect(challenge.memberships.last.bible_version).to eql 'NASB'
-        end
+# argument hashes not curren't used in app, but leaving in for the future
+#        it 'creates a membership for that user specifying the bible version' do
+#          expect {
+#            challenge.join_new_member(user,{bible_version: 'NASB'})
+#          }.to change(challenge.memberships, :count).by(1)
+#          expect(challenge.memberships.last.user.bible_version).to eql 'NASB'
+#        end
       end
       context 'with multiple users' do
         let(:users){create_list(:user, 3)}

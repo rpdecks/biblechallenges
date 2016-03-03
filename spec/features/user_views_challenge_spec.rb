@@ -17,6 +17,17 @@ feature 'User views challenge page as member' do
     end
   end
 
+# Valid/working text, but has too heavy a call to LSM API for RcV text
+#  scenario "only sends number of chapters up to the daily limit of readings" do
+#    challenge = create(:challenge, :with_readings, begindate: Date.today, enddate: Date.today,
+#                      chapters_to_read: "Gen 1-33")
+#    create(:membership, user: user, challenge: challenge)
+#    visit member_challenge_path(challenge)
+#
+#    expect(page).to have_content "a good dowry"  # from Gen 30
+#    expect(page).not_to have_content "spent the night in the mountain"  #from Gen 31
+#  end
+
   scenario "Today's reading accounts for multiple readings per day" do
     challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-2",
                        begindate: Date.today,
