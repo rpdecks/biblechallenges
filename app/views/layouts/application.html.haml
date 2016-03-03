@@ -33,6 +33,7 @@
         n.params=n.params||[];
         m="track register unregister identify set_config people.delete people.create people.update people.create_property people.tag people.remove_Tag".split(" ");
         for(var i=0;i<m.length;i++)f(n,m[i])}})(document,window.nudgespot||[]);nudgespot.init('#{ENV['NUDGESPOT_JS_API_KEY']}');
+        nudgespot.identify("#{current_user.email || 'guest'}", {name: "#{current_user.name || 'user'}"});
 
   %body
 
