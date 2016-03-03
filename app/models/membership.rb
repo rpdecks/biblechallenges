@@ -2,9 +2,6 @@ class Membership < ActiveRecord::Base
 
   attr_accessor :auto_created_user
 
-  # Constants
-  BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV)
-
   # Relations
   belongs_to :user
   belongs_to :challenge, counter_cache: true
@@ -22,8 +19,6 @@ class Membership < ActiveRecord::Base
 
   # Scopes
   scope :by_group, -> { order(:group_id) }
-  #scope :by_last_read_chapter, -> { joins(:membership_readings).group(:membership_id).order("membership_readings.created_at, memberships.id")}
-  #scope :by_last_read_chapter, -> { includes(:membership_readings).order("membership_readings.created_at")}
 
   delegate :name, to: :user
   delegate :email, to: :user
@@ -31,9 +26,7 @@ class Membership < ActiveRecord::Base
   #  Validations
   validates :challenge_id, presence: true
   validates :user_id, presence: true
-  validates :bible_version, presence: true
   validates_uniqueness_of :user_id, scope: :challenge_id
-  validates :bible_version, inclusion: {in: BIBLE_VERSIONS}
 
   # Callbacks
   after_update :recalculate_group_stats

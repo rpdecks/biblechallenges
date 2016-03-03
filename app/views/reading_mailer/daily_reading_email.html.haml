@@ -11,17 +11,21 @@
       %br
       - @readings.each do |reading|
         - chapter = reading.chapter
-        - verses = chapter.verses.by_version(@membership.bible_version)
+        - verses = chapter.by_version(@membership.user.bible_version)
         %br
         %hr
         %h2
           %center
-            #{chapter.book_name}  #{chapter.chapter_number} (#{@membership.bible_version.upcase})
+            #{chapter.book_name}  #{chapter.chapter_number} (#{@membership.user.bible_version.upcase})
 
         %ol
           - verses.each do |v|
             %li=raw v.text
 
+        -if @membership.user.bible_version == "RCV"
+          %center
+            %strong
+              Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
       %br
       %center
       %div{style: "font-family: Helvetica, Arial, sans-serif; border: 1px solid transparent;font-size: 16px;line-height: 1.6;border-radius: 4px;padding: 7px 15px 7px 15px;background-color: #0078b4;text-align:center;"}

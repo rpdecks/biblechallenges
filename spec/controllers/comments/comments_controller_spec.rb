@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Comments::CommentsController, "Routing" do
-  it { {post: "/comments/1/comments"}.should route_to(controller: "comments/comments",
+  specify { expect({post: "/comments/1/comments"}).to route_to(controller: "comments/comments",
                                                       action: "create",
                                                       comment_id: "1") }
 end
@@ -29,7 +29,7 @@ describe Comments::CommentsController, "Actions" do
       it "redirects back to the comment's reading" do
         post :create, comment_id: @comment.to_param, comment: {content: "Hello"}
 
-        should redirect_to(reading_path(reading))
+        expect(response).to redirect_to(reading_path(reading))
       end
     end
   end

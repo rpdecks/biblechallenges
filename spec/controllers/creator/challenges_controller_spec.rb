@@ -4,7 +4,7 @@ describe Creator::ChallengesController do
   render_views
 
   describe "Routing" do
-    it { {get: "/creator/challenges"}.should route_to(controller: "creator/challenges", action: "index") }
+    specify { expect({get: "/creator/challenges"}).to route_to(controller: "creator/challenges", action: "index") }
   end
 
   describe 'Unauthorized access' do

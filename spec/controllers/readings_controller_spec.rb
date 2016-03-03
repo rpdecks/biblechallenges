@@ -57,11 +57,6 @@ describe ReadingsController do
       sign_in :user, user
     end
 
-    describe "GET #edit" do
-      it "does not show the edit form", skip: true do
-        pending
-      end
-    end
     describe "GET #show" do
       context "the user is part of this challenge and reading" do
         it "assigns the requested reading to @reading" do
