@@ -9,6 +9,7 @@ class TaskStat < ApplicationMailer
 		@end_time = e_time
 		@execution_time = exec_time
 		@date = Time.current.to_date.strftime("%b %d, %Y")
+		@schedule_date = DateTime.current.tomorrow.strftime("%b %d, %Y")
 		mail(
 		  to: "bc-trial-email@beyondfinity.com",
 		  subject: "DailyEmailScheduler Report - #{@date}"
