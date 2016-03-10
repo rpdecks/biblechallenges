@@ -1,0 +1,32 @@
+%table#templateBody{border: "0", cellpadding: "0", cellspacing: "0", style: "-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;background-color: #F4F4F4;border-top: 1px solid #FFFFFF;border-bottom: 1px solid #CCCCCC;border-collapse: collapse;", width: "100%"}
+  %tr
+    %td.header{style: "padding: 20px; background-color: #0078b4; color: #fff;"}
+      %h2{style: "display: block;font-family: Helvetica;font-size: 20px;font-style: normal;font-weight: bold;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 5px;margin-left: 0;text-align: center;"}= "DailyEmailScheduler Report - #{@date}"
+      %h4{style: "display: block;font-family: Helvetica;font-size: 14px;font-style: italic;font-weight: normal;line-height: 100%;letter-spacing: normal;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: center;"}
+  %tr
+    %td.bodyContent{"mc:edit" => "body_content", style: "-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;padding-top: 20px;padding-right: 20px;padding-bottom: 20px;padding-left: 20px;text-align: left;", valign: "top"}
+      Hello!
+      %br
+      The batch task run-report for DailyEmailScheduler:
+      %br
+      %h4
+        = "Emails processed (scheduled) for date: #{@date}"
+      %h4
+        = "Total active challenges for the date: #{@total_challenges}"
+      %h4
+        = "Total members processed (reading_notify=true/false): #{@total_members}"
+      %h4
+        = "Total emails processed (scheduled): #{@emails_count}"
+      %hr
+      %h4
+        = "Exceptions raised: #{0 unless @errors.try(:size) > 0}"
+      - @errors.each do |error|
+        %br
+        = error
+      %hr
+      = "Task start time: #{@start_time}"
+      %br
+      = "Task end time: #{@end_time}"
+      %br
+      = "Running Duration: #{@execution_time} mins"
+        
