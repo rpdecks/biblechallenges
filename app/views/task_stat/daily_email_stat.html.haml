@@ -9,14 +9,41 @@
       %br
       The batch task run-report for DailyEmailScheduler:
       %br
-      %h4
-        = "Emails processed (scheduled) for date: #{@date}"
-      %h4
-        = "Total active challenges for the date: #{@total_challenges}"
-      %h4
-        = "Total members processed (reading_notify=true/false): #{@total_members}"
-      %h4
-        = "Total emails processed (scheduled): #{@emails_count}"
+      %table
+        %tr
+          %td 
+            = "Processed for Reading Date"
+          %td
+            = ":"
+            %span{style: "font-weight: bold;"}
+              = "#{@schedule_date} (all timezones)"
+        %tr
+          %td 
+            = "Total active challenges for the date"
+          %td
+            = ":"
+            %span{style: "font-weight: bold;"}
+              = "#{@total_challenges}"
+        %tr
+          %td 
+            = "Total members (reading_notify=true/false)"
+          %td
+            = ":"
+            %span{style: "font-weight: bold;"}
+              = "#{@total_members}"
+        %tr
+          %td
+            = "Total emails scheduled"
+          %td
+            = ":"
+            %span{style: "font-weight: bold;"}
+              = "#{@emails_count}"
+      / %h4
+      /   = "Total active challenges for the date: #{@total_challenges}"
+      / %h4
+      /   = "Total members (reading_notify=true/false): #{@total_members}"
+      / %h4
+      /   = "Total emails scheduled: #{@emails_count}"
       %hr
       %h4
         = "Exceptions raised: #{0 unless @errors.try(:size) > 0}"
@@ -24,9 +51,14 @@
         %br
         = error
       %hr
-      = "Task start time: #{@start_time}"
-      %br
-      = "Task end time: #{@end_time}"
-      %br
-      = "Running Duration: #{@execution_time} mins"
+      %table
+        %tr
+          %td= "Task start time"
+          %td= ": #{@start_time}"
+        %tr
+          %td= "Task end time"
+          %td= ": #{@end_time}"
+        %tr
+          %td= "Running Duration"
+          %td= ": #{@execution_time} mins"
         
