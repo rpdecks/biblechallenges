@@ -1,5 +1,5 @@
 production:
-  pool: <%= ENV['DATABASE_POOL_SIZE'] || 15 %>
+  pool: <%= ENV['DATABASE_POOL_SIZE'] || 10 %>
   url: <%= ENV['DATABASE_URL'] %>
 
 defaults: &defaults
