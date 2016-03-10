@@ -1,11 +1,11 @@
+production:
+  pool: <%= ENV['DATABASE_POOL_SIZE'] || 15 %>
+  url: <%= ENV['DATABASE_URL'] %>
+
 defaults: &defaults
   adapter: postgresql
   template: template0
   host: localhost
-
-production:
-  <<: *defaults
-  database: bc_production
 
 development:
   <<: *defaults
