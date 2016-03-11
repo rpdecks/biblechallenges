@@ -73,8 +73,8 @@ Biblechallenge::Application.configure do
   if ENV['STAGING']
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      :user_name => ENV["MAILTRAP_USER_NAME"],
-      :password => ENV["MAILTRAP_PASSWORD"],
+      :user_name => ENV["NEW_MAILTRAP_USER_NAME"],
+      :password => ENV["NEW_MAILTRAP_PASSWORD"],
       :address => 'mailtrap.io',
       :domain => 'mailtrap.io',
       :port => '2525',
