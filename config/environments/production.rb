@@ -69,25 +69,31 @@ Biblechallenge::Application.configure do
     config.action_mailer.default_url_options = { host: 'biblechallenges.com' }
   end
 
+  response = RestClient.get "https://mailtrap.io/api/v1/inboxes.json?api_token=#{ENV['MAILTRAP_API_TOKEN']}"
+
+  first_inbox = JSON.parse(response)[0] # get first inbox
+
+
   # if ENV staging is set, send email to mailtrap
+  ActionMailer::Base.delivery_method = :smtp
   if ENV['STAGING']
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      :user_name => ENV["MAILTRAP_USER_NAME"],
-      :password => ENV["MAILTRAP_PASSWORD"],
-      :address => 'mailtrap.io',
-      :domain => 'mailtrap.io',
-      :port => '2525',
-      :authentication => :cram_md5
+    ActionMailer::Base.smtp_settings = {
+      :user_name => first_inbox['username'],
+      :password => first_inbox['password'],
+      :address => first_inbox['domain'],
+      :domain => first_inbox['domain'],
+      :port => first_inbox['smtp_ports'][0],
+      :authentication => :plain
     }
+   
   else  # we must be in production
     ActionMailer::Base.smtp_settings = {
-    :port =>           '587',
-    :address =>        'smtp.mandrillapp.com',
-    :user_name =>      ENV['MANDRILL_USERNAME'],
-    :password =>       ENV['MANDRILL_APIKEY'],
-    :domain =>         'heroku.com',
-    :authentication => :plain
+      :port =>           '587',
+      :address =>        'smtp.mandrillapp.com',
+      :user_name =>      ENV['MANDRILL_USERNAME'],
+      :password =>       ENV['MANDRILL_APIKEY'],
+      :domain =>         'heroku.com',
+      :authentication => :plain
     }
     ActionMailer::Base.delivery_method = :smtp
   end
