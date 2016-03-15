@@ -1,5 +1,6 @@
 Biblechallenge::Application.routes.draw do
   require 'sidekiq/web'
+  require 'sidetiq/web'
   mount Sidekiq::Web, at: '/sidekiq'
 
   get '/test_exception_notifier', to: 'application#test_exception_notifier'

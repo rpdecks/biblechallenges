@@ -15,6 +15,7 @@ gem 'activerecord-import'
 gem 'thin'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'sidetiq'
 gem 'airbrake', '~> 4.3.4'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
