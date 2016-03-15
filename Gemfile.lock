@@ -542,6 +542,3 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-worker-killer
-
-BUNDLED WITH
-   1.11.2
