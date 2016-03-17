@@ -49,6 +49,10 @@ gem 'slack-notifier'
 gem "autoprefixer-rails" #prefix styles for cross-browser
 gem 'fastercsv'
 gem 'rcv_bible', '~> 0.0.5'
+gem 'rack-mini-profiler', require: false
+gem 'flamegraph'
+gem 'stackprof'
+gem 'memory_profiler'
 
 #sortable table/link
 gem 'ransack'
