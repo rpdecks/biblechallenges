@@ -67,8 +67,7 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
-  gem 'letter_opener'
-  gem 'letter_opener_web'
+  gem 'goatmail'
 #  gem 'bullet'
 end
 
