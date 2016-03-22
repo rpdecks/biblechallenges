@@ -1,13 +1,8 @@
 Biblechallenge::Application.routes.draw do
-  require 'sidekiq/web'
   require 'sidetiq/web'
   mount Sidekiq::Web, at: '/sidekiq'
 
   get '/test_exception_notifier', to: 'application#test_exception_notifier'
-
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
@@ -19,6 +14,10 @@ Biblechallenge::Application.routes.draw do
     match '/users/finish_signup' => 'users/registrations#finish_signup',
       via: [:get, :patch],
       :as => :finish_signup
+  end
+
+  if Rails.env.development?
+    mount Goatmail::App, at: "/inbox"
   end
 
   resource :user, only: [:edit, :update]

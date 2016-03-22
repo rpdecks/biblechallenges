@@ -38,7 +38,7 @@ Biblechallenge::Application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # delivering email
-  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.delivery_method = :goatmail
   config.action_mailer.smtp_settings = {
     :address => "localhost",
     :port    => 1025
