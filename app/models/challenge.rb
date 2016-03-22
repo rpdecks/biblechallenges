@@ -58,7 +58,7 @@ class Challenge < ActiveRecord::Base
 
 
   def membership_for(user)
-    user && memberships.find_by_user_id(user.id)
+    user.is_a?(User) && memberships.find_by_user_id(user.id)
   end
 
   def associate_statistics #for the sample data rake task
