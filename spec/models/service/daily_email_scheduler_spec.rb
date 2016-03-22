@@ -22,6 +22,7 @@ describe DailyEmailScheduler do
       challenge = create(:challenge, :with_membership, :with_readings, begindate: "2050-01-01")
 #      membership = create(:membership, user: user, challenge: challenge)
       membership = challenge.memberships.first
+      user = membership.user
 
       Timecop.travel("2050-01-01")
 
@@ -31,7 +32,7 @@ describe DailyEmailScheduler do
       DailyEmailWorker.drain
 
       #first email is for created challenge, second is the dailyreading
-      expect(ActionMailer::Base.deliveries.size).to eq 0
+      expect(ActionMailer::Base.deliveries.select { |email| email.To.to_s == user.email}).to eq []  #differentiates challenge email from 'daily email report' which also enqueues
 
       Timecop.return
     end
@@ -97,7 +98,7 @@ describe DailyEmailScheduler do
       a = Time.at(DailyEmailWorker.jobs.second["at"])
       b = Time.at(DailyEmailWorker.jobs.last["at"])
       time_lapse = ( b - a ) / 3600
-      expect(time_lapse).to eq 3
+      expect(time_lapse.abs).to eq 3
     end
     it "schedules an email job for users in different timezones but at the same scheduled universal time" do
       challenge = create(:challenge, :with_readings, begindate: "2050-01-01")
