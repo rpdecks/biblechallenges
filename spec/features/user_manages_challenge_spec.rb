@@ -86,8 +86,8 @@ feature 'User manages challenges' do
                          owner_id: user.id)
       challenge.join_new_member(user)
       expect(challenge.members).to include user
-      DailyEmailScheduler.set_daily_email_jobs
-      expect(ActionMailer::Base.deliveries.size).to eq 1 #Today's reading.
+      DailyScheduleWorker.perform_async
+      expect(ActionMailer::Base.deliveries.select { |email| email.To.to_s == user.email}.size).to eq 1 #Today's reading
     end
   end
 
