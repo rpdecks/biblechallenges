@@ -8,8 +8,11 @@
           %strong
             = user.last_chapter_posted
           (
-          = time_ago_in_words(user.last_recorded_reading_time)
+          = time_ago_in_words(user.last_recorded_reading.created_at)
           ago )
+          %br
+          %strong
+            = user.last_recorded_reading.challenge_name
     %tr
       %td= user.user_statistic_chapters_read_all_time.try(:name)
       %td= user.user_statistic_chapters_read_all_time
