@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lost some data on Aug 10, 2015.  Also, updates."
+title: "Introducing the Recovery Version of the Bible"
 date: 2016-03-23
 categories: updates
 comments: true
