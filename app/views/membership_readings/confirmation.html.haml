@@ -1,13 +1,26 @@
 %br
 %br
-.fb-share-button{"data-href" => "#{ENV['APP_URL']+'/challenges/'+@slug}", "layout" => "button", "data-width" => "450"}
-%br
+%h3
+  = @slug
 %br
 %h5
+  %span.glyphicon.glyphicon-ok
+  = @first_reading.chapter.book_name
+  = @first_reading.chapter.chapter_number
+  - if @first_reading != @last_reading
+    \-
+    = @last_reading.chapter.book_name
+    = @last_reading.chapter.chapter_number
+
+  %p
   Thank you for entering your reading!
   %br
   %br
-  = link_to "BibleChallenges.com",  root_path
+  = link_to "Go to Challenge", challenge_path(@first_reading.challenge, anchor: "statistics")
+  %br
+  %br
+  .fb-share-button{"data-href" => "#{ENV['APP_URL']+'/challenges/'+@slug}", "layout" => "button", "data-width" => "450"}
+%br
 
 
 :javascript
