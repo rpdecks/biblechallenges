@@ -107,6 +107,7 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.5)
       timers (>= 4.1.1)
+    chartkick (1.4.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
@@ -179,6 +180,8 @@ GEM
       railties (>= 3.1)
     gretel (3.0.8)
       rails (>= 3.2.0)
+    groupdate (2.5.0)
+      activesupport (>= 3)
     haml (4.0.7)
       tilt
     haml-rails (0.9.0)
@@ -470,6 +473,7 @@ DEPENDENCIES
   bootswatch-rails
   capybara
   capybara-webkit
+  chartkick
   coffee-rails
   database_cleaner (~> 1.2.0)
   devise
@@ -486,6 +490,7 @@ DEPENDENCIES
   goatmail
   google-instant-hangouts
   gretel
+  groupdate
   haml
   haml-rails
   high_voltage
@@ -537,3 +542,6 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-worker-killer
+
+BUNDLED WITH
+   1.11.2
