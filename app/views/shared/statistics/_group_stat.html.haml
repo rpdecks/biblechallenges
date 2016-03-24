@@ -3,25 +3,36 @@
   %thead
     %tr
       %th 
-        %h6
+        %h5
           %strong
             Group Name
       %th 
-        %h6
+        %h5
           %strong
             Progress Percentage
       %th 
-        %h6
+        %h5
           %strong
-            On-schedule Percentage
-      %th 
-        %h6
-          %strong
-            Total Chapters Read
+            On Schedule Percentage
   - groups.each do |g|
     %tbody
       %tr
-        %td= g.name
-        %td= g.group_statistic_progress_percentage
-        %td= g.group_statistic_on_schedule_percentage
-        %td= g.group_statistic_total_chapters_read
+        %td.col-md-4
+          %strong
+            = g.name
+          &nbsp;
+          - g.members.limit(5).each do |m|
+            = render 'shared/avatar_medium', user: m
+          %span.badge
+            = "#{g.members.size}" + " member".pluralize(g.members.size)
+        %td.col-md-3
+          .progress
+            .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", 
+              "aria-valuenow" => "#{g.group_statistic_progress_percentage.value}", 
+              :role => "progressbar", :style => "width: #{g.group_statistic_progress_percentage.value}%;"}
+              #{g.group_statistic_progress_percentage.value}% Complete
+        %td.col-md-3
+          .progress
+            .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{g.group_statistic_on_schedule_percentage.value}", :role => "progressbar", :style => "width: #{g.group_statistic_on_schedule_percentage.value}%;"}
+              #{g.group_statistic_on_schedule_percentage.value}% On Schedule
+
