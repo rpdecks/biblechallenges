@@ -21,7 +21,7 @@ feature 'User manages challenges' do
       all_emails = ActionMailer::Base.deliveries
       expect(all_emails.size).to eq 2 #Today's reading and creation notification
       todays_reading = all_emails.second
-      expect(todays_reading.subject).to eq "Bible Challenge reading for challenge 1"
+      expect(todays_reading.subject).to include "challenge 1...BibleChallenges.com reading -"
     end
   end
 
