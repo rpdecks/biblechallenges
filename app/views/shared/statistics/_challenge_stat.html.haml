@@ -32,11 +32,7 @@
           %u
             Last chapter read:
           &nbsp;
-          -if membership.membership_readings.any?
-            %strong
-              = membership.membership_readings.order(:created_at).last.chapter.book_and_chapter
-            ,
-            = time_ago_in_words(membership.membership_readings.order(:created_at).last.created_at)
-            ago
-          -else
-            << no readings yet >>
+          %strong
+            = membership.last_recorded_chapter
+            \--
+            = membership.last_recorded_reading_time

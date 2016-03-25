@@ -25,12 +25,8 @@
       %td= membership.group.try(:name)
       %td= mail_to(membership.user.email)
       %td= membership.x_of_total_read
-      - if membership.membership_readings.empty?
-        %td= "No readings yet"
-      - else
-        %td
-          = time_ago_in_words(membership.last_recorded_reading_time)
-          ago
+      %td
+        = membership.last_recorded_reading_time
       - if challenge.owner == membership.user
         %td= "N/A"
       - else
