@@ -24,6 +24,17 @@ class Member::ChallengesController < ApplicationController
                                          :group_statistic_total_chapters_read)
     @user = current_user
     @todays_readings = @challenge.todays_readings(@user).order(:chapter_id)
+    @challenge.readings.pluck(:read_on).first.strftime("%b %e")
+    @data = [
+      {
+      name: "Challenge Benchmark", 
+      data: [["2010", 10], ["2020", 16], ["2030", 28]]
+      },
+      {
+      name: "#{current_user.name}", 
+      data: [["2010", 24], ["2020", 22], ["2030", 19]]
+      }
+    ]
   end
 
   private
