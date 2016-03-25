@@ -1,5 +1,6 @@
+= javascript_include_tag "//www.google.com/jsapi", "chartkick"
 %span
-  = line_chart User.limit(10).group_by_day(:created_at).count
+  = line_chart data, stacked: true, discrete: true
 /%table.table.table-bordered.table-hover.table-condensed
 /  %thead
 /    %tr

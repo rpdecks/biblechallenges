@@ -1,6 +1,5 @@
 -# - breadcrumb :challenge, @challenge
 -# = breadcrumbs style: :ol, class: "breadcrumb breadcrumbs-minimal"
-= javascript_include_tag "//www.google.com/jsapi", "chartkick"
 
 .section.primary
   .container
@@ -50,7 +49,7 @@
           .tab-pane#groups{role: "tabpanel"}
             = render partial: 'shared/challenges/challenge_groups', locals: {groups: @groups, challenge: @challenge}
         .tab-pane#statistics{role: "tabpanel"}
-          = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge, groups: @groups, user: @current_user}
+          = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge, groups: @groups, user: @current_user, data: @data}
 
 :javascript
   // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
