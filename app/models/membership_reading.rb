@@ -1,4 +1,7 @@
 class MembershipReading < ActiveRecord::Base
+  include ActionView::Helpers::DateHelper
+  NO_READING = "No readings yet"
+  NO_CHAPTER = ""
   # Scopes
   default_scope {includes(:reading).order('readings.read_on')}
   scope :on_schedule, -> {where(on_schedule: 1)}
@@ -21,6 +24,14 @@ class MembershipReading < ActiveRecord::Base
 
   #Callbacks
   before_create :mark_on_schedule
+
+  def self.most_recent
+    order(:created_at).last || NoReading.new
+  end
+
+  def reading_time
+    time_ago_in_words(self.created_at) + " ago"
+  end
 
   private
 

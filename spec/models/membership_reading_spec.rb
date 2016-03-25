@@ -42,5 +42,28 @@ describe MembershipReading do
     end
   end
 
+  describe " methods" do
+    describe "#most_recent" do
+      it "returns the most recent recorded reading time" do
+        newest_reading = create(:membership_reading)
+        create(:membership_reading, created_at: 3.days.ago)
+        membership_readings = MembershipReading.all
+        expect(membership_readings.most_recent).to eq newest_reading
+      end
+
+      it "returns NoReading class when none is present" do
+        result = MembershipReading.most_recent
+
+        expect(result).to be_a(NoReading)
+      end
+
+      it "returns no reading text when user has no membership reading" do
+        membership = create(:membership)
+        result = membership.last_recorded_reading_time
+        expect(result).to eq MembershipReading::NO_READING
+      end
+    end
+  end
+
 end
 

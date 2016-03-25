@@ -16,6 +16,7 @@ class Membership < ActiveRecord::Base
   MembershipStatistic.descendants.each do |stat| 
     has_one stat.name.underscore.to_sym
   end
+  NO_READING = "No readings yet"
 
   # Scopes
   scope :by_group, -> { order(:group_id) }
@@ -68,13 +69,16 @@ class Membership < ActiveRecord::Base
   end
 
   def last_recorded_reading_time
-    membership_readings.order(:created_at).last.try(:created_at)
+    membership_readings.most_recent.reading_time
+  end
+
+  def last_recorded_chapter
+    membership_readings.most_recent.chapter_name
   end
 
   def x_of_total_read
     "#{membership_readings_count} of #{readings.size}"
   end
-
 
   def send_challenge_snapshot_email
     SnapshotEmailWorker.perform_in(10.seconds, self.email, self.challenge_id)

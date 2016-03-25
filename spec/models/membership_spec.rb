@@ -1,4 +1,5 @@
 require 'spec_helper'
+include ActionView::Helpers::DateHelper
 
 describe Membership do
 
@@ -75,6 +76,34 @@ describe Membership do
         expect(membership.completed?).to eq false
       end
     end
-  end
 
+    describe '#last_recorded_reading_time' do
+      it "returns the time of most recent recorded reading" do
+        membership = create(:membership)
+        newest_reading = create(:membership_reading, membership: membership)
+        create(:membership_reading, membership: membership, created_at: 3.days.ago)
+
+        result = membership.last_recorded_reading_time
+        expect(result).to eq time_ago_in_words(newest_reading.created_at) + " ago"
+      end
+
+      it "returns the no reading text when there is no reading" do
+        membership = create(:membership)
+
+        result = membership.last_recorded_reading_time
+        expect(result).to eq MembershipReading::NO_READING
+      end
+    end
+
+    describe '#last_recorded_chapter' do
+      it "returns the most recnet book and chapter of the membership reading" do
+        membership = create(:membership)
+        newest_reading = create(:membership_reading, membership: membership)
+        create(:membership_reading, membership: membership, created_at: 3.days.ago)
+
+        result = membership.last_recorded_chapter
+        expect(result).to eq newest_reading.chapter_name
+      end
+    end
+  end
 end
