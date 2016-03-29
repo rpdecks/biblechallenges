@@ -22,17 +22,17 @@ class Member::ChallengesController < ApplicationController
                                          :group_statistic_progress_percentage,
                                          :group_statistic_on_schedule_percentage,
                                          :group_statistic_total_chapters_read)
-    @user = current_user
-    @todays_readings = @challenge.todays_readings(@user).order(:chapter_id)
+    @member = current_user
+    @todays_readings = @challenge.todays_readings(@member).order(:chapter_id)
     @challenge.readings.pluck(:read_on).first.strftime("%b %e")
-    @data = [
+    @whole_challenge_chart_data = [
       {
-      name: "Challenge Benchmark", 
-      data: [["2010", 10], ["2020", 16], ["2030", 28]]
+      name: "Challenge Benchmark",
+      data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).whole_challenge_benchmark_data
       },
       {
-      name: "#{current_user.name}", 
-      data: [["2010", 24], ["2020", 22], ["2030", 19]]
+      name: "#{@member.name}", 
+      data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).whole_challenge_mrs
       }
     ]
   end
