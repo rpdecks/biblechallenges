@@ -8,7 +8,7 @@ describe ChartDataGenerator do
       membership_readings = double("membership_readings")
       benchmark_data = ChartDataGenerator.new(readings: readings, membership_readings: membership_readings).benchmark_data
 
-      expect(benchmark_data.count).to eq readings.count + 1
+      expect(benchmark_data.count).to eq (readings.count + 1)
     end
   end
 end
