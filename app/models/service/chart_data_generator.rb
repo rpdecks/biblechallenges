@@ -23,10 +23,12 @@ class ChartDataGenerator
     @readings.pluck(:read_on).uniq.each do |r|
       @member_readings_data_array << [
                                       r.strftime("%-m/%-e"),
-                                      (@membership_readings_data_array.select { |x| x.created_at.to_date == r.to_date }
-                                      .size) + @member_readings_data_array.last[-1]
+                                      (@membership_readings.
+                                      select { |x| x.created_at.to_date == r.to_date }.size) + 
+                                      @member_readings_data_array.last[-1]
                                      ]
     end
+    @member_readings_data_array
   end
 
   def member_readings_initial_setup
