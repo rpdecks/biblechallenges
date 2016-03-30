@@ -21,11 +21,13 @@ describe ChartDataGenerator do
       create(:membership_reading, membership: membership)
       mrs = membership.membership_readings
 
-      member_data = ChartDataGenerator.new(readings: readings,
+      member_reading_data = ChartDataGenerator.new(readings: readings,
                                            membership_readings: mrs).member_reading_data
+      binding.pry
 
-      expect(member_data.count).to eq (readings.count + 1)
-      expect(member_data.first).to eq ["start", 0]
+      expect(member_reading_data.count).to eq 2
+      expect(member_reading_data.last[-1]).to eq 2
+      expect(member_reading_data.first).to eq ["start", 0]
     end
   end
 end
