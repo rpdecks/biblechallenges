@@ -1,6 +1,6 @@
 = javascript_include_tag "//www.google.com/jsapi", "chartkick"
 %span
-  = line_chart @challenge_chart_data, stacked: true, discrete: true, ytitle: "chapters read"
+  = line_chart @challenge_chart_data, stacked: true, discrete: true, ytitle: "chapters read", library: {pointSize: 1}
 
 %table.table.table-bordered.table-hover.table-condensed
   %thead
