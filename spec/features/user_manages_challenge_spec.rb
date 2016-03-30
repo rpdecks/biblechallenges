@@ -116,7 +116,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     create(:membership, challenge: challenge, user: user)
     visit challenge_path(challenge)
 
@@ -124,7 +124,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User leaves a challenge successfully' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     create(:membership, challenge: challenge, user: user)
     visit challenge_path(challenge)
     click_link "Unsubscribe"
@@ -158,7 +158,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User should leave his or her group automatically once the user leaves the challenge' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
     membership = create(:membership, challenge: challenge, user: user, group_id: group.id)
     visit challenge_path(challenge)

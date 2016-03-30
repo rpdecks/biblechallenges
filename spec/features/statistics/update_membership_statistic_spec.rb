@@ -9,7 +9,7 @@ feature 'Membership Statistic' do
 
   feature 'User leaves challenge' do
     scenario 'Removes the membership_statistics all together' do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       visit challenge_path(challenge)
       click_link "Join Challenge"
       visit challenge_path(challenge)
