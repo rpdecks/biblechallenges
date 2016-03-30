@@ -14,7 +14,7 @@
         %h5
           %strong
             On Schedule Percentage
-  - groups.each do |g|
+  - @groups.each do |g|
     %tbody
       %tr
         %td.col-md-4
@@ -28,11 +28,11 @@
         %td.col-md-3
           .progress
             .progress-bar.progress-bar-success{"aria-valuemax" => "100", "aria-valuemin" => "0", 
-              "aria-valuenow" => "#{g.group_statistic_progress_percentage.value}", 
-              :role => "progressbar", :style => "width: #{g.group_statistic_progress_percentage.value}%;"}
-              #{g.group_statistic_progress_percentage.value}% Complete
+              "aria-valuenow" => "#{g.group_statistic_progress_percentage.try(:value)}", 
+              :role => "progressbar", :style => "width: #{g.group_statistic_progress_percentage.try(:value)}%;"}
+              #{g.group_statistic_progress_percentage.try(:value)}% Complete
         %td.col-md-3
           .progress
-            .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{g.group_statistic_on_schedule_percentage.value}", :role => "progressbar", :style => "width: #{g.group_statistic_on_schedule_percentage.value}%;"}
-              #{g.group_statistic_on_schedule_percentage.value}% 
+            .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "#{g.group_statistic_on_schedule_percentage.try(:value)}", :role => "progressbar", :style => "width: #{g.group_statistic_on_schedule_percentage.try(:value)}%;"}
+              #{g.group_statistic_on_schedule_percentage.try(:value)}% 
 

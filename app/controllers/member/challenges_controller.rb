@@ -24,8 +24,7 @@ class Member::ChallengesController < ApplicationController
                                          :group_statistic_total_chapters_read)
     @member = current_user
     @todays_readings = @challenge.todays_readings(@member).order(:chapter_id)
-    @challenge.readings.pluck(:read_on).first.strftime("%b %e")
-    @whole_challenge_chart_data = formatted_membership_readings_data_collector
+    @challenge_chart_data = formatted_membership_readings_data_collector
   end
 
   private
@@ -34,11 +33,11 @@ class Member::ChallengesController < ApplicationController
     [
       {
       name: "Challenge Benchmark",
-      data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).whole_challenge_benchmark_data
+      data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).benchmark_data
       },
       {
       name: "#{@member.name}", #users whole challenge membership readings data
-      data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).whole_challenge_mrs
+      data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).member_reading_data
       }
     ]
   end
