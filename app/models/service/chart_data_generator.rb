@@ -20,7 +20,8 @@ class ChartDataGenerator
 
   def member_reading_data
     member_readings_initial_setup
-    @readings.pluck(:read_on).uniq.each do |r|
+    readings_till_today = @readings.select { |x| x.read_on <= Time.now.utc.to_date }
+    readings_till_today.map(&:read_on).uniq.each do |r|
       @member_readings_data_array << [
                                       r.strftime("%-m/%-e"),
                                       (@membership_readings.
