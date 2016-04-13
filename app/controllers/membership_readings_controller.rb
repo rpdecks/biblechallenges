@@ -65,14 +65,9 @@ class MembershipReadingsController < ApplicationController
   end
 
   def confirmation
-    if params[:membership_id]
-      @slug = Membership.find(params[:membership_id]).challenge.slug
-      @first_reading = Reading.find(params[:id].split("/").first)
-      @last_reading = Reading.find(params[:id].split("/").last)
-
-    else
-      @slug = ""
-    end
+    membership = Membership.find(params[:membership_id])
+    challenge = membership.challenge
+    @reading_confirmation_stats = ReadingConfirmationStats.new(membership, challenge)
   end
 
   def membership_reading_params
