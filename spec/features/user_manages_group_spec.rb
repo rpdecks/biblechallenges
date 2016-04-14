@@ -9,7 +9,7 @@ feature 'User manages groups' do
 
   context "Not having joined the challenge" do
     scenario "When joins a group, also joins the challenge" do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group = challenge.groups.create(name: "UCLA", user_id: user.id)
       challenge.join_new_member(user)
 
@@ -31,7 +31,7 @@ feature 'User manages groups' do
 
   context "Having joined the challenge" do
     scenario 'User creates a group and is automatically a member of the group' do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       membership = create(:membership, challenge: challenge, user: user)
 
       visit challenge_path(challenge)
@@ -47,7 +47,7 @@ feature 'User manages groups' do
       expect(membership.reload.group).to eq group
     end
     scenario 'User joins a group successfully' do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       create(:membership, challenge: challenge, user: user)
       group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
 
@@ -133,7 +133,7 @@ feature 'User manages groups' do
       expect(group_stat.value).to eq 50
     end
     scenario 'User sees members of a group without being in the group' do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       user2 = create(:user)
       create(:membership, challenge: challenge, user: user)
       create(:membership, challenge: challenge, user: user2)
@@ -153,7 +153,7 @@ feature 'User manages groups' do
     scenario 'Owner of a group can delete the group and will unsubscribe all members in the group' do
       user1 = create(:user)
       user2 = create(:user)
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group = challenge.groups.create(user_id: user.id)
       create(:membership, challenge: challenge, group: group, user: user)
       membership = create(:membership, challenge: challenge, group: group, user: user1)
@@ -168,7 +168,7 @@ feature 'User manages groups' do
     end
 
     scenario 'Owner of a group can edit the name of the group' do
-      challenge = create(:challenge, owner_id: user.id)
+      challenge = create(:challenge, :with_readings, owner_id: user.id)
       group = challenge.groups.create(user_id: user.id, name: "Butter")
       create(:membership, challenge: challenge, group: group, user: user)
       visit member_challenge_path(challenge)
@@ -182,7 +182,7 @@ feature 'User manages groups' do
     end
 
     scenario 'Owner of a group can only see delete the group option' do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group = challenge.groups.create(user_id: user.id, name: "Awesome")
       create(:membership, challenge: challenge, group: group, user: user)
       visit member_challenge_path(challenge)
@@ -191,7 +191,7 @@ feature 'User manages groups' do
 
     scenario 'User should not see the Create Group link' do
       #setup
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group1 = challenge.groups.create(name: "UCLA", user_id: user.id)
       create(:membership, challenge: challenge, user: user, group_id: group1.id)
       visit(challenge_path(challenge))
@@ -201,7 +201,7 @@ feature 'User manages groups' do
     scenario 'User should see the Leave Group link instead of the Join link' do
       #setup
       non_owner = create(:user)
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group1 = challenge.groups.create(name: "UCLA", user_id: non_owner.id)
       create(:membership, challenge: challenge, user: user, group_id: group1.id)
       visit(challenge_path(challenge))
@@ -211,7 +211,7 @@ feature 'User manages groups' do
 
     scenario 'User should be able to leaves a group successfully' do
       non_owner = create(:user)
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group = challenge.groups.create(name: "UC Irvine", user_id: non_owner.id)
       create(:membership, challenge: challenge, user: user, group_id: group.id)
 
