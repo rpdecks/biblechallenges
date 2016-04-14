@@ -34,7 +34,7 @@ class Member::ChallengesController < ApplicationController
   def formatted_membership_readings_data_collector
     [
       {
-      name: "Challenge Benchmark",
+      name: "Benchmark",
       data: ChartDataGenerator.new(readings: @readings, membership_readings: @membership_readings).benchmark_data
       },
       {
