@@ -1,5 +1,7 @@
 class Member::ChallengesController < ApplicationController
   respond_to :html, :js
+  include Chartkick::Remote
+  chartkick_remote
 
   FIRST_VERSES_LIMIT = 10
 
