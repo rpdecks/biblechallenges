@@ -1,6 +1,7 @@
 = javascript_include_tag "//www.google.com/jsapi", "chartkick"
+
 %span
-  = line_chart @challenge_chart_data, stacked: true, discrete: true, ytitle: "chapters read", library: {pointSize: 1}  #  consider add'l library option-- curveType: "none"
+  = line_chart(remote: true, stacked: true, discrete: true, ytitle: "chapters read", width: "auto", library: {pointSize: 1}) { @challenge_chart_data }  #  consider add'l library option-- curveType: "none"
 
 %table.table.table-bordered.table-hover.table-condensed
   %thead
@@ -32,14 +33,15 @@
         %td= @challenge.challenge_statistic_progress_percentage
       %tr
         %td
-          %u
-            Last chapter read:
-          &nbsp;
-          -if @membership.membership_readings.any?
-            %strong
-              = @membership.membership_readings.order(:created_at).last.chapter.book_and_chapter
-            ,
-            = time_ago_in_words(@membership.membership_readings.order(:created_at).last.created_at)
-            ago
-          -else
-            << no readings yet >>
+          %span
+            %u><
+              Last chapter read
+            \:
+            -if @membership.membership_readings.any?
+              %strong
+                = @membership.membership_readings.order(:created_at).last.chapter.book_and_chapter
+              ,
+              = time_ago_in_words(@membership.membership_readings.order(:created_at).last.created_at)
+              ago
+            -else
+              << no readings yet >>

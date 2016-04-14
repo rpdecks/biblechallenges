@@ -108,6 +108,9 @@ GEM
     celluloid-supervision (0.20.5)
       timers (>= 4.1.1)
     chartkick (1.4.1)
+    chartkick-remote (1.3.0)
+      chartkick (~> 1.2)
+      railties (>= 3.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
@@ -474,6 +477,7 @@ DEPENDENCIES
   capybara
   capybara-webkit
   chartkick
+  chartkick-remote
   coffee-rails
   database_cleaner (~> 1.2.0)
   devise
