@@ -1,18 +1,19 @@
 .container
-  - if membership = challenge.membership_for(current_user)
-    - if membership.completed?
+  - if @membership = @challenge.membership_for(current_user)
+    - if @membership.completed?
       %h4 
         %p
           Congratulations! You have completed this Bible Challenge!
-    -if challenge.groups.any?
+    -if @challenge.groups.any?
       .panel.panel-primary
         .panel-heading 
           %strong
             Group Statistics
-        = render partial: 'shared/statistics/group_stat', locals: {groups: groups}
+        = render partial: 'shared/statistics/group_stat'#, locals: {groups: groups}
     .panel.panel-primary
-      .panel-heading 
+      .panel-heading
         %strong
           Challenge Statistics
-      = render partial: 'shared/statistics/challenge_stat', locals: {challenge: challenge, membership: membership}
+      .panel-body
+        = render partial: 'shared/statistics/challenge_stat'#, locals: {data: data}
 

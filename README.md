@@ -70,7 +70,7 @@ Note: DO NOT FORGET TO RUN THE TESTS BEFORE PUSH.
 
 ## Mail Preview
 
-go to `localhost:3000/mail_view`
+go to `localhost:3000/inbox`
 
 ## Development Server
 

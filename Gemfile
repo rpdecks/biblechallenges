@@ -48,6 +48,9 @@ gem 'slack-notifier'
 gem "autoprefixer-rails" #prefix styles for cross-browser
 gem 'fastercsv'
 gem 'rcv_bible', '~> 0.0.5'
+gem 'chartkick'
+gem 'chartkick-remote'
+gem 'groupdate'
 
 #sortable table/link
 gem 'ransack'
