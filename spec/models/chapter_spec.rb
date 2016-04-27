@@ -45,9 +45,9 @@ describe Chapter do
       Timecop.return
     end
 
-    it "returns the default version when the specified version does not exist" do
-      matthew1 = Chapter.find_by_book_id_and_chapter_number(40, 1)
-      verses = matthew1.by_version("IMAGINARY")
+    it "returns the default version when verses for the specified version are not there" do
+      gen1 = Chapter.find_by_book_id_and_chapter_number(1, 1)
+      verses = gen1.by_version("KJV") # we currently do not have KJV old testament
       expect(verses.first.version).to eq Verse::DEFAULT_VERSION
     end
   end
