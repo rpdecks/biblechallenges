@@ -10,17 +10,15 @@ class Verse < ActiveRecord::Base
     response = where(version: version)
     if response.any?
       if version == 'RCV'
-        if response.first.updated_at < 10.days.ago
-          RetrieveRcv.new(chapter_number: self.first.chapter_number, book_name: self.first.book_name, book_id: self.first.book_id, chapter_index: self.first.chapter_index).retouch_rcv_chapter
-        end
+        RetrieveRcv.new(chapter_number: self.first.chapter_number, book_name: self.first.book_name, book_id: self.first.book_id, chapter_index: self.first.chapter_index).refresh
       end
       response
-    elsif version == "RCV"
-      bookname = self.first.book_name
-      chapternumber = self.first.chapter_number
-      bookid = self.first.book_id
-      chapterindex = self.first.chapter_index
-      RetrieveRcv.new(chapter_number: chapternumber, book_name: bookname, book_id: bookid, chapter_index: chapterindex).park_and_return_rcv_chapter
+    #elsif version == "RCV"
+    #  bookname = self.first.book_name
+    #  chapternumber = self.first.chapter_number
+    #  bookid = self.first.book_id
+    #  chapterindex = self.first.chapter_index
+    #  RetrieveRcv.new(chapter_number: chapternumber, book_name: bookname, book_id: bookid, chapter_index: chapterindex).park_and_return_rcv_chapter
     else
       where(version: DEFAULT_VERSION)
     end

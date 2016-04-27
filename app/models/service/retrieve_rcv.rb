@@ -10,7 +10,7 @@ class RetrieveRcv
     rcv_verses = RcvBible::Reference.new(@chapter.book_and_chapter).verses
 
     rcv_verses.each.with_index(1) do |v, index|
-      if v['text'] 
+      if v['text']
         Verse.create(version: "RCV", book_name: @chapter.book_name,
                           chapter_number: @chapter.chapter_number,
                           verse_number: index,
