@@ -19,8 +19,9 @@ namespace :rcv do
     prompt = STDIN.gets.chomp
     if prompt == "Y" || prompt == "y"
       duplicate_chapters.each do |chapter|
-        chapter.destroy
-        chapter.by_version("RCV")
+        chapter_rcv_verses = chapter.verses.where(version: "RCV")
+        chapter_rcv_verses.destroy_all #remove all rcv verses
+        chapter.by_version("RCV") #re-populate since rcv verses from lsm api
       end
     else
       break
