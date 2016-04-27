@@ -11,7 +11,7 @@ namespace :rcv do
         duplicate_chapters << chapter
       end
     end
-    puts "These Chapters have duplicates:"
+    puts "#{duplicate_chapters.size} Chapters have duplicates:"
     duplicate_chapters.each do |chapter|
       puts "#{chapter.book_name}" + " " + "#{chapter.chapter_number}"
     end
