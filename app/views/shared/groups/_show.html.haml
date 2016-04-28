@@ -51,3 +51,16 @@
 .row
   .col-sm-12
     = render partial: 'groups/comments', locals: {comments: group.comments, group: group}
+%br
+
+.row
+  .col-sm-12
+    - @comments_json = ActiveModel::ArraySerializer.new(@group.comments.recent_last, each_serializer: CommentSerializer).to_json
+
+    = @comments_json
+    %hr
+
+    = react_component("CommentList", {title: "React Group Comments", comments: eval(@comments_json), currentUserName: @current_user.name})
+
+%br
+%br

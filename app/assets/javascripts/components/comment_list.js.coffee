@@ -54,11 +54,14 @@
 						newResponseHandler: @handleNewResponse
 					for response in comment.comments by -1
 						if response.id == 'new-response'
-							React.createElement CommentForm,
-								createCommentHandler: @handleCreateComment
+							React.DOM.div
+								className: ''
+								style: {paddingLeft: '50px'}
+								React.createElement CommentForm,
+									createCommentHandler: @handleCreateComment
 						else							
 							React.DOM.div
-								className: 'response'
+								className: ''
 								style: {paddingLeft: '50px'}
 								React.createElement Comment,
 									key: response.id
