@@ -51,6 +51,7 @@ gem 'rcv_bible', '~> 0.0.5'
 gem 'chartkick'
 gem 'chartkick-remote'
 gem 'groupdate'
+gem 'active_model_serializers'
 
 #sortable table/link
 gem 'ransack'
