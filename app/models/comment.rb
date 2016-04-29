@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
-  has_many :comments, as: :commentable
+  has_many :comments, -> {order(:created_at)}, as: :commentable
 
   validates :user, presence: true
   validates :content, presence: true, length: {maximum: 1000}
