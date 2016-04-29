@@ -8,58 +8,76 @@
 
 	getInitialState: ->
 		comments: @props.comments
+		showingResponseFormForCommentId: null
 
 	getDefaultProps: ->
 		title: 'Comments'
 		comments: []
 		currentUserName: 'You'
 
-	handleCreateComment: (content) ->
+	createComment: (content, isResponse, responseForCommentId) ->
+		@closeAnyOpenResponseForm()
 		newComment = 
-			id: undefined,
-			content: undefined,
-			timeAgo: undefined,
-			userName: undefined,
+			id: new Date().getTime() # assign a temporary ID
+			content: content,
+			userName: @props.currentUserName,
 			comments: []
-		newComment.content = content
-		newComment.userName = @props.currentUserName
-		@state.comments.push(newComment)
+		if isResponse == true
+			$.each @state.comments, (i, comment) ->
+				if comment.id == responseForCommentId
+					comment.comments.push(newComment)
+		else
+			@state.comments.push(newComment)
 		@setState comments: @state.comments
 
-	handleNewResponse: (commentId) ->
+	showResponseForm: (commentId) ->
+		@closeAnyOpenResponseForm()
+		newResponse =
+			id: 'new-response'
 		$.each @state.comments, (i, comment) ->
 			if comment.id == commentId
-				comment.comments.push({id: 'new-response'})
+				comment.comments.push(newResponse)
 		@setState comments: @state.comments
+		@setState showingResponseFormForCommentId: commentId
+
+	closeAnyOpenResponseForm: ->
+		showingResponseFormForCommentId = @state.showingResponseFormForCommentId
+		if showingResponseFormForCommentId != null
+			$.each @state.comments, (i, comment) ->
+				if comment.id == showingResponseFormForCommentId
+					comment.comments.pop() # remove previously showing response form
+		@setState showingResponseFormForCommentId: null
 
 	render: ->
 		React.DOM.div
-			className: 'temp'
+			className: ''
 			React.DOM.h4
-				className: 'temp'
+				className: ''
 				@props.title
 			React.DOM.br
-				className: 'temp'
+				className: ''
 			React.createElement CommentForm,
-				createCommentHandler: @handleCreateComment
+				createCommentHandler: @createComment
 			for comment in @state.comments by -1
 				React.DOM.div
-					className: 'temp'
+					className: ''
 					React.createElement Comment,
 						key: comment.id
 						id: comment.id
 						content: comment.content
 						timeAgo: comment.timeAgo
 						userName: comment.userName
-						newResponseHandler: @handleNewResponse
-					for response in comment.comments by -1
+						showResponseFormHandler: @showResponseForm
+					for response in comment.comments # render comment responses
 						if response.id == 'new-response'
 							React.DOM.div
 								className: ''
 								style: {paddingLeft: '50px'}
 								React.createElement CommentForm,
-									createCommentHandler: @handleCreateComment
-						else							
+									forResponse: true
+									responseForCommentId: comment.id
+									createCommentHandler: @createComment
+						else
 							React.DOM.div
 								className: ''
 								style: {paddingLeft: '50px'}

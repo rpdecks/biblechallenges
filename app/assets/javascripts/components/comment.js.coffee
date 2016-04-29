@@ -6,37 +6,39 @@
 		content: React.PropTypes.string
 		timeAgo: React.PropTypes.string
 		userName: React.PropTypes.string
-		newResponseHandler: React.PropTypes.func
+		showResponseFormHandler: React.PropTypes.func
 
 	getDefaultProps: ->
 		id: null
 		content: ''
-		timeAgo: 'Just now'
+		timeAgo: 'less than a minute ago'
 		userName: 'You'
-		newResponseHandler: null
+		showResponseFormHandler: null
 
 	handleNewResponse: (e) ->
 		e.preventDefault()
-		@props.newResponseHandler(@props.id)
+		@props.showResponseFormHandler(@props.id)
 
 	render: ->
 		React.DOM.div
-			className: 'temp'
+			className: ''
 			React.DOM.div
-				className: 'temp'
+				className: ''
+				style: {fontWeight: 'bold'}
 				@props.userName
 			React.DOM.div
-				className: 'temp'
+				className: ''
 				@props.content
-			React.DOM.div
-				className: 'temp'
-				@props.timeAgo
-			if @props.newResponseHandler != null
+			React.DOM.span
+				className: ''
+				style: {color: 'gray', fontSize: '10px'}
+				@props.timeAgo + ' | '
+			if @props.showResponseFormHandler != null
 				React.DOM.a
 					className: ''
 					href: '#'
 					onClick: @handleNewResponse
 					'Respond'
 			React.DOM.hr
-				className: 'temp'
+				className: ''
 				style: {borderColor: 'gray'}
