@@ -35,20 +35,4 @@ feature 'User logs reading via email' do
 
     expect(page).to have_content ("Thank you")
   end
-  scenario 'For a 2 chapter per day challenge, user logs his reading from the link at the bottom of the daily reading email, later tries to confirm the same readings via email' do
-
-    user = create(:user)
-    challenge = create(:challenge, :with_readings, chapters_to_read: "Gen 1-2", num_chapters_per_day: 2)
-    create(:membership, user: user, challenge: challenge)
-    reading_ids = challenge.readings.pluck(:id)
-    ReadingMailer.daily_reading_email(reading_ids, user.id).deliver_now
-
-    open_last_email
-    visit_in_email("Confirm")
-    expect(user.membership_readings.size).to eq 2
-
-    open_last_email
-    visit_in_email("Confirm")
-    expect(user.membership_readings.size).to eq 2
-  end
 end
