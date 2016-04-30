@@ -46,7 +46,7 @@ feature "calculates personal user stats" do
   end
 
   context "Joins a challenge, logs some readings, and leaves the challenge" do
-    scenario "personal statistics should remain" do
+    scenario "personal statistics are removed" do
       challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1-3",
                          owner: user, begindate: Date.today)
       user2 = create(:user, email: "guy@example.com")
@@ -61,9 +61,9 @@ feature "calculates personal user stats" do
       click_link "Unsubscribe"
 
       user2.update_stats
-      expect(user2.user_statistic_chapters_read_all_time.value).to eq 1
-      expect(user2.user_statistic_days_read_in_a_row_current.value).to eq 1
-      expect(user2.user_statistic_days_read_in_a_row_all_time.value).to eq 1
+      expect(user2.user_statistic_chapters_read_all_time.value).to eq 0
+      expect(user2.user_statistic_days_read_in_a_row_current.value).to eq 0
+      expect(user2.user_statistic_days_read_in_a_row_all_time.value).to eq 0
     end
   end
 end
