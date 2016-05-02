@@ -30,5 +30,23 @@ namespace :membership_reading do
       end
     end
   end
+
+  task update_nil: :environment do
+    all_broken_duplicate_mr = MembershipReading.where(chapter_id: nil)
+    all_broken_duplicate_mr.each do |mr|
+      membership = Membership.find(mr.membership_id)
+      reading = Reading.find(mr.reading_id)
+      mr.update_attributes(on_schedule: 1, 
+                           chapter_name: reading.chapter.book_and_chapter,
+                           chapter_id: reading.chapter_id,
+                           challenge_name: membership.challenge.name,
+                           challenge_id: membership.challenge_id,
+                           group_name: membership.group.try(:name),
+                           group_id: membership.group.try(:id),
+                           user_id: membership.user_id
+                          )
+
+    end
+  end
 end
 
