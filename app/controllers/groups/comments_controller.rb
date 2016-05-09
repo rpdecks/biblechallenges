@@ -6,27 +6,47 @@ class Groups::CommentsController < ApplicationController
 
   def create
     if @group.has_member?(current_user)
-      @comment = current_user.comments.new(comment_params) 
+      @comment = current_user.comments.new(comment_params)
+      is_saved = @comment.save
 
-      if @comment.save
-        flash[:notice] = "Successfully created comment!"
-        redirect_to params[:location] || request.referer
-      else
-        flash[:alert] = @comment.errors.full_messages.to_sentence
-        redirect_to params[:location] || request.referer
+      respond_to do |format|
+        format.html {
+          if is_saved
+            flash[:notice] = "Successfully created comment!"
+            redirect_to params[:location] || request.referer
+          else
+            flash[:alert] = @comment.errors.full_messages.to_sentence
+            redirect_to params[:location] || request.referer
+          end
+        }
+        format.json {
+          if is_saved
+            render json: {id: @comment.id}
+          else
+            head :no_content
+          end
+        }
       end
     else
-      redirect_to params[:location] || request.referer
+      raise "Not allowed"
     end
   end
 
   def destroy
     if (@comment = current_user.comments.find_by_id(params[:id]))
       @comment.destroy
-      flash[:notice] = "Successfully deleted comment"
-      redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
+
+      respond_to do |format|
+        format.html { 
+          flash[:notice] = "Successfully deleted comment"
+          redirect_to member_challenge_path(@group.challenge, anchor: "mygroup")
+        }
+        format.json {
+          head :no_content
+        }
+      end
     else
-      redirect_to root_url
+      raise "Not allowed"
     end
   end
 
