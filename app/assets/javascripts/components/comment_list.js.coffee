@@ -2,18 +2,20 @@
 	displayName: 'CommentList'
 
 	propTypes:
-		title: React.PropTypes.string
+		commentableType: React.PropTypes.string
+		commentableId: React.PropTypes.number
 		comments: React.PropTypes.array
 		currentUserName: React.PropTypes.string
+
+	getDefaultProps: ->
+		commentableType: ''
+		commentableId: null
+		comments: []
+		currentUserName: 'You'
 
 	getInitialState: ->
 		comments: @props.comments
 		showingResponseFormForCommentId: null
-
-	getDefaultProps: ->
-		title: 'Comments'
-		comments: []
-		currentUserName: 'You'
 
 	showResponseForm: (commentId) ->
 		@closeAnyOpenResponseForm()
@@ -69,10 +71,12 @@
 			className: ''
 			React.DOM.h4
 				className: ''
-				@props.title
+				@props.commentableType + ' Comments'
 			React.DOM.br
 				className: ''
 			React.createElement CommentForm,
+				commentableType: @props.commentableType
+				commentableId: @props.commentableId
 				addCommentHandler: @addComment
 			for comment in @state.comments by -1
 				React.DOM.div
@@ -89,6 +93,8 @@
 					for response in comment.comments # render comment responses
 						if response.id == 'new-response-form'
 							React.createElement CommentForm,
+								commentableType: @props.commentableType
+								commentableId: @props.commentableId
 								isResponse: true
 								responseForCommentId: comment.id
 								addResponseHandler: @addResponse
