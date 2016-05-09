@@ -2,12 +2,16 @@
 	displayName: 'CommentForm'
 
 	propTypes:
+		commentableType: React.PropTypes.string
+		commentableId: React.PropTypes.number
 		addCommentHandler: React.PropTypes.func
 		isResponse: React.PropTypes.bool
 		responseForCommentId: React.PropTypes.any
 		addResponseHandler: React.PropTypes.func
 
 	getDefaultProps: ->
+		commentableType: ''
+		commentableId: null
 		addCommentHandler: null
 		isResponse: false
 		responseForCommentId: null
@@ -31,17 +35,17 @@
 			data =
 				comment:
 					content: refs.newCommentInput.value
-					commentable_id: 1
-					commentable_type: 'Group'
+					commentable_type: props.commentableType
+					commentable_id: props.commentableId
 		else
 			data =
 				comment:
 					content: refs.newCommentInput.value
-					commentable_id: props.responseForCommentId
 					commentable_type: 'Comment'
+					commentable_id: props.responseForCommentId
 		$.ajax
 			method: 'POST'
-			url: "/groups/1/comments"
+			url: '/' + props.commentableType.toLowerCase() + 's/' + props.commentableId + '/comments'
 			dataType: 'JSON'
 			data: data
 			success: (result) ->
