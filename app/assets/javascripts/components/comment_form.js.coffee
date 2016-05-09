@@ -2,18 +2,20 @@
 	displayName: 'CommentForm'
 
 	propTypes:
-		forResponse: React.PropTypes.bool
+		addCommentHandler: React.PropTypes.func
+		isResponse: React.PropTypes.bool
 		responseForCommentId: React.PropTypes.any
-		createCommentHandler: React.PropTypes.func
+		addResponseHandler: React.PropTypes.func
 
 	getDefaultProps: ->
-		forResponse: false
+		addCommentHandler: null
+		isResponse: false
 		responseForCommentId: null
-		createCommentHandler: null
+		addResponseHandler: null
 
 	componentDidMount: ->
 		@refs.postButton.disabled = true
-		if @props.forResponse == true
+		if @props.isResponse == true
 			@refs.newCommentInput.focus()
 
 	handleOnChange: (e) ->
@@ -23,14 +25,38 @@
 			@refs.postButton.disabled = true
 
 	handlePostComment: ->
-		textInput = @refs.newCommentInput
-		@props.createCommentHandler(textInput.value, @props.forResponse, @props.responseForCommentId)
-		textInput.value = ''
-		@refs.postButton.disabled = true
+		props = @props
+		refs = @refs
+		if props.isResponse == false
+			data =
+				comment:
+					content: refs.newCommentInput.value
+					commentable_id: 1
+					commentable_type: 'Group'
+		else
+			data =
+				comment:
+					content: refs.newCommentInput.value
+					commentable_id: props.responseForCommentId
+					commentable_type: 'Comment'
+		$.ajax
+			method: 'POST'
+			url: "/groups/1/comments"
+			dataType: 'JSON'
+			data: data
+			success: (result) ->
+				console.log('comment created')
+				if props.isResponse == false
+					props.addCommentHandler(result.id, refs.newCommentInput.value)
+					refs.newCommentInput.value = ''
+					refs.postButton.disabled = true
+				else
+					props.addResponseHandler(result.id, refs.newCommentInput.value, props.responseForCommentId)
 
 	render: ->
 		React.DOM.div
 			className: ''
+			style: if @props.isResponse == true then {paddingLeft: '50px'} else null
 			React.DOM.Comment
 				React.DOM.textarea
 					className: ''

@@ -15,30 +15,36 @@
 		comments: []
 		currentUserName: 'You'
 
-	createComment: (content, isResponse, responseForCommentId) ->
-		@closeAnyOpenResponseForm()
-		newComment = 
-			id: new Date().getTime() # assign a temporary ID
-			content: content,
-			userName: @props.currentUserName,
-			comments: []
-		if isResponse == true
-			$.each @state.comments, (i, comment) ->
-				if comment.id == responseForCommentId
-					comment.comments.push(newComment)
-		else
-			@state.comments.push(newComment)
-		@setState comments: @state.comments
-
 	showResponseForm: (commentId) ->
 		@closeAnyOpenResponseForm()
 		newResponse =
-			id: 'new-response'
+			id: 'new-response-form' # just a flag
 		$.each @state.comments, (i, comment) ->
 			if comment.id == commentId
 				comment.comments.push(newResponse)
 		@setState comments: @state.comments
 		@setState showingResponseFormForCommentId: commentId
+
+	addComment: (id, content) ->
+		@closeAnyOpenResponseForm()
+		newComment = 
+			id: id
+			content: content,
+			userName: @props.currentUserName,
+			comments: []
+		@state.comments.push(newComment)
+		@setState comments: @state.comments
+
+	addResponse: (id, content, forCommentId) ->
+		@closeAnyOpenResponseForm()
+		newResponse = 
+			id: id
+			content: content,
+			userName: @props.currentUserName,
+		$.each @state.comments, (i, comment) ->
+			if comment.id == forCommentId
+				comment.comments.push(newResponse)
+		@setState comments: @state.comments
 
 	closeAnyOpenResponseForm: ->
 		showingResponseFormForCommentId = @state.showingResponseFormForCommentId
@@ -47,6 +53,16 @@
 				if comment.id == showingResponseFormForCommentId
 					comment.comments.pop() # remove previously showing response form
 		@setState showingResponseFormForCommentId: null
+
+	removeComment: (commentId) ->
+		state = @state
+		for comment, i in state.comments by -1
+			if comment.id == commentId
+				state.comments.splice(i, 1)
+			for response, j in comment.comments by -1
+				if response.id == commentId
+					comment.comments.splice(j, 1)
+		@setState comments: state.comments
 
 	render: ->
 		React.DOM.div
@@ -57,7 +73,7 @@
 			React.DOM.br
 				className: ''
 			React.createElement CommentForm,
-				createCommentHandler: @createComment
+				addCommentHandler: @addComment
 			for comment in @state.comments by -1
 				React.DOM.div
 					className: ''
@@ -67,23 +83,21 @@
 						content: comment.content
 						timeAgo: comment.timeAgo
 						userName: comment.userName
-						showResponseFormHandler: @showResponseForm
+						isResponse: false
+						removeHandler: @removeComment
+						respondHandler: @showResponseForm
 					for response in comment.comments # render comment responses
-						if response.id == 'new-response'
-							React.DOM.div
-								className: ''
-								style: {paddingLeft: '50px'}
-								React.createElement CommentForm,
-									forResponse: true
-									responseForCommentId: comment.id
-									createCommentHandler: @createComment
+						if response.id == 'new-response-form'
+							React.createElement CommentForm,
+								isResponse: true
+								responseForCommentId: comment.id
+								addResponseHandler: @addResponse
 						else
-							React.DOM.div
-								className: ''
-								style: {paddingLeft: '50px'}
-								React.createElement Comment,
-									key: response.id
-									id: response.id
-									content: response.content
-									timeAgo: response.timeAgo
-									userName: response.userName
+							React.createElement Comment,
+								key: response.id
+								id: response.id
+								content: response.content
+								timeAgo: response.timeAgo
+								userName: response.userName
+								isResponse: true
+								removeHandler: @removeComment
