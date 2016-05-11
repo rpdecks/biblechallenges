@@ -14,7 +14,8 @@ feature 'User manages challenges' do
     Sidekiq::Testing.inline! do
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
-      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-2"
+      select "Matthew", from: 'challenge[begin_book]'
+      select "John", from: 'challenge[end_book]'
 
       click_button "Create Challenge"
 
