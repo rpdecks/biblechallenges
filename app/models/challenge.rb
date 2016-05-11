@@ -128,6 +128,7 @@ class Challenge < ActiveRecord::Base
   end
 
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
+    self.chapters_to_read = ChapterGenerator.new(self).retrieve_chapters_to_read
     self.book_chapters = ActsAsScriptural.new.parse(chapters_to_read).chapters
   end
 
