@@ -8,9 +8,9 @@ class ChapterGenerator
   end
 
   def build_string
-    starting_book = @challenge.begin_book << " 1"
+    starting_book = @challenge.begin_book
     ending_book = LAST_CHAPTER_OF_BOOK["#{@challenge.end_book}"]
-    starting_book + "-" + ending_book
+    starting_book + " 1-" + ending_book
   end
 
   LAST_CHAPTER_OF_BOOK = {
