@@ -8,6 +8,7 @@
 		isResponse: React.PropTypes.bool
 		responseForCommentId: React.PropTypes.any
 		addResponseHandler: React.PropTypes.func
+		currentUser: React.PropTypes.object
 
 	getDefaultProps: ->
 		commentableType: ''
@@ -16,62 +17,76 @@
 		isResponse: false
 		responseForCommentId: null
 		addResponseHandler: null
+		currentUser: null
 
 	componentDidMount: ->
 		@refs.postButton.disabled = true
 		if @props.isResponse == true
-			@refs.newCommentInput.focus()
+			@refs.commentText.focus()
 
-	handleOnChange: (e) ->
-		if @refs.newCommentInput.value.trim() != ''
-			@refs.postButton.disabled = false
-		else
+	handleOnChange: ->
+		if @refs.commentText.value.trim() == ''
 			@refs.postButton.disabled = true
+		else
+			@refs.postButton.disabled = false
+
+	handleTextAutoResize: ->
+		$(@refs.commentText).css({'height':'auto','overflow-y':'hidden'}).height(@refs.commentText.scrollHeight - 4)
+
+	handleEnterKeySubmit: (e) ->
+		if e.keyCode == 13 && not e.shiftKey == true
+			e.preventDefault()
+			@refs.postButton.click()
 
 	handlePostComment: ->
-		props = @props
-		refs = @refs
-		if props.isResponse == false
+		context = @
+		if context.props.isResponse == false
 			data =
 				comment:
-					content: refs.newCommentInput.value
-					commentable_type: props.commentableType
-					commentable_id: props.commentableId
+					content: context.refs.commentText.value
+					commentable_type: context.props.commentableType
+					commentable_id: context.props.commentableId
 		else
 			data =
 				comment:
-					content: refs.newCommentInput.value
+					content: context.refs.commentText.value
 					commentable_type: 'Comment'
-					commentable_id: props.responseForCommentId
+					commentable_id: context.props.responseForCommentId
 		$.ajax
 			method: 'POST'
-			url: '/' + props.commentableType.toLowerCase() + 's/' + props.commentableId + '/comments'
+			url: '/' + context.props.commentableType.toLowerCase() + 's/' + context.props.commentableId + '/comments'
 			dataType: 'JSON'
 			data: data
 			success: (result) ->
 				console.log('comment created')
-				if props.isResponse == false
-					props.addCommentHandler(result.id, refs.newCommentInput.value)
-					refs.newCommentInput.value = ''
-					refs.postButton.disabled = true
+				if context.props.isResponse == false
+					context.props.addCommentHandler(result.id, context.refs.commentText.value)
+					context.refs.commentText.value = ''
+					context.handleOnChange()
+					context.handleTextAutoResize()
 				else
-					props.addResponseHandler(result.id, refs.newCommentInput.value, props.responseForCommentId)
+					context.props.addResponseHandler(result.id, context.refs.commentText.value, context.props.responseForCommentId)
 
 	render: ->
 		React.DOM.div
-			className: ''
-			style: if @props.isResponse == true then {paddingLeft: '50px'} else null
-			React.DOM.Comment
+			className: 'comment-form'
+			React.DOM.div
+				className: 'comment-form__container--' + if @props.isResponse == false then 'comment' else 'response'
+				React.DOM.img
+					className: 'comment-form__avatar--' + if @props.isResponse == false then 'comment' else 'response'
+					src: @props.currentUser.avatar_path
+					title: 'You'
 				React.DOM.textarea
-					className: ''
-					style: {marginRight: '10px'}
-					ref: 'newCommentInput'
+					ref: 'commentText'
+					rows: 1
+					className: 'comment-form__comment-text'
+					placeholder:  if @props.isResponse == false then 'Write a comment...' else 'Write a reply...'
 					onChange: @handleOnChange
+					onInput: @handleTextAutoResize
+					onKeyDown: @handleEnterKeySubmit
 				React.DOM.button
-					className: ''
 					ref: 'postButton'
+					className: 'comment-form__post-button--' + if @props.isResponse == false then 'comment' else 'response'
 					onClick: @handlePostComment
-					'Post Comment'
+					'Post'
 				React.DOM.hr
-					className: ''
-					style: {borderColor: 'gray'}
