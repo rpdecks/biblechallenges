@@ -19,43 +19,26 @@
         .col-md-6
           = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
   - else
-    / %h3.component-title Leaderboards
-    .row
-      .col-md-3
-        = render partial: 'challenges/leaderboard_last_chapters'
-      .col-md-3
-        = render partial: 'challenges/leaderboard_all_time_streak'
-      .col-md-3
-        = render partial: 'challenges/leaderboard_current_streak'
-      .col-md-3
-        = render partial: 'challenges/leaderboard_chapters_all_time'
-
-    .row
-      .centered
-        %hr
-        This week's most-read chapter:
-        %br
-        %strong
-          = @front_page_leaderboard.weeks_most_read_chapter
-
     - unless @my_challenges.blank?
-      %h3.component-title My Current Challenges
-      .challenges
-        - @my_challenges.each_slice(2) do |challenge_group|
-          .row
-            .row-lg-height.row-md-height
-              - challenge_group.each do |challenge|
-                .col-md-6.col-lg-height.col-md-height
-                  .inside.inside-full-height
-                    = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+      .centered
+        %h3.component-title My Current Challenges
+        .challenges
+          - @my_challenges.each_slice(2) do |challenge_group|
+            .row
+              .row-lg-height.row-md-height
+                - challenge_group.each do |challenge|
+                  .col-md-6.col-lg-height.col-md-height
+                    .inside.inside-full-height
+                      = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
 
     - unless @public_challenges.empty?
-      %h3.component-title Popular Challenges
-      .challenges
-        - @public_challenges.each_slice(2) do |challenge_group|
-          .row
-            .row-lg-height.row-md-height
-              - challenge_group.each do |challenge|
-                .col-md-6.col-lg-height.col-md-height
-                  .inside.inside-full-height
-                    = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
+      .centered
+        %h3.component-title Popular Challenges
+        .challenges
+          - @public_challenges.each_slice(2) do |challenge_group|
+            .row
+              .row-lg-height.row-md-height
+                - challenge_group.each do |challenge|
+                  .col-md-6.col-lg-height.col-md-height
+                    .inside.inside-full-height
+                      = render partial: 'shared/challenges/challenge_list_item', locals: {challenge: challenge}
