@@ -5,13 +5,16 @@
 		commentableType: React.PropTypes.string
 		commentableId: React.PropTypes.number
 		comments: React.PropTypes.array
-		currentUserName: React.PropTypes.string
+		currentUser: React.PropTypes.object
 
 	getDefaultProps: ->
 		commentableType: ''
 		commentableId: null
 		comments: []
-		currentUserName: 'You'
+		currentUser:
+			id: null
+			name: 'You'
+			avatar_path: '/assets/default_avatar.png'
 
 	getInitialState: ->
 		comments: @props.comments
@@ -31,8 +34,8 @@
 		@closeAnyOpenResponseForm()
 		newComment = 
 			id: id
-			content: content,
-			userName: @props.currentUserName,
+			content: content
+			user: @props.currentUser
 			comments: []
 		@state.comments.push(newComment)
 		@setState comments: @state.comments
@@ -42,7 +45,7 @@
 		newResponse = 
 			id: id
 			content: content,
-			userName: @props.currentUserName,
+			user: @props.currentUser
 		$.each @state.comments, (i, comment) ->
 			if comment.id == forCommentId
 				comment.comments.push(newResponse)
@@ -68,16 +71,20 @@
 
 	render: ->
 		React.DOM.div
-			className: ''
+			className: 'comment-list'
 			React.DOM.h4
 				className: ''
 				@props.commentableType + ' Comments'
-			React.DOM.br
-				className: ''
+			React.DOM.br null
 			React.createElement CommentForm,
 				commentableType: @props.commentableType
 				commentableId: @props.commentableId
 				addCommentHandler: @addComment
+				currentUser: @props.currentUser
+			if @state.comments.length == 0
+				React.DOM.div
+					className: 'comment-list__no-comments'
+					'No comments yet!'
 			for comment in @state.comments by -1
 				React.DOM.div
 					className: ''
@@ -86,10 +93,11 @@
 						id: comment.id
 						content: comment.content
 						timeAgo: comment.timeAgo
-						userName: comment.userName
+						user: comment.user
 						isResponse: false
 						removeHandler: @removeComment
 						respondHandler: @showResponseForm
+						currentUser: @props.currentUser
 					for response in comment.comments # render comment responses
 						if response.id == 'new-response-form'
 							React.createElement CommentForm,
@@ -98,12 +106,16 @@
 								isResponse: true
 								responseForCommentId: comment.id
 								addResponseHandler: @addResponse
+								currentUser: @props.currentUser
 						else
 							React.createElement Comment,
 								key: response.id
 								id: response.id
 								content: response.content
 								timeAgo: response.timeAgo
-								userName: response.userName
+								user: response.user
 								isResponse: true
+								responseForCommentId: comment.id
 								removeHandler: @removeComment
+								respondHandler: @showResponseForm
+								currentUser: @props.currentUser

@@ -6,20 +6,24 @@
 		id: React.PropTypes.number
 		content: React.PropTypes.string
 		timeAgo: React.PropTypes.string
-		userName: React.PropTypes.string
+		user: React.PropTypes.object
 		isResponse: React.PropTypes.bool
+		responseForCommentId: React.PropTypes.any
 		removeHandler: React.PropTypes.func
 		respondHandler: React.PropTypes.func
+		currentUser: React.PropTypes.object
 
 	getDefaultProps: ->
 		key: null
 		id: null
 		content: ''
 		timeAgo: 'Just now'
-		userName: 'You'
+		user: null
 		isResponse: false
+		responseForCommentId: null
 		removeHandler: null
 		respondHandler: null
+		currentUser: null
 
 	handleDelete: (e) ->
 		props = @props
@@ -35,33 +39,48 @@
 
 	handleRespond: (e) ->
 		e.preventDefault()
-		@props.respondHandler(@props.id)
+		context = @
+		if @props.isResponse == false
+			context.props.respondHandler(@props.id)
+		else
+			context.props.respondHandler(@props.responseForCommentId)
 
 	render: ->
 		React.DOM.div
-			className: ''
-			style: if @props.isResponse == true then {paddingLeft: '50px'} else null
+			className: 'react-comment'
 			React.DOM.div
-				className: ''
-				@props.userName
-			React.DOM.div
-				className: ''
-				@props.content
-			React.DOM.span
-				className: ''
-				style: {color: 'gray', fontSize: '10px'}
-				@props.timeAgo
-			React.DOM.a
-				className: ''
-				href: '#'
-				onClick: @handleDelete
-				' Delete '
-			if @props.isResponse == false
-				React.DOM.a
-					className: ''
-					href: '#'
-					onClick: @handleRespond
-					' Respond '
-			React.DOM.hr
-				className: ''
-				style: {borderColor: 'gray'}
+				className: 'react-comment__container--' + if @props.isResponse == false then 'comment' else 'response'
+				React.DOM.div
+					className: 'react-comment__flexbox'
+					React.DOM.img
+						className: 'react-comment__avatar--' + if @props.isResponse == false then 'comment' else 'response'
+						src: @props.user.avatar_path
+					React.DOM.div
+						className: 'react-comment__content-area'
+						React.DOM.span
+							className: 'react-comment__username'
+							@props.user.name
+						React.DOM.span
+							className: 'react-comment__content'
+							@props.content
+						React.DOM.div
+							className: 'react-comment__bottom-items--' + if @props.isResponse == false then 'comment' else 'response'
+							React.DOM.a
+								className: 'react-comment__reply'
+								href: '#'
+								onClick: @handleRespond
+								'Reply'
+							React.DOM.span
+								className: 'react-comment__dot-separator'
+								' · '
+							React.DOM.a
+								className: 'react-comment__delete'
+								href: '#'
+								onClick: @handleDelete
+								'Delete'
+							React.DOM.span
+								className: 'react-comment__dot-separator'
+								' · '
+							React.DOM.span
+								className: 'react-comment__timeago'
+								@props.timeAgo
