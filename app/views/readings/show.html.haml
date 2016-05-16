@@ -23,12 +23,9 @@
 
   .row-fluid
     .centered
-      Click to Confirm you read this challenge chapter:
       %td{id: dom_id(@reading)}
         - if @membership
-          = react_component 'ReadingButton',
-            { reading_id: @reading.id, membership_id: @membership.id,
-          membership_reading_id: @membership.membership_readings.find{|mr| mr.reading_id == @reading.id && mr.membership_id = @membership.id}.try(:id) } 
+          = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: @reading.book_and_chapter, membership: @membership, todays_reading: @reading}
       %br
       - unless @reading.last_challenge_reading?
         Next Chapter >> 
