@@ -84,6 +84,7 @@ Biblechallenge::Application.routes.draw do
   get '/log_reading/' => 'membership_readings#create', as: 'log_reading'
 
   resources :challenges, only: [:index, :show], controller: 'challenges'
+  get 'challenges_statistics' => 'challenges#public_statistics'
   root to: 'challenges#index'
 
 end
