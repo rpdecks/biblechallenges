@@ -15,6 +15,7 @@ feature "User manages membership reading" do
     create(:membership, user: user, challenge: challenge, group_id: group.id)
 
     visit member_challenge_path(challenge)
+    click_link "Matthew 1"
     expect{
       click_link_or_button "Log Matthew 1"
     }.to change(user.membership_readings, :count).by(1)

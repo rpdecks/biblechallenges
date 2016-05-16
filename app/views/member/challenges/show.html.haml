@@ -18,26 +18,10 @@
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
-          %h4
-            Today's Reading (#{current_user.date_by_timezone.strftime("%m/%d/%Y")})
-
           - if @challenge.membership_for(current_user)
             = render partial: "shared/challenges/change_bible_version",
               locals: {membership: @membership}
-            %br
-
-          - # todo: refactor this to todays_chapters
-          - @todays_readings.each do |todays_reading|
-            - todays_verses = todays_reading.chapter.by_version(current_user.bible_version)
-
-            = render partial: 'shared/challenges/todays_reading',
-            locals: { todays_reading: todays_reading, todays_verses: todays_verses, bible_version: current_user.bible_version}
-
-            = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
-
-            %br
-            %br
-
+          %br
           .panel.panel-primary
             .panel-heading Challenge Readings
             %center
@@ -65,7 +49,7 @@
   // on load of the page: switch to the currently selected tab
   var hash = window.location.hash;
     $('#grouptabs a[href="' + hash + '"]').tab('show');
-  
+
   $("#addFriendsToChallenge").on("click", function() {
     setTimeout(function (){
       $( "#addFriendsInput" ).focus();

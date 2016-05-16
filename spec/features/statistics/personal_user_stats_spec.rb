@@ -55,6 +55,7 @@ feature "calculates personal user stats" do
       Membership.where(user_id: user2.id).first
 
       visit member_challenge_path(challenge)
+      click_link "Matthew 1"
       click_link_or_button "Log Matthew 1"
 
       visit challenge_path(challenge)
