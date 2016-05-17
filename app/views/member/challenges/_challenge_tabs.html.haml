@@ -9,3 +9,10 @@
       %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
   %li{role: "presentation"}
     %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
+
+:javascript
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    var ev = document.createEvent('Event');
+    ev.initEvent('resize', true, true);
+    window.dispatchEvent(ev);
+  });

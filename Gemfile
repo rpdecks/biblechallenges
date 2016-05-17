@@ -16,6 +16,7 @@ gem 'activerecord-import'
 gem 'thin'
 gem 'sidekiq'
 gem 'sidekiq-failures'
+gem 'sidetiq'
 gem 'airbrake', '~> 4.3.4'
 gem 'sinatra', :require => nil #required for viewing sidekiq jobs in web interface
 gem 'pickadate-rails'
@@ -41,7 +42,6 @@ gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
 gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
-gem 'intercom-rails'
 gem 'friendly_id'
 gem 'mail_form'
 gem 'exception_notification'
@@ -49,6 +49,9 @@ gem 'slack-notifier'
 gem "autoprefixer-rails" #prefix styles for cross-browser
 gem 'fastercsv'
 gem 'rcv_bible', '~> 0.0.5'
+gem 'chartkick'
+gem 'chartkick-remote'
+gem 'groupdate'
 
 #sortable table/link
 gem 'ransack'
@@ -68,8 +71,7 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
-  gem 'letter_opener'
-  gem 'letter_opener_web'
+  gem 'goatmail'
 #  gem 'bullet'
 end
 

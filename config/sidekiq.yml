@@ -1,0 +1,13 @@
+:verbose: false
+:concurrency: 8
+
+# Set timeout to 8 on Heroku, longer if you manage your own systems.
+:timeout: 8
+
+production:
+  :concurrency: 8
+  :timeout: 8
+
+:queues:
+  - ["stats", 5]
+  - default

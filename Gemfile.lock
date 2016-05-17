@@ -90,6 +90,27 @@ GEM
     capybara-webkit (1.8.0)
       capybara (>= 2.3.0, < 2.7.0)
       json
+    celluloid (0.17.3)
+      celluloid-essentials
+      celluloid-extras
+      celluloid-fsm
+      celluloid-pool
+      celluloid-supervision
+      timers (>= 4.1.1)
+    celluloid-essentials (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-extras (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-fsm (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-pool (0.20.5)
+      timers (>= 4.1.1)
+    celluloid-supervision (0.20.5)
+      timers (>= 4.1.1)
+    chartkick (1.4.1)
+    chartkick-remote (1.3.0)
+      chartkick (~> 1.2)
+      railties (>= 3.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
@@ -155,10 +176,15 @@ GEM
     get_process_mem (0.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    goatmail (1.1.1)
+      letter_opener
+      sinatra
     google-instant-hangouts (0.0.3)
       railties (>= 3.1)
     gretel (3.0.8)
       rails (>= 3.2.0)
+    groupdate (2.5.0)
+      activesupport (>= 3)
     haml (4.0.7)
       tilt
     haml-rails (0.9.0)
@@ -170,6 +196,7 @@ GEM
     hashie (3.4.3)
     high_voltage (2.4.0)
     hirb (0.7.3)
+    hitimes (1.2.3)
     hpricot (0.8.6)
     html2haml (2.0.0)
       erubis (~> 2.7.0)
@@ -182,8 +209,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpauth (0.2.1)
     i18n (0.7.0)
-    intercom-rails (0.2.30)
-      activesupport (> 3.0)
+    ice_cube (0.13.3)
     jquery-rails (4.1.0)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -199,10 +225,6 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    letter_opener_web (1.3.0)
-      actionmailer (>= 3.2)
-      letter_opener (~> 1.0)
-      railties (>= 3.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -374,6 +396,10 @@ GEM
       redis (~> 3.2, >= 3.2.1)
     sidekiq-failures (0.4.5)
       sidekiq (>= 2.16.0)
+    sidetiq (0.7.0)
+      celluloid (>= 0.17.3)
+      ice_cube (~> 0.13.2)
+      sidekiq (>= 4.0.0)
     simple_form (3.2.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -410,6 +436,8 @@ GEM
     thread_safe (0.3.5)
     tilt (2.0.2)
     timecop (0.8.0)
+    timers (4.1.1)
+      hitimes
     turn (0.9.6)
       ansi
     tzinfo (1.2.2)
@@ -451,6 +479,8 @@ DEPENDENCIES
   bootswatch-rails
   capybara
   capybara-webkit
+  chartkick
+  chartkick-remote
   coffee-rails
   database_cleaner (~> 1.2.0)
   devise
@@ -464,20 +494,19 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   friendly_id
+  goatmail
   google-instant-hangouts
   gretel
+  groupdate
   haml
   haml-rails
   high_voltage
   hirb
   hpricot
   htmlentities
-  intercom-rails
   jquery-rails
   kaminari
   launchy
-  letter_opener
-  letter_opener_web
   mail_form
   mail_view
   omniauth
@@ -507,6 +536,7 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq
   sidekiq-failures
+  sidetiq
   simple_form
   simple_token_authentication (~> 1.0)
   simplecov (= 0.5.4)

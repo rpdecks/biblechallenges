@@ -8,7 +8,7 @@ feature 'User updates membership preferences' do
   end
 
   scenario 'User should see the Change (Bible Version) Link if he is a member of challenge' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
 
@@ -16,7 +16,7 @@ feature 'User updates membership preferences' do
   end
 
   scenario 'Member of challenge can visit user profile update page for bible_version directly from challenge page' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     create(:membership, challenge: challenge, user: user)
     visit member_challenge_path(challenge)
     click_link "Change"

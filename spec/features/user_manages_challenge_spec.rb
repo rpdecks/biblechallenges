@@ -21,7 +21,7 @@ feature 'User manages challenges' do
       all_emails = ActionMailer::Base.deliveries
       expect(all_emails.size).to eq 2 #Today's reading and creation notification
       todays_reading = all_emails.second
-      expect(todays_reading.subject).to eq "Bible Challenge reading for challenge 1"
+      expect(todays_reading.subject).to include "challenge 1...BibleChallenges.com reading -"
     end
   end
 
@@ -86,8 +86,8 @@ feature 'User manages challenges' do
                          owner_id: user.id)
       challenge.join_new_member(user)
       expect(challenge.members).to include user
-      DailyEmailScheduler.set_daily_email_jobs
-      expect(ActionMailer::Base.deliveries.size).to eq 1 #Today's reading.
+      DailyScheduleWorker.perform_async
+      expect(ActionMailer::Base.deliveries.select { |email| email.To.to_s == user.email}.size).to eq 1 #Today's reading
     end
   end
 
@@ -116,7 +116,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User should see the Leave Challenge link instead of the Join link if he already in this challenge' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     create(:membership, challenge: challenge, user: user)
     visit challenge_path(challenge)
 
@@ -124,7 +124,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User leaves a challenge successfully' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     create(:membership, challenge: challenge, user: user)
     visit challenge_path(challenge)
     click_link "Unsubscribe"
@@ -158,7 +158,7 @@ feature 'User manages challenges' do
   end
 
   scenario 'User should leave his or her group automatically once the user leaves the challenge' do
-    challenge = create(:challenge)
+    challenge = create(:challenge, :with_readings)
     group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
     membership = create(:membership, challenge: challenge, user: user, group_id: group.id)
     visit challenge_path(challenge)

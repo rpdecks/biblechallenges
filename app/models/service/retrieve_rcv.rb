@@ -10,7 +10,7 @@ class RetrieveRcv
     rcv_verses = RcvBible::Reference.new(@chapter.book_and_chapter).verses
 
     rcv_verses.each.with_index(1) do |v, index|
-      if v['text'] 
+      if v['text']
         Verse.create(version: "RCV", book_name: @chapter.book_name,
                           chapter_number: @chapter.chapter_number,
                           verse_number: index,
@@ -26,15 +26,11 @@ class RetrieveRcv
   end
 
   def refresh
-    if chapter_missing?
+    if !chapter_present?
       cache_chapter
     elsif chapter_present? && expired_cache?
       retouch_rcv_chapter
     end
-  end
-
-  def chapter_missing?
-    cached_verses.empty?
   end
 
   def chapter_present?

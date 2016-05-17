@@ -40,4 +40,24 @@ feature "User manages membership reading" do
     expect(page).to have_content "Recovery Version" #changes to default version for missing OT version
     expect(page).to have_content "He will yet fill your mouth with laughter"
   end
+
+  context "user leaves the challenge" do
+    scenario "should remove user's previous membership readings" do
+      challenge = create(:challenge_with_readings, chapters_to_read: "Matthew 1")
+      group = create(:group, user_id: user.id, challenge_id: challenge.id)
+      create(:membership, user: user, challenge: challenge, group_id: group.id)
+
+      visit member_challenge_path(challenge)
+      expect{
+        click_link_or_button "Log Matthew 1"
+      }.to change(user.membership_readings, :count).by(1)
+
+      membership = Membership.first
+      membership.destroy
+
+
+      expect(Membership.count).to eq 0
+      expect(MembershipReading.count).to eq 0
+    end
+  end
 end
