@@ -30,9 +30,14 @@
           %p.help-block The end date is the last day of your bible challenge.  The number of chapters will be arranged evenly on each day.  If you leave this blank, the challenge will have one chapter per day and the end date will be calculated automatically.
 
         .form-group
-          = f.label :chapters_to_read, "Chapters to Read"
-          = f.text_field :chapters_to_read, required: true, class: "form-control"
-          %p.help-block Enter here, in reference form, the span of chapters you would like to read.  For example, "Matt 1-28" or "Matt 1-Rev 22"
+          = f.label :begin_book, "Starting Book"
+          = f.select :begin_book, Bible::BOOKS, required: true, class: "form-control"
+          %p.help-block Select your book to start.
+
+        .form-group
+          = f.label :end_book, "Ending Book"
+          = f.select :end_book, Bible::BOOKS, required: true, class: "form-control"
+          %p.help-block Select your book to end.
 
         .form-group
           = f.label :dates_to_skip, "Dates to skip"
