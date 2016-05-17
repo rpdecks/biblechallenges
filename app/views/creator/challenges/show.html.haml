@@ -14,7 +14,8 @@
       %u
         Closed 
   %br
-  = link_to "Edit", edit_creator_challenge_path(@challenge), :class=>"btn btn-default"
+  = link_to "Edit Challenge", edit_creator_challenge_path(@challenge), :class=>"btn btn-default"
+  = link_to "Delete Challenge", creator_challenge_path(@challenge), method: :delete, title: 'Delete Challenge', "data-confirm" => 'STOP! Deleting this challenge will remove all members from this challenge and destroy all groups! This cannot be undone! Are you SURE you want to do this?',:class=>"btn btn-danger"
   = render partial: 'shared/challenges/invite_friends'
 
   .panel.panel-primary
