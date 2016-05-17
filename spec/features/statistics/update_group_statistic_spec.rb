@@ -9,7 +9,7 @@ feature 'Group Statistic' do
 
   feature 'User deletes a group' do
     scenario 'Removes the challenge_statistics all together' do
-      challenge = create(:challenge)
+      challenge = create(:challenge, :with_readings)
       group = challenge.groups.create(name: "UC Irvine", user_id: user.id)
       membership = create(:membership, challenge: challenge, user: user, group_id: group.id)
       MembershipCompletion.new(membership)

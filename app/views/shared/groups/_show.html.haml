@@ -26,6 +26,9 @@
       %td= membership.membership_readings.size
       - unless membership.membership_readings.empty?
         %td
+          %strong
+            = membership.membership_readings.order(:created_at).last.chapter.book_and_chapter
+          \-
           = time_ago_in_words(membership.last_recorded_reading_time)
           ago
       - else

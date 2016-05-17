@@ -70,13 +70,19 @@ Note: DO NOT FORGET TO RUN THE TESTS BEFORE PUSH.
 
 ## Mail Preview
 
-go to `localhost:3000/mail_view`
+go to `localhost:3000/inbox`
+
+## Development Server
+
+run `redis-server` to queue jobs/avoid errors, along with rails server.
 
 ## Development emails
 
-mailcatcher gem is installed
-run % mailcatcher
-go to localhost:1080 to see dev emails
+goatmail gem is installed
+`bundle exec sidekiq` to execute background email jobs (redis-server needs to be running)
+go to localhost:3000/inbox to view dev emails, email links open in localhost
+
+`redis-cli flushall` to wipe redis queue, if needed
 
 
 ## Schema explanation

@@ -69,8 +69,9 @@ feature 'User manages notification preferences via email' do
         DailyEmailScheduler.set_daily_email_jobs
 
         reading_email = ActionMailer::Base.deliveries.first
-        expect(ActionMailer::Base.deliveries.size).to eq 1 
+        expect(ActionMailer::Base.deliveries.size).to eq 2 #2nd email is 'daily email report'
         expect(reading_email.To.value).to eq user2.email
+        expect(ActionMailer::Base.deliveries.select { |email| email.To.to_s == user1.email}).to eq []
       end
     end
   end
@@ -99,7 +100,7 @@ feature 'User manages notification preferences via email' do
       user2 = create(:user, comment_notify: false)
       challenge = create(:challenge, :with_readings, owner_id: user2.id)
       group = create(:group, name: "Test", challenge: challenge, user_id: user2.id)
-      original_comment = create(:group_comment, user_id: user2.id, commentable: group)
+      create(:group_comment, user_id: user2.id, commentable: group) #original comment
 
       user = create(:user)
       login(user)
