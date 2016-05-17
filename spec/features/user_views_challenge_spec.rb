@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 feature 'User views challenge page as member' do
+  before { skip("Today's reading is taken out from challenge show page to save room") }
   let(:user) {create(:user)}
 
   before(:each) do
