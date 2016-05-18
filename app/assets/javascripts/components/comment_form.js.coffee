@@ -18,6 +18,9 @@
 		responseForCommentId: null
 		addResponseHandler: null
 		currentUser: null
+		
+	getInitialState: ->
+		isBusy: false
 
 	componentDidMount: ->
 		@refs.postButton.disabled = true
@@ -57,8 +60,12 @@
 			url: '/' + context.props.commentableType.toLowerCase() + 's/' + context.props.commentableId + '/comments'
 			dataType: 'JSON'
 			data: data
+			timeout: 10000
+			beforeSend: ->
+				context.setState isBusy: true
 			success: (result) ->
 				console.log('comment created')
+				context.setState isBusy: false
 				if context.props.isResponse == false
 					context.props.addCommentHandler(result.id, context.refs.commentText.value)
 					context.refs.commentText.value = ''
@@ -66,6 +73,12 @@
 					context.handleTextAutoResize()
 				else
 					context.props.addResponseHandler(result.id, context.refs.commentText.value, context.props.responseForCommentId)
+			error: (jqXHR, textStatus, errorThrown) ->
+				if textStatus == 'timeout'
+					alert("Sorry, it's taking too long for your comment to be sent. Please check your connection and try again.")
+				else
+					alert('Sorry, your comment could not be created. Please try again after some time.')
+				context.setState isBusy: false
 
 	render: ->
 		React.DOM.div
@@ -87,6 +100,14 @@
 				React.DOM.button
 					ref: 'postButton'
 					className: 'comment-form__post-button--' + if @props.isResponse == false then 'comment' else 'response'
+					disabled: if @state.isBusy == true then true else false
 					onClick: @handlePostComment
+					if @state.isBusy == true
+						React.DOM.span
+							className: null
+							React.DOM.i
+								className: 'fa fa-refresh fa-spin'
+							React.DOM.span
+								className: null
+								' '
 					'Post'
-				React.DOM.hr
