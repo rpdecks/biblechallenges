@@ -25,17 +25,29 @@
 		respondHandler: null
 		currentUser: null
 
+	getInitialState: ->
+		isBusy: false
+
 	handleDelete: (e) ->
-		props = @props
+		context = @
 		e.preventDefault()
 		if confirm("Are you sure you want to delete this comment?") == true
 			$.ajax
 				method: 'DELETE'
-				url: "/groups/1/comments/" + @props.id
+				url: "/groups/1/comments/" + context.props.id
 				dataType: 'JSON'
+				timeout: 10000
+				beforeSend: ->
+					context.setState isBusy: true
 				success: ->
 					console.log('comment deleted')
-					props.removeHandler(props.id)
+					context.props.removeHandler(context.props.id)
+				error: (jqXHR, textStatus, errorThrown) ->
+					if textStatus == 'timeout'
+						alert("Sorry, it's taking too long for your request to be sent. Please check your connection and try again.")
+					else
+						alert('Sorry, your request could not be processed. Please try again after some time.')
+					context.setState isBusy: false
 
 	handleRespond: (e) ->
 		e.preventDefault()
@@ -70,17 +82,28 @@
 								href: '#'
 								onClick: @handleRespond
 								'Reply'
-							React.DOM.span
-								className: 'react-comment__dot-separator'
-								' · '
-							React.DOM.a
-								className: 'react-comment__delete'
-								href: '#'
-								onClick: @handleDelete
-								'Delete'
+							if @props.user.id == @props.currentUser.id
+								React.DOM.span
+									className: null
+									React.DOM.span
+										className: 'react-comment__dot-separator'
+										' · '
+									React.DOM.a
+										className: 'react-comment__delete'
+										href: '#'
+										onClick: @handleDelete
+										'Delete'
 							React.DOM.span
 								className: 'react-comment__dot-separator'
 								' · '
 							React.DOM.span
 								className: 'react-comment__timeago'
 								@props.timeAgo
+							if @state.isBusy == true
+								React.DOM.span
+									className: null
+									React.DOM.span
+										className: 'react-comment__dot-separator'
+										' · '
+									React.DOM.i
+										className: 'fa fa-refresh fa-spin'
