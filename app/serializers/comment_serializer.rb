@@ -1,5 +1,7 @@
 class CommentSerializer < ActiveModel::Serializer
 	include ActionView::Helpers::DateHelper
+  include ApplicationHelper
+  include ActionView::Helpers::AssetUrlHelper
 
   attributes :id, :content, :timeAgo, :user
 
@@ -10,10 +12,12 @@ class CommentSerializer < ActiveModel::Serializer
   end
 
   def user
+    user = object.user
+
     {
-    	id: object.user.id,
-    	name: object.user.name,
-    	avatar_path: '/assets/default_avatar.png'
+    	id: user.id,
+    	name: user.name,
+      avatar_path: avatar_url(user)
     }
   end
 end
