@@ -39,21 +39,12 @@
   .col-sm-12
     .pull-right
       = render partial: "shared/groups/group_navigation", locals: {group: group}
+    .clearfix
 
-      %span
+    %br
+
+    %div{style: "max-width: 600px;"}
+      %h4 Group Comments
+      = react_component("CommentList", {commentableType: "Group", commentableId: group.id, comments: comments_json(group), currentUser: current_user_json})
 %br
-
-.row
-  .col-sm-12
-    %h4 Group Comments
-    = render partial: 'groups/comment_form', locals: {comment: Comment.new, group: group}
-
-.row
-  .col-sm-12
-    = render partial: 'groups/comments', locals: {comments: group.comments, group: group}
-%br
-
-.row
-  .col-sm-12
-    = react_component("CommentList", {commentableType: "Group", commentableId: group.id, comments: group_comments_json, currentUser: current_user_json})
 %br

@@ -72,9 +72,6 @@
 	render: ->
 		React.DOM.div
 			className: 'comment-list'
-			React.DOM.h4
-				className: ''
-				@props.commentableType + ' Comments'
 			React.DOM.br null
 			React.createElement CommentForm,
 				commentableType: @props.commentableType
