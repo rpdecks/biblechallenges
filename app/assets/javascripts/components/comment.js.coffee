@@ -34,7 +34,7 @@
 		if confirm("Are you sure you want to delete this comment?") == true
 			$.ajax
 				method: 'DELETE'
-				url: "/groups/1/comments/" + context.props.id
+				url: "/react_comments/" + context.props.id
 				dataType: 'JSON'
 				timeout: 10000
 				beforeSend: ->
@@ -42,11 +42,8 @@
 				success: ->
 					console.log('comment deleted')
 					context.props.removeHandler(context.props.id)
-				error: (jqXHR, textStatus, errorThrown) ->
-					if textStatus == 'timeout'
-						alert("Sorry, it's taking too long for your request to be sent. Please check your connection and try again.")
-					else
-						alert('Sorry, your request could not be processed. Please try again after some time.')
+				error: ->
+					alert('Sorry, your request could not be processed. Please try again after some time.')
 					context.setState isBusy: false
 
 	handleRespond: (e) ->

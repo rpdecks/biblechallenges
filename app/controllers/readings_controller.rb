@@ -20,6 +20,12 @@ class ReadingsController < ApplicationController
       @reading = nil
       redirect_to root_url
     end
+
+    # generate json for comments
+    if @reading
+      @comments_json = eval(ActiveModel::ArraySerializer.new(@reading.comments.recent_last, each_serializer: CommentSerializer).to_json)
+      @current_user_json = eval(UserSerializer.new(current_user).to_json)
+    end
   end
 
 

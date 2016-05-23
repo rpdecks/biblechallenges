@@ -3,6 +3,7 @@ class Member::GroupsController < ApplicationController
 
   def show
     group
+    @summa = "gumma"
   end
 
   def join

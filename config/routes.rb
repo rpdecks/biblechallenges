@@ -74,6 +74,8 @@ Biblechallenge::Application.routes.draw do
     resources :comments, only: [:create], controller: "comments/comments"
   end
 
+  resources :react_comments, only: [:create, :destroy], controller: "react_comments"
+
   # more restful reading logging
   resources :membership_readings, only: [:create, :destroy] do
     member do
