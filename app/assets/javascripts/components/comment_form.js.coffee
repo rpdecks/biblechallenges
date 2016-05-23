@@ -57,27 +57,24 @@
 					commentable_id: context.props.responseForCommentId
 		$.ajax
 			method: 'POST'
-			url: '/' + context.props.commentableType.toLowerCase() + 's/' + context.props.commentableId + '/comments'
+			url: '/react_comments'
 			dataType: 'JSON'
 			data: data
 			timeout: 10000
 			beforeSend: ->
 				context.setState isBusy: true
-			success: (result) ->
+			success: (response) ->
 				console.log('comment created')
 				context.setState isBusy: false
 				if context.props.isResponse == false
-					context.props.addCommentHandler(result.id, context.refs.commentText.value)
+					context.props.addCommentHandler(response.id, context.refs.commentText.value)
 					context.refs.commentText.value = ''
 					context.handleOnChange()
 					context.handleTextAutoResize()
 				else
-					context.props.addResponseHandler(result.id, context.refs.commentText.value, context.props.responseForCommentId)
-			error: (jqXHR, textStatus, errorThrown) ->
-				if textStatus == 'timeout'
-					alert("Sorry, it's taking too long for your comment to be sent. Please check your connection and try again.")
-				else
-					alert('Sorry, your comment could not be created. Please try again after some time.')
+					context.props.addResponseHandler(response.id, context.refs.commentText.value, context.props.responseForCommentId)
+			error: ->
+				alert('Sorry, your comment could not be created. Please try again after some time.')
 				context.setState isBusy: false
 
 	render: ->

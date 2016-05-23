@@ -37,4 +37,8 @@
         %br
       = button_to "Back to Challenge", member_challenge_path(@membership.challenge), :method => :get
       %br
-      %br
+
+  %hr
+  = react_component("CommentList", {commentableType: "Reading", commentableId: @reading.id, comments: @comments_json, currentUser: @current_user_json})
+  %br
+  %br

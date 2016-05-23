@@ -55,8 +55,5 @@
 
 .row
   .col-sm-12
-    - @comments_json = ActiveModel::ArraySerializer.new(@group.comments.recent_last, each_serializer: CommentSerializer).to_json
-    = react_component("CommentList", {commentableType: "Group", commentableId: @group.id, comments: eval(@comments_json), currentUser: {id: @current_user.id, name: @current_user.name, avatar_path: '/assets/default_avatar.png'}})
-
-%br
+    = react_component("CommentList", {commentableType: "Group", commentableId: group.id, comments: group_comments_json, currentUser: current_user_json})
 %br

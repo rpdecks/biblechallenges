@@ -8,6 +8,11 @@
       = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
     = render partial: 'shared/challenges/invite_friends'
 
+    - challenge_comments_json = eval(ActiveModel::ArraySerializer.new(@challenge.comments.recent_last, each_serializer: CommentSerializer).to_json)
+    - current_user_json = eval(UserSerializer.new(current_user).to_json)
+    = react_component("CommentList", {commentableType: "Challenge", commentableId: @challenge.id, comments: challenge_comments_json, currentUser: current_user_json})
+
+
 .content
   .container
     %br
@@ -34,6 +39,10 @@
 
             = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
 
+            %hr
+            - comments_json = eval(ActiveModel::ArraySerializer.new(todays_reading.comments.recent_last, each_serializer: CommentSerializer).to_json)
+            = react_component("CommentList", {commentableType: "Reading", commentableId: todays_reading.id, comments: comments_json, currentUser: current_user_json})
+
             %br
             %br
 
@@ -43,7 +52,7 @@
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
-            = render partial: 'shared/groups/show', locals: {group: @group}
+            = render partial: 'shared/groups/show', locals: {group: @group, group_comments_json: @group_comments_json, current_user_json: @current_user_json}
         - else
           .tab-pane#groups{role: "tabpanel"}
             = render partial: 'shared/challenges/challenge_groups', locals: {groups: @groups, challenge: @challenge}
