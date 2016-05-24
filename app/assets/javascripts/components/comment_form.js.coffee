@@ -60,7 +60,7 @@
 			url: '/react_comments'
 			dataType: 'JSON'
 			data: data
-			timeout: 10000
+			timeout: 15000
 			beforeSend: ->
 				context.setState isBusy: true
 			success: (response) ->
@@ -74,7 +74,7 @@
 				else
 					context.props.addResponseHandler(response.id, context.refs.commentText.value, context.props.responseForCommentId)
 			error: ->
-				alert('Sorry, your comment could not be created. Please try again after some time.')
+				alert('Sorry, unable to create your comment now. Please try again later.')
 				context.setState isBusy: false
 
 	render: ->

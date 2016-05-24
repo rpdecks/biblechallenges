@@ -36,14 +36,14 @@
 				method: 'DELETE'
 				url: "/react_comments/" + context.props.id
 				dataType: 'JSON'
-				timeout: 10000
+				timeout: 15000
 				beforeSend: ->
 					context.setState isBusy: true
 				success: ->
 					console.log('comment deleted')
 					context.props.removeHandler(context.props.id)
 				error: ->
-					alert('Sorry, your request could not be processed. Please try again after some time.')
+					alert('Sorry, unable to process your request now. Please try again later.')
 					context.setState isBusy: false
 
 	handleRespond: (e) ->

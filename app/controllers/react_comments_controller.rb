@@ -1,6 +1,7 @@
 class ReactCommentsController < ApplicationController
 	respond_to :json
-	before_filter :validate_commentable_relationship
+  before_action :authenticate_user
+	before_action :validate_user_permission
 
 	def create
 		@comment = current_user.comments.new(comment_params)
@@ -22,8 +23,28 @@ class ReactCommentsController < ApplicationController
 
 	private
 
-	def validate_commentable_relationship
+	def authenticate_user
+	  unless current_user
+	    head :unauthorized
+	  end
+	end
 
+	def validate_user_permission
+		commentable_type = params[:comment][:commentable_type]
+		commentable_id = params[:comment][:commentable_id]
+
+		permitted = case commentable_type
+			when "Challenge"
+				Challenge.find(commentable_id.to_i).has_member?(current_user)
+			when "Reading"
+				Reading.find(commentable_id).challenge.has_member?(current_user)
+			when "Group"
+				Group.find(commentable_id).has_member?(current_user)
+			else
+				false
+		end
+
+		head :unauthorized if not permitted
 	end
 
   def comment_params
