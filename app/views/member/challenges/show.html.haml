@@ -2,14 +2,14 @@
 -# = breadcrumbs style: :ol, class: "breadcrumb breadcrumbs-minimal"
 
 .section.primary
-  .flexbox{style: "display: flex; flex-wrap: wrap;"}
-    .container.some{style: "flex: 1; margin-left: 1em;"}
+  .challenge-comments
+    .container.challenge-comments__heading
       = render 'shared/challenges/challenge_overview'
       - unless @challenge.owner == current_user
         = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
       = render partial: 'shared/challenges/invite_friends'
 
-    %div{style: "flex: 1; margin-right: 1em; padding: 20px; max-height: 300px; min-width: 200px; overflow-y: auto; border: solid 1px white; border-right: 0px; border-radius: 10px; background-color: #DDE9EF; color: black;"}
+    .challenge-comments__comments
       %h5 Comments on this Challenge
       = react_component("CommentList", {commentableType: "Challenge", commentableId: @challenge.id, comments: comments_json(@challenge), currentUser: current_user_json})
 
@@ -39,14 +39,14 @@
 
             %br
 
-            %div{style: "display: flex; flex-wrap: wrap;"}
-              %div{style: "flex: 1;"}
+            .todays-reading-comments
+              .todays-reading-comments__logbutton-container
                 %br
                 %br
                 = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
                 %br
                 %br
-              %div{style: "flex: 1; max-height: 300px; min-width: 200px; padding: 10px; overflow-y: auto;"}
+              .todays-reading-comments__comments
                 %h5="Reading Comments - " + todays_reading.book_and_chapter
                 = react_component("CommentList", {commentableType: "Reading", commentableId: todays_reading.id, comments: comments_json(todays_reading), currentUser: current_user_json})
 
