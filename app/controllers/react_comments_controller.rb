@@ -1,7 +1,7 @@
 class ReactCommentsController < ApplicationController
 	respond_to :json
   before_action :authenticate_user
-	before_action :validate_user_permission
+	before_action :validate_create_permission, only: [:create]
 
 	def create
 		@comment = current_user.comments.new(comment_params)
@@ -17,7 +17,7 @@ class ReactCommentsController < ApplicationController
       @comment.destroy
       head :no_content
     else
-    	raise "cannot delete comment"
+    	head :unauthorized
     end
 	end
 
@@ -29,7 +29,7 @@ class ReactCommentsController < ApplicationController
 	  end
 	end
 
-	def validate_user_permission
+	def validate_create_permission
 		commentable_type = params[:comment][:commentable_type]
 		commentable_id = params[:comment][:commentable_id]
 
