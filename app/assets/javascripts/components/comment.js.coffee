@@ -63,7 +63,7 @@
 					className: 'react-comment__flexbox'
 					React.DOM.img
 						className: 'react-comment__avatar--' + if @props.isResponse == false then 'comment' else 'response'
-						src: @props.user.avatar_url
+						src: @props.user.avatar_path
 					React.DOM.div
 						className: 'react-comment__content-area'
 						React.DOM.span
