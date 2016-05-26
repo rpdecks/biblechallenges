@@ -41,7 +41,8 @@
 			e.preventDefault()
 			@refs.postButton.click()
 
-	handlePostComment: ->
+	handleSubmit: (e) ->
+		e.preventDefault()
 		context = @
 		if context.props.isResponse == false
 			data =
@@ -80,8 +81,9 @@
 	render: ->
 		React.DOM.div
 			className: 'comment-form'
-			React.DOM.div
-				className: 'comment-form__container--' + if @props.isResponse == false then 'comment' else 'response'
+			React.DOM.form
+				className: 'comment-form__container-form--' + if @props.isResponse == false then 'comment' else 'response'
+				onSubmit: @handleSubmit
 				React.DOM.img
 					className: 'comment-form__avatar--' + if @props.isResponse == false then 'comment' else 'response'
 					src: @props.currentUser.avatar_path
@@ -95,10 +97,10 @@
 					onInput: @handleTextAutoResize
 					onKeyDown: @handleEnterKeySubmit
 				React.DOM.button
+					type: 'submit'
 					ref: 'postButton'
 					className: 'comment-form__post-button--' + if @props.isResponse == false then 'comment' else 'response'
 					disabled: if @state.isBusy == true then true else false
-					onClick: @handlePostComment
 					if @state.isBusy == true
 						React.DOM.span
 							className: null
