@@ -73,6 +73,7 @@ group :development do
   gem 'better_errors'
   gem 'goatmail'
 #  gem 'bullet'
+  gem "awesome_print", require:"ap"
 end
 
 # Gems used only for assets and not required

@@ -58,6 +58,7 @@ GEM
     autoprefixer-rails (6.3.3)
       execjs
       json
+    awesome_print (1.6.1)
     aws-sdk (1.66.0)
       aws-sdk-v1 (= 1.66.0)
     aws-sdk-v1 (1.66.0)
@@ -470,6 +471,7 @@ DEPENDENCIES
   airbrake (~> 4.3.4)
   annotate
   autoprefixer-rails
+  awesome_print
   aws-sdk (~> 1.6)
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
