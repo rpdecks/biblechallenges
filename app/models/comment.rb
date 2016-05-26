@@ -20,12 +20,26 @@ class Comment < ActiveRecord::Base
     order(:created_at)
   end
 
+  private
+
   def commentable_belongs_to_user
-    if commentable_type == "Reading"
-      unless commentable.members.find_by_id user.id
-        errors.add(:user_id, " cannot comment upon something you do not own.")
-      end
+    if not check_user_permission(commentable)
+      errors.add(:base, "You cannot comment upon something that you are not related to")
     end
   end
 
+  def check_user_permission(commentable)
+    case commentable.class.to_s
+      when "Challenge"
+        commentable.has_member?(user)
+      when "Reading"
+        commentable.challenge.has_member?(user)
+      when "Group"
+        commentable.has_member?(user)
+      when "Comment"
+        check_user_permission(commentable.commentable) # call recursively
+      else
+        false
+    end
+  end
 end
