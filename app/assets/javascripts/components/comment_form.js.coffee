@@ -58,7 +58,7 @@
 					commentable_id: context.props.responseForCommentId
 		$.ajax
 			method: 'POST'
-			url: '/react_comments'
+			url: '/comments'
 			dataType: 'JSON'
 			data: data
 			timeout: 15000

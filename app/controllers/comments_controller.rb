@@ -1,4 +1,4 @@
-class ReactCommentsController < ApplicationController
+class CommentsController < ApplicationController
 	respond_to :json
   before_action :authenticate_user
 
