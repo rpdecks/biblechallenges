@@ -24,9 +24,10 @@
 		@closeAnyOpenResponseForm()
 		newResponse =
 			id: 'new-response-form' # just a flag
-		$.each @state.comments, (i, comment) ->
+		for comment, i in @state.comments by -1
 			if comment.id == commentId
 				comment.comments.push(newResponse)
+				break
 		@setState comments: @state.comments
 		@setState showingResponseFormForCommentId: commentId
 
@@ -35,6 +36,7 @@
 		newComment = 
 			id: id
 			content: content
+			timeAgo: 'Just now'
 			user: @props.currentUser
 			comments: []
 		@state.comments.push(newComment)
@@ -45,28 +47,36 @@
 		newResponse = 
 			id: id
 			content: content,
+			timeAgo: 'Just now'
 			user: @props.currentUser
-		$.each @state.comments, (i, comment) ->
+		for comment, i in @state.comments by -1
 			if comment.id == forCommentId
 				comment.comments.push(newResponse)
+				break
 		@setState comments: @state.comments
 
 	closeAnyOpenResponseForm: ->
 		showingResponseFormForCommentId = @state.showingResponseFormForCommentId
 		if showingResponseFormForCommentId != null
-			$.each @state.comments, (i, comment) ->
+			for comment, i in @state.comments by -1
 				if comment.id == showingResponseFormForCommentId
 					comment.comments.pop() # remove previously showing response form
+					break
 		@setState showingResponseFormForCommentId: null
 
 	removeComment: (commentId) ->
 		state = @state
+		isResponseDeleted = false
 		for comment, i in state.comments by -1
+			if isResponseDeleted == true then break #// exit loop if the comment is a response and it's already deleted (below)
 			if comment.id == commentId
 				state.comments.splice(i, 1)
+				break
 			for response, j in comment.comments by -1
 				if response.id == commentId
 					comment.comments.splice(j, 1)
+					isResponseDeleted = true
+					break
 		@setState comments: state.comments
 
 	render: ->
@@ -76,8 +86,8 @@
 			React.createElement CommentForm,
 				commentableType: @props.commentableType
 				commentableId: @props.commentableId
-				addCommentHandler: @addComment
 				currentUser: @props.currentUser
+				addCommentHandler: @addComment
 			if @state.comments.length == 0
 				React.DOM.div
 					className: 'comment-list__no-comments'
@@ -87,14 +97,11 @@
 					className: ''
 					React.createElement Comment,
 						key: comment.id
-						id: comment.id
-						content: comment.content
-						timeAgo: comment.timeAgo
-						user: comment.user
+						comment: comment
 						isResponse: false
+						currentUser: @props.currentUser
 						removeHandler: @removeComment
 						respondHandler: @showResponseForm
-						currentUser: @props.currentUser
 					for response in comment.comments # render comment responses
 						if response.id == 'new-response-form'
 							React.createElement CommentForm,
@@ -102,17 +109,14 @@
 								commentableId: @props.commentableId
 								isResponse: true
 								responseForCommentId: comment.id
-								addResponseHandler: @addResponse
 								currentUser: @props.currentUser
+								addResponseHandler: @addResponse
 						else
 							React.createElement Comment,
 								key: response.id
-								id: response.id
-								content: response.content
-								timeAgo: response.timeAgo
-								user: response.user
+								comment: response
 								isResponse: true
 								responseForCommentId: comment.id
+								currentUser: @props.currentUser
 								removeHandler: @removeComment
 								respondHandler: @showResponseForm
-								currentUser: @props.currentUser

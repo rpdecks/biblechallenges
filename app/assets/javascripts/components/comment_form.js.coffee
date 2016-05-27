@@ -7,8 +7,8 @@
 		addCommentHandler: React.PropTypes.func
 		isResponse: React.PropTypes.bool
 		responseForCommentId: React.PropTypes.any
-		addResponseHandler: React.PropTypes.func
 		currentUser: React.PropTypes.object
+		addResponseHandler: React.PropTypes.func
 
 	getDefaultProps: ->
 		commentableType: ''
@@ -16,8 +16,8 @@
 		addCommentHandler: null
 		isResponse: false
 		responseForCommentId: null
-		addResponseHandler: null
 		currentUser: null
+		addResponseHandler: null
 		
 	getInitialState: ->
 		isBusy: false

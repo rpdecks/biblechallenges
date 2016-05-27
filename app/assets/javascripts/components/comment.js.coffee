@@ -3,27 +3,25 @@
 
 	propTypes:
 		key: React.PropTypes.number
-		id: React.PropTypes.number
-		content: React.PropTypes.string
-		timeAgo: React.PropTypes.string
-		user: React.PropTypes.object
+		comment: React.PropTypes.object
 		isResponse: React.PropTypes.bool
 		responseForCommentId: React.PropTypes.any
+		currentUser: React.PropTypes.object
 		removeHandler: React.PropTypes.func
 		respondHandler: React.PropTypes.func
-		currentUser: React.PropTypes.object
 
 	getDefaultProps: ->
 		key: null
-		id: null
-		content: ''
-		timeAgo: 'Just now'
-		user: null
+		comment:
+			id: null
+			content: ''
+			timeAgo: 'Just now'
+			user: null
 		isResponse: false
 		responseForCommentId: null
+		currentUser: null
 		removeHandler: null
 		respondHandler: null
-		currentUser: null
 
 	getInitialState: ->
 		isBusy: false
@@ -34,14 +32,14 @@
 		if confirm("Are you sure you want to delete this comment?") == true
 			$.ajax
 				method: 'DELETE'
-				url: "/comments/" + context.props.id
+				url: "/comments/" + context.props.comment.id
 				dataType: 'JSON'
 				timeout: 15000
 				beforeSend: ->
 					context.setState isBusy: true
 				success: ->
 					console.log('comment deleted')
-					context.props.removeHandler(context.props.id)
+					context.props.removeHandler(context.props.comment.id)
 				error: ->
 					alert('Sorry, unable to process your request now. Please try again later.')
 					context.setState isBusy: false
@@ -50,7 +48,7 @@
 		e.preventDefault()
 		context = @
 		if @props.isResponse == false
-			context.props.respondHandler(@props.id)
+			context.props.respondHandler(@props.comment.id)
 		else
 			context.props.respondHandler(@props.responseForCommentId)
 
@@ -63,15 +61,15 @@
 					className: 'react-comment__flexbox'
 					React.DOM.img
 						className: 'react-comment__avatar--' + if @props.isResponse == false then 'comment' else 'response'
-						src: @props.user.avatar_path
+						src: @props.comment.user.avatar_path
 					React.DOM.div
 						className: 'react-comment__content-area'
 						React.DOM.span
 							className: 'react-comment__username'
-							@props.user.name
+							@props.comment.user.name
 						React.DOM.span
 							className: 'react-comment__content'
-							@props.content
+							@props.comment.content
 						React.DOM.div
 							className: 'react-comment__bottom-items--' + if @props.isResponse == false then 'comment' else 'response'
 							React.DOM.a
@@ -79,7 +77,7 @@
 								href: '#'
 								onClick: @handleRespond
 								'Reply'
-							if @props.user.id == @props.currentUser.id
+							if @props.comment.user.id == @props.currentUser.id
 								React.DOM.span
 									className: null
 									React.DOM.span
@@ -95,7 +93,7 @@
 								' · '
 							React.DOM.span
 								className: 'react-comment__timeago'
-								@props.timeAgo
+								@props.comment.timeAgo
 							if @state.isBusy == true
 								React.DOM.span
 									className: null
