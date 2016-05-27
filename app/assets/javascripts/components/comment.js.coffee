@@ -34,7 +34,7 @@
 		if confirm("Are you sure you want to delete this comment?") == true
 			$.ajax
 				method: 'DELETE'
-				url: "/react_comments/" + context.props.id
+				url: "/comments/" + context.props.id
 				dataType: 'JSON'
 				timeout: 15000
 				beforeSend: ->
