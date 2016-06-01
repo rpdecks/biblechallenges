@@ -22,44 +22,21 @@
 
       .tab-content
         .tab-pane.active#readings{role: "tabpanel"}
-          %h4
-            Today's Reading (#{current_user.date_by_timezone.strftime("%m/%d/%Y")})
-
           - if @challenge.membership_for(current_user)
             = render partial: "shared/challenges/change_bible_version",
               locals: {membership: @membership}
-            %br
-
-          - # todo: refactor this to todays_chapters
-          - @todays_readings.each do |todays_reading|
-            - todays_verses = todays_reading.chapter.by_version(current_user.bible_version)
-
-            = render partial: 'shared/challenges/todays_reading',
-            locals: { todays_reading: todays_reading, todays_verses: todays_verses, bible_version: current_user.bible_version}
-
-            %br
-
-            .todays-reading-comments
-              .todays-reading-comments__logbutton-container
-                %br
-                %br
-                = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
-                %br
-                %br
-              .todays-reading-comments__comments
-                %h5="Reading Comments - " + todays_reading.book_and_chapter
-                = react_component("CommentList", {commentableType: "Reading", commentableId: todays_reading.id, comments: comments_json(todays_reading), currentUser: current_user_json})
-
-            %br
-            %br
+          %br
 
           .panel.panel-primary
             .panel-heading Challenge Readings
+            %center
+              %strong
+                = paginate @readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
-            = render partial: 'shared/groups/show', locals: {group: @group, group_comments_json: @group_comments_json, current_user_json: @current_user_json}
+            = render partial: 'shared/groups/show', locals: {group: @group}
         - else
           .tab-pane#groups{role: "tabpanel"}
             = render partial: 'shared/challenges/challenge_groups', locals: {groups: @groups, challenge: @challenge}
@@ -77,7 +54,7 @@
   // on load of the page: switch to the currently selected tab
   var hash = window.location.hash;
     $('#grouptabs a[href="' + hash + '"]').tab('show');
-  
+
   $("#addFriendsToChallenge").on("click", function() {
     setTimeout(function (){
       $( "#addFriendsInput" ).focus();

@@ -39,7 +39,7 @@
             \:
             -if @membership.membership_readings.any?
               %strong
-                = @membership.membership_readings.order(:created_at).last.chapter.book_and_chapter
+                = @membership.membership_readings.order(:created_at).last.reading.book_and_chapter
               ,
               = time_ago_in_words(@membership.membership_readings.order(:created_at).last.created_at)
               ago

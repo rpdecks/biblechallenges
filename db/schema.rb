@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224144939) do
+ActiveRecord::Schema.define(version: 20160511163558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160224144939) do
     t.json     "schedule",             default: {},   null: false
     t.date     "available_dates",      default: [],                array: true
     t.boolean  "joinable",             default: true
+    t.string   "begin_book"
+    t.string   "end_book"
   end
 
   add_index "challenges", ["owner_id"], name: "index_challenges_on_owner_id", using: :btree
