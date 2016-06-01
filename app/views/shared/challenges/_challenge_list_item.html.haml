@@ -16,7 +16,7 @@
             = render 'shared/avatar_small', user: m
   - else
     = link_to challenge_path(challenge) do
-      .list-group-item.list-group-success-border
+      .list-group-item
         %span.badge
           = challenge.memberships_count
           = "member".pluralize(challenge.memberships_count)

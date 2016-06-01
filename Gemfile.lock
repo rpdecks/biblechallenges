@@ -220,6 +220,9 @@ GEM
     json (1.8.3)
     jwt (0.1.6)
       multi_json (>= 1.0)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -507,6 +510,7 @@ DEPENDENCIES
   hpricot
   htmlentities
   jquery-rails
+  kaminari
   launchy
   mail_form
   mail_view

@@ -26,10 +26,12 @@ feature "User logs reading" do
 
       Time.zone = "UTC" # heroku timezone
       visit member_challenge_path(challenge)
+      click_link "Matthew 1"
       click_link_or_button "Log Matthew 1"
 
       Timecop.travel(1.day)
       visit member_challenge_path(challenge)
+      click_link "Matthew 2"
       click_link_or_button "Log Matthew 2"
 
       expect(membership.membership_statistics.find_by_type(
@@ -56,11 +58,13 @@ feature "User logs reading" do
       # read in morning on first day
       Timecop.travel(Time.zone.local(2015, 7, 4, 15, 0, 0))
       visit member_challenge_path(challenge)
+      click_link "Matthew 1"
       click_link_or_button "Log Matthew 1"
 
       # read at night on second day
       Timecop.travel(Time.zone.local(2015, 7, 6, 2, 0, 0))
       visit member_challenge_path(challenge)
+      click_link "Matthew 2"
       click_link_or_button "Log Matthew 2"
 
       expect(user.user_statistic_days_read_in_a_row_current.value).to eq 2

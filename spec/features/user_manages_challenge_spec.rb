@@ -13,7 +13,8 @@ feature 'User manages challenges' do
     Sidekiq::Testing.inline! do
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
-      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+      select "Ephesians", from: 'challenge[begin_book]'
+      select "Ephesians", from: 'challenge[end_book]'
       click_button "Create Challenge"
       expect(Challenge.all.size).to eq 1
       number_of_stats = ChallengeStatistic.descendants.size
@@ -34,7 +35,8 @@ feature 'User manages challenges' do
     click_link 'Create a challenge'
     fill_in 'challenge[name]', with: "challenge 2"
     fill_in 'challenge[begindate]', with: Date.today
-    fill_in 'challenge[chapters_to_read]', with: "Matthew 1-8"
+    select "Ephesians", from: 'challenge[begin_book]'
+    select "Ephesians", from: 'challenge[end_book]'
     select challenge.name, from: "challenge_previous_challenge_id"
     click_button "Create Challenge"
 
@@ -49,7 +51,8 @@ feature 'User manages challenges' do
     expect{
       fill_in 'challenge[name]', with: "challenge 1"
       fill_in 'challenge[begindate]', with: Date.today
-      fill_in 'challenge[chapters_to_read]', with: "Matthew 1-28"
+      select "Ephesians", from: 'challenge[begin_book]'
+      select "Ephesians", from: 'challenge[end_book]'
       click_button "Create Challenge"
     }.to change(Challenge, :count).by(1)
     expect(Membership.count).to be 1

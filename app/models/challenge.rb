@@ -47,12 +47,13 @@ class Challenge < ActiveRecord::Base
   validates :owner_id, presence: true
   validates :chapters_to_read, presence: true
   validate  :validate_dates
+  validate  :validate_book_sequence
   validates :book_chapters, presence: true
   validate  :validate_days_of_week_to_skip
 
   # Callbacks
 
-  before_validation :generate_book_chapters, :generate_date_ranges_to_skip
+  before_validation :generate_chapters_to_read, :generate_book_chapters, :generate_date_ranges_to_skip
   before_save :generate_schedule
 
   after_commit :successful_creation_email, :on => :create
@@ -128,6 +129,10 @@ class Challenge < ActiveRecord::Base
     self.enddate = self.available_dates.last
   end
 
+  def generate_chapters_to_read
+    self.chapters_to_read = ChapterGenerator.new(self).retrieve_chapters_to_read if begin_book
+  end
+
   def generate_book_chapters  # an array of [book,chapter] pairs, integers
     self.book_chapters = ActsAsScriptural.new.parse(chapters_to_read).chapters
   end
@@ -167,6 +172,14 @@ class Challenge < ActiveRecord::Base
   def validate_dates
     if enddate && begindate
       errors[:begin_date] << "and end date must be sequential" if enddate < begindate
+    end
+  end
+
+  def validate_book_sequence
+    if begin_book
+      books = Bible::BOOKS
+      books_index = Hash[books.map.with_index.to_a]
+      errors[:chapters_to_read] << "scheduler can only work with books in sequence at the moment." if books_index[begin_book] > books_index[end_book]
     end
   end
 

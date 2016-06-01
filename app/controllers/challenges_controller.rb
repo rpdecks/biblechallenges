@@ -1,12 +1,9 @@
 class ChallengesController < ApplicationController
   def index
-
-    @front_page_leaderboard = FrontPageLeaderboard.new
-
     if params[:query]
       @public_challenges = Challenge.search_by_name(params[:query])
     else
-      @public_challenges = Challenge.includes(:members).current.at_least_5_members
+      @public_challenges = Challenge.includes(:members).current.at_least_5_members.sample(6)
     end
 
     if current_user && current_user.is_a?(User)
@@ -15,8 +12,10 @@ class ChallengesController < ApplicationController
         @public_challenges -= @my_challenges
       end
     end
+  end
 
-
+  def public_statistics
+    @front_page_leaderboard = FrontPageLeaderboard.new
   end
 
   def show
