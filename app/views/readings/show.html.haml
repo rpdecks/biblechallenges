@@ -37,6 +37,6 @@
 
     .reading-comments__comments
       %h5 Reading Comments
-      = react_component("CommentList", {commentableType: "Reading", commentableId: @reading.id, comments: @comments_json, currentUser: @current_user_json})
+      = react_component("CommentList", {commentableType: "Reading", commentableId: @reading.id, comments: comments_json(@reading), currentUser: current_user_json})
   %br
   %br      
