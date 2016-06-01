@@ -1,11 +1,6 @@
 class Member::GroupsController < ApplicationController
   before_filter :authenticate_user!
 
-  def show
-    group
-    @summa = "gumma"
-  end
-
   def join
     group.add_user_to_group(group.challenge, current_user)
     group.update_stats
