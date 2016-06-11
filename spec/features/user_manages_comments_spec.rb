@@ -14,7 +14,7 @@ feature 'User manages comments' do
     visit member_challenge_path(challenge)
     click_link "Join Group"
     fill_in 'comment_content', with: "Testing"
-    click_button "Post Comment"
+    click_button "Post"
     expect(page).to have_content("Testing")
   end
 end
