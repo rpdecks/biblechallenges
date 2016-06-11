@@ -90,6 +90,7 @@
 					title: 'You'
 				React.DOM.textarea
 					ref: 'commentText'
+					name: 'comment_content'
 					rows: 1
 					className: 'comment-form__comment-text'
 					placeholder:  if @props.isResponse == false then 'Write a comment...' else 'Write a reply...'
