@@ -97,27 +97,27 @@ feature 'User manages notification preferences via email' do
       expect(user.comment_notify).to be_falsey
     end
 
-    scenario 'User whose comment email prefs are set to false will not receive comment on comment notification' do
-      user2 = create(:user, comment_notify: false)
-      challenge = create(:challenge, :with_readings, owner_id: user2.id)
-      group = create(:group, name: "Test", challenge: challenge, user_id: user2.id)
-      group.add_user_to_group(challenge,user2)      
-      create(:group_comment, user_id: user2.id, commentable: group) #original comment
+    # scenario 'User whose comment email prefs are set to false will not receive comment on comment notification' do
+    #   user2 = create(:user, comment_notify: false)
+    #   challenge = create(:challenge, :with_readings, owner_id: user2.id)
+    #   group = create(:group, name: "Test", challenge: challenge, user_id: user2.id)
+    #   group.add_user_to_group(challenge,user2)      
+    #   create(:group_comment, user_id: user2.id, commentable: group) #original comment
 
-      user = create(:user)
-      login(user)
-      challenge.join_new_member(user)
+    #   user = create(:user)
+    #   login(user)
+    #   challenge.join_new_member(user)
 
-      visit member_challenge_path(challenge)
-      click_link "Join Group"
-      click_link "Respond"
-      within(".new_comment:eq(1)") do # for ambiguous page reference, can index Capybara elements
-        fill_in "comment_content", with: "Testing"
-        click_button "Post Comment"
-      end
-      comment_email = ActionMailer::Base.deliveries
-      expect(comment_email.size).to eq 0
-    end
+    #   visit member_challenge_path(challenge)
+    #   click_link "Join Group"
+    #   click_link "Respond"
+    #   within(".new_comment:eq(1)") do # for ambiguous page reference, can index Capybara elements
+    #     fill_in "comment_content", with: "Testing"
+    #     click_button "Post Comment"
+    #   end
+    #   comment_email = ActionMailer::Base.deliveries
+    #   expect(comment_email.size).to eq 0
+    # end
   end
 
   feature 'From admin/creator message emails' do
