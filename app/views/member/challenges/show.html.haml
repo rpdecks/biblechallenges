@@ -32,6 +32,8 @@
               %strong
                 = paginate @readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
+        .tab-pane#todaysreadings{role: "tabpanel"}
+          = render partial: 'shared/challenges/todays_reading', locals: {data: @todays_readings}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
