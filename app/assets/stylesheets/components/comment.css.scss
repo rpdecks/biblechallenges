@@ -1,0 +1,74 @@
+.react-comment {
+	&__container--comment {
+		padding-top: 7px;
+		padding-bottom: 7px;
+		border-bottom: solid 1px #E2E2E2;
+	}
+
+	&__container--response {
+		margin-left: 37px;
+		padding-top: 7px;
+		padding-bottom: 7px;
+		border-bottom: solid 1px #E2E2E2;
+	}
+
+	&__flexbox {
+		display: flex;
+	}
+
+	&__avatar--comment {
+		margin-top: 3px;
+		margin-right: 5px;
+		width: 32px;
+		height: 32px;
+		border: solid 1px #bbb;
+	}
+
+	&__avatar--response {
+		margin-top: 3px;
+		margin-right: 5px;
+		width: 28px;
+		height: 28px;
+		border: solid 1px #bbb;
+	}
+
+	&__content-area {
+		flex: 1;
+	}
+
+	&__username {
+		margin-right: 5px;
+		font-weight: bold;
+		color: #DAA134;
+	}
+
+	&__content {
+
+	}
+
+	&__bottom-items--comment {
+		margin-top: 2px;
+		font-size: 0.9em;
+	}
+	
+	&__bottom-items--response {
+		margin-top: -1px;
+		font-size: 0.9em;
+	}
+
+	&__reply {
+		
+	}
+
+	&__dot-separator {
+
+	}
+
+	&__delete {
+
+	}
+
+	&__timeago {
+		color: gray;
+	}
+}

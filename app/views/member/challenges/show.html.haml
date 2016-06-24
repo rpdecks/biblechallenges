@@ -2,11 +2,16 @@
 -# = breadcrumbs style: :ol, class: "breadcrumb breadcrumbs-minimal"
 
 .section.primary
-  .container
-    = render 'shared/challenges/challenge_overview'
-    - unless @challenge.owner == current_user
-      = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
-    = render partial: 'shared/challenges/invite_friends'
+  .challenge-comments
+    .container.challenge-comments__heading
+      = render 'shared/challenges/challenge_overview'
+      - unless @challenge.owner == current_user
+        = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
+      = render partial: 'shared/challenges/invite_friends'
+
+    .challenge-comments__comments
+      %h5 Comments on this Challenge
+      = react_component("CommentList", {commentableType: "Challenge", commentableId: @challenge.id, comments: comments_json(@challenge), currentUser: current_user_json})
 
 .content
   .container

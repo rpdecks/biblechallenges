@@ -60,19 +60,11 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :groups, only: [] do
-    resources :comments, only: [:create, :destroy], controller: 'groups/comments'
-  end
-
   resources :badges, only: [:index, :show]
 
-  resources :readings, only: [:show, :edit, :update] do
-    resources :comments, only: [:create, :destroy], controller: 'readings/comments'
-  end
+  resources :readings, only: [:show, :edit, :update], controller: 'readings'
 
-  resources :comments, only: [] do
-    resources :comments, only: [:create], controller: "comments/comments"
-  end
+  resources :comments, only: [:create, :destroy], controller: "comments"
 
   # more restful reading logging
   resources :membership_readings, only: [:create, :destroy] do
