@@ -21,17 +21,22 @@
 
   %hr
 
-  .row-fluid
-    .centered
-      %td{id: dom_id(@reading)}
-        - if @membership
-          = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: @reading.book_and_chapter, membership: @membership, todays_reading: @reading}
-      %br
-      - unless @reading.last_challenge_reading?
-        Next Chapter >> 
-        = link_to @reading.next_reading.chapter.book_and_chapter, reading_path(@reading.next_reading)
+  .reading-comments
+    .reading-comments__logbutton-container
+      .centered
+        %td{id: dom_id(@reading)}
+          - if @membership
+            = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: @reading.book_and_chapter, membership: @membership, todays_reading: @reading}
         %br
-        %br
-      = button_to "Back to Challenge", member_challenge_path(@membership.challenge), :method => :get
-      %br
-      %br
+        - unless @reading.last_challenge_reading?
+          Next Chapter >> 
+          = link_to @reading.next_reading.chapter.book_and_chapter, reading_path(@reading.next_reading)
+          %br
+          %br
+        = button_to "Back to Challenge", member_challenge_path(@membership.challenge), :method => :get
+
+    .reading-comments__comments
+      %h5 Reading Comments
+      = react_component("CommentList", {commentableType: "Reading", commentableId: @reading.id, comments: comments_json(@reading), currentUser: current_user_json})
+  %br
+  %br      

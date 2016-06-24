@@ -52,6 +52,7 @@ gem 'rcv_bible', '~> 0.0.5'
 gem 'chartkick'
 gem 'chartkick-remote'
 gem 'groupdate'
+gem 'active_model_serializers'
 
 #sortable table/link
 gem 'ransack'
@@ -73,6 +74,7 @@ group :development do
   gem 'better_errors'
   gem 'goatmail'
 #  gem 'bullet'
+  gem "awesome_print", require:"ap"
 end
 
 # Gems used only for assets and not required

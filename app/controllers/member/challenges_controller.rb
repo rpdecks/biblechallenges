@@ -27,6 +27,12 @@ class Member::ChallengesController < ApplicationController
     @member = current_user
     @todays_readings = @challenge.todays_readings(@member).order(:chapter_id)
     @challenge_chart_data = formatted_membership_readings_data_collector
+
+    # generate json for group comments
+    if @group
+      @group_comments_json = eval(ActiveModel::ArraySerializer.new(@group.comments.recent_last, each_serializer: CommentSerializer).to_json)
+      @current_user_json = eval(UserSerializer.new(current_user).to_json)
+    end
   end
 
   private
