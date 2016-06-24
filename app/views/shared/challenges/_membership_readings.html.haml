@@ -1,0 +1,13 @@
+- todays_readings.each do |r|
+  %h4
+    %br
+    = r.book_and_chapter
+    %br
+    - verses = r.chapter.by_version(current_user.bible_version)
+    %br
+    %h5
+      #verses
+        - verses.each do |v|
+          = v.decorate.to_div
+
+      = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: r.book_and_chapter, membership: @membership, todays_reading: r }
