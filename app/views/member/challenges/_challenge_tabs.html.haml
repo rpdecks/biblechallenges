@@ -1,6 +1,8 @@
 %ul#grouptabs.nav.nav-tabs.nav-justified{role: "tablist"}
   %li.active{role: "presentation"}
-    %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Readings
+    %a{href: "#todaysreadings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Today's Readings
+  %li{role: "presentation"}
+    %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} All Readings
   - if current_user.find_challenge_group(@challenge) != nil
     %li{role: "presentation"}
       %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group

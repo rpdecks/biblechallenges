@@ -1,20 +1,17 @@
 %br
--if todays_reading
+-if @todays_readings.present?
   %h4.chapter
-    = todays_reading.book_and_chapter
-
-
-  #verses
-    - todays_verses.each do |verse|
-      = verse.decorate.to_div
+    Today's Reading (#{current_user.date_by_timezone.strftime("%m/%d/%Y")})
     %br
+
+    = render partial: 'shared/challenges/membership_readings',
+      locals: { todays_readings: @todays_readings }
+
 -else
+  %h3 No readings today
   %br
   %br
-  %h3 No reading today
-  %br
-  %br
--if bible_version == "RCV"
+-if current_user.bible_version == "RCV"
   %center
     %strong
       Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
