@@ -21,7 +21,7 @@
       = render partial: "member/challenges/challenge_tabs", locals: {challenge: @challenge}
 
       .tab-content
-        .tab-pane.active#readings{role: "tabpanel"}
+        .tab-pane.active#todaysreadings{role: "tabpanel"}
           - if @challenge.membership_for(current_user)
             = render partial: "shared/challenges/change_bible_version",
               locals: {membership: @membership}
@@ -31,9 +31,9 @@
             %center
               %strong
                 = paginate @readings
-            = render partial: 'shared/challenges/readings', locals: {readings: @readings}
-        .tab-pane#todaysreadings{role: "tabpanel"}
-          = render partial: 'shared/challenges/todays_reading', locals: {data: @todays_readings}
+            = render partial: 'shared/challenges/todays_reading', locals: {data: @todays_readings}
+        .tab-pane#readings{role: "tabpanel"}
+          = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
         - if current_user.find_challenge_group(@challenge) != nil
           .tab-pane#mygroup{role: "tabpanel"}
