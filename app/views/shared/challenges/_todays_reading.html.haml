@@ -7,8 +7,6 @@
     = render partial: 'shared/challenges/membership_readings',
       locals: { todays_readings: @todays_readings }
 
-    =# render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
-
 -else
   %h3 No readings today
   %br
