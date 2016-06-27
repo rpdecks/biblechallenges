@@ -21,10 +21,12 @@
       = render partial: "member/challenges/challenge_tabs", locals: {challenge: @challenge}
 
       .tab-content
-        .tab-pane.active#readings{role: "tabpanel"}
+        .tab-pane.active#todaysreadings{role: "tabpanel"}
           - if @challenge.membership_for(current_user)
             = render partial: "shared/challenges/change_bible_version",
               locals: {membership: @membership}
+            = render partial: 'shared/challenges/todays_reading', locals: {data: @todays_readings}
+        .tab-pane#readings{role: "tabpanel"}
           %br
           .panel.panel-primary
             .panel-heading Challenge Readings
