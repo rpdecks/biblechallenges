@@ -689,24 +689,22 @@ fieldset {
   flex-wrap: wrap;
 
   &__heading {
-    flex: 1;
-    margin-left: 1em;
+    flex: 2;
+    flex-basis: 438px;
   }
 
   &__comments {
     flex: 1;
-    margin-right: 1em;
+    flex-basis: 300px;
+    margin: 15px 15px 0 15px;
     padding: 20px;
     max-height: 300px;
-    min-width: 200px;
     overflow-y: auto;
     border: solid 1px white;
-    border-right: 0px;
     border-radius: 10px;
     background-color: #DDE9EF;
     color: black;
   }
-
 }
 
 .todays-reading-comments {
