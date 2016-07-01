@@ -34,7 +34,7 @@ class ChapterGenerator
     'Job' => 'Job 42',
     'Psalms' => 'Psalm 150',
     'Proverbs' => 'Proverbs 31',
-    'Ecclesiastes' => 'Ecclesiates 12',
+    'Ecclesiastes' => 'Ecclesiastes 12',
     'Song of Songs' => 'Song of Songs 8',
     'Isaiah' => 'Isaiah 66',
     'Jeremiah' => 'Jeremiah 52',
