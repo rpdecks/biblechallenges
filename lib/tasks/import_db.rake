@@ -7,6 +7,8 @@ namespace :db do
       #heroku pg:backups capture -a biblechallenges
       `curl -o db.dump \`heroku pg:backups public-url -a biblechallenges\``
       `pg_restore --verbose --clean --no-acl --no-owner -d bc_development db.dump`
+
+      system "rm db.dump"
     end
   end
 end
