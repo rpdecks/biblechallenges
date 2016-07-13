@@ -13,7 +13,7 @@ namespace :setup do
     puts "do you want to download data from production? (Y/N) You many lose your current  Biblechallenges data."
     download_db
     puts "Biblechallenges application launching..............."
-    system "rails s -p4000"
+    system "rails s"
   end
 
   def git_setup
