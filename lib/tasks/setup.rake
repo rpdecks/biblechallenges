@@ -108,6 +108,7 @@ namespace :setup do
     input = STDIN.gets.chomp
     case input.upcase
     when "Y"
+       puts "If any problem occurs, Check your access to the heroku app first..."
       puts "downloading db..................."
       if File.exist?('./config/database.yml')
         system "rake db:restore"
