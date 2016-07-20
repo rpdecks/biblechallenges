@@ -1,16 +1,16 @@
 %ul#grouptabs.nav.nav-tabs.nav-justified{role: "tablist"}
   %li.active{role: "presentation"}
-    %a{role: "tab", aria: {controls: "readings"}, data: {toggle: "tab", target: "#todaysreadings"}} Today's Readings
+    %a{href: "#todaysreadings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} Today's Readings
   %li{role: "presentation"}
-    %a{role: "tab", aria: {controls: "readings"}, data: {toggle: "tab", target: "#readings"}} All Readings
+    %a{href: "#readings", role: "tab", aria: {controls: "readings"}, data: {toggle: "tab"}} All Readings
   - if current_user.find_challenge_group(@challenge) != nil
     %li{role: "presentation"}
-      %a{role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab", target: "#mygroup"}} My Group
+      %a{href: "#mygroup", role: "tab", aria: {controls: "mygroup"}, data: {toggle: "tab"}} My Group
   - else
     %li{role: "presentation"}
-      %a{role: "tab", aria: {controls: "groups"}, data: {toggle: "tab", target: "#groups"}} Groups
+      %a{href: "#groups", role: "tab", aria: {controls: "groups"}, data: {toggle: "tab"}} Groups
   %li{role: "presentation"}
-    %a{role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab", target: "#statistics"}} Statistics
+    %a{href: "#statistics", role: "tab", aria: {controls: "statistics"}, data: {toggle: "tab"}} Statistics
 
 :javascript
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {

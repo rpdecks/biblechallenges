@@ -49,18 +49,52 @@
   // store the currently selected tab in the hash value
   $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
     var id = $(e.target).attr("href").substr(1);
-    window.location.hash = id;
+    window.history.pushState('', '', ('#' + id)); // Changes the URL without redirecting
   });
 
   // on load of the page: switch to the currently selected tab
   var hash = window.location.hash;
-    $('#grouptabs a[href="' + hash + '"]').tab('show');
+  $('#grouptabs a[href="' + hash + '"]').tab('show');
+
+  // Gets a param from the URL and returns its value
+  $.urlParam = function(name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null)
+      return null;
+    else
+      return results[1] || 0;
+  };
+
+  // Gets a part of the URL prior to the specified param
+  $.parseUrl = function(url, param) {
+    if (url.indexOf('&' + param) !== -1) {
+      return url.substr(0, url.indexOf('&' + param));
+    } else {
+      return url
+    }
+  };
 
   $("#addFriendsToChallenge").on("click", function() {
     setTimeout(function (){
       $( "#addFriendsInput" ).focus();
     }, 0);
   });
+
+  // Tailors the URL upon clicking the pagination link
+  $("nav.pagination a").on("click", function (e) {
+    e.preventDefault();
+    var hash = window.location.hash;
+    var targetUrl = $(e.target).attr('href');
+    var scrollPosition = document.body.scrollTop;
+    window.location = $.parseUrl(targetUrl, 'position') + '&position=' + scrollPosition + hash;
+  })
+
+  // Maintains scroll position when user switches between the challenge pages 
+  if ($.urlParam('position')) {
+    setTimeout(function() {
+      window.scrollTo(0, $.urlParam('position'));
+    }, 10);
+  }
 
   window.fbAsyncInit = function() {
     FB.init({
