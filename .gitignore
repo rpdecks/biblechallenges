@@ -45,3 +45,6 @@ _site
 
 #paperclip local storage
 public/system
+
+# database dump
+db.dump
