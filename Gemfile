@@ -72,9 +72,8 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
-  gem 'goatmail'
-#  gem 'bullet'
   gem "awesome_print", require:"ap"
+  gem 'letter_opener'
 end
 
 # Gems used only for assets and not required
