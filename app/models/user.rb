@@ -28,12 +28,13 @@ class User < ActiveRecord::Base
   has_many :badges, dependent: :destroy
   has_many :membership_readings
 
-  has_attached_file :avatar,
-    :styles => {
+  paper_clip_options = { :styles => {
     :medium => "300x300>",
     :thumb => "75x75>" },
     :s3_host_name => ENV["AWS_HOST_NAME"],
-    :default_url => "default_avatar.png"
+    :default_url => "default_avatar.png" }
+
+  has_attached_file :avatar, paper_clip_options
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def self.from_omniauth(auth)

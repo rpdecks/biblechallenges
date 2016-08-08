@@ -13,10 +13,6 @@ Biblechallenge::Application.routes.draw do
       :as => :finish_signup
   end
 
-  if Rails.env.development?
-    mount Goatmail::App, at: "/inbox"
-  end
-
   resource :user, only: [:edit, :update]
 
   get 'user/:id/remove_avatar', to: 'users#remove_avatar', as: 'remove_user_avatar'

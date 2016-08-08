@@ -179,9 +179,6 @@ GEM
     get_process_mem (0.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    goatmail (1.1.1)
-      letter_opener
-      sinatra
     google-instant-hangouts (0.0.3)
       railties (>= 3.1)
     gretel (3.0.8)
@@ -499,7 +496,6 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   friendly_id
-  goatmail
   google-instant-hangouts
   gretel
   groupdate
@@ -512,6 +508,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy
+  letter_opener
   mail_form
   mail_view
   omniauth

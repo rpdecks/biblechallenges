@@ -200,12 +200,12 @@ ActiveRecord::Schema.define(version: 20160511163558) do
     t.integer  "challenge_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "bible_version",                default: "RCV"
     t.integer  "group_id"
     t.integer  "rec_sequential_reading_count", default: 0
     t.integer  "punctual_reading_percentage",  default: 0
     t.integer  "progress_percentage",          default: 0
     t.integer  "membership_readings_count",    default: 0
+    t.string   "bible_version"
   end
 
   add_index "memberships", ["challenge_id", "user_id"], name: "index_memberships_on_challenge_id_and_user_id", using: :btree
