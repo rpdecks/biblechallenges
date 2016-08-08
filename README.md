@@ -5,8 +5,10 @@ BIBLECHALLENGES.COM
 Status](https://magnum.travis-ci.com/biblesforamerica/biblechallenges.svg?token=FPGcoGHoxfQhf2jcpsha&branch=master)](https://magnum.travis-ci.com/biblesforamerica/biblechallenges)
 
 1. Once you have cloned the repo, run bin/setup
-2. To run the application in development mode, start a redis server with 'redis-server' then run 'rails s'  
-3. In order to process background jobs such as sending emails (which will be opened in a browser tab via letter_opener), you need to have sidkiq running via: 'bundle exec sidekiq'
+2. To run the application you need a rails server, sidekiq, and redis running.  You can get all this at once with this command, which will run the services you need in development:
+
+  % foreman start -f Procfile.dev
+
 3. Google authentication and Facebook Authentication will not work; only the devise authentication will work but that is enough to create accounts / login etc
 4. In development mode, paperclip will store your images (avatars, etc) locally in your public/images folder
 5. `redis-cli flushall` to wipe redis queue, if needed
