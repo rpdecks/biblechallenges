@@ -95,7 +95,7 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 3.3.0'
   gem 'spring-commands-rspec'
-  gem 'pry-byebug'
+#  gem 'pry-byebug'
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
@@ -105,6 +105,7 @@ group :development, :test do
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'pry-remote'
 end
 
 group :test do
