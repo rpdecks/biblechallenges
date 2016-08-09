@@ -7,11 +7,11 @@
     = render partial: 'shared/challenges/membership_readings',
       locals: { todays_readings: @todays_readings }
 
+  -if current_user.bible_version == "RCV"
+    %center
+      %strong
+        Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
 -else
   %h3 No readings today
   %br
   %br
--if current_user.bible_version == "RCV"
-  %center
-    %strong
-      Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org

@@ -730,15 +730,15 @@ fieldset {
 }
 
 .reading-comments {
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
 
-  &__logbutton-container {
-    flex: 1;
-  }
+  // &__logbutton-container {
+  //   flex: 1;
+  // }
 
-  &__comments {
-    flex: 1;
-    padding: 10px;
-  }
+  // &__comments {
+  //   flex: 1;
+  //   padding: 10px;
+  // }
 }

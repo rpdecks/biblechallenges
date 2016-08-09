@@ -19,7 +19,6 @@
       %strong
         Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
 
-  %hr
 
   .reading-comments
     .reading-comments__logbutton-container
@@ -39,4 +38,3 @@
       %h5 Reading Comments
       = react_component("CommentList", {commentableType: "Reading", commentableId: @reading.id, comments: comments_json(@reading), currentUser: current_user_json})
   %br
-  %br      
