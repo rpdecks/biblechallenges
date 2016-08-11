@@ -15,8 +15,9 @@ Status](https://magnum.travis-ci.com/biblesforamerica/biblechallenges.svg?token=
 
 ##Tests
 
-1. Tests should all pass.  Run them via:  bundle exec rspec spec
-2. New features should be tested, at least on the unit level
+1. You need to seed the test database with some information.  Run this command:  RAILS_ENV=test rake db:seed (how can we make this easier / automatic?)
+2. Tests should all pass.  Run them via:  bundle exec rspec spec
+3. New features should be tested, at least on the unit level
 
 ## Schema explanation
 
