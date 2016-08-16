@@ -35,14 +35,6 @@ describe Users::OmniauthCallbacksController do
       }.to change{ User.count }.by(1)
     end
 
-    it "should successfully associate user_statistics to user" do
-      pending #TODO should we update statistics
-      number_of_stats = UserStatistic.descendants.size
-      expect {
-        post :google_oauth2, provider: :google_oauth2
-      }.to change{ UserStatistic.count }.by(number_of_stats)
-    end
-
     it "should redirect first-time sign-ups to root url" do
       post :google_oauth2, provider: :google_oauth2
       expect(response).to redirect_to root_path
