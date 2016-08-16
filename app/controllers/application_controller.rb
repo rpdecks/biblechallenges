@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   before_filter :store_location
 
+  def after_sign_in_path_for(resource)
+    if resource.is_a?(User) && resource.challenges.present?
+      member_challenges_path
+    else
+      session[:previous_url] || root_path
+    end
+  end
+
   def store_location
     # store last url - this is needed for post-login redirect to whatever the user last visited.
     return unless request.get?
