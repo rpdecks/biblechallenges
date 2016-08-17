@@ -1,16 +1,15 @@
 class Users::SessionsController < Devise::SessionsController
   def create
-    user = User.where(email: user_params[:email]).first
-    if user
-      if user.provider == "facebook"
-        redirect_to new_user_registration_path
-        flash[:notice] = "That account appears to be a Facebook Account without a password. Try using the Log in with Facebook button."
-      elsif user.provider == "google_oauth2"
-        redirect_to new_user_registration_path
-        flash[:notice] = "That account appears to be a Google Account without a password. Try using the Log in with Google button."
-      else
-        super
-      end
+    @user = User.where(email: user_params[:email]).first
+
+    if user_already_has_a_facebook_account
+      redirect_to new_user_registration_path
+      flash[:notice] = "That account appears to be a Facebook Account. Try using the Log in with Facebook button."
+    elsif user_already_has_a_google_account
+      redirect_to new_user_registration_path
+      flash[:notice] = "That account appears to be a Google Account. Try using the Log in with Google button."
+    else
+      super
     end
   end
 
@@ -32,5 +31,13 @@ class Users::SessionsController < Devise::SessionsController
 
   def user_params
     params[:user]
+  end
+
+  def user_already_has_a_facebook_account
+    @user && @user.provider == "facebook"
+  end
+
+  def user_already_has_a_google_account
+    @user && @user.provider == "google_oauth2"
   end
 end
