@@ -70,7 +70,7 @@ feature "Omniauth Sign In / Sign Up" do
       fill_in 'user[password]', with: password
       click_button "Sign in"
 
-      expect(page).to have_content("That account appears to be a Google Account without a password. Try using the Log in with Google button.")
+      expect(page).to have_content("That account appears to be a Google Account. Try using the Log in with Google button.")
     end
 
     scenario "New User SIGNS UP with facebook, logs out, logs back in through devise" do
@@ -86,7 +86,7 @@ feature "Omniauth Sign In / Sign Up" do
       fill_in 'user[password]', with: password
       click_button "Sign in"
 
-      expect(page).to have_content("That account appears to be a Facebook Account without a password. Try using the Log in with Facebook button.")
+      expect(page).to have_content("That account appears to be a Facebook Account. Try using the Log in with Facebook button.")
     end
 
     scenario "New User SIGNS UP with google, logs out, logs back in with facebook with the same email" do
