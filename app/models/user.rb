@@ -38,6 +38,14 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def self.from_omniauth(auth)
+    user = User.find_by(email: auth.info.email)
+    if user && user.provider == nil
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.image = auth.info.image
+      return user
+    end
+
     User.where(provider: auth.provider, uid: auth.uid).first_or_create do |u|
       u.provider = auth.provider
       u.uid = auth.uid
