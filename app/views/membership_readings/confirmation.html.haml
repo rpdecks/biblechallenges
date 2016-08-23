@@ -31,6 +31,9 @@
             %td
               = x.membership_statistic_progress_percentage.value
               %span>%
+  %h5 Comments
+  - @reading_confirmation_stats.readings.each do |r|
+    = react_chat (r)
   %p
     %strong
       = link_to "Go to Challenge", challenge_path(@reading_confirmation_stats.challenge, anchor: "statistics")
