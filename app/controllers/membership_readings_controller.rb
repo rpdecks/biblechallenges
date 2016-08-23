@@ -21,11 +21,13 @@ class MembershipReadingsController < ApplicationController
 
       respond_to do |format|
         format.html {
-          # go back to referer unless alternate location passed in
-          redirect = params[:location] || request.referer
-          # might be an anchor tag
-          redirect += params[:anchor] if params[:anchor]
-          redirect_to redirect
+          if params[:source] == "email"
+            redirect_to confirmation_membership_reading_path(id: readings.pluck(:id), membership_id: membership.id)
+          else
+            redirect = params[:location] || request.referer
+            redirect += params[:anchor] if params[:anchor]
+            redirect_to redirect
+          end
         }
         format.json {
           render json: @membership_reading
@@ -65,9 +67,10 @@ class MembershipReadingsController < ApplicationController
   end
 
   def confirmation
+    reading_ids = params[:id].split('/')
     membership = Membership.find(params[:membership_id])
     challenge = membership.challenge
-    @reading_confirmation_stats = ReadingConfirmationStats.new(membership, challenge)
+    @reading_confirmation_stats = ReadingConfirmationStats.new(membership, challenge, reading_ids)
   end
 
   def membership_reading_params
