@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user = User.find_by(email: auth.info.email)
-    if user && user.provider == nil
+    if user
       user.provider = auth.provider
       user.uid = auth.uid
       user.image = auth.info.image
