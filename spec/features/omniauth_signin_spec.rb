@@ -3,15 +3,25 @@ require "spec_helper"
 feature "Omniauth Sign In / Sign Up" do
 
   context "successfully" do
-    scenario "Existing facebook user signs in with facebook" do
+    scenario "User signs up with google" do
+      email = "barry.allen@flash.com"
+      mock_auth_hash("google_oauth2", email)
+      visit root_path
+      click_link "Log in"
+      click_link "Log in with Google"
+      user = User.where(email: email).first
+      expect(user.user_statistics.blank?).to be false
+      expect(current_path).to eq root_path
+      expect(page).to have_content("Successfully authenticated from google_oauth2 account.")
+    end
+
+    scenario "Existing facebook user signs in with google" do
       user = create(:existing_facebook_user)
       email = user.email
       mock_auth_hash("google_oauth2", email)
       visit root_path
       click_link "Log in"
       click_link "Log in with Google"
-      expect(current_path).to eq root_path
-      expect(page).to have_content("Successfully authenticated from google_oauth2 account.")
       expect(User.count).to eq 1
     end
 

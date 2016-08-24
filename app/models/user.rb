@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
       u.password = Devise.friendly_token[0,15]
       u.name = auth.info.name
       u.image = auth.info.image
+      UserCompletion.new(u)
     end
   end
 
