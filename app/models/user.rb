@@ -31,7 +31,6 @@ class User < ActiveRecord::Base
   paper_clip_options = { :styles => {
     :medium => "300x300>",
     :thumb => "75x75>" },
-    :s3_host_name => ENV["AWS_HOST_NAME"],
     :default_url => "default_avatar.png" }
 
   has_attached_file :avatar, paper_clip_options

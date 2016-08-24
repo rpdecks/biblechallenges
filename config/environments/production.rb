@@ -95,6 +95,7 @@ Biblechallenge::Application.configure do
   # paperclip with s3 storage
   config.paperclip_defaults = {
     :storage => :s3,
+    :s3_host_name => ENV["AWS_HOST_NAME"],
     :s3_credentials => {
       :bucket => ENV["AWS_BUCKET_NAME"],
     }

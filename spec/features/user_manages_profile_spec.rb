@@ -30,4 +30,5 @@ feature 'User manages user profile' do
     # destroy avatar uploads after test
     clean_test_uploads
   end
+
 end
