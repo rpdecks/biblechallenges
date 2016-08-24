@@ -5,17 +5,18 @@ rvm:
 addons:
   postgresql: '9.3'
 before_install:
-- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+- sudo add-apt-repository --yes ppa:baineri/opt-qt551-trusty
 - sudo apt-get update -qq
-- sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
-- sudo apt-get install qt5-default qttools5-dev-tools
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
+install:
+  - sudo apt-get -y install qt55[QTPACKAGE]
+
 before_script:
 - psql -c 'create database bc_test;' -U postgres
 script:
-- qmake -project
-- qmake Ultron.pro
+- source /opt/qt55/bin/qt55-env.sh
+- /opt/qt55/bin/qmake
 - make
 - bundle exec rake db:migrate RAILS_ENV=test VERBOSE=false
 - bundle exec rake db:seed RAILS_ENV=test
