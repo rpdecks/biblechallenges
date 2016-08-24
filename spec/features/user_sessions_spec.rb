@@ -9,10 +9,10 @@ feature "User session spec" do
     challenge2 = create(:challenge, name: "Not Cool")
 
     visit root_path
-    click_link "Login"
+    click_link "Log in"
     fill_in 'user[email]', with: user.email
     fill_in 'user[password]', with: "password"
-    click_button "Sign in"
+    click_button "Log in"
 
     expect(page).to have_content(challenge.name)
     expect(page).to_not have_content(challenge2.name)
@@ -23,10 +23,10 @@ feature "User session spec" do
     create(:challenge, name: "Not Cool")
 
     visit root_path
-    click_link "Login"
+    click_link "Log in"
     fill_in 'user[email]', with: user.email
     fill_in 'user[password]', with: "password"
-    click_button "Sign in"
+    click_button "Log in"
 
     expect(current_path).to eq root_path
   end
@@ -37,10 +37,10 @@ feature "User session spec" do
 
       visit "/challenges/#{challenge.slug}"
       click_link_or_button "Sign me up"
-      click_link "Login", :match => :first
+      click_link "Log in", :match => :first
       fill_in 'user[email]', with: user.email
       fill_in 'user[password]', with: "password"
-      click_button "Sign in"
+      click_button "Log in"
 
       expect(current_path).to eq challenge_path(challenge)
     end
@@ -48,11 +48,11 @@ feature "User session spec" do
 
   scenario "User signs in and signs out of biblechallenges" do
     visit root_path
-    click_link "Login"
+    click_link "Log in"
     fill_in 'user[email]', with: user.email
     fill_in 'user[password]', with: "password"
-    click_button "Sign in"
-    click_link "Logout"
+    click_button "Log in"
+    click_link "Log out"
     expect(current_path).to eq "/"
   end
 end
