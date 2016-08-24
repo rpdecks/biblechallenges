@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+         :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Constants
   BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV RCV)
