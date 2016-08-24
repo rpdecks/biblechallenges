@@ -5,12 +5,17 @@ rvm:
 addons:
   postgresql: '9.3'
 before_install:
+- sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+- sudo apt-get update -qq
+- sudo apt-get install -qq qt5-qmake qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 before_script:
 - psql -c 'create database bc_test;' -U postgres
 script:
-- 
+- qmake -qt=qt5 -v
+- qmake -qt=qt5
+- make
 - bundle exec rake db:migrate RAILS_ENV=test VERBOSE=false
 - bundle exec rake db:seed RAILS_ENV=test
 - bundle exec rspec -fp -t ~skip spec/
