@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
     return unless request.get?
     if (request.path != "/users/sign_in" &&
         request.path != "/users/sign_up" &&
+        request.path != "/users/password/new" &&
+        request.path != "/users/password/edit" &&
         request.path != "/users/auth/facebook/callback" &&
         request.path != "/users/auth/google_oauth2/callback" &&
         !request.xhr?) # don't store ajax calls
