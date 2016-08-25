@@ -91,7 +91,6 @@
 			if @state.comments.length == 0
 				React.DOM.div
 					className: 'comment-list__no-comments'
-					'No comments yet!'
 			for comment in @state.comments by -1
 				React.DOM.div
 					className: ''
