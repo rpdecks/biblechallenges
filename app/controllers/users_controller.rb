@@ -20,7 +20,8 @@ class UsersController < ApplicationController
   def remove_avatar
     @user = current_user
     @user.update_attributes(avatar_file_name: nil)
-    redirect_to edit_user_path, notice: "User avatar has been removed"
+    AvatarlyAttacher.new(@user).attach
+    redirect_to edit_user_path, notice: "Custom avatar has been removed"
   end
 
   private

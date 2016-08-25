@@ -1,5 +1,7 @@
 class AvatarlyAttacher
 
+  DEFAULT_FILENAME = 'avatarly.png'
+
   def initialize(user)
     @user = user
   end
@@ -8,7 +10,7 @@ class AvatarlyAttacher
     if missing_avatar?
       new_avatar = Avatarly.generate_avatar(only_letters(@user.name))
       @user.avatar = StringIO.new(new_avatar)
-      @user.avatar_file_name = 'avatarly.png'
+      @user.avatar_file_name = DEFAULT_FILENAME
       @user.save
     end
   end
