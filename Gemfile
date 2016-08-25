@@ -54,6 +54,7 @@ gem 'chartkick'
 gem 'chartkick-remote'
 gem 'groupdate'
 gem 'active_model_serializers'
+gem 'avatarly'
 
 #sortable table/link
 gem 'ransack'
