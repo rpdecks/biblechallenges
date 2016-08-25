@@ -58,6 +58,10 @@ GEM
     autoprefixer-rails (6.3.3)
       execjs
       json
+    avatarly (1.4.0)
+      rfc822
+      rmagick
+      unicode_utils
     awesome_print (1.6.1)
     aws-sdk (1.66.0)
       aws-sdk-v1 (= 1.66.0)
@@ -346,6 +350,8 @@ GEM
     request_store (1.3.0)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
+    rfc822 (0.1.5)
+    rmagick (2.16.0)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -446,6 +452,7 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicode_utils (1.4.0)
     unicorn (5.0.1)
       kgio (~> 2.6)
       rack
@@ -472,6 +479,7 @@ DEPENDENCIES
   airbrake (~> 4.3.4)
   annotate
   autoprefixer-rails
+  avatarly
   awesome_print
   aws-sdk (~> 1.6)
   better_errors
