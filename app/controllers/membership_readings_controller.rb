@@ -1,7 +1,7 @@
 class MembershipReadingsController < ApplicationController
   respond_to :html, :json
+
   acts_as_token_authentication_handler_for User, only: [:create]
-  before_filter :authenticate_user!, except: [:confirmation] # needs to follow token_authentication_handler
 
   layout 'from_email'
 
