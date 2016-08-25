@@ -9,9 +9,5 @@ describe Users::RegistrationsController do
       expect(UserCompletion).to have_received(:new)
     end
   end
-
-  describe "#finish_signup" do
-
-  end
 end
 

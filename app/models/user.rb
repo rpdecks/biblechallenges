@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+         :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Constants
   BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV RCV)
@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user = User.find_by(email: auth.info.email)
-
     if user
       user.provider = auth.provider
       user.uid = auth.uid
@@ -54,7 +53,7 @@ class User < ActiveRecord::Base
       u.password = Devise.friendly_token[0,15]
       u.name = auth.info.name
       u.image = auth.info.image
-      u.save!
+      UserCompletion.new(u)
     end
   end
 

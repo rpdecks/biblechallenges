@@ -101,4 +101,6 @@ RSpec.configure do |config|
   config.include LoginMacros
   config.include CreationMacros
   config.include ControllerMacros, type: :controller
+  config.include MailerMacros
+  config.before(:each) { reset_email }
 end
