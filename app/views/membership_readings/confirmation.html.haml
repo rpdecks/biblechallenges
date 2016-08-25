@@ -1,13 +1,9 @@
 %br
-%br
-%h3
-  = @slug
-%br
 %h5
-  Thank you for entering your reading!
+  = "Thank you for entering your reading, #{@reading_confirmation_stats.name}!"
+  %br
+  %br
   .panel.panel-info
-    .panel-heading
-      %h4= @reading_confirmation_stats.name
     .panel-body
       %p
         Total Challenge Members:
@@ -17,6 +13,15 @@
         = @reading_confirmation_stats.read_chapters_over_total_chapters
         of the total chapters in this challenge.
 
+  %p 
+    Did you discover anything new in your reading today?  Share with the others on your challenge!
+  - @reading_confirmation_stats.readings.each do |r|
+    %h5= "#{r.book_and_chapter} Comments / Reponses "
+    = react_chat (r)
+    %br
+    %br
+    %br
+    %br
   .panel.panel-info
     .panel-heading
       %h5

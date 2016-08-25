@@ -4,13 +4,18 @@ class ReadingConfirmationStats
 
   INDIV_LIMIT = 5
 
-  def initialize(membership, challenge)
+  def initialize(membership, challenge, reading_ids = [])
     @membership = membership
     @challenge = challenge
+    @reading_ids = reading_ids
   end
 
   def read_chapters_over_total_chapters
     "#{@membership.membership_readings.count}/#{total_chapters}"
+  end
+
+  def readings
+    Reading.where(id: @reading_ids)
   end
 
   def slug
