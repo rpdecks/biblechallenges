@@ -15,7 +15,7 @@
     %tbody
       %tr
         %td
-          = render 'shared/avatar_medium', user: @membership.user
+          = medium_avatar(@membership.user)
           - if @challenge.owner == @membership.user
             %span
               = "#{@membership.user.decorate.name} (*)"

@@ -20,7 +20,7 @@
   - group.memberships.each do |membership|
     %tr
       %td
-        = render 'shared/avatar_medium', user: membership.user
+        = medium_avatar(membership.user)
         %span
           = membership.user.decorate.name
       %td= membership.membership_readings.size
