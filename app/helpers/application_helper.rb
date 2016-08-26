@@ -39,6 +39,13 @@ module ApplicationHelper
     })
   end
 
+  def medium_avatar(user)
+    image_tag avatar_url(user),
+      title: "#{user.name}",
+      class: "img-circle",
+      size: "35x35"
+  end
+
 # I know this is gross but I'm leaving these helper examples in here; they are helpful
 # raw [
 #   tag('meta', property: 'og:image', content: image_url('ralph-gradient.png')),

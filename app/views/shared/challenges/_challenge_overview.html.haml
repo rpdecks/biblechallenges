@@ -17,7 +17,7 @@
   = @challenge.available_dates.last.strftime("%-m/%-d/%Y")
 
 - @challenge.members.each do |m|
-  = render 'shared/avatar_medium', user: m
+  = medium_avatar(m)
 
 %br
 %br
