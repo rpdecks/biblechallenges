@@ -1,7 +1,7 @@
 class MembershipReadingsController < ApplicationController
   respond_to :html, :json
 
-  acts_as_token_authentication_handler_for User, only: [:create]
+  acts_as_token_authentication_handler_for User, only: [:create, :confirmation]
 
   layout 'from_email'
 
@@ -22,7 +22,10 @@ class MembershipReadingsController < ApplicationController
       respond_to do |format|
         format.html {
           if params[:source] == "email"
-            redirect_to confirmation_membership_reading_path(id: readings.pluck(:id), membership_id: membership.id)
+            redirect_to confirmation_membership_reading_path(
+              id: readings.pluck(:id), 
+              membership_id: membership.id,
+              user_token: membership.user.authentication_token)
           else
             redirect = params[:location] || request.referer
             redirect += params[:anchor] if params[:anchor]
