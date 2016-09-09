@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
   def index
     if params[:query]
-      @public_challenges = Challenge.search_by_name(params[:query])
+      @public_challenges = Challenge.search_by_name(params[:query]).reorder(begindate: :desc)
     else
       @public_challenges = Challenge.includes(:members).current.at_least_5_members.sample(6)
     end
