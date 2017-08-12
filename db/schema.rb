@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511163558) do
+ActiveRecord::Schema.define(version: 20170627200119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,15 @@ ActiveRecord::Schema.define(version: 20160511163558) do
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
+  create_table "reading_prompts", force: :cascade do |t|
+    t.integer  "reading_id"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "reading_prompts", ["reading_id"], name: "index_reading_prompts_on_reading_id", using: :btree
+
   create_table "readings", force: :cascade do |t|
     t.integer "chapter_id"
     t.integer "challenge_id"
@@ -284,4 +293,5 @@ ActiveRecord::Schema.define(version: 20160511163558) do
   add_index "verses", ["chapter_index"], name: "index_verses_on_chapter_index", using: :btree
 
   add_foreign_key "badges", "users"
+  add_foreign_key "reading_prompts", "readings"
 end
