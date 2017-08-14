@@ -35,3 +35,16 @@
       = "Total Groups: #{@challenge.groups.size} "
     = render partial: 'creator/challenges/groups_table', locals: {challenge: @challenge}
   = link_to "Add a group", new_creator_challenge_group_path(challenge_id: @challenge.id), :class => 'btn btn-success btn-sm'
+  %br
+  %br
+
+  .panel.panel-primary
+    .panel-heading
+      = "Total Readings: #{@readings.size} "
+    %table.table.table-striped.table-bordered.table-hover
+      - @readings.each do |reading|
+        %tr
+          %td= reading.chapter.book_and_chapter
+          %td= reading.discussion
+          %td= link_to "Edit", edit_reading_path(reading)
+

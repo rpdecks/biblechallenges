@@ -26,7 +26,7 @@ class ReadingsController < ApplicationController
   def update
     @reading = Reading.find(params[:id])
     flash[:notice] = "Reading successfully updated" if @reading.update_attributes(reading_params)
-    redirect_to reading_path(@reading)
+    redirect_to creator_challenge_path(@reading.challenge)
   end
 
 

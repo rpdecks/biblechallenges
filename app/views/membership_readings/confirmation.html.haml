@@ -16,6 +16,12 @@
   %p 
     Did you discover anything new in your reading today?  Share with the others on your challenge!
   - @reading_confirmation_stats.readings.each do |r|
+    - unless r.discussion.blank?
+      %h5 #{r.book_and_chapter} Discussion:
+      %br
+      = r.discussion
+      %br
+      %br
     %h5= "#{r.book_and_chapter} Comments / Reponses "
     = react_chat (r)
     %br

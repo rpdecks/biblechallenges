@@ -22,7 +22,7 @@ class Creator::ChallengesController < ApplicationController
                                          :group_statistic_progress_percentage,
                                          :group_statistic_on_schedule_percentage,
                                          :group_statistic_total_chapters_read)
-    @readings  = @challenge.readings.order(:date)
+    @readings  = @challenge.readings.order(:read_on)
   end
 
   def toggle
