@@ -10,4 +10,16 @@
         - verses.each do |v|
           = v.decorate.to_div
 
-      = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: r.book_and_chapter, membership: @membership, todays_reading: r }
+  -if current_user.bible_version == "RCV"
+    %center
+      %strong
+        Verses accessed from the Holy Bible Recovery Version (text-only edition) © 2012 Living Stream Ministry www.lsm.org
+
+  %br
+    = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: r.book_and_chapter, membership: @membership, todays_reading: r }
+
+  %br
+  %br
+  - unless r.discussion.blank?
+    %h5 For Discussion:
+    = r.discussion

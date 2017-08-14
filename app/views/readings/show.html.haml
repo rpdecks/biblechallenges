@@ -34,6 +34,10 @@
           %br
         = button_to "Back to Challenge", member_challenge_path(@membership.challenge), :method => :get
 
+    - unless @reading.discussion.blank?
+      %h5 For Discussion:
+      = @reading.discussion
+  %br
     .reading-comments__comments
       %h5 Reading Comments
       = react_chat(@reading)

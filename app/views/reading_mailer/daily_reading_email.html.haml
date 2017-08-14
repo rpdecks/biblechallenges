@@ -22,6 +22,11 @@
           - verses.each do |v|
             %li=raw v.text
 
+        - unless reading.discussion.blank?
+          %h5 Discussion:
+          = reading.discussion
+
+
         -if @membership.user.bible_version == "RCV"
           %center
             %strong
