@@ -22,7 +22,7 @@ Biblechallenge::Application.routes.draw do
       resources :memberships, only: [:edit, :update]
       resources :groups, only: [:new, :create, :edit]
       member do
-        get 'snapshot_email' 
+        get 'snapshot_email'
       end
       resources :mass_emails, only: [:new, :create]
       get 'toggle'
@@ -67,9 +67,11 @@ Biblechallenge::Application.routes.draw do
   end
 
   get '/log_reading/' => 'membership_readings#create', as: 'log_reading'
+  # Temp fix - To handle the hash added in the emails sent
+  get '/:trk_hash1/log_reading/' => 'membership_readings#create'
+  get '/:trk_hash1/:trk_hash2/log_reading/' => 'membership_readings#create'
 
   resources :challenges, only: [:index, :show], controller: 'challenges'
   get 'challenges_statistics' => 'challenges#public_statistics'
   root to: 'challenges#index'
-
 end
