@@ -68,6 +68,7 @@ Biblechallenge::Application.routes.draw do
 
   get '/log_reading/' => 'membership_readings#create', as: 'log_reading'
   # Temp fix - To handle the hash added in the emails sent
+  get '/:trk_hash1/log_reading/' => 'membership_readings#create'
   get '/:trk_hash1/:trk_hash2/log_reading/' => 'membership_readings#create'
 
   resources :challenges, only: [:index, :show], controller: 'challenges'
