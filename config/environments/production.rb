@@ -58,15 +58,17 @@ Biblechallenge::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  config.action_controller.default_url_options = { host: 'www.biblechallenges.com' }
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
   config.action_mailer.delivery_method = :smtp
-  
+
   if ENV['STAGING']
     config.action_mailer.default_url_options = { host: 'bc-staging.herokuapp.com' }
   else
-    config.action_mailer.default_url_options = { host: 'biblechallenges.com' }
+    config.action_mailer.default_url_options = { host: 'www.biblechallenges.com' }
   end
 
   # if ENV staging is set, send email to mailtrap
