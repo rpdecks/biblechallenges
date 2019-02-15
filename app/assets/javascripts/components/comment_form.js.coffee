@@ -18,7 +18,7 @@
 		responseForCommentId: null
 		currentUser: null
 		addResponseHandler: null
-		
+
 	getInitialState: ->
 		isBusy: false
 
@@ -74,8 +74,8 @@
 					context.handleTextAutoResize()
 				else
 					context.props.addResponseHandler(response.id, context.refs.commentText.value, context.props.responseForCommentId)
-			error: ->
-				alert('Sorry, unable to create your comment now. Please try again later.')
+			error: (response) ->
+				alert(response.responseJSON.errors)
 				context.setState isBusy: false
 
 	render: ->
@@ -92,8 +92,9 @@
 					ref: 'commentText'
 					id: 'comment_content'
 					rows: 1
+					maxLength: 1000
 					className: 'comment-form__comment-text'
-					placeholder:  if @props.isResponse == false then 'Write a comment...' else 'Write a reply...'
+					placeholder:  if @props.isResponse == false then 'Write a comment within 1000 chars...' else 'Write a reply within 1000 chars...'
 					onChange: @handleOnChange
 					onInput: @handleTextAutoResize
 					onKeyDown: @handleEnterKeySubmit
