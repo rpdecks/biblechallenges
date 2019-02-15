@@ -6,5 +6,9 @@ FactoryGirl.define do
     chapter
     read_on      {Date.today}
     discussion "This is so interesting"
+
+    trait :with_challenge_membership do
+      association :challenge, :with_membership
+    end
   end
 end
