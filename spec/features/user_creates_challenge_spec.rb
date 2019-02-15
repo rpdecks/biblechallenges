@@ -32,6 +32,25 @@ feature 'User manages challenges' do
     end
   end
 
+  scenario 'User creates a challenge that starts tomorrow' do
+    visit root_path
+    click_link 'Create a challenge'
+
+    Sidekiq::Testing.inline! do
+      fill_in 'challenge[name]', with: "challenge 1"
+      fill_in 'challenge[begindate]', with: Date.today + 1.day
+      select "Matthew", from: 'challenge[begin_book]'
+      select "John", from: 'challenge[end_book]'
+
+      click_button "Create Challenge"
+
+      expect(Challenge.all.size).to eq 1
+
+      all_emails = ActionMailer::Base.deliveries
+      expect(all_emails.size).to eq 1 #New membership email
+    end
+  end
+
   scenario 'User creates a challenge and automatically joins the challenge' do
     visit root_path
     click_link 'Create a challenge'
