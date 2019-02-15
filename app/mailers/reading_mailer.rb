@@ -10,6 +10,7 @@ class ReadingMailer < ActionMailer::Base
     @challenge = @readings.first.challenge
     @user = User.find(member)
     @membership = Membership.where(user: @user, challenge: @challenge).first
+    subject = "#{@readings.first.chapter.book_and_chapter} - #{@challenge.name}"
 
     unless @membership.nil?
       EmailLog.create(event: "Deliver",
@@ -23,7 +24,7 @@ class ReadingMailer < ActionMailer::Base
 
       mail(
         to: @user.email,
-        subject: "#{@challenge.name.first(12)}...BibleChallenges.com reading - #{@reading_date.strftime("%B %d")}: #{@readings.first.chapter.book_and_chapter}..."
+        subject: subject
       )
     end
   end
