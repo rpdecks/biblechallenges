@@ -11,13 +11,11 @@ feature 'User unsubscribes via email' do
     create(:membership, user: user, challenge: challenge)
     ReadingMailer.daily_reading_email([challenge.readings.first.id], user.id).deliver_now
 
-    expect{
     open_last_email
-    path = parse_email_for_link(current_email, "Here")# the link is Click *here* to unsubsubscribe
+    path = parse_email_for_link(current_email, "Manage your notification preferences.")# the link is Click *here* to unsubsubscribe
+    login(user)
     visit(path)
-    click_button("Unsubscribe")
-    }.to change(Membership, :count).by(-1)
-
+    expect(page.body).to include('Email Preferences')
   end
 end
 

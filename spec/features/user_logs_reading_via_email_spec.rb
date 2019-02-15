@@ -49,8 +49,8 @@ feature 'User logs reading via email' do
     open_last_email
     visit_in_email("Confirm")
 
-    expect(page).to have_content ("Wazzup")
-    expect(page).to have_content ("Howdy")
+    expect(page.body).to include("Wazzup")
+    expect(page.body).to include("Howdy")
   end
 
 end

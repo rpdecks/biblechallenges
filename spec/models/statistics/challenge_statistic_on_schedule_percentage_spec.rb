@@ -16,13 +16,13 @@ describe ChallengeStatisticOnSchedulePercentage do
       m3 = create(:membership, challenge: challenge)
 
       readings[0..2].each do |r|
-        create(:membership_reading, membership: m1, reading:r)
-        create(:membership_reading, membership: m2, reading:r)
-        create(:membership_reading, membership: m3, reading:r)
+        create(:membership_reading, membership: m1, reading:r, on_schedule: 1)
+        create(:membership_reading, membership: m2, reading:r, on_schedule: 1)
+        create(:membership_reading, membership: m3, reading:r, on_schedule: 1)
         Timecop.travel(1.day) # each member read 3 chapters on-schedule, 9 readings
       end
       readings[3..5].each do |r|
-        create(:membership_reading, membership: m1, reading:r)
+        create(:membership_reading, membership: m1, reading:r, on_schedule: 1)
         Timecop.travel(1.day)
         # read 12 / 18 membership readings are on-schedule
       end
@@ -30,8 +30,8 @@ describe ChallengeStatisticOnSchedulePercentage do
       m1.update_stats
       MembershipStatisticOnSchedulePercentage.new(membership: m2).update
       MembershipStatisticOnSchedulePercentage.new(membership: m3).update
-      stat = ChallengeStatisticOnSchedulePercentage.new(challenge: challenge)
-      expect(stat.calculate).to eq 66  # 12 on-schedule out of 18
+      challenge_stat = ChallengeStatisticOnSchedulePercentage.new(challenge: challenge)
+      expect(challenge_stat.calculate).to eq 66  # 12 on-schedule out of 18
     end
   end
 end
