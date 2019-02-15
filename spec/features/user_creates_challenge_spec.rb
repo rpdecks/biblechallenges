@@ -28,7 +28,7 @@ feature 'User manages challenges' do
       expect(all_emails.size).to eq 2 #Today's reading and new membership email
 
       todays_reading = all_emails.last
-      expect(todays_reading.subject).to include "challenge 1...BibleChallenges.com reading"
+      expect(todays_reading.subject).to include "Matthew 1 - challenge 1"
     end
   end
 

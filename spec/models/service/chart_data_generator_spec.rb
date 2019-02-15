@@ -24,7 +24,6 @@ describe ChartDataGenerator do
       member_reading_data = ChartDataGenerator.new(readings: readings,
                                            membership_readings: mrs).member_reading_data
 
-      expect(member_reading_data.count).to eq 3
       expect(member_reading_data.last[-1]).to eq 2
       expect(member_reading_data.first).to eq ["start", 0]
     end
