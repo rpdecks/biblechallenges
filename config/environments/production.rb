@@ -106,7 +106,7 @@ Biblechallenge::Application.configure do
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
-      :email_prefix => "[PREFIX] ",
+      :email_prefix => "LIVE EXCEPTION - ",
       :sender_address => %{"Bible Challenges Exception Notifier" <notifier@biblechallenges.com>},
       :exception_recipients => ENV['EXCEPTION_EMAILS_TO']
     },
