@@ -62,7 +62,6 @@ gem 'ransack'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-
 group :production do
   gem 'unicorn'
   gem 'unicorn-worker-killer'
@@ -76,6 +75,7 @@ group :development do
   gem 'better_errors'
   gem "awesome_print", require:"ap"
   gem 'letter_opener'
+  gem 'meta_request'
 end
 
 # Gems used only for assets and not required

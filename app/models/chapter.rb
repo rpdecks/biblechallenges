@@ -7,7 +7,7 @@ class Chapter < ActiveRecord::Base
   has_many :membership_readings
 
   def book_and_chapter
-    book_name + " " + chapter_number.to_s
+    @book_and_chapter ||= book_name + ' ' + chapter_number.to_s
   end
 
   def self.book_name_from_pair(book_chapter_pair)
