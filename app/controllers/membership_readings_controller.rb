@@ -1,7 +1,7 @@
 class MembershipReadingsController < ApplicationController
   respond_to :html, :json
 
-  acts_as_token_authentication_handler_for User, only: [:create, :confirmation]
+  acts_as_token_authentication_handler_for User, only: [:create, :confirmation, :destroy]
 
   layout 'from_email'
 
@@ -23,7 +23,7 @@ class MembershipReadingsController < ApplicationController
         format.html {
           if params[:source] == "email"
             redirect_to confirmation_membership_reading_path(
-              id: readings.pluck(:id), 
+              id: readings.pluck(:id),
               membership_id: membership.id,
               user_token: membership.user.authentication_token)
           else
@@ -37,7 +37,7 @@ class MembershipReadingsController < ApplicationController
         }
       end
     else
-      raise "Not allowed"
+      format.json { head :bad_request }
     end
   end
 
@@ -55,7 +55,7 @@ class MembershipReadingsController < ApplicationController
       update_stats
 
       respond_to do |format|
-        format.html { 
+        format.html {
           # go back to referer unless alternate location passed in
           redirect = params[:location] || request.referer
           # might be an anchor tag
@@ -65,7 +65,7 @@ class MembershipReadingsController < ApplicationController
         format.json { head :no_content }
       end
     else
-      raise "Not allowed"
+      head :bad_request
     end
   end
 
