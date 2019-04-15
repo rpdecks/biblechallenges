@@ -15,8 +15,27 @@
         = stylesheet_link_tag    "application", :media => "all"
         = javascript_include_tag "application"
         = csrf_meta_tags
-  %body
 
+    :javascript
+      (function(d,n)
+        {var s,a,p;
+        s=document.createElement("script");
+        s.type="text/javascript";
+        s.async=true;
+        s.src=(document.location.protocol==="https:"?"https:":"http:")+"//cdn.nudgespot.com"+"/nudgespot.js";
+        a=document.getElementsByTagName("script");
+        p=a[a.length-1];
+        p.parentNode.insertBefore(s,p.nextSibling);
+        window.nudgespot=n;
+        n.init=function(t){function f(n,m){var a=m.split('.');
+        2==a.length&&(n=n[a[0]],m=a[1]);
+        n[m]=function(){n.push([m].concat(Array.prototype.slice.call(arguments,0)))}}n._version=0.1;n._globals=[t];n.people=n.people||[];
+        n.params=n.params||[];
+        m="track register unregister identify set_config people.delete people.create people.update people.create_property people.tag people.remove_Tag".split(" ");
+        for(var i=0;i<m.length;i++)f(n,m[i])}})(document,window.nudgespot||[]);nudgespot.init('#{ENV['NUDGESPOT_JS_API_KEY']}');
+        nudgespot.identify("#{current_user.email || 'guest'}", {name: "#{current_user.name || 'user'}"});
+
+  %body
 
     / Nav Header
     %nav.navbar.navbar-default.navbar-fixed-top
@@ -34,24 +53,16 @@
             %li
               = link_to "Blog", "http://blog.biblechallenges.com"
             %li
-              = link_to "FAQ", page_path("faq")
+              = link_to "Leaderboards", challenges_statistics_path
             %li
-              - if user_signed_in?
-                = link_to('My Challenges', member_challenges_path)
-            %li.profile-link
-              - if user_signed_in?
-                = link_to edit_user_path do
-                  = render 'shared/avatar', user: current_user
+              = link_to "FAQ", page_path("faq")
             - if user_signed_in?
-              %li
-                = link_to('Logout', destroy_user_session_path, :method => :delete)
+              %li= link_to('My Challenges', member_challenges_path)
+              %li= link_to 'Profile', edit_user_path
+              %li= link_to('Log out', destroy_user_session_path, :method => :delete)
             - else
               %li
-                = link_to('Login', new_user_session_path)
-              %li
-                = link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-              %li
-                = link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2)
+                = link_to 'Log in', new_user_session_path
 
           .form-inline.navbar-form.navbar-right
             = form_tag challenges_path, method: :get, class: "input-group" do

@@ -28,6 +28,10 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+Capybara::Webkit.configure do |config|
+  config.block_unknown_urls
+end
+
 RSpec.configure do |config|
 
   #clears jobs in in worker array before each
@@ -97,4 +101,6 @@ RSpec.configure do |config|
   config.include LoginMacros
   config.include CreationMacros
   config.include ControllerMacros, type: :controller
+  config.include MailerMacros
+  config.before(:each) { reset_email }
 end

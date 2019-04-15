@@ -7,10 +7,10 @@
 
     %br
     .centered
-      - if current_user
+      - if current_user.is_a?(User)
         = link_to "Join Challenge", member_challenge_memberships_path(challenge_id: @challenge.id), method: :post, :class => 'btn block-center', display: 'inline'
-      - unless current_user
-        = link_to "Sign me up", new_user_registration_path(challenge_id: @challenge.id), :class => 'btn btn-primary'
+      - unless current_user.is_a?(User)
+        = link_to "Sign me up", new_user_registration_path, :class => 'btn btn-primary'
 
 .section.grey
   .container

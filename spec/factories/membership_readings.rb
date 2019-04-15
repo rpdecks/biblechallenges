@@ -5,5 +5,6 @@ FactoryGirl.define do
     membership
     reading
     user
+    chapter
   end
 end

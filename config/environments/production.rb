@@ -58,15 +58,17 @@ Biblechallenge::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  config.action_controller.default_url_options = { host: 'www.biblechallenges.com' }
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
   config.action_mailer.delivery_method = :smtp
-  
+
   if ENV['STAGING']
     config.action_mailer.default_url_options = { host: 'bc-staging.herokuapp.com' }
   else
-    config.action_mailer.default_url_options = { host: 'biblechallenges.com' }
+    config.action_mailer.default_url_options = { host: 'www.biblechallenges.com' }
   end
 
   # if ENV staging is set, send email to mailtrap
@@ -95,6 +97,7 @@ Biblechallenge::Application.configure do
   # paperclip with s3 storage
   config.paperclip_defaults = {
     :storage => :s3,
+    :s3_host_name => ENV["AWS_HOST_NAME"],
     :s3_credentials => {
       :bucket => ENV["AWS_BUCKET_NAME"],
     }
@@ -103,9 +106,9 @@ Biblechallenge::Application.configure do
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
-      :email_prefix => "[PREFIX] ",
+      :email_prefix => "LIVE EXCEPTION - ",
       :sender_address => %{"Bible Challenges Exception Notifier" <notifier@biblechallenges.com>},
-      :exception_recipients => %w{pdbradley@gmail.com}
+      :exception_recipients => ENV['EXCEPTION_EMAILS_TO']
     },
     :slack => {
       :webhook_url => "https://hooks.slack.com/services/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",

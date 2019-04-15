@@ -12,7 +12,7 @@ describe Comment do
       reading = create(:reading, challenge: challenge)
       random_user = create(:user)
       newcomment = FactoryGirl.build(:reading_comment, user: random_user, commentable: reading)
-      expect(newcomment).to have(1).errors_on(:user_id)
+      expect(newcomment).to have(1).errors_on(:base)
     end
 
   end

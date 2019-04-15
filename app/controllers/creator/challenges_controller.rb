@@ -22,7 +22,7 @@ class Creator::ChallengesController < ApplicationController
                                          :group_statistic_progress_percentage,
                                          :group_statistic_on_schedule_percentage,
                                          :group_statistic_total_chapters_read)
-    @readings  = @challenge.readings.order(:date)
+    @readings  = @challenge.readings.order(:read_on)
   end
 
   def toggle
@@ -104,7 +104,7 @@ class Creator::ChallengesController < ApplicationController
   end
 
   def challenge_params
-    params.require(:challenge).permit(:owner_id, :name, :users, :dates_to_skip, :begindate, :enddate, :chapters_to_read, :previous_challenge_id, days_of_week_to_skip: [])
+    params.require(:challenge).permit(:owner_id, :name, :users, :dates_to_skip, :begindate, :enddate, :chapters_to_read, :previous_challenge_id, :begin_book, :end_book, days_of_week_to_skip: [])
   end
 
   def validate_ownership

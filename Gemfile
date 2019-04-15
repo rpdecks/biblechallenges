@@ -7,10 +7,12 @@ gem 'pg'
 gem 'haml-rails'
 gem 'devise'
 gem 'high_voltage'
+gem 'kaminari'
 gem 'simple_form'
 gem 'bootstrap-datepicker-rails', '1.1.1.9'
 gem 'bootstrap-switch-rails', '~> 3.0.0'
 gem 'activerecord-import'
+gem 'foreman'
 #gem 'chosen-rails'
 gem 'thin'
 gem 'sidekiq'
@@ -41,7 +43,6 @@ gem 'google-instant-hangouts'
 gem 'ruby_array_find_consecutive'
 gem 'paperclip'
 gem 'aws-sdk', '~> 1.6'
-gem 'intercom-rails'
 gem 'friendly_id'
 gem 'mail_form'
 gem 'exception_notification'
@@ -49,13 +50,17 @@ gem 'slack-notifier'
 gem "autoprefixer-rails" #prefix styles for cross-browser
 gem 'fastercsv'
 gem 'rcv_bible', '~> 0.0.5'
+gem 'chartkick'
+gem 'chartkick-remote'
+gem 'groupdate'
+gem 'active_model_serializers'
+gem 'avatarly'
 
 #sortable table/link
 gem 'ransack'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 
 group :production do
   gem 'unicorn'
@@ -68,9 +73,9 @@ end
 group :development do
   gem 'mail_view'
   gem 'better_errors'
+  gem "awesome_print", require:"ap"
   gem 'letter_opener'
-  gem 'letter_opener_web'
-#  gem 'bullet'
+  gem 'meta_request'
 end
 
 # Gems used only for assets and not required
@@ -91,7 +96,7 @@ gem 'jquery-rails'
 group :development, :test do
   gem 'rspec-rails', '~> 3.3.0'
   gem 'spring-commands-rspec'
-  gem 'pry-byebug'
+#  gem 'pry-byebug'
   gem 'sqlite3'
   gem 'hpricot'
   gem 'ruby_parser'
@@ -101,6 +106,7 @@ group :development, :test do
   gem 'timecop'
   gem 'rspec-collection_matchers'
   gem 'dotenv-rails'
+  gem 'pry-remote'
 end
 
 group :test do

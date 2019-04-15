@@ -23,7 +23,7 @@ class ReadingMailer < ActionMailer::Base
 
       mail(
         to: @user.email,
-        subject: "Bible Challenge reading for #{@challenge.name}"
+        subject: "#{@challenge.name.first(12)}...BibleChallenges.com reading - #{@reading_date.strftime("%B %d")}: #{@readings.first.chapter.book_and_chapter}..."
       )
     end
   end

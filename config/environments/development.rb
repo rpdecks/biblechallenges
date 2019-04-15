@@ -38,21 +38,13 @@ Biblechallenge::Application.configure do
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # delivering email
-  config.action_mailer.delivery_method = :letter_opener_web
-  config.action_mailer.smtp_settings = {
-    :address => "localhost",
-    :port    => 1025
-  }
+  config.action_mailer.delivery_method = :letter_opener
 
   # add db logging
   config.active_record_logger = Logger.new("log/sql.log")
 
-  # paperclip with s3 storage
+  # paperclip with s3 storage turned OFF in development
   config.paperclip_defaults = {
-    :storage => :s3,
-    :s3_credentials => {
-      :bucket => ENV["AWS_BUCKET_NAME"],
-    }
   }
 
 #  config.after_initialize do

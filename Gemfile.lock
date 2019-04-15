@@ -24,6 +24,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    active_model_serializers (0.9.5)
+      activemodel (>= 3.2)
     activejob (4.2.1)
       activesupport (= 4.2.1)
       globalid (>= 0.3.0)
@@ -56,6 +58,11 @@ GEM
     autoprefixer-rails (6.3.3)
       execjs
       json
+    avatarly (1.4.0)
+      rfc822
+      rmagick
+      unicode_utils
+    awesome_print (1.6.1)
     aws-sdk (1.66.0)
       aws-sdk-v1 (= 1.66.0)
     aws-sdk-v1 (1.66.0)
@@ -79,7 +86,7 @@ GEM
     bootswatch-rails (3.3.5)
       railties (>= 3.1)
     builder (3.2.2)
-    byebug (8.2.2)
+    callsite (0.0.11)
     capybara (2.6.2)
       addressable
       mime-types (>= 1.16)
@@ -107,6 +114,10 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.5)
       timers (>= 4.1.1)
+    chartkick (1.4.1)
+    chartkick-remote (1.3.0)
+      chartkick (~> 1.2)
+      railties (>= 3.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     climate_control (0.0.3)
@@ -121,7 +132,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
-    concurrent-ruby (1.0.0)
+    concurrent-ruby (1.0.5)
     connection_pool (2.2.0)
     daemons (1.2.3)
     database_cleaner (1.2.0)
@@ -167,6 +178,8 @@ GEM
       thor (~> 0.14)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
+    foreman (0.78.0)
+      thor (~> 0.19.1)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
     get_process_mem (0.2.0)
@@ -176,6 +189,8 @@ GEM
       railties (>= 3.1)
     gretel (3.0.8)
       rails (>= 3.2.0)
+    groupdate (2.5.0)
+      activesupport (>= 3)
     haml (4.0.7)
       tilt
     haml-rails (0.9.0)
@@ -201,8 +216,6 @@ GEM
     httpauth (0.2.1)
     i18n (0.7.0)
     ice_cube (0.13.3)
-    intercom-rails (0.2.30)
-      activesupport (> 3.0)
     jquery-rails (4.1.0)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -210,15 +223,14 @@ GEM
     json (1.8.3)
     jwt (0.1.6)
       multi_json (>= 1.0)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    letter_opener_web (1.3.0)
-      actionmailer (>= 3.2)
-      letter_opener (~> 1.0)
-      railties (>= 3.2)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -228,6 +240,10 @@ GEM
       activemodel (>= 3.2, < 5)
     mail_view (2.0.4)
       tilt
+    meta_request (0.6.0)
+      callsite (~> 0.0, >= 0.0.11)
+      rack-contrib (>= 1.1, < 3)
+      railties (>= 3.0.0, < 6)
     method_source (0.8.2)
     mime-types (2.99)
     mimemagic (0.3.0)
@@ -271,16 +287,18 @@ GEM
       railties (>= 3.1.0)
     polyamorous (1.3.0)
       activerecord (>= 3.0)
-    pry (0.10.3)
+    pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    pry-byebug (3.3.0)
-      byebug (~> 8.0)
-      pry (~> 0.10)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.4)
+    rack (1.6.10)
+    rack-contrib (1.8.0)
+      rack (~> 1.4)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -339,6 +357,8 @@ GEM
     request_store (1.3.0)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
+    rfc822 (0.1.5)
+    rmagick (2.16.0)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -414,7 +434,7 @@ GEM
     spring (1.6.3)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
-    sprockets (3.5.2)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.0.1)
@@ -439,6 +459,7 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicode_utils (1.4.0)
     unicorn (5.0.1)
       kgio (~> 2.6)
       rack
@@ -458,12 +479,15 @@ PLATFORMS
 DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
+  active_model_serializers
   activerecord-deprecated_finders
   activerecord-import
   acts_as_scriptural (= 0.0.5)
   airbrake (~> 4.3.4)
   annotate
   autoprefixer-rails
+  avatarly
+  awesome_print
   aws-sdk (~> 1.6)
   better_errors
   bootstrap-datepicker-rails (= 1.1.1.9)
@@ -473,6 +497,8 @@ DEPENDENCIES
   bootswatch-rails
   capybara
   capybara-webkit
+  chartkick
+  chartkick-remote
   coffee-rails
   database_cleaner (~> 1.2.0)
   devise
@@ -485,22 +511,24 @@ DEPENDENCIES
   fastercsv
   figaro
   font-awesome-rails
+  foreman
   friendly_id
   google-instant-hangouts
   gretel
+  groupdate
   haml
   haml-rails
   high_voltage
   hirb
   hpricot
   htmlentities
-  intercom-rails
   jquery-rails
+  kaminari
   launchy
   letter_opener
-  letter_opener_web
   mail_form
   mail_view
+  meta_request
   omniauth
   omniauth-facebook
   omniauth-google-oauth2
@@ -508,7 +536,7 @@ DEPENDENCIES
   pg
   pg_search
   pickadate-rails
-  pry-byebug
+  pry-remote
   quiet_assets
   rack-timeout
   rails (= 4.2.1)
@@ -543,5 +571,8 @@ DEPENDENCIES
   unicorn
   unicorn-worker-killer
 
+RUBY VERSION
+   ruby 2.2.1p85
+
 BUNDLED WITH
-   1.11.2
+   1.16.4

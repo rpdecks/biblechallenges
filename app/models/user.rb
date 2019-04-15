@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:facebook, :google_oauth2]
+         :omniauthable, :omniauth_providers => [:google_oauth2]
 
   # Constants
   BIBLE_VERSIONS = %w(ASV ESV KJV NASB NKJV RCV)
@@ -28,17 +28,16 @@ class User < ActiveRecord::Base
   has_many :badges, dependent: :destroy
   has_many :membership_readings
 
-  has_attached_file :avatar,
-    :styles => {
+  paper_clip_options = { :styles => {
     :medium => "300x300>",
     :thumb => "75x75>" },
-    :s3_host_name => ENV["AWS_HOST_NAME"],
-    :default_url => "default_avatar.png"
+    :default_url => "default_avatar.png" }
+
+  has_attached_file :avatar, paper_clip_options
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def self.from_omniauth(auth)
     user = User.find_by(email: auth.info.email)
-
     if user
       user.provider = auth.provider
       user.uid = auth.uid
@@ -53,7 +52,7 @@ class User < ActiveRecord::Base
       u.password = Devise.friendly_token[0,15]
       u.name = auth.info.name
       u.image = auth.info.image
-      u.save!
+      UserCompletion.new(u)
     end
   end
 
@@ -95,12 +94,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  def last_recorded_reading_time
-    membership_readings.order(:created_at).last.created_at
+  def last_recorded_reading
+    membership_readings.order(:created_at).last
   end
 
   def last_chapter_posted
-    membership_readings.order(:created_at).last.reading.chapter.book_and_chapter
+    last_recorded_reading.reading.chapter.book_and_chapter
   end
 
   def existing_user?

@@ -1,13 +1,54 @@
 %br
-%br
-.fb-share-button{"data-href" => "#{ENV['APP_URL']+'/challenges/'+@slug}", "layout" => "button", "data-width" => "450"}
-%br
-%br
 %h5
-  Thank you for entering your reading!
+  = "Thank you for entering your reading, #{@reading_confirmation_stats.name}!"
   %br
   %br
-  = link_to "BibleChallenges.com",  root_path
+  .panel.panel-info
+    .panel-body
+      %p
+        Total Challenge Members:
+        = @reading_confirmation_stats.total_members
+      %p
+        You have read
+        = @reading_confirmation_stats.read_chapters_over_total_chapters
+        of the total chapters in this challenge.
+
+  %p 
+    Did you discover anything new in your reading today?  Share with the others on your challenge!
+  - @reading_confirmation_stats.readings.each do |r|
+    - unless r.discussion.blank?
+      %h5 #{r.book_and_chapter} Discussion:
+      %br
+      = r.discussion
+      %br
+      %br
+    %h5= "#{r.book_and_chapter} Comments / Reponses "
+    = react_chat (r)
+    %br
+    %br
+    %br
+    %br
+  .panel.panel-info
+    .panel-heading
+      %h5
+        %u
+          Top Readers
+          (Challenge Progress)
+    .panel-body
+      %table
+        - @reading_confirmation_stats.memberships_by_percentage_challenge_completed.each do |x|
+          %tr
+            %td= x.name
+            %td
+              = x.membership_statistic_progress_percentage.value
+              %span>%
+  %p
+    %strong
+      = link_to "Go to Challenge", challenge_path(@reading_confirmation_stats.challenge, anchor: "statistics")
+    %br
+  %br
+  .fb-share-button{"data-href" => "#{ENV['APP_URL']+'/challenges/'+@reading_confirmation_stats.slug}", "layout" => "button", "data-width" => "450"}
+%br
 
 
 :javascript

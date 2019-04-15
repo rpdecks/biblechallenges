@@ -42,3 +42,9 @@ dump.rdb
 /lib/tasks/clear_database.rake
 
 _site
+
+#paperclip local storage
+public/system
+
+# database dump
+db.dump

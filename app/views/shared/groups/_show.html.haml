@@ -20,12 +20,15 @@
   - group.memberships.each do |membership|
     %tr
       %td
-        = render 'shared/avatar_medium', user: membership.user
+        = medium_avatar(membership.user)
         %span
           = membership.user.decorate.name
       %td= membership.membership_readings.size
       - unless membership.membership_readings.empty?
         %td
+          %strong
+            = membership.membership_readings.order(:created_at).last.reading.book_and_chapter
+          \-
           = time_ago_in_words(membership.last_recorded_reading_time)
           ago
       - else
@@ -36,15 +39,12 @@
   .col-sm-12
     .pull-right
       = render partial: "shared/groups/group_navigation", locals: {group: group}
+    .clearfix
 
-      %span
+    %br
+
+    .group-comments
+      %h4 Group Comments
+      = react_chat(group)
 %br
-
-.row
-  .col-sm-12
-    %h4 Group Comments
-    = render partial: 'groups/comment_form', locals: {comment: Comment.new, group: group}
-
-.row
-  .col-sm-12
-    = render partial: 'groups/comments', locals: {comments: group.comments, group: group}
+%br

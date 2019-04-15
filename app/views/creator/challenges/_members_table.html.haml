@@ -17,7 +17,7 @@
       %td
         = link_to edit_creator_challenge_membership_path(@challenge, membership.id), title: "Assign to Group" do
           %button.btn-outlined
-            = render 'shared/avatar_medium', user: membership.user
+            = medium_avatar(membership.user)
             - if challenge.owner == membership.user
               = "#{membership.user.decorate.name} (Owner)"
             - else 

@@ -1,7 +1,7 @@
 class MembershipReadingsController < ApplicationController
   respond_to :html, :json
-  acts_as_token_authentication_handler_for User, only: [:create]
-  before_filter :authenticate_user!, except: [:confirmation] # needs to follow token_authentication_handler
+
+  acts_as_token_authentication_handler_for User, only: [:create, :confirmation, :destroy]
 
   layout 'from_email'
 
@@ -11,8 +11,8 @@ class MembershipReadingsController < ApplicationController
     if @challenge.has_member?(current_user) && membership.user == current_user
 
       readings.each do |reading|
-        #we want to create a membership reading for each reading so I'm merging the reading params in
-        @membership_reading = MembershipReading.create(membership_reading_params.merge(reading_id: reading.id))
+        @membership_reading = MembershipReading.new(membership_id: membership_reading_params[:membership_id],
+                                                    reading_id: reading.id)
         if @membership_reading.save
           MembershipReadingCompletion.new(current_user, membership, @membership_reading).attach_attributes
           update_stats
@@ -21,18 +21,23 @@ class MembershipReadingsController < ApplicationController
 
       respond_to do |format|
         format.html {
-          # go back to referer unless alternate location passed in
-          redirect = params[:location] || request.referer
-          # might be an anchor tag
-          redirect += params[:anchor] if params[:anchor]
-          redirect_to redirect
+          if params[:source] == "email"
+            redirect_to confirmation_membership_reading_path(
+              id: readings.pluck(:id),
+              membership_id: membership.id,
+              user_token: membership.user.authentication_token)
+          else
+            redirect = params[:location] || request.referer
+            redirect += params[:anchor] if params[:anchor]
+            redirect_to redirect
+          end
         }
         format.json {
           render json: @membership_reading
         }
       end
     else
-      raise "Not allowed"
+      format.json { head :bad_request }
     end
   end
 
@@ -50,7 +55,7 @@ class MembershipReadingsController < ApplicationController
       update_stats
 
       respond_to do |format|
-        format.html { 
+        format.html {
           # go back to referer unless alternate location passed in
           redirect = params[:location] || request.referer
           # might be an anchor tag
@@ -60,20 +65,19 @@ class MembershipReadingsController < ApplicationController
         format.json { head :no_content }
       end
     else
-      raise "Not allowed"
+      head :bad_request
     end
   end
 
   def confirmation
-    if params[:membership_id]
-      @slug = Membership.find(params[:membership_id]).challenge.slug
-    else
-      @slug = ""
-    end
+    reading_ids = params[:id].split('/')
+    membership = Membership.find(params[:membership_id])
+    challenge = membership.challenge
+    @reading_confirmation_stats = ReadingConfirmationStats.new(membership, challenge, reading_ids)
   end
 
   def membership_reading_params
-    params.permit(:reading_id, :membership_id, :challenge_id, :user_id, :challenge_name, :chapter_id, :chapter_name)
+    params.permit(:reading_id, :membership_id, :challenge_id, :user_id, :challenge_name, :chapter_id, :chapter_name, :reading_ids => [])
   end
 
   def membership_reading
@@ -85,8 +89,8 @@ class MembershipReadingsController < ApplicationController
   end
 
   def readings
-    @readings ||= Reading.find(params[:reading_id])
-    @readings = [@readings] unless @readings.is_a? Array
+    reading_ids = params[:reading_id] || params[:reading_ids]
+    @readings ||= Reading.where(id: reading_ids)
     @readings
   end
 end

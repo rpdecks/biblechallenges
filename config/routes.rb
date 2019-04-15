@@ -1,13 +1,5 @@
 Biblechallenge::Application.routes.draw do
-  require 'sidekiq/web'
-  require 'sidetiq/web'
-  mount Sidekiq::Web, at: '/sidekiq'
-
   get '/test_exception_notifier', to: 'application#test_exception_notifier'
-
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: "/letter_opener"
-  end
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
@@ -30,7 +22,7 @@ Biblechallenge::Application.routes.draw do
       resources :memberships, only: [:edit, :update]
       resources :groups, only: [:new, :create, :edit]
       member do
-        get 'snapshot_email' 
+        get 'snapshot_email'
       end
       resources :mass_emails, only: [:new, :create]
       get 'toggle'
@@ -61,19 +53,11 @@ Biblechallenge::Application.routes.draw do
     end
   end
 
-  resources :groups, only: [] do
-    resources :comments, only: [:create, :destroy], controller: 'groups/comments'
-  end
-
   resources :badges, only: [:index, :show]
 
-  resources :readings, only: [:show, :edit, :update] do
-    resources :comments, only: [:create, :destroy], controller: 'readings/comments'
-  end
+  resources :readings, only: [:show, :edit, :update], controller: 'readings'
 
-  resources :comments, only: [] do
-    resources :comments, only: [:create], controller: "comments/comments"
-  end
+  resources :comments, only: [:create, :destroy], controller: "comments"
 
   # more restful reading logging
   resources :membership_readings, only: [:create, :destroy] do
@@ -83,8 +67,10 @@ Biblechallenge::Application.routes.draw do
   end
 
   get '/log_reading/' => 'membership_readings#create', as: 'log_reading'
+  # Temp fix - To handle the hash added in the emails sent
+  get '*trk_hash/log_reading/' => 'membership_readings#create'
 
   resources :challenges, only: [:index, :show], controller: 'challenges'
+  get 'challenges_statistics' => 'challenges#public_statistics'
   root to: 'challenges#index'
-
 end

@@ -223,6 +223,7 @@ fieldset {
 
 .nav.nav-tabs{
   margin-bottom: 40px;
+  a { cursor: pointer; }
 }
 
 .panel-primary{
@@ -668,4 +669,76 @@ fieldset {
   color: #000;
   margin-bottom: 0px;
   padding-top: 18px;
+}
+
+// Reading Confirmation
+
+.glyphicon-ok{
+  width:25px;
+  height:25px;
+  background: #0073e6;
+  padding: 3px;
+  border-radius: 100%;
+  color: white;
+  text-align:center
+}
+
+// Comment boxes
+
+.challenge-comments {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__heading {
+    flex: 2;
+    flex-basis: 438px;
+  }
+
+  &__comments {
+    flex: 1;
+    flex-basis: 300px;
+    margin: 15px 15px 0 15px;
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: solid 1px white;
+    border-radius: 10px;
+    background-color: #DDE9EF;
+    color: black;
+  }
+}
+
+.todays-reading-comments {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__logbutton-container {
+    flex: 1;
+  }
+
+  &__comments {
+    flex: 1;
+    max-height: 300px;
+    min-width: 200px;
+    padding: 10px;
+    overflow-y: auto;
+  }
+}
+
+.group-comments {
+  max-width: 600px;
+}
+
+.reading-comments {
+  // display: flex;
+  // flex-wrap: wrap;
+
+  // &__logbutton-container {
+  //   flex: 1;
+  // }
+
+  // &__comments {
+  //   flex: 1;
+  //   padding: 10px;
+  // }
 }

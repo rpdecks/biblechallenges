@@ -8,7 +8,6 @@
       = render partial: 'shared/challenges/challenge_unsubscribe', locals: {membership: @membership, challenge: @challenge}
     = render partial: 'shared/challenges/invite_friends'
 
-
 .content
   .container
     %br
@@ -17,29 +16,18 @@
       = render partial: "member/challenges/challenge_tabs", locals: {challenge: @challenge}
 
       .tab-content
-        .tab-pane.active#readings{role: "tabpanel"}
-          %h4
-            Today's Reading (#{current_user.date_by_timezone.strftime("%m/%d/%Y")})
-
+        .tab-pane.active#todaysreadings{role: "tabpanel"}
           - if @challenge.membership_for(current_user)
             = render partial: "shared/challenges/change_bible_version",
               locals: {membership: @membership}
-            %br
-
-          - # todo: refactor this to todays_chapters
-          - @todays_readings.each do |todays_reading|
-            - todays_verses = todays_reading.chapter.by_version(current_user.bible_version)
-
-            = render partial: 'shared/challenges/todays_reading',
-            locals: { todays_reading: todays_reading, todays_verses: todays_verses, bible_version: current_user.bible_version}
-
-            = render partial: 'shared/challenges/log_todays_reading', locals: {link_text: todays_reading.book_and_chapter, membership: @membership, todays_reading: todays_reading}
-
-            %br
-            %br
-
+            = render partial: 'shared/challenges/todays_reading', locals: {data: @todays_readings}
+        .tab-pane#readings{role: "tabpanel"}
+          %br
           .panel.panel-primary
             .panel-heading Challenge Readings
+            %center
+              %strong
+                = paginate @readings
             = render partial: 'shared/challenges/readings', locals: {readings: @readings}
 
         - if current_user.find_challenge_group(@challenge) != nil
@@ -49,25 +37,61 @@
           .tab-pane#groups{role: "tabpanel"}
             = render partial: 'shared/challenges/challenge_groups', locals: {groups: @groups, challenge: @challenge}
         .tab-pane#statistics{role: "tabpanel"}
-          = render partial: 'shared/challenges/challenge_statistics', locals: {membership: @membership, challenge: @challenge, groups: @groups, user: @current_user}
+          = render partial: 'shared/challenges/challenge_statistics', locals: {data: @challenge_chart_data}
+        .tab-pane#discussion{role: "tabpanel"}
+          = react_chat(@challenge)
 
 :javascript
   // this is pulled from http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
   // store the currently selected tab in the hash value
   $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
     var id = $(e.target).attr("href").substr(1);
-    window.location.hash = id;
+    window.history.pushState('', '', ('#' + id)); // Changes the URL without redirecting
   });
 
   // on load of the page: switch to the currently selected tab
   var hash = window.location.hash;
-    $('#grouptabs a[href="' + hash + '"]').tab('show');
-  
+  $('#grouptabs a[href="' + hash + '"]').tab('show');
+
+  // Gets a param from the URL and returns its value
+  $.urlParam = function(name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null)
+      return null;
+    else
+      return results[1] || 0;
+  };
+
+  // Gets a part of the URL prior to the specified param
+  $.parseUrl = function(url, param) {
+    if (url.indexOf('&' + param) !== -1) {
+      return url.substr(0, url.indexOf('&' + param));
+    } else {
+      return url
+    }
+  };
+
   $("#addFriendsToChallenge").on("click", function() {
     setTimeout(function (){
       $( "#addFriendsInput" ).focus();
     }, 0);
   });
+
+  // Tailors the URL upon clicking the pagination link
+  $("nav.pagination a").on("click", function (e) {
+    e.preventDefault();
+    var hash = window.location.hash;
+    var targetUrl = $(e.target).attr('href');
+    var scrollPosition = document.body.scrollTop;
+    window.location = $.parseUrl(targetUrl, 'position') + '&position=' + scrollPosition + hash;
+  })
+
+  // Maintains scroll position when user switches between the challenge pages 
+  if ($.urlParam('position')) {
+    setTimeout(function() {
+      window.scrollTo(0, $.urlParam('position'));
+    }, 10);
+  }
 
   window.fbAsyncInit = function() {
     FB.init({
