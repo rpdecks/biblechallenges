@@ -19,8 +19,8 @@ class MembershipStatisticOnSchedulePercentage < MembershipStatistic
         on_time_readings += 1
       end
     end
-
-    readings_to_date.size.zero? ? 0 : (on_time_readings * 100) / readings_to_date.size
+    total = (on_time_readings * 100) / readings_to_date.size
+    readings_to_date.size.zero? ? 0 : total
   end
 
   def update

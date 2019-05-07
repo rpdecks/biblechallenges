@@ -4,12 +4,15 @@ production:
 
 defaults: &defaults
   adapter: postgresql
-  template: template0
-  host: localhost
+  # template: template0
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  # host: localhost
 
 development:
   <<: *defaults
-  database: bc_development
+  database: bc_development_may07
 
 test:
   <<: *defaults

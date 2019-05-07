@@ -82,14 +82,14 @@ class Creator::ChallengesController < ApplicationController
   def destroy
     if @challenge.owner == current_user
       @challenge.destroy
-      flash[:notice] = "Successfully deleted Challenge" 
+      flash[:notice] = "Successfully deleted Challenge"
       redirect_to member_challenges_path
     end
   end
 
   def snapshot_email
     @challenge.send_challenge_snapshot_email_to_members
-    flash[:notice] = "Successfully sent snapshot email to challenge members." 
+    flash[:notice] = "Successfully sent snapshot email to challenge members."
     redirect_to :back
   end
 

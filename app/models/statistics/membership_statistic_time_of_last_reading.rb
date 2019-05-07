@@ -14,8 +14,7 @@ class MembershipStatisticTimeOfLastReading < MembershipStatistic
   end
 
   def update
-    self.date_value = calculate
-    save
+    self.update(value: calculate)
   end
 
 end

@@ -570,9 +570,3 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   unicorn-worker-killer
-
-RUBY VERSION
-   ruby 2.2.1p85
-
-BUNDLED WITH
-   1.16.4

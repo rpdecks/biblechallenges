@@ -14,8 +14,7 @@ class MembershipStatisticTotalChaptersRead < MembershipStatistic
   end
 
   def update
-    self.value = calculate
-    save
+    self.update(value: calculate)
   end
 
 end

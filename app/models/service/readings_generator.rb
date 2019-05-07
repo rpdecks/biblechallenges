@@ -12,10 +12,11 @@ class ReadingsGenerator
     schedule.keys.sort.each do |date|
       num_chapters = schedule[date]
       chapters_for_this_day = chapters_to_read.shift(num_chapters)
+      query_fragment = chapters_for_this_day.map { |b, c| "(#{b}, #{c})" }.join(', ')
+      chapters = Chapter.where("(book_id, chapter_number) IN (#{query_fragment})")
 
-      chapters_for_this_day.each do |chapter|
-        chapter = Chapter.find_by_book_id_and_chapter_number(chapter.first, chapter.last)
-        readings << Reading.new(chapter: chapter, read_on: date)
+      chapters.each do |chap|
+        readings << Reading.new(chapter: chap, read_on: date)
       end
     end
 

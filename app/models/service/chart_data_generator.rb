@@ -25,7 +25,7 @@ class ChartDataGenerator
       @member_readings_data_array << [
                                       r.strftime("%-m/%-e"),
                                       (@membership_readings.
-                                      select { |x| x.created_at.to_date == r.to_date }.size) + 
+                                      select { |x| x.created_at.to_date == r.to_date }.size) +
                                       @member_readings_data_array.last[-1]
                                      ]
     end
