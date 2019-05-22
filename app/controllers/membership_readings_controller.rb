@@ -27,7 +27,7 @@ class MembershipReadingsController < ApplicationController
               membership_id: membership.id,
               user_token: membership.user.authentication_token)
           else
-            redirect = params[:location] || request.referer
+            redirect = params[:location] || request.referer || member_challenge_path(@challenge)
             redirect += params[:anchor] if params[:anchor]
             redirect_to redirect
           end
