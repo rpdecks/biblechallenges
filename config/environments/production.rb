@@ -103,16 +103,10 @@ Biblechallenge::Application.configure do
     }
   }
 
-
   Rails.application.config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix => "LIVE EXCEPTION - ",
       :sender_address => %{"Bible Challenges Exception Notifier" <notifier@biblechallenges.com>},
       :exception_recipients => ENV['EXCEPTION_EMAILS_TO']
-    },
-    :slack => {
-      :webhook_url => "https://hooks.slack.com/services/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",
-      :channel => "#exceptions"
     }
-
 end
