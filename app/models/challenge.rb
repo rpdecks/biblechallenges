@@ -3,7 +3,7 @@ class Challenge < ActiveRecord::Base
   serialize :date_ranges_to_skip  # array of ranges
 
   Rails.application.eager_load!
-  ChallengeStatistic.descendants.each do |stat| 
+  ChallengeStatistic.descendants.each do |stat|
     has_one stat.name.underscore.to_sym
   end
 
@@ -33,7 +33,7 @@ class Challenge < ActiveRecord::Base
 
   has_many :members, through: :memberships, source: :user
   has_many :readings, dependent: :destroy
-  has_many :membership_readings, through: :memberships  # needs default order #todo 
+  has_many :membership_readings, through: :memberships  # needs default order #todo
   has_many :groups
   has_many :chapters, through: :readings
   has_many :challenge_statistics, dependent: :destroy
@@ -101,7 +101,7 @@ class Challenge < ActiveRecord::Base
   end
 
   # Accepts one or multiple users
-  def join_new_member(userz,options={})  # not currently using option/arg 
+  def join_new_member(userz,options={})  # not currently using option/arg
                                          # hashes in the app but leaving here
     if userz.class == Array
       userz.map {|u| join_new_member(u,options) }
@@ -186,6 +186,8 @@ class Challenge < ActiveRecord::Base
   def validate_days_of_week_to_skip
     if self.days_of_week_to_skip.size == 7
       errors.add(:days_of_week_to_skip, "can't skip all seven days of the week")
+    elsif AvailableDatesCalculator.new(self).available_dates.empty?
+      errors.add(:base, "Can't skip all days in the given date range") if enddate > begindate
     end
   end
 

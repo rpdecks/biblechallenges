@@ -67,6 +67,15 @@ describe Challenge do
         expect(challenge.enddate).to eql(challenge.begindate + 8.days)
       end
     end
+
+    context 'when all dates in the given range are skipped' do
+      let (:challenge) {build(:challenge, enddate: 7.days.from_now, begindate: Date.today, dates_to_skip: Date.today..(7.days.from_now))}
+
+      it "adds error to base on skipped dates" do
+        challenge.valid?
+        expect(challenge.errors[:base][0]).to eql("Can't skip all days in the given date range")
+      end
+    end
   end
 
   describe "Relations" do
