@@ -178,8 +178,8 @@ class Challenge < ActiveRecord::Base
   def validate_book_sequence
     if begin_book
       books = Bible::BOOKS
-      books_index = Hash[books.map.with_index.to_a]
-      errors[:chapters_to_read] << "scheduler can only work with books in sequence at the moment." if books_index[begin_book] > books_index[end_book]
+      @books_index = Hash[books.map.with_index.to_a]
+      errors[:chapters_to_read] << "scheduler can only work with books in sequence at the moment." if @books_index[begin_book] > @books_index[end_book]
     end
   end
 
@@ -187,7 +187,7 @@ class Challenge < ActiveRecord::Base
     if self.days_of_week_to_skip.size == 7
       errors.add(:days_of_week_to_skip, "can't skip all seven days of the week")
     elsif AvailableDatesCalculator.new(self).available_dates.empty?
-      errors.add(:base, "Can't skip all days in the given date range") if enddate > begindate
+      errors.add(:base, "Can't skip all days in the given date range") if enddate > begindate && @books_index[end_book] > @books_index[begin_book]
     end
   end
 
