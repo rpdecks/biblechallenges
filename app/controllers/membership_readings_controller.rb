@@ -37,7 +37,7 @@ class MembershipReadingsController < ApplicationController
         }
       end
     else
-      format.json { head :bad_request }
+      head :bad_request
     end
   end
 

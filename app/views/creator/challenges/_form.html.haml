@@ -101,14 +101,17 @@
     clear: '',
     hiddenPrefix: 'date_format_',
     hiddenSuffix: 'data',
-    editable: true
+    editable: true,
+    onClose: function() {
+      $('#challenge_enddate_input').attr('readonly', true);
+    }
   });
-  
+
   // From pickadate.js docs:
   // An important thing to note here is that this [editable: true] disables
   // keyboard bindings on the input element, such as arrow keys opening the
   // picker. You will have to add your own bindings as you see fit.
-  // 
+  //
   // This enables the date picker to pop up even when editable is set to
   // true.
   var enddatepicker = $enddateinput.pickadate('picker');
@@ -122,11 +125,11 @@
       enddatepicker.close();
     } else {
       enddatepicker.open();
-    }                        
+    }
     event.stopPropagation();
   };
 
-  //--------original below don't touch  
+  //--------original below don't touch
 
   var $input = $('#challenge_begindate_input').pickadate({
     // Escape any “rule” characters with an exclamation mark (!).
@@ -135,14 +138,17 @@
     clear: '',
     hiddenPrefix: 'date_format_',
     hiddenSuffix: 'data',
-    editable: true
+    editable: true,
+    onClose: function() {
+      $('#challenge_begindate_input').attr('readonly', true);
+    }
   });
-  
+
   // From pickadate.js docs:
   // An important thing to note here is that this [editable: true] disables
   // keyboard bindings on the input element, such as arrow keys opening the
   // picker. You will have to add your own bindings as you see fit.
-  // 
+  //
   // This enables the date picker to pop up even when editable is set to
   // true.
   var picker = $input.pickadate('picker');
@@ -156,6 +162,6 @@
       picker.close();
     } else {
       picker.open();
-    }                        
+    }
     event.stopPropagation();
   };

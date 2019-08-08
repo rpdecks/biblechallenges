@@ -58,7 +58,6 @@ class Challenge < ActiveRecord::Base
 
   after_commit :successful_creation_email, :on => :create
 
-
   def membership_for(user)
     user.is_a?(User) && memberships.find_by_user_id(user.id)
   end
@@ -186,7 +185,7 @@ class Challenge < ActiveRecord::Base
   def validate_days_of_week_to_skip
     if self.days_of_week_to_skip.size == 7
       errors.add(:days_of_week_to_skip, "can't skip all seven days of the week")
-    elsif AvailableDatesCalculator.new(self).available_dates.empty?
+    elsif AvailableDatesCalculator.new(self).available_dates.empty? && !errors[:chapters_to_read].present?
       errors.add(:base, "Can't skip all days in the given date range") if enddate > begindate
     end
   end
