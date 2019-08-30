@@ -388,7 +388,7 @@ GEM
     ruby_array_find_consecutive (0.0.3)
     ruby_parser (3.7.3)
       sexp_processor (~> 4.1)
-    rubyzip (1.1.7)
+    rubyzip (1.2.3)
     sass (3.4.21)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
