@@ -9,14 +9,14 @@ namespace :dups do
 
     puts Verse.where(version: 'RCV').size
     Verse.all.each do |v|
-      print '.'
+      # print '.'
       if (Verse.where(
           version: v.version,
           book_name: v.book_name,
           chapter_number: v.chapter_number,
           verse_number: v.verse_number,
           book_id: v.book_id).count) > 1
-        puts "#{v.book_name} #{v.chapter_number} #{v.verse_number} is a dup"
+        # puts "#{v.book_name} #{v.chapter_number} #{v.verse_number} is a dup"
         v.destroy
       end
     end
