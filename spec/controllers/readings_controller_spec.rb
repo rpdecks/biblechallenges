@@ -74,9 +74,9 @@ describe ReadingsController do
 
       context "the user is not part of this challenge and reading" do
         it "does not assign the requested reading to @reading" do
-          randomreading = create(:reading)
-          get :show, id: randomreading
-          expect(assigns(:reading)).to_not eq randomreading
+          # randomreading = create(:reading)
+          get :show, id: 91289317
+          expect(assigns(:reading)).to eq nil
         end
 
         it "does not render the show template" do

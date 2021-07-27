@@ -13,7 +13,7 @@ feature 'User unsubscribes via email' do
 
     expect{
     open_last_email
-    path = parse_email_for_link(current_email, "Here")# the link is Click *here* to unsubsubscribe
+    path = parse_email_for_link(current_email, "HERE")# the link is Click *here* to unsubsubscribe
     visit(path)
     click_button("Unsubscribe")
     }.to change(Membership, :count).by(-1)

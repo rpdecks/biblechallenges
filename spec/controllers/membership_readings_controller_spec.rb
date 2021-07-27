@@ -42,9 +42,8 @@ describe MembershipReadingsController, type: :controller do
         challenge2 = create(:challenge, chapters_to_read:'John 1-4')
         membership2 = challenge2.join_new_member(user2)
         reading = challenge.readings.first
-        expect {
-          post :create, reading_id: reading.id, membership_id: membership2
-        }.to raise_error('Not allowed')
+        post :create, reading_id: reading.id, membership_id: membership2
+        expect(response).to have_http_status(:bad_request)
       end
 
       it "creates a new membership_reading allowed only for the owner of that membership reading" do
@@ -52,9 +51,8 @@ describe MembershipReadingsController, type: :controller do
         membership1 = challenge.memberships.first #belongs to user1
         challenge.join_new_member(user2) #user2 joins challenge
         reading = challenge.readings.first
-        expect {
-          post :create, reading_id: reading.id, membership_id: membership1
-        }.to raise_error('Not allowed')
+        post :create, reading_id: reading.id, membership_id: membership1
+        expect(response).to have_http_status(:bad_request)
       end
 
       it "should redirect to :back if params[:location] is not provided" do
@@ -143,9 +141,8 @@ describe MembershipReadingsController, type: :controller do
         challenge2 = create(:challenge, chapters_to_read:'John 1-4')
         membership2 = challenge2.join_new_member(user2)
         mr = create(:membership_reading, membership:membership2, reading: reading, user_id: user2.id)
-        expect {
-          delete :destroy, id: mr.id
-        }.to raise_error
+        delete :destroy, id: mr.id
+        expect(response).to have_http_status(:bad_request)
       end
 
       it "should redirect to :back if params[:location] is not  provided" do
@@ -170,9 +167,8 @@ describe MembershipReadingsController, type: :controller do
       membership2 = challenge.join_new_member(user2) #user2 joins challenge
       reading = challenge.readings.first
       mr = create(:membership_reading, membership:membership1, reading: reading)
-      expect {
-        delete :destroy, id: mr.id, membership_id: membership1
-      }.to raise_error('Not allowed')
+      delete :destroy, id: mr.id, membership_id: membership1
+      expect(response).to have_http_status(:bad_request)
     end
   end
 end
