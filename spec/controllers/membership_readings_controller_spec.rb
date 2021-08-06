@@ -25,7 +25,7 @@ describe MembershipReadingsController, type: :controller do
 
   context 'User access through website' do
     before do
-      sign_in :user, user
+      sign_in user, scope: :user
       request.env["HTTP_REFERER"] = "where_i_came_from"  #to test redirect back
     end
 
@@ -70,7 +70,7 @@ describe MembershipReadingsController, type: :controller do
       it "should update one of the membership statistics (lamo test)" do 
         challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         user = create(:user)
-        sign_in :user, user
+        sign_in user, scope: :user
         membership = challenge.join_new_member(user)
         membership.associate_statistics
 
@@ -85,7 +85,7 @@ describe MembershipReadingsController, type: :controller do
       it "updates days_read_in_a_row statistics" do
         challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         user = create(:user)
-        sign_in :user, user
+        sign_in user, scope: :user
         membership = challenge.join_new_member(user)
         membership.associate_statistics
 
@@ -99,7 +99,7 @@ describe MembershipReadingsController, type: :controller do
       it "should update the chapters_all_time_read statistics after posting a reading" do
         challenge = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         user = create(:user)
-        sign_in :user, user
+        sign_in user, scope: :user
         membership = challenge.join_new_member(user)
 
         user.associate_statistics
@@ -113,7 +113,7 @@ describe MembershipReadingsController, type: :controller do
         challenge1 = create(:challenge_with_readings, chapters_to_read:'Mat 1-2')
         challenge2 = create(:challenge_with_readings, chapters_to_read:'Luke 1-2')
         user = create(:user)
-        sign_in :user, user
+        sign_in user, scope: :user
         user.associate_statistics
         membership1 = challenge1.join_new_member(user)
         membership2 = challenge2.join_new_member(user)

@@ -23,7 +23,7 @@ describe Member::ChallengesController do
     let(:current_user) { create(:user) }
 
     before do
-      sign_in :user, current_user
+      sign_in current_user, scope: :user
     end
 
     describe 'GET#index' do

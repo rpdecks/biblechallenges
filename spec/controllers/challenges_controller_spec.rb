@@ -23,7 +23,7 @@ describe ChallengesController, "Actions" do
       user = create(:user)
       challenge = create(:challenge)
       create(:membership, challenge: challenge, user: user)
-      sign_in :user, user
+      sign_in user, scope: :user
 
       get :show, id: challenge
       expect(response).to redirect_to member_challenge_path(challenge)

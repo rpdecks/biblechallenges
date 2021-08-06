@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
-ruby "2.2.1"
+ruby "2.5.9"
 
-gem 'rails', '4.2.1'
+gem 'rails', '~> 4.2'
 gem 'haml'
 gem 'pg'
 gem 'haml-rails'
-gem 'devise'
+gem 'devise', '~> 4.0'
 gem 'high_voltage'
 gem 'kaminari'
 gem 'simple_form'
@@ -47,7 +47,7 @@ gem 'friendly_id'
 gem 'mail_form'
 gem 'exception_notification'
 gem 'slack-notifier'
-gem "autoprefixer-rails" #prefix styles for cross-browser
+gem 'autoprefixer-rails' #prefix styles for cross-browser
 gem 'fastercsv'
 gem 'rcv_bible', '~> 0.0.5'
 gem 'chartkick'
@@ -81,7 +81,7 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails'
+  gem 'sass-rails', '5.0.7'
   gem 'coffee-rails'
   gem 'bootstrap-sass', '~> 3.0.2.0'
   gem 'bootswatch-rails'
@@ -94,7 +94,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.3.0'
+  gem 'rspec-rails', '~> 3.4'
   gem 'spring-commands-rspec'
 #  gem 'pry-byebug'
   gem 'sqlite3'

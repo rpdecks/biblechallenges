@@ -4,7 +4,7 @@ describe Member::GroupsController, type: :controller do
   let(:user){create(:user)}
 
   before do
-    sign_in :user, user
+    sign_in user, scope: :user
   end
 
   describe  'POST#create' do

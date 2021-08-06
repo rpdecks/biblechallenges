@@ -4,12 +4,10 @@
     %h3.text-center Log in to BibleChallenges
     %br/
     - if devise_mapping.omniauthable?
-      - resource_class.omniauth_providers.each do |provider|
-        .centered
-          - provider_name = provider.to_s.split("_")[0].titleize
-          = link_to "Log in with #{provider_name}", user_omniauth_authorize_path(provider), class: "btn btn-danger"
-        %br/
-        %br/
+      .centered
+        = link_to "Log in with Google", user_google_oauth2_omniauth_authorize_path, class: "btn btn-danger"
+      %br/
+      %br/
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: 'form'}) do |f|
       .form-group
         = f.label :email

@@ -7,7 +7,7 @@ describe Member::MembershipsController do
   let!(:membership){challenge.join_new_member(user)}
 
   before(:each) do
-    sign_in :user, user
+    sign_in user, scope: :user
   end
 
   describe 'DELETE#destroy' do

@@ -28,5 +28,5 @@
         = f.password_field :current_password, class: 'form-control', placeholder: "Current Password"
         %p.help-block
 
-      = devise_error_messages!
+      = render "devise/shared/error_messages", resource: resource
       = f.submit "Update", class: 'btn btn-primary btn-block'

@@ -25,7 +25,7 @@ describe ReadingsController do
 
   describe "Owner Access" do
     before do
-      sign_in :user, owner
+      sign_in owner, scope: :user
     end
 
     describe "GET #edit" do
@@ -54,7 +54,7 @@ describe ReadingsController do
 
   describe "User Access" do
     before do
-      sign_in :user, user
+      sign_in user, scope: :user
     end
 
     describe "GET #show" do
@@ -76,7 +76,7 @@ describe ReadingsController do
         it "does not assign the requested reading to @reading" do
           # randomreading = create(:reading)
           get :show, id: 91289317
-          expect(assigns(:reading)).to eq nil
+          expect(assigns(:reading)).to be_nil
         end
 
         it "does not render the show template" do

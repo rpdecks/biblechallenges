@@ -26,7 +26,7 @@ describe Creator::ChallengesController do
     let(:challenge) { create(:challenge, owner: challenge_creator) }
 
     before :each do
-      sign_in :user, challenge_creator
+      sign_in challenge_creator, scope: :user
     end
 
     describe "DELETE#destroy" do

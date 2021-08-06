@@ -13,7 +13,7 @@ describe CommentsController, 'Actions' do
 
     context 'when user is logged in' do
       before(:each) do
-        sign_in(reading.owner)
+        sign_in(reading.owner, scope: :user)
       end
       describe 'with invalid comment params' do
         it 'should return http status BAD REQUEST' do
