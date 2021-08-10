@@ -84,7 +84,7 @@ end
 group :assets do
   gem 'sass-rails', '5.0.7'
   gem 'coffee-rails'
-  gem 'bootstrap-sass', '~> 3.0.2.0'
+  gem 'bootstrap-sass', '~> 3.4.1'
   gem 'bootswatch-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   #gem 'therubyracer', :platforms => :ruby
