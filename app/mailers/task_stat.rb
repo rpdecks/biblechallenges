@@ -11,7 +11,7 @@ class TaskStat < ApplicationMailer
 		@date = Time.current.to_date.strftime("%b %d, %Y")
 		@schedule_date = DateTime.current.tomorrow.strftime("%b %d, %Y")
 		mail(
-			to: "pdbradley@gmail.com, evankoch@gmail.com, eric87chen@gmail.com, rathan@beyondfinity.com, jebin@beyondfinity.com",
+			to: ENV['REPORT_EMAILS_TO'],
 			subject: "DailyEmailScheduler Report - #{@date}"
 		)
 	end
