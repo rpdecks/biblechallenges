@@ -1,4 +1,8 @@
 Biblechallenge::Application.routes.draw do
+  constraints(host: /biblechallenges.herokuapp.com/) do
+    match '/(*path)' => redirect { |params| "https://www.biblechallenges.com/#{params[:path]}" }, via: %i[get post]
+  end
+
   get '/test_exception_notifier', to: 'application#test_exception_notifier'
 
   devise_for :users, controllers: {
