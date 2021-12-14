@@ -5,7 +5,7 @@
     %br/
     - if devise_mapping.omniauthable?
       .centered
-        = link_to "Log in with Google", user_google_oauth2_omniauth_authorize_path, class: "btn btn-danger"
+        = link_to "Log in with Google", user_google_oauth2_omniauth_authorize_path, method: :post, class: "btn btn-danger"
       %br/
       %br/
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: {role: 'form'}) do |f|

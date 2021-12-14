@@ -29,7 +29,8 @@ gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'omniauth-google-oauth2'
+gem 'omniauth-google-oauth2', '= 0.8.0'
+gem "omniauth-rails_csrf_protection"
 gem 'acts_as_scriptural', '0.0.5'
 gem 'simple_token_authentication', '~> 1.0'
 gem 'gretel'
@@ -115,7 +116,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'turn', :require => false
-  gem 'simplecov', '0.5.4'
+  gem 'simplecov'
   gem 'faker', '~> 1.4.3'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner', '~> 1.2.0'
