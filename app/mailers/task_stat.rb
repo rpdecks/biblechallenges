@@ -12,7 +12,7 @@ class TaskStat < ApplicationMailer
 		@schedule_date = DateTime.current.tomorrow.strftime("%b %d, %Y")
 		mail(
 			to: ENV['REPORT_EMAILS_TO'],
-			subject: "DailyEmailScheduler Report - #{@date}"
+			subject: "DailyEmailScheduler Report - #{@schedule_date}"
 		)
 	end
 end
